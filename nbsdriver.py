@@ -23,13 +23,17 @@ class NBSdriver(webdriver.Chrome):
         super(NBSdriver, self).__init__(executable_path= self.executable_path, options = self.options)
 
 ########################### NBS Navigation Methods ############################
+    def GetCredentials(self):
+        """ A method to prompt user to provide a valid username and RSA token
+        to log in to NBS. Must """
+        self.username = input('Enter your SOM username ("first_name.last_name"):')
+        self.passcode = input('Enter your RSA passcode:')
+
     def LogIn(self):
         """ Log in to NBS. """
         self.get(self.site)
         self.switch_to.frame("contentFrame")
-        self.username = input('Enter your SOM username ("first_name.last_name"):')
         self.find_element_by_id('username').send_keys(self.username)
-        self.passcode = input('Enter your RSA passcode:')
         self.find_element_by_id('passcode').send_keys(self.passcode)
         self.find_element(By.XPATH,'/html/body/div[2]/p[2]/input[1]').click()
         WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a')))
@@ -50,8 +54,12 @@ class NBSdriver(webdriver.Chrome):
         self.find_element(By.XPATH,'//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a').click()
 
     def GoToApprovalQueue(self):
-        """ NAvigate to approval queue from Home page. """
+        """ Navigate to approval queue from Home page. """
         self.find_element(By.PARTIAL_LINK_TEXT,'Approval Queue for Initial Notifications').click()
+
+    def ReturnApprovalQueue(self):
+        """ Return to Approval Queue from an investigation initally accessed from the queue. """
+        self.find_element(By.XPATH,'//*[@id="bd"]/div[1]/a').click()
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """

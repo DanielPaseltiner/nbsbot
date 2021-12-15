@@ -1,11 +1,21 @@
 from nbsdriver import NBSdriver
+from datetime import datetime
+import configparser
+from selenium.webdriver.common.by import By
 
 class COVIDcasereview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
     methods for reviewing COVID case investigations for data accuracy and completeness. """
-    def __init__(self, production):
+    def __init__(self, production=False):
         self.Reset()
+        self.GetObInvNames()
         super(COVIDcasereview, self).__init__(production)
+
+    def GetObInvNames(self):
+        """ Read list of congregate setting outbreak investigators from config file. """
+        outbreak_investigators = configparser.ConfigParser()
+        outbreak_investigators.read('cong_outbreak_investigators.cfg')
+        self.outbreak_investigators = outbreak_investigators.get('OutbreakInvestigators', 'Investigators').split(', ')
 
     def Reset(self):
         """ Clear values of attributes assigned during case investigation review.
@@ -147,6 +157,7 @@ class COVIDcasereview(NBSdriver):
     def CheckInvestigator(self):
         """ Check if an investigator was assigned to the case. """
         investigator = self.find_element(By.XPATH, '//*[@id="INV180"]').text
+        self.investigator_name = investigator
         if investigator:
             self.investigator = True
         else:
@@ -182,15 +193,15 @@ class COVIDcasereview(NBSdriver):
             self.issues.append('Report to county date missing.')
         elif current_county_date < self.current_report_date:
             self.issues.append('Earliest report to county cannot be prior to inital report date.')
-        elif current_county_date > self.now:
-            self.issues.append('Earliest report to county date cannot be in the future.')
+        elif current_county_date > self.investigation_start_date:
+            self.issues.append('Earliest report to county date cannot be after investigation start date')
 
         if not current_state_date:
             self.issues.append('Report to state date missing.')
         elif current_state_date < self.current_report_date:
             self.issues.append('Earliest report to state cannot be prior to inital report date.')
-        elif current_state_date > self.now:
-            self.issues.append('Earliest report to state date cannot be in the future.')
+        elif current_state_date > self.investigation_start_date:
+            self.issues.append('Earliest report to state date cannot be after investigation start date.')
 
         if current_county_date:
             if current_state_date:
@@ -264,7 +275,7 @@ class COVIDcasereview(NBSdriver):
 
 #################### Hospital Check Methods ###################################
     def CheckHospitalizationIndicator(self):
-        """ Verify hospitalization info. """
+        """ Read hospitalization status. If an investigation was conducted it must be Yes or No """
         self.hospitalization_indicator = self.find_element(By.XPATH, '//*[@id="INV128"]').text
         if (self.ltf != 'Yes') & (self.investigator):
             if self.hospitalization_indicator not in ['Yes', 'No']:
@@ -332,9 +343,12 @@ class COVIDcasereview(NBSdriver):
 #################### Housing Check Methods ###################################
     def CheckCongregateSetting(self):
         """ Check if a patient lives in congregate setting."""
-        xpath = '//*[@id="95421_4"]'
-        if self.ltf != 'Yes':
-            self.cong_setting_indicator =  self.CheckForValue(xpath, 'Congregate setting status must have a value.')
+        self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="95421_4"]').text
+        if self.investigator:
+            if (self.investigator_name in self.outbreak_investigators) & (self.cong_setting_indicator not in ['Yes', 'No']):
+                self.issues.append('Congregate setting question must be answered with "Yes" or "No".')
+            elif (self.ltf != 'Yes') & (not self.cong_setting_indicator):
+                self.issues.append('Congregate setting status must have a value.')
 
     def CheckCongregateFacilityName(self):
         """ Need a congregate faciltiy name if patient lives in congregate setting."""
@@ -352,7 +366,12 @@ class COVIDcasereview(NBSdriver):
 #################### Healthcare Worker Check Methods ###########################
     def CheckHealthcareWorker(self):
         """ Check if patient is a healthcare worker."""
-        self.healthcare_worker =  self.CheckForValue('//*[@id="ME59100"]','Healthcare worker question is blank.')
+        self.healthcare_worker = self.find_element(By.XPATH, '//*[@id="ME59100"]').text
+        if self.investigator:
+            if (self.investigator_name in self.outbreak_investigators) & (self.cong_setting_indicator not in ['Yes', 'No']):
+                self.issues.append('Healthcare worker questions must be answered with "Yes" or "No".')
+            elif (self.ltf != 'Yes') & (not self.cong_setting_indicator):
+                self.issues.append('Healthcare worker question is blank.')
 
     def CheckHealtcareWorkerFacility(self):
         """ If the patient is a healthcare worker then a facility name must be provided."""
@@ -429,29 +448,39 @@ class COVIDcasereview(NBSdriver):
     def CheckSchoolExposure(self):
         """ If school/daycare exposure is indicated ensure that facility name is
         provided."""
-        school_exposure = self.find_element(By.XPATH, '//*[@id="NBS688"]').text
-        if school_exposure == 'Yes':
-            school_name = self.find_element(By.XPATH, '//*[@id="ME62100"]').text
-            university_name = self.find_element(By.XPATH, '//*[@id="ME62101"]').text
-            daycare_name = self.find_element(By.XPATH, '//*[@id="ME10106"]').text
-            if (not school_name) & (not university_name) & (not daycare_name):
-                self.issues.append("If school/daycare/university exposure is indicated then school/daycare/university name must be specified.")
-            if school_name == 'Other':
-                other_school_name = self.find_element(By.XPATH, '//*[@id="ME62100Oth"]').text
-                if not other_school_name:
-                    self.issues.append('Other school name is blank.')
-            if university_name == 'Other':
-                other_univeristy_name = self.find_element(By.XPATH, '//*[@id="ME62101Oth"]').text
-                if not other_university_name:
-                    self.issues.append('Other university name is blank.')
+        if self.site == 'https://nbs.iphis.maine.gov/':
+            school_exposure = self.find_element(By.XPATH, '//*[@id="NBS688"]').text
+            if school_exposure == 'Yes':
+                school_name = self.find_element(By.XPATH, '//*[@id="ME62100"]').text
+                university_name = self.find_element(By.XPATH, '//*[@id="ME62101"]').text
+                daycare_name = self.find_element(By.XPATH, '//*[@id="ME10106"]').text
+                if (not school_name) & (not university_name) & (not daycare_name):
+                    self.issues.append("If school/daycare/university exposure is indicated then school/daycare/university name must be specified.")
+                if school_name == 'Other':
+                    other_school_name = self.find_element(By.XPATH, '//*[@id="ME62100Oth"]').text
+                    if not other_school_name:
+                        self.issues.append('Other school name is blank.')
+                if university_name == 'Other':
+                    other_univeristy_name = self.find_element(By.XPATH, '//*[@id="ME62101Oth"]').text
+                    if not other_university_name:
+                        self.issues.append('Other university name is blank.')
 
     def CheckOutbreakExposure(self):
-        """ If outbreak exposure is indicated then outbreak name must be provided. """
+        """ If outbreak exposure is indicated then outbreak name must be provided.
+        If the case is assigned to outbreak investigator outbreak exposure section must be complete."""
         outbreak_exposure_path = '//*[@id="INV150"]'
         outbreak_name_path = '//*[@id="ME125032"]'
         check_condition = 'Yes'
         message = "Outbreak name must be provided if outbreak exposure is indicated."
-        self.CheckIfField(outbreak_exposure_path, outbreak_name_path, check_condition, message)
+
+        if self.investigator_name in self.outbreak_investigators:
+            ob_exposure = self.find_element(By.XPATH, outbreak_exposure_path ).text
+            if ob_exposure != 'Yes':
+                self.issues.append('Outbreak exposure must be "Yes" and outbreak name must be specified.')
+            else:
+                self.CheckForValue(outbreak_name_path, 'Outbreak name in exposure section is blank.')
+        else:
+            self.CheckIfField(outbreak_exposure_path, outbreak_name_path, check_condition, message)
 
 ######################### Case Status Check Methods ############################
     def CheckTransmissionMode(self):
@@ -721,7 +750,7 @@ class COVIDcasereview(NBSdriver):
             self.issues.append('AOEs indicate that the case is hospitalized, but the investigation does not.')
 
     def CheckIcuAOE(self):
-        """ Ensrue that if AOEs show a patient as in the ICU the investigation matches."""
+        """ Ensure that if AOEs show a patient as in the ICU the investigation matches."""
         if self.hospitalization_indicator == 'Yes':
             if self.icu_aoe & (self.icu_indicator != 'Yes'):
                 self.issues.append('AOEs indicate that the case is in the ICU, but the investigation does not.')
