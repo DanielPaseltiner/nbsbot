@@ -20,6 +20,7 @@ class NBSdriver(webdriver.Chrome):
         self.options.add_argument('--ignore-ssl-errors=yes')
         self.options.add_argument('--ignore-certificate-errors')
         super(NBSdriver, self).__init__(executable_path= self.executable_path, options = self.options)
+        self.issues = []
 
 ########################### NBS Navigation Methods ############################
     def GetCredentials(self):
@@ -63,9 +64,20 @@ class NBSdriver(webdriver.Chrome):
         self.SortApprovalQueue()
 
     def SortApprovalQueue(self):
-        """ Sort approval queue so that "2019 Novel..." is at the top. """
-        self.find_element(By.XPATH,'//*[@id="parent"]/thead/tr/th[8]/a').click()
-        self.find_element(By.XPATH,'//*[@id="parent"]/thead/tr/th[8]/a').click()
+        """ Sort approval queue so that case are listed chronologically by
+        notification creation date and in alpha order so that
+        "2019 Novel..." is at the top. """
+        clear_filter_path = '//*[@id="removeFilters"]/a/font'
+        submit_date_path = '//*[@id="parent"]/thead/tr/th[3]/a'
+        condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
+        # Clear all filters
+        self.find_element(By.XPATH, clear_filter_path).click()
+        # Double click submit date for chronological order.
+        self.find_element(By.XPATH, submit_date_path).click()
+        self.find_element(By.XPATH, submit_date_path).click()
+        # Double clikc condition for alpha order.
+        self.find_element(By.XPATH,condition_path).click()
+        self.find_element(By.XPATH,condition_path).click()
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
