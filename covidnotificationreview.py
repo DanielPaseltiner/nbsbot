@@ -168,20 +168,27 @@ class COVIDnotificationreview(COVIDcasereview):
 
     def ReviewCase(self):
         """ Conduct review of a case in the notification queue. """
-        self.GoToFirstCaseInApprovalQueue()
-        self.StandardChecks()
-        if not self.investigator:
-            self.TriageReview()
-        elif self.investigator_name in self.outbreak_investigators:
-            self.OutbreakInvestigatorReview()
-        else:
-            self.CaseInvestigatorReview()
+        self.CheckFirstCase()
+        self.initial_name = self.patient_name
+        if self.condition == '2019 Novel Coronavirus (2019-nCoV)':
+            self.CheckFirstCase()
+            self.GoToFirstCaseInApprovalQueue()
+            self.StandardChecks()
+            if not self.investigator:
+                self.TriageReview()
+            elif self.investigator_name in self.outbreak_investigators:
+                self.OutbreakInvestigatorReview()
+            else:
+                self.CaseInvestigatorReview()
 
-        self.ReturnApprovalQueue()
-        if not self.issues:
-            self.ApproveNotification()
-        else:
-            self.RejectNotification()
+            self.ReturnApprovalQueue()
+            self.CheckFirstCase()
+            self.final_name = self.patient_name
+            if self.final_name == self.initial_name:
+                if not self.issues:
+                    self.ApproveNotification()
+                else:
+                    self.RejectNotification()
 
     def ApproveNotification(self):
         """ Approve notification on first case in notification queue. """

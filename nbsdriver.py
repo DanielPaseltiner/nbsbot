@@ -79,6 +79,11 @@ class NBSdriver(webdriver.Chrome):
         self.find_element(By.XPATH,condition_path).click()
         self.find_element(By.XPATH,condition_path).click()
 
+    def CheckFirstCase(self):
+        """ Ensure that first case is COVID and save case's name for later use."""
+        self.condition = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[8]/a').get_attribute('innerText')
+        self.patient_name = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a').get_attribute('innerText')
+
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
         self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[8]/a').click()
