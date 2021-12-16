@@ -535,7 +535,9 @@ class COVIDcasereview(NBSdriver):
         current_case_status = self.find_element(By.XPATH, '//*[@id="INV163"]').get_attribute('innerText')
         status_pairs = {'Confirmed':'C', 'Probable':'P', 'Suspect':'S', 'Not a Case':'N'}
         if current_case_status == 'Not a Case':
-            self.issues.append('Not a Case. Manual review required.')
+            self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
+            patient_id = self.find_element(By.XPATH, '//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]').get_attribute('innerText')
+            self.not_a_case_log.append(patient_id)
         elif not current_case_status:
             self.issues.append('Case satus is blank.')
         elif status_pairs[current_case_status] != self.status:
@@ -750,7 +752,8 @@ class COVIDcasereview(NBSdriver):
                     ,'symp_aoe':'Has symptoms for condition:\xa0Y'
                     ,'hosp_aoe':'Hospitalized for condition of interest:\xa0Y'
                     ,'cong_aoe':'Resides in a congregate care setting:\xa0Y'
-                    ,'fr_aoe':'First Responder:\xa0Y'}
+                    ,'fr_aoe':'First Responder:\xa0Y'
+                    ,'preg_aoe': 'Pregnancy Status:\xa0N'}
         for aoe in aoe_flags.keys():
             self.labs[aoe] = self.labs.apply(lambda row: aoe_flags[aoe] in row['Test Results'], axis=1 )
         self.icu_aoe =  any(self.labs.icu_aoe)
@@ -759,6 +762,7 @@ class COVIDcasereview(NBSdriver):
         self.hosp_aoe =  any(self.labs.hosp_aoe)
         self.cong_aoe =  any(self.labs.cong_aoe)
         self.fr_aoe = any(self.labs.fr_aoe)
+        self.preg_aoe = any(self.labs.preg_aoe)
 
 ########################### AOE Check Methods ##################################
     def CheckHospAOE(self):
@@ -792,4 +796,11 @@ class COVIDcasereview(NBSdriver):
         """ Ensure that if AOEs show a patient is a first responder that the
         investigation matches."""
         if self.fr_aoe & (self.first_responder != 'Yes'):
-            self.issues.append('AOEs indicate that the case lives in a congregate setting, but the investigation does not.')
+            self.issues.append('AOEs indicate that the case lives is a first responder, but the investigation does not.')
+
+    def CheckPregnancyAOE(self):
+        """ Ensure that if AOEs show a patient is pregnany that the
+        investigation matches."""
+        pregnant_status = self.find_element(By.XPATH, '//*[@id="INV178"]').get_attribute('innerText')
+        if self.preg_aoe & (pregnant_status != 'Yes'):
+            self.issues.append('AOEs indicate that the case is pregnant, but the investigation does not.')

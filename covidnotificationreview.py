@@ -100,8 +100,16 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckDetectionMethod()
         self.CheckConfirmationMethod()
 
+
     def AOEChecks(self):
         """ A method to read and check all AOEs."""
+        self.CheckHospAOE()
+        self.CheckIcuAOE()
+        self.CheckHcwAOE()
+        self.CheckSympAOE()
+        self.CheckCongAOE()
+        self.CheckFirstResponderAOE()
+        self.CheckPregnancyAOE()
 
     def CaseInvestigatorReview(self):
         """ Conduct the case review required when an investigation is assigned to a case investigator. """
@@ -117,7 +125,7 @@ class COVIDnotificationreview(COVIDcasereview):
             self.CheckTransmissionMode()
             self.CheckDetectionMethod()
             self.CheckConfirmationMethod()
-        self.ExposureChecks()
+            self.ExposureChecks()
         # Check COVID Tab.
         self.GoToCOVID()
         self.CheckSymptoms()
@@ -136,6 +144,8 @@ class COVIDnotificationreview(COVIDcasereview):
         # Check AOEs
         if self.ltf == 'Yes':
             self.AOEChecks()
+        else:
+            self.CheckPregnancyAOE()
 
     def OutbreakInvestigatorReview(self):
         """A method to perfrom check specific to investigations assigned to outbreak investigators. """
