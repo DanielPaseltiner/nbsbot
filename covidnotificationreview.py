@@ -76,6 +76,8 @@ class COVIDnotificationreview(COVIDcasereview):
         if self.first_responder == 'Yes':
             self.CheckFirstResponderOrg()
 
+        self.CheckLostToFollowUp()
+
         self.CheckHealthcareWorker()
         if self.healthcare_worker == 'Yes':
             self.CheckHealtcareWorkerFacility()
@@ -118,7 +120,7 @@ class COVIDnotificationreview(COVIDcasereview):
     def CaseInvestigatorReview(self):
         """ Conduct the case review required when an investigation is assigned to a case investigator. """
         self.CheckFirstAttemptDate()
-        self.CheckLostToFollowUp()
+
         if self.ltf != 'Yes':
             self.CheckNumCloseContacts()
             self.ExposureChecks()

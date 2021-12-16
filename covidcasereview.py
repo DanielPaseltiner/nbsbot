@@ -557,6 +557,8 @@ class COVIDcasereview(NBSdriver):
         self.ltf = self.find_element(By.XPATH, '//*[@id="ME64100"]').get_attribute('innerText')
         if self.ltf == 'Unknown':
             self.issues.append('Lost to follow up inidicator cannot be unknown.')
+        elif (not self.ltf) & self.investigator:
+            self.issues.append('Lost to follow up cannot be blank.')
 
     def CheckClosedDate(self):
         """ Check if a closed date is provided and makes sense"""

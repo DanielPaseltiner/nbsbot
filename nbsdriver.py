@@ -92,6 +92,7 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
+        self.SortApprovalQueue()
         self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[8]/a').click()
         self.issues = []
 
