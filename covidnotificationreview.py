@@ -177,10 +177,10 @@ class COVIDnotificationreview(COVIDcasereview):
 
     def ReviewCase(self):
         """ Conduct review of a case in the notification queue. """
+        self.SortApprovalQueue()
         self.CheckFirstCase()
         self.initial_name = self.patient_name
         if self.condition == '2019 Novel Coronavirus (2019-nCoV)':
-            self.CheckFirstCase()
             self.GoToFirstCaseInApprovalQueue()
             self.StandardChecks()
             if not self.investigator:
@@ -191,6 +191,7 @@ class COVIDnotificationreview(COVIDcasereview):
                 self.CaseInvestigatorReview()
 
             self.ReturnApprovalQueue()
+            self.SortApprovalQueue()
             self.CheckFirstCase()
             self.final_name = self.patient_name
             if self.final_name == self.initial_name:

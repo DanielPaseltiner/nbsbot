@@ -5,3 +5,4 @@ NBS.LogIn()
 NBS.GoToApprovalQueue()
 for i in range(10):
     NBS.ReviewCase()
+    print(i)

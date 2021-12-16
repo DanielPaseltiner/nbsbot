@@ -56,12 +56,11 @@ class NBSdriver(webdriver.Chrome):
     def GoToApprovalQueue(self):
         """ Navigate to approval queue from Home page. """
         self.find_element(By.PARTIAL_LINK_TEXT,'Approval Queue for Initial Notifications').click()
-        self.SortApprovalQueue()
+
 
     def ReturnApprovalQueue(self):
         """ Return to Approval Queue from an investigation initally accessed from the queue. """
         self.find_element(By.XPATH,'//*[@id="bd"]/div[1]/a').click()
-        self.SortApprovalQueue()
 
     def SortApprovalQueue(self):
         """ Sort approval queue so that case are listed chronologically by
@@ -92,7 +91,6 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
-        self.SortApprovalQueue()
         self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[8]/a').click()
         self.issues = []
 
