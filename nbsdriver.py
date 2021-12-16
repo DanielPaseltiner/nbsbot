@@ -101,7 +101,7 @@ class NBSdriver(webdriver.Chrome):
 
     def CheckForValue(self, xpath, blank_message):
         """ If value is blank add appropriate message to list of issues. """
-        value = self.find_element(By.XPATH, xpath).text
+        value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
         if not value:
             self.issues.append(blank_message)
         return value
@@ -117,8 +117,8 @@ class NBSdriver(webdriver.Chrome):
 
     def CheckIfField(self, parent_xpath, child_xpath, value, message):
         """ If parent field is value ensure that child field is not blank. """
-        parent = self.find_element(By.XPATH, parent_xpath).text
+        parent = self.find_element(By.XPATH, parent_xpath).get_attribute('innerText')
         if parent == value:
-            child = self.find_element(By.XPATH, child_xpath).text
+            child = self.find_element(By.XPATH, child_xpath).get_attribute('innerText')
             if not child:
                 self.issues.append(message)

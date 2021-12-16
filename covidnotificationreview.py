@@ -189,6 +189,10 @@ class COVIDnotificationreview(COVIDcasereview):
                     self.ApproveNotification()
                 else:
                     self.RejectNotification()
+            else:
+                print('Case at top of queue changed. No action was taken on the reviewed case.')
+        else:
+            print("No COVID-19 cases in notification queue.")
 
     def ApproveNotification(self):
         """ Approve notification on first case in notification queue. """
