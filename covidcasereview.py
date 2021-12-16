@@ -11,6 +11,7 @@ class COVIDcasereview(NBSdriver):
     def __init__(self, production=False):
         self.Reset()
         self.GetObInvNames()
+        self.not_a_case_log = []
         super(COVIDcasereview, self).__init__(production)
 
     def GetObInvNames(self):
