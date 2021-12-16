@@ -3,15 +3,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import pandas as pd
-from bs4 import BeautifulSoup
 from datetime import datetime
 
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
-        if production:
+        self.production = production
+        if self.production:
             self.site = 'https://nbs.iphis.maine.gov/'
         else:
             self.site = 'https://nbstest.state.me.us/'
@@ -56,10 +55,17 @@ class NBSdriver(webdriver.Chrome):
     def GoToApprovalQueue(self):
         """ Navigate to approval queue from Home page. """
         self.find_element(By.PARTIAL_LINK_TEXT,'Approval Queue for Initial Notifications').click()
+        self.SortApprovalQueue()
 
     def ReturnApprovalQueue(self):
         """ Return to Approval Queue from an investigation initally accessed from the queue. """
         self.find_element(By.XPATH,'//*[@id="bd"]/div[1]/a').click()
+        self.SortApprovalQueue()
+
+    def SortApprovalQueue(self):
+        """ Sort approval queue so that "2019 Novel..." is at the top. """
+        self.find_element(By.XPATH,'//*[@id="parent"]/thead/tr/th[8]/a').click()
+        self.find_element(By.XPATH,'//*[@id="parent"]/thead/tr/th[8]/a').click()
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
@@ -85,7 +91,7 @@ class NBSdriver(webdriver.Chrome):
 
     def ReadDate(self, xpath):
         """ Read date from NBS and return a datetime.date object. """
-        date = self.find_element(By.XPATH, xpath).text
+        date = self.find_element(By.XPATH, xpath).get_attribute('innerText')
         try:
             date = datetime.strptime(date, '%m/%d/%Y').date()
         except ValueError:

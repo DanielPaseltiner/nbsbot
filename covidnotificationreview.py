@@ -1,4 +1,5 @@
 from covidcasereview import COVIDcasereview
+from selenium.webdriver.common.by import By
 
 class COVIDnotificationreview(COVIDcasereview):
     """ A class to review COVID-19 cases in the notification queue.
@@ -99,9 +100,11 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckDetectionMethod()
         self.CheckConfirmationMethod()
 
+    def AOEChecks(self):
+        """ A method to read and check all AOEs."""
+
     def CaseInvestigatorReview(self):
         """ Conduct the case review required when an investigation is assigned to a case investigator. """
-        self.StandardChecks()
         self.CheckFirstAttemptDate()
         self.CheckLostToFollowUp()
         if self.ltf != 'Yes':
@@ -125,22 +128,17 @@ class COVIDnotificationreview(COVIDcasereview):
             self.CheckPreExistingConditions()
         self.CheckImmPactQuery()
         self.CheckRecievedVax()
-        self.CheckFullyVaccinated()
+        if self.vax_recieved == 'Yes':
+            self.CheckFullyVaccinated()
         self.CheckTestingPreformed()
         if self.testing_preformed == 'Yes':
             self.CheckLabTable()
         # Check AOEs
         if self.ltf == 'Yes':
-            self.ReadAoes()
-            self.CheckHospAOE()
-            self.CheckIcuAOE()
-            self.CheckHcwAOE()
-            self.CheckSympAOE()
-            self.CheckCongAOE()
+            self.AOEChecks()
 
     def OutbreakInvestigatorReview(self):
         """A method to perfrom check specific to investigations assigned to outbreak investigators. """
-        self.StandardChecks()
         self.ExposureChecks()
         # Check COVID Tab.
         self.GoToCOVID()
@@ -150,31 +148,63 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckIsolation()
         self.CheckImmPactQuery()
         self.CheckRecievedVax()
-        self.CheckFullyVaccinated()
+        if self.vax_recieved == 'Yes':
+            self.CheckFullyVaccinated()
         self.CheckTestingPreformed()
         if self.testing_preformed == 'Yes':
             self.CheckLabTable()
+        self.AOEChecks()
 
-    def TraigeReview(self):
+    def TriageReview(self):
         """A method to perfrom check specific to investigations open and closed without an investigator. """
-        self.StandardChecks()
         # Check COVID Tab.
         self.GoToCOVID()
         self.CheckSymptoms()
         self.CheckImmPactQuery()
-        self.CheckRecievedVax()
         self.CheckFullyVaccinated()
         self.CheckTestingPreformed()
         # Check AOEs
-        self.ReadAoes()
-        self.CheckHospAOE()
-        self.CheckIcuAOE()
-        self.CheckHcwAOE()
-        self.CheckSympAOE()
-        self.CheckCongAOE()
+        self.AOEChecks()
+
+    def ReviewCase(self):
+        """ Conduct review of a case in the notification queue. """
+        self.GoToFirstCaseInApprovalQueue()
+        self.StandardChecks()
+        if not self.investigator:
+            self.TriageReview()
+        elif self.investigator_name in self.outbreak_investigators:
+            self.OutbreakInvestigatorReview()
+        else:
+            self.CaseInvestigatorReview()
+
+        self.ReturnApprovalQueue()
+        if not self.issues:
+            self.ApproveNotification()
+        else:
+            self.RejectNotification()
 
     def ApproveNotification(self):
         """ Approve notification on first case in notification queue. """
+        main_window_handle = self.current_window_handle
         self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[1]/img').click()
+        for handle in self.window_handles:
+            if handle != main_window_handle:
+                approval_comment_window = handle
+                break
+        self.switch_to.window(approval_comment_window)
+        self.find_element(By.XPATH,'//*[@id="approve"]/table/tbody/tr[2]/td/input[1]').click()
+        self.switch_to.window(main_window_handle)
 
-    #def RejectNotification(self):
+    def RejectNotification(self):
+        """ Reject notification on first case in notification queue.
+        To be used when issues were encountered during review of the case."""
+        main_window_handle = self.current_window_handle
+        self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[2]/img').click()
+        for handle in self.window_handles:
+            if handle != main_window_handle:
+                rejection_comment_window = handle
+                break
+        self.switch_to.window(rejection_comment_window)
+        self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
+        self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
+        self.switch_to.window(main_window_handle)

@@ -2,6 +2,8 @@ from nbsdriver import NBSdriver
 from datetime import datetime
 import configparser
 from selenium.webdriver.common.by import By
+from bs4 import BeautifulSoup
+import pandas as pd
 
 class COVIDcasereview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
@@ -234,7 +236,7 @@ class COVIDcasereview(NBSdriver):
         if not current_collection_date:
             self.issues.append('Collection date is missing.')
         elif current_collection_date != self.collection_date:
-            self.issues.append('Collection date mismatch')
+            self.issues.append('Collection date mismatch.')
         elif current_collection_date > self.investigation_start_date:
             self.issues.append('Collection date cannot be after investigation start date.')
 
@@ -244,9 +246,9 @@ class COVIDcasereview(NBSdriver):
         associated labs. """
         self.current_status = self.find_element(By.XPATH, '//*[@id="NBS548"]').text
         if (self.current_status == 'Probable Case') & (self.status != 'P'):
-            self.issues.append('Current status mismatch')
+            self.issues.append('Current status mismatch.')
         elif (self.current_status == 'Laboratory-confirmed case') & (self.status != 'C'):
-            self.issues.append('Current status mismatch')
+            self.issues.append('Current status mismatch.')
         elif not self.current_status:
             self.issues.append('Current status is blank.')
 
@@ -343,7 +345,11 @@ class COVIDcasereview(NBSdriver):
 #################### Housing Check Methods ###################################
     def CheckCongregateSetting(self):
         """ Check if a patient lives in congregate setting."""
-        self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="95421_4"]').text
+        if self.site == 'https://nbstest.state.me.us/':
+            self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="95421_4"]').text
+        else:
+            self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="ME3130"]').text
+
         if self.investigator:
             if (self.investigator_name in self.outbreak_investigators) & (self.cong_setting_indicator not in ['Yes', 'No']):
                 self.issues.append('Congregate setting question must be answered with "Yes" or "No".')
@@ -357,11 +363,13 @@ class COVIDcasereview(NBSdriver):
 #################### First Responder Check Methods #############################
     def CheckFirstResponder(self):
         """ Check if a patient is a first responder."""
-        self.first_responder =  self.CheckForValue('//*[@id="ME59100"]','First responder question must be answered.')
+        self.first_responder =  self.find_element(By.XPATH, '//*[@id="ME59100"]').text
+        if (self.investigator_name in self.outbreak_investigators) & (not self.first_responder):
+            self.issues.append('First responder question must be answered.')
 
     def CheckFirstResponderOrg(self):
         """ Check first responder organization."""
-        first_responder_org = self.CheckForValue('//*[@id="ME59116"]','First responder organizations is blank.')
+        first_responder_org = self.CheckForValue('//*[@id="ME59116"]','First responder organization is blank.')
 
 #################### Healthcare Worker Check Methods ###########################
     def CheckHealthcareWorker(self):
@@ -401,10 +409,18 @@ class COVIDcasereview(NBSdriver):
     def GetNumListedCloseContacts(self):
         """Determine number of rows in close contact table to find the number of
         close contacts listed."""
-        html = self.find_element(By.XPATH, '//*[@id="ME60100"]/tbody/tr[1]/td/table/tbody').get_attribute('innerHTML')
-        soup = BeautifulSoup(html, 'html.parser')
-        table = pd.read_html(str(soup))[0]
-        num_listed_contacts = len(table)
+
+        if self.production:
+            xpath = '//*[@id="questionbodyUI_ME59100"]'
+        else:
+            xpath = '//*[@id="ME60100"]/tbody/tr[1]/td/table/tbody'
+        try:
+            html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
+            soup = BeautifulSoup(html, 'html.parser')
+            table = pd.read_html(str(soup))[0]
+            num_listed_contacts = len(table)
+        except ValueError:
+            num_listed_contacts = 0
         return num_listed_contacts
 
     def CheckNumCloseContacts(self):
@@ -589,7 +605,7 @@ class COVIDcasereview(NBSdriver):
                 self.issues.append('Symptom onset date is blank.')
             if symp_resolution_date:
                 self.issues.append('Symptom resolution date is not blank. If date known choose "Symptoms resolved" for symptom status.')
-        elif symptom_status == 'Unknown symptom status':
+        elif symp_status == 'Unknown symptom status':
             self.issues.append('Symptom status cannot be "Unknown symptom status".')
 
 ########################### Isolation Check Methods ############################
@@ -639,13 +655,13 @@ class COVIDcasereview(NBSdriver):
             elif dose_number == '0':
                 self.issues.append('Number of doses prior to onset cannot be zero.')
             last_dose_date = self.ReadDate('//*[@id="VAC142"]')
-            first_vax_date = datetime(2021, 12, 15).date()
+            first_vax_date = datetime(2020, 12, 15).date()
             if not last_dose_date:
                 self.issues.append('Last dose date is blank.')
             elif last_dose_date < first_vax_date:
                 self.issues.append('Last dose date is prior to when vaccinations become available.')
-            elif last_dose_date > datetime.now():
-                self.issues.appedn('Last dose date cannot be in the future.')
+            elif last_dose_date > self.now:
+                self.issues.append('Last dose date cannot be in the future.')
 
     def CheckFullyVaccinated(self):
         """ Validate fully vaccinated question"""
@@ -664,12 +680,11 @@ class COVIDcasereview(NBSdriver):
 
     def CheckLabTable(self):
         """ Ensure that labs listed in investigation support case status. """
-        try:
-            html = self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table').get_attribute('innerHTML')
-            soup = BeautifulSoup(html, 'html.parser')
-            table = pd.read_html(str(soup))
-            inv_labs = table[0]
-        except NoSuchElementException:
+        html = self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table').get_attribute('innerHTML')
+        soup = BeautifulSoup(html, 'html.parser')
+        table = pd.read_html(str(soup))
+        inv_labs = table[0]
+        if len(inv_labs) == 0:
             self.issues.append('No labs listed in investigation.')
         if len(inv_labs.loc[inv_labs['Test Result'] != 'Positive']) > 0:
             self.issues.append('All labs list in investigation must be positive.')
@@ -690,7 +705,7 @@ class COVIDcasereview(NBSdriver):
 
     def AssignLabTypes(self):
         """ Determine lab type (PCR, Ag, or Ab) for each associated lab."""
-        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'COVID19', 'COVID-19', 'PRL SCV2']
+        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2']
         ag_flags = ['AG', 'ANTIGEN', 'VERITOR']
         ab_flags = ['AB', 'IGG', 'IGM', 'IGA', 'Antibod', 'T-DETECT']
         test_types = [('pcr', pcr_flags), ('antigen', ag_flags), ('antibody', ab_flags)]
@@ -734,7 +749,8 @@ class COVIDcasereview(NBSdriver):
                     ,'hcw_aoe':'Hospitalized for condition of interest:\xa0Y'
                     ,'symp_aoe':'Has symptoms for condition:\xa0Y'
                     ,'hosp_aoe':'Hospitalized for condition of interest:\xa0Y'
-                    ,'cong_aoe':'Resides in a congregate care setting:\xa0Y'}
+                    ,'cong_aoe':'Resides in a congregate care setting:\xa0Y'
+                    ,'fr_aoe':'First Responder:\xa0Y'}
         for aoe in aoe_flags.keys():
             self.labs[aoe] = self.labs.apply(lambda row: aoe_flags[aoe] in row['Test Results'], axis=1 )
         self.icu_aoe =  any(self.labs.icu_aoe)
@@ -742,10 +758,11 @@ class COVIDcasereview(NBSdriver):
         self.symp_aoe =  any(self.labs.symp_aoe)
         self.hosp_aoe =  any(self.labs.hosp_aoe)
         self.cong_aoe =  any(self.labs.cong_aoe)
+        self.fr_aoe = any(self.labs.fr_aoe)
 
 ########################### AOE Check Methods ##################################
     def CheckHospAOE(self):
-        """ Ensrue that if AOEs show a patient as hosptialized the investigation matches."""
+        """ Ensure that if AOEs show a patient as hosptialized the investigation matches."""
         if self.hosp_aoe & (self.hospitalization_indicator != 'Yes'):
             self.issues.append('AOEs indicate that the case is hospitalized, but the investigation does not.')
 
@@ -756,17 +773,23 @@ class COVIDcasereview(NBSdriver):
                 self.issues.append('AOEs indicate that the case is in the ICU, but the investigation does not.')
 
     def CheckHcwAOE(self):
-        """ Ensrue that if AOEs show a patient is a healthcare worker the investigation matches."""
-        if self.hcw_aoe & (self.healthcare_worker  != 'Yes'):
+        """ Ensure that if AOEs show a patient is a healthcare worker the investigation matches."""
+        if self.hcw_aoe & (self.healthcare_worker != 'Yes'):
             self.issues.append('AOEs indicate that the case is a healthcare worker, but the investigation does not.')
 
     def CheckSympAOE(self):
-        """ Ensrue that if AOEs show a patient is symptomatic the investigation matches."""
-        if self.symp_aoe & (self.symptoms  != 'Yes'):
+        """ Ensure that if AOEs show a patient is symptomatic the investigation matches."""
+        if self.symp_aoe & (self.symptoms != 'Yes'):
             self.issues.append('AOEs indicate that the case is symptomatic, but the investigation does not.')
 
     def CheckCongAOE(self):
-        """ Ensrue that if AOEs show a patient lives in a congregate setting the
+        """ Ensure that if AOEs show a patient lives in a congregate setting the
         investigation matches."""
-        if self.symp_aoe & (self.cong_setting_indicator   != 'Yes'):
+        if self.symp_aoe & (self.cong_setting_indicator != 'Yes'):
+            self.issues.append('AOEs indicate that the case lives in a congregate setting, but the investigation does not.')
+
+    def CheckFirstResponderAOE(self):
+        """ Ensure that if AOEs show a patient is a first responder that the
+        investigation matches."""
+        if self.fr_aoe & (self.first_responder != 'Yes'):
             self.issues.append('AOEs indicate that the case lives in a congregate setting, but the investigation does not.')
