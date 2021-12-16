@@ -71,13 +71,19 @@ class NBSdriver(webdriver.Chrome):
         submit_date_path = '//*[@id="parent"]/thead/tr/th[3]/a'
         condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
         # Clear all filters
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
         self.find_element(By.XPATH, clear_filter_path).click()
         # Double click submit date for chronological order.
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
         self.find_element(By.XPATH, submit_date_path).click()
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
         self.find_element(By.XPATH, submit_date_path).click()
         # Double clikc condition for alpha order.
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
         self.find_element(By.XPATH,condition_path).click()
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
         self.find_element(By.XPATH,condition_path).click()
+        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
 
     def CheckFirstCase(self):
         """ Ensure that first case is COVID and save case's name for later use."""

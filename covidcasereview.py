@@ -754,7 +754,7 @@ class COVIDcasereview(NBSdriver):
                     ,'hosp_aoe':'Hospitalized for condition of interest:\xa0Y'
                     ,'cong_aoe':'Resides in a congregate care setting:\xa0Y'
                     ,'fr_aoe':'First Responder:\xa0Y'
-                    ,'preg_aoe': 'Pregnancy Status:\xa0N'}
+                    ,'preg_aoe': 'Pregnancy Status:\xa0Y'}
         for aoe in aoe_flags.keys():
             self.labs[aoe] = self.labs.apply(lambda row: aoe_flags[aoe] in row['Test Results'], axis=1 )
         self.icu_aoe =  any(self.labs.icu_aoe)

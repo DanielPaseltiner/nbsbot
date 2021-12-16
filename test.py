@@ -3,4 +3,5 @@ NBS = COVIDnotificationreview(production=True)
 NBS.GetCredentials()
 NBS.LogIn()
 NBS.GoToApprovalQueue()
-NBS.ReviewCase()
+for i in range(10):
+    NBS.ReviewCase()

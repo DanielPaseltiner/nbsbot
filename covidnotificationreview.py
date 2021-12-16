@@ -7,6 +7,9 @@ class COVIDnotificationreview(COVIDcasereview):
 
     def __init__(self, production=False):
         super(COVIDnotificationreview, self).__init__(production)
+        self.num_approved = 0
+        self.num_rejected = 0
+        self.num_fail = 0
 
     def StandardChecks(self):
         """ A method to conduct checks that must be done on all cases regardless of investigator. """
@@ -103,6 +106,7 @@ class COVIDnotificationreview(COVIDcasereview):
 
     def AOEChecks(self):
         """ A method to read and check all AOEs."""
+        self.ReadAoes()
         self.CheckHospAOE()
         self.CheckIcuAOE()
         self.CheckHcwAOE()
@@ -117,14 +121,6 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckLostToFollowUp()
         if self.ltf != 'Yes':
             self.CheckNumCloseContacts()
-            self.CheckExposureSection()
-            self.CheckDomesticTravel()
-            self.CheckShipTravel()
-            self.CheckSchoolExposure()
-            self.CheckOutbreakExposure()
-            self.CheckTransmissionMode()
-            self.CheckDetectionMethod()
-            self.CheckConfirmationMethod()
             self.ExposureChecks()
         # Check COVID Tab.
         self.GoToCOVID()
@@ -145,6 +141,7 @@ class COVIDnotificationreview(COVIDcasereview):
         if self.ltf == 'Yes':
             self.AOEChecks()
         else:
+            self.ReadAoes()
             self.CheckPregnancyAOE()
 
     def OutbreakInvestigatorReview(self):
@@ -197,10 +194,13 @@ class COVIDnotificationreview(COVIDcasereview):
             if self.final_name == self.initial_name:
                 if not self.issues:
                     self.ApproveNotification()
+                    self.num_approved += 1
                 else:
                     self.RejectNotification()
+                    self.num_rejected += 1
             else:
                 print('Case at top of queue changed. No action was taken on the reviewed case.')
+                self.num_fail += 1
         else:
             print("No COVID-19 cases in notification queue.")
 
@@ -226,6 +226,7 @@ class COVIDnotificationreview(COVIDcasereview):
                 rejection_comment_window = handle
                 break
         self.switch_to.window(rejection_comment_window)
+        self.issues.append('-nbsbot')
         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
         self.switch_to.window(main_window_handle)
