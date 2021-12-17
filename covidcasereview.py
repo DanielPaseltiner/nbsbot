@@ -32,6 +32,7 @@ class COVIDcasereview(NBSdriver):
         self.current_report_date = None
         self.current_status = None
         self.death_inidicator = None
+        self.dob = None
         self.first_responder = None
         self.hcw_aoe = None
         self.healthcare_worker = None
@@ -62,10 +63,10 @@ class COVIDcasereview(NBSdriver):
 ###################### Other Personal Details Check Methods ####################
     def CheckDOB(self):
         """ Must provide DOB. """
-        dob = self.ReadDate('//*[@id="DEM115"]')
-        if not dob:
+        self.dob = self.ReadDate('//*[@id="DEM115"]')
+        if not self.dob:
             self.issues.append('DOB is blank.')
-        elif dob > self.now:
+        elif self.dob > self.now:
             self.issues.append('DOB cannot be in the future.')
 
     def CheckCurrentSex(self):
@@ -228,7 +229,7 @@ class COVIDcasereview(NBSdriver):
         """ Ensure that preforming laboratory is not empty. """
         reporting_organization = self.find_element(By.XPATH,'//*[@id="ME6105"]').get_attribute('innerText')
         if not reporting_organization:
-            self.issues.append('Preforming laboratory is blank.')
+            self.issues.append('Performing laboratory is blank.')
 
     def CheckCollectionDate(self):
         """ Check if collection date is present and matches earliest date from
@@ -641,9 +642,10 @@ class COVIDcasereview(NBSdriver):
 
 ########### Vaccination Interperative Information Check Methods ################
     def CheckImmPactQuery(self):
-        """ Ensure ImmPact was queried. """
+        """ Ensure ImmPact was queried when age eligible. """
         self.immpact = self.find_element(By.XPATH, '//*[@id="ME71100"]').get_attribute('innerText')
-        if self.immpact != 'Yes':
+        age = (self.collection_date - self.dob).years
+        if (self.immpact != 'Yes') & (age >= 5):
             self.issues.append('ImmPact has not been queried.')
 
     def CheckRecievedVax(self):
@@ -651,7 +653,7 @@ class COVIDcasereview(NBSdriver):
         self.vax_recieved = self.find_element(By.XPATH, '//*[@id="VAC126"]').get_attribute('innerText')
         if (self.vax_recieved == 'No') & (self.ltf != 'No'):
             self.issues.append('Unless lost to follow up is "No" vaccine recieved cannot be "No".')
-        elif (self.ltf != 'No') & (not self.vax_recieved):
+        elif (self.ltf == 'No') & (not self.vax_recieved):
             self.issues.append('If the case is not lost to follow up then vaccine recieved must be answered.')
         elif self.vax_recieved == 'Yes':
             dose_number = self.find_element(By.XPATH, '//*[@id="VAC140"]').get_attribute('innerText')
@@ -696,7 +698,7 @@ class COVIDcasereview(NBSdriver):
         status_lab_pairs = {'C':'PCR', 'P':'Ag', 'S':'Ab'}
         if self.status in status_lab_pairs.keys():
             if len(inv_labs.loc[inv_labs['Test Type'].str.contains(status_lab_pairs[self.status])]) == 0:
-                self.issues.append('Lab(s) list in investigation do not support correct case status.')
+                self.issues.append('Lab(s) listed in investigation do not support correct case status.')
 
 ########################### Parse and process labs ############################
     def ReadAssociatedLabs(self):

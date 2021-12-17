@@ -1,5 +1,6 @@
 from covidcasereview import COVIDcasereview
 from selenium.webdriver.common.by import By
+from datetime import datetime
 
 class COVIDnotificationreview(COVIDcasereview):
     """ A class to review COVID-19 cases in the notification queue.
@@ -35,6 +36,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.GetReportDate()
 
         # # Check Case Info Tab
+        self.CheckLostToFollowUp()
         self.GoToCaseInfo()
         self.CheckJurisdiction()
         self.CheckProgramArea()
@@ -76,8 +78,6 @@ class COVIDnotificationreview(COVIDcasereview):
         if self.first_responder == 'Yes':
             self.CheckFirstResponderOrg()
 
-        self.CheckLostToFollowUp()
-
         self.CheckHealthcareWorker()
         if self.healthcare_worker == 'Yes':
             self.CheckHealtcareWorkerFacility()
@@ -103,8 +103,6 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckOutbreakExposure()
         self.CheckTransmissionMode()
         self.CheckDetectionMethod()
-        self.CheckConfirmationMethod()
-
 
     def AOEChecks(self):
         """ A method to read and check all AOEs."""
@@ -229,7 +227,8 @@ class COVIDnotificationreview(COVIDcasereview):
                 rejection_comment_window = handle
                 break
         self.switch_to.window(rejection_comment_window)
-        self.issues.append('-nbsbot')
+        timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        self.issues.append('-nbsbot ' + timestamp)
         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
         self.switch_to.window(main_window_handle)

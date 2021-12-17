@@ -1,8 +1,11 @@
 from covidnotificationreview import COVIDnotificationreview
+from tqdm import tqdm
 NBS = COVIDnotificationreview(production=True)
 NBS.GetCredentials()
 NBS.LogIn()
 NBS.GoToApprovalQueue()
-for i in range(10):
+
+num_cases = 100
+for i in tqdm(range(num_cases)):
     NBS.ReviewCase()
-    print(i)
+print(f'notfications approved: {NBS.num_approved}\nnotifications rejected: {NBS.num_rejected}')
