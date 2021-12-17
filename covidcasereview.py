@@ -31,20 +31,22 @@ class COVIDcasereview(NBSdriver):
         self.county = None
         self.current_report_date = None
         self.current_status = None
-        self.death_inidicator = None
+        self.death_indicator = None
         self.dob = None
         self.first_responder = None
+        self.fr_aoe = None
         self.hcw_aoe = None
         self.healthcare_worker = None
         self.hosp_aoe = None
         self.hospitalization_indicator = None
         self.icu_aoe = None
+        self.icu_indicator = None
         self.immpact = None
-        self.implicitly_wait = None
         self.investigation_start_date = None
         self.investigator = None
         self.labs = None
         self.ltf = None
+        self.preg_aoe = None
         self.report_date = None
         self.status = None
         self.symp_aoe = None
@@ -336,7 +338,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckDieFromIllness(self):
         """ Died from illness should be yes or no. """
-        self.death_inidicator =  self.CheckForValue('//*[@id="INV145"]','Died from illness must be yes or no.')
+        self.death_indicator =  self.CheckForValue('//*[@id="INV145"]','Died from illness must be yes or no.')
 
     def CheckDeathDate(self):
         """ Death date must be present."""
@@ -556,6 +558,7 @@ class COVIDcasereview(NBSdriver):
     def CheckLostToFollowUp(self):
         """ Check if case is lost to follow up. """
         self.ltf = self.find_element(By.XPATH, '//*[@id="ME64100"]').get_attribute('innerText')
+        self.ltf = self.ltf.replace('\n', '')
         if self.ltf == 'Unknown':
             self.issues.append('Lost to follow up inidicator cannot be unknown.')
         elif (not self.ltf) & self.investigator:
@@ -620,7 +623,7 @@ class COVIDcasereview(NBSdriver):
         indicator are all consistent."""
         isolation_release = self.find_element(By.XPATH, '//*[@id="NBS555"]').get_attribute('innerText')
         isolation_release_date = self.ReadDate('//*[@id="INV138"]')
-        if (self.death_inidicator == 'Yes') & (isolation_release != 'No'):
+        if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
             self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
         if isolation_release == 'Yes':
             if not isolation_release_date:
@@ -644,9 +647,16 @@ class COVIDcasereview(NBSdriver):
     def CheckImmPactQuery(self):
         """ Ensure ImmPact was queried when age eligible. """
         self.immpact = self.find_element(By.XPATH, '//*[@id="ME71100"]').get_attribute('innerText')
-        age = (self.collection_date - self.dob).years
-        if (self.immpact != 'Yes') & (age >= 5):
-            self.issues.append('ImmPact has not been queried.')
+        try:
+            age = int((self.collection_date - self.dob).days//365.25)
+            if (self.immpact != 'Yes') & (age >= 5):
+                self.issues.append('ImmPact has not been queried.')
+        except TypeError:
+            self.issues.append('Unable to compute age because of bad/missing collection date or DOB -> ImmPact check applied regardless of age.')
+            if self.immpact != 'Yes':
+                self.issues.append('ImmPact has not been queried.')
+
+
 
     def CheckRecievedVax(self):
         """ Ever recieved vaccine should only be no when case not LTFU. """

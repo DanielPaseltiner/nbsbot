@@ -36,7 +36,6 @@ class COVIDnotificationreview(COVIDcasereview):
         self.GetReportDate()
 
         # # Check Case Info Tab
-        self.CheckLostToFollowUp()
         self.GoToCaseInfo()
         self.CheckJurisdiction()
         self.CheckProgramArea()
@@ -45,6 +44,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckSharedIndicator()
         self.CheckStateCaseID()
         self.CheckInvestigator()
+        self.CheckLostToFollowUp()
         self.CheckReportDate()
         self.CheckInvestigatorAssignDate()
         self.CheckCountyStateReportDate()
@@ -67,7 +67,7 @@ class COVIDnotificationreview(COVIDcasereview):
             self.CheckIcuDischargeDate()
 
         self.CheckDieFromIllness()
-        if self.death_inidicator == 'Yes':
+        if self.death_indicator == 'Yes':
             self.CheckDeathDate()
 
         self.CheckCongregateSetting()
