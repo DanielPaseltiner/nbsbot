@@ -141,7 +141,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckInvestigationStatus(self):
         """ Only accept closed investigations for review. """
-        inv_status = self.find_element(By.XPATH,'//*[@id="INV109"]').get_attribute('innerText')
+        inv_status = self.ReadText('//*[@id="INV109"]')
         if not inv_status:
             self.issues.append('Investigation status is blank.')
         elif inv_status == 'Open':
@@ -149,20 +149,20 @@ class COVIDcasereview(NBSdriver):
 
     def CheckSharedIndicator(self):
         """ Ensure shared indicator is yes. """
-        shared_indicator = self.find_element(By.XPATH,'//*[@id="NBS_UI_19"]/tbody/tr[5]/td[2]').get_attribute('innerText')
+        shared_indicator = self.ReadText('//*[@id="NBS_UI_19"]/tbody/tr[5]/td[2]')
         if shared_indicator != 'Yes':
             self.issues.append('Shared indicator not selected.')
 
     def CheckStateCaseID(self):
         """ State Case ID must be provided. """
-        case_id = self.find_element(By.XPATH, '//*[@id="INV173"]').get_attribute('innerText')
+        case_id = self.ReadText('//*[@id="INV173"]')
         if not case_id:
             self.issues.append('State Case ID is blank.')
 
 ####################### Investigator Check Methods ############################
     def CheckInvestigator(self):
         """ Check if an investigator was assigned to the case. """
-        investigator = self.find_element(By.XPATH, '//*[@id="INV180"]').get_attribute('innerText')
+        investigator = self.ReadText('//*[@id="INV180"]')
         self.investigator_name = investigator
         if investigator:
             self.investigator = True
@@ -173,7 +173,7 @@ class COVIDcasereview(NBSdriver):
         """ If an investigator was assinged then there should be an investigator
         assigned date. """
         if self.investigator:
-            assigned_date = self.find_element(By.XPATH, '//*[@id="INV110"]').get_attribute('innerText')
+            assigned_date = self.ReadText('//*[@id="INV110"]')
             if not assigned_date:
                 self.issues.append('Missing investigator assigned date.')
 
@@ -217,19 +217,19 @@ class COVIDcasereview(NBSdriver):
 ################### Reporting Organization Check Methods #######################
     def CheckReportingSourceType(self):
         """ Ensure that reporting source type is not empty. """
-        reporting_source_type = self.find_element(By.XPATH,'//*[@id="INV112"]').get_attribute('innerText')
+        reporting_source_type = self.ReadText('//*[@id="INV112"]')
         if not reporting_source_type:
             self.issues.append('Reporting source type is blank.')
 
     def CheckReportingOrganization(self):
         """ Ensure that reporting organization is not empty. """
-        reporting_organization = self.find_element(By.XPATH,'//*[@id="INV183"]').get_attribute('innerText')
+        reporting_organization = self.ReadText('//*[@id="INV183"]')
         if not reporting_organization:
             self.issues.append('Reporting organization is blank.')
 ############### Preforming Lab Check Methods ##################################
     def CheckPreformingLaboratory(self):
         """ Ensure that preforming laboratory is not empty. """
-        reporting_organization = self.find_element(By.XPATH,'//*[@id="ME6105"]').get_attribute('innerText')
+        reporting_organization = self.ReadText('//*[@id="ME6105"]')
         if not reporting_organization:
             self.issues.append('Performing laboratory is blank.')
 
@@ -248,7 +248,7 @@ class COVIDcasereview(NBSdriver):
     def CheckCurrentStatus(self):
         """ Check if current status in the investigation is consistent with the
         associated labs. """
-        self.current_status = self.find_element(By.XPATH, '//*[@id="NBS548"]').get_attribute('innerText')
+        self.current_status = self.ReadText('//*[@id="NBS548"]')
         if (self.current_status == 'Probable Case') & (self.status != 'P'):
             self.issues.append('Current status mismatch.')
         elif (self.current_status == 'Laboratory-confirmed case') & (self.status != 'C'):
@@ -259,7 +259,8 @@ class COVIDcasereview(NBSdriver):
     def CheckProbableReason(self):
         """ Check if probable reason is consistent with current status and case
         status. """
-        probable_reason = self.find_element(By.XPATH, '//*[@id="NBS678"]').get_attribute('innerText')
+        probable_reason = self.ReadText('//*[@id="NBS678"]')
+        probable_reason = probable_reason.replace('\n','')
         if (probable_reason == 'Meets Presump Lab and Clinical or Epi') & ((self.status != 'P') | (self.current_status != 'Probable Case')):
             self.issues.append('Status inconsistency.')
         elif probable_reason in ['Meets Clinical/Epi, No Lab Conf', 'Meets Vital Records, No Lab Confirm']:
@@ -282,14 +283,14 @@ class COVIDcasereview(NBSdriver):
 #################### Hospital Check Methods ###################################
     def CheckHospitalizationIndicator(self):
         """ Read hospitalization status. If an investigation was conducted it must be Yes or No """
-        self.hospitalization_indicator = self.find_element(By.XPATH, '//*[@id="INV128"]').get_attribute('innerText')
+        self.hospitalization_indicator = self.ReadText('//*[@id="INV128"]')
         if (self.ltf != 'Yes') & (self.investigator):
             if self.hospitalization_indicator not in ['Yes', 'No']:
                 self.issues.append("Patient hospitalized must be 'Yes' or 'No'.")
 
     def CheckHospitalName(self):
         """" If the case is hospitalized then a hospital name must be provided. """
-        hospital_name = self.find_element(By.XPATH, '//*[@id="INV184"]').get_attribute('innerText')
+        hospital_name = self.ReadText('//*[@id="INV184"]')
         if not hospital_name:
             self.issues.append('Hospital name missing.')
 
@@ -313,7 +314,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckIcuIndicator(self):
         """ If case is hospitalized then we should know if they were ever in the ICU."""
-        self.icu_indicator = self.find_element(By.XPATH, '//*[@id="309904001"]').get_attribute('innerText')
+        self.icu_indicator = self.ReadText('//*[@id="309904001"]')
         if (self.ltf != 'Yes') & (self.hospitalization_indicator == 'Yes') & (self.investigator):
             if not self.icu_indicator:
                 self.issues.append('ICU indicator is blank.')
@@ -350,10 +351,10 @@ class COVIDcasereview(NBSdriver):
     def CheckCongregateSetting(self):
         """ Check if a patient lives in congregate setting."""
         if self.site == 'https://nbstest.state.me.us/':
-            self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="95421_4"]').get_attribute('innerText')
+            xpath = '//*[@id="95421_4"]'
         else:
-            self.cong_setting_indicator = self.find_element(By.XPATH, '//*[@id="ME3130"]').get_attribute('innerText')
-
+            xpath = '//*[@id="ME3130"]'
+        self.cong_setting_indicator = self.ReadText(xpath)
         if self.investigator:
             if (self.investigator_name in self.outbreak_investigators) & (self.cong_setting_indicator not in ['Yes', 'No']):
                 self.issues.append('Congregate setting question must be answered with "Yes" or "No".')
@@ -367,7 +368,7 @@ class COVIDcasereview(NBSdriver):
 #################### First Responder Check Methods #############################
     def CheckFirstResponder(self):
         """ Check if a patient is a first responder."""
-        self.first_responder =  self.find_element(By.XPATH, '//*[@id="ME59100"]').get_attribute('innerText')
+        self.first_responder =  self.ReadText()'//*[@id="ME59100"]')
         if (self.investigator_name in self.outbreak_investigators) & (not self.first_responder):
             self.issues.append('First responder question must be answered.')
 
@@ -378,7 +379,7 @@ class COVIDcasereview(NBSdriver):
 #################### Healthcare Worker Check Methods ###########################
     def CheckHealthcareWorker(self):
         """ Check if patient is a healthcare worker."""
-        self.healthcare_worker = self.find_element(By.XPATH, '//*[@id="ME59100"]').get_attribute('innerText')
+        self.healthcare_worker = self.ReadText('//*[@id="ME59100"]')
         if self.investigator:
             if (self.investigator_name in self.outbreak_investigators) & (self.healthcare_worker not in ['Yes', 'No']):
                 self.issues.append('Healthcare worker questions must be answered with "Yes" or "No".')
@@ -395,7 +396,7 @@ class COVIDcasereview(NBSdriver):
         if self.ltf != 'Yes':
             self.healthcare_worker_job =  self.CheckForValue(xpath,'Healthcare worker occupation is blank.')
         else:
-            self.healthcare_worker_job = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+            self.healthcare_worker_job = self.ReadText(xpath)
 
     def CheckHealthcareWorkerJobOther(self):
         """ If the patient is a healthcare worker and occupation is other then name must be provided."""
@@ -430,7 +431,7 @@ class COVIDcasereview(NBSdriver):
     def CheckNumCloseContacts(self):
         """ Ensure that the number of close contacts listed is consistent with
         the number of entries in the Sara Alert repeating block."""
-        num_contacts = self.find_element(By.XPATH, '//*[@id="ME59105"]').get_attribute('innerText')
+        num_contacts = self.ReadText('//*[@id="ME59105"]')
         table_contacts = self.GetNumListedCloseContacts()
         if (not num_contacts) & (table_contacts > 0):
             self.issues.append(f'Number of close contacts is blanks, but {table_contacts} are listed in repeating block.')
@@ -445,7 +446,7 @@ class COVIDcasereview(NBSdriver):
         html = self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21014"]/tbody').get_attribute('innerHTML')
         soup = BeautifulSoup(html, 'html.parser')
         num_exposures = str(soup).count('Yes')
-        unknown_exposure = self.find_element(By.XPATH, '//*[@id="NBS667"]').get_attribute('innerText')
+        unknown_exposure = self.ReadText('//*[@id="NBS667"]')
         if num_exposures == 0:
             self.issues.append('Exposure section is not complete.')
         elif (unknown_exposure == 'Yes') & (num_exposures > 1):
@@ -469,19 +470,19 @@ class COVIDcasereview(NBSdriver):
         """ If school/daycare exposure is indicated ensure that facility name is
         provided."""
         if self.site == 'https://nbs.iphis.maine.gov/':
-            school_exposure = self.find_element(By.XPATH, '//*[@id="NBS688"]').get_attribute('innerText')
+            school_exposure = self.ReadText('//*[@id="NBS688"]')
             if school_exposure == 'Yes':
-                school_name = self.find_element(By.XPATH, '//*[@id="ME62100"]').get_attribute('innerText')
-                university_name = self.find_element(By.XPATH, '//*[@id="ME62101"]').get_attribute('innerText')
-                daycare_name = self.find_element(By.XPATH, '//*[@id="ME10106"]').get_attribute('innerText')
+                school_name = self.ReadText('//*[@id="ME62100"]')
+                university_name = self.ReadText('//*[@id="ME62101"]')
+                daycare_name = self.ReadText('//*[@id="ME10106"]')
                 if (not school_name) & (not university_name) & (not daycare_name):
                     self.issues.append("If school/daycare/university exposure is indicated then school/daycare/university name must be specified.")
                 if school_name == 'Other':
-                    other_school_name = self.find_element(By.XPATH, '//*[@id="ME62100Oth"]').get_attribute('innerText')
+                    other_school_name = self.ReadText('//*[@id="ME62100Oth"]')
                     if not other_school_name:
                         self.issues.append('Other school name is blank.')
                 if university_name == 'Other':
-                    other_univeristy_name = self.find_element(By.XPATH, '//*[@id="ME62101Oth"]').get_attribute('innerText')
+                    other_univeristy_name = self.ReadText('//*[@id="ME62101Oth"]')
                     if not other_university_name:
                         self.issues.append('Other university name is blank.')
 
@@ -494,7 +495,7 @@ class COVIDcasereview(NBSdriver):
         message = "Outbreak name must be provided if outbreak exposure is indicated."
 
         if self.investigator_name in self.outbreak_investigators:
-            ob_exposure = self.find_element(By.XPATH, outbreak_exposure_path ).get_attribute('innerText')
+            ob_exposure = self.ReadText(outbreak_exposure_path)
             if ob_exposure != 'Yes':
                 self.issues.append('Outbreak exposure must be "Yes" and outbreak name must be specified.')
             else:
@@ -505,13 +506,13 @@ class COVIDcasereview(NBSdriver):
 ######################### Case Status Check Methods ############################
     def CheckTransmissionMode(self):
         """ Transmission mode should blank or airborne"""
-        transmission_method =  self.find_element(By.XPATH, '//*[@id="INV157"]').get_attribute('innerText')
+        transmission_method =  self.ReadText('//*[@id="INV157"]')
         if transmission_method not in ['', 'Airborne']:
             self.issues.append('Transmission mode should be blank or airborne.')
 
     def CheckConfirmationMethod(self):
         """ Confirmation Method must be blank or consistent with correct case status."""
-        confirmation_method =  self.find_element(By.XPATH, '//*[@id="INV161"]').get_attribute('innerText')
+        confirmation_method =  self.ReadText('//*[@id="INV161"]')
         if confirmation_method:
             if (self.status == 'C') & ('Laboratory confirmed' not in confirmation_method):
                 self.issues.append('Since correct case status is confirmed confirmation method should include "Laboratory confirmed".')
@@ -536,11 +537,11 @@ class COVIDcasereview(NBSdriver):
 
     def CheckCaseStatus(self):
         """ Case status must be consistent with associated labs. """
-        current_case_status = self.find_element(By.XPATH, '//*[@id="INV163"]').get_attribute('innerText')
+        current_case_status = self.ReadText('//*[@id="INV163"]')
         status_pairs = {'Confirmed':'C', 'Probable':'P', 'Suspect':'S', 'Not a Case':'N'}
         if current_case_status == 'Not a Case':
             self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
-            patient_id = self.find_element(By.XPATH, '//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]').get_attribute('innerText')
+            patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
             self.not_a_case_log.append(patient_id)
         elif not current_case_status:
             self.issues.append('Case satus is blank.')
@@ -557,7 +558,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckLostToFollowUp(self):
         """ Check if case is lost to follow up. """
-        self.ltf = self.find_element(By.XPATH, '//*[@id="ME64100"]').get_attribute('innerText')
+        self.ltf = self.ReadText('//*[@id="ME64100"]')
         self.ltf = self.ltf.replace('\n', '')
         if self.ltf == 'Unknown':
             self.issues.append('Lost to follow up inidicator cannot be unknown.')
@@ -577,7 +578,7 @@ class COVIDcasereview(NBSdriver):
 ######################### Symptom Check Methods ################################
     def CheckSymptoms(self):
         """" Check symptom status of case. """
-        self.symptoms = self.find_element(By.XPATH, '//*[@id="INV576"]').get_attribute('innerText')
+        self.symptoms = self.ReadText('//*[@id="INV576"]')
         if (self.ltf != 'Yes') & (self.investigator):
             if not self.symptoms:
                 self.issues.append("Symptom status is blank.")
@@ -587,7 +588,7 @@ class COVIDcasereview(NBSdriver):
         are consistent."""
         symp_onset_date = self.ReadDate('//*[@id="INV137"]')
         symp_resolution_date = self.ReadDate('//*[@id="INV138"]')
-        symp_status = self.find_element(By.XPATH, '//*[@id="NBS555"]').get_attribute('innerText')
+        symp_status = self.ReadText('//*[@id="NBS555"]')
 
         if not symp_status:
             self.issues.append('Symptom status is blank')
@@ -621,7 +622,7 @@ class COVIDcasereview(NBSdriver):
     def CheckIsolation(self):
         """ Ensure isolation release indicator, release date, and died from illness
         indicator are all consistent."""
-        isolation_release = self.find_element(By.XPATH, '//*[@id="NBS555"]').get_attribute('innerText')
+        isolation_release = self.ReadText('//*[@id="NBS555"]')
         isolation_release_date = self.ReadDate('//*[@id="INV138"]')
         if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
             self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
@@ -634,8 +635,8 @@ class COVIDcasereview(NBSdriver):
 ############### Pre-existing Medical Conditions Check Methods ##################
     def CheckPreExistingConditions(self):
         """ Ensure pre-exisiting condtions indicator is consistent with medical history."""
-        pre_existing_conditions = self.find_element(By.XPATH, '//*[@id="102478008"]').get_attribute('innerText')
-        medical_hx = 'Yes' in self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21008"]/tbody').get_attribute('innerText')
+        pre_existing_conditions = self.ReadText('//*[@id="102478008"]')
+        medical_hx = 'Yes' in self.ReadText('//*[@id="NBS_UI_GA21008"]/tbody')
         if not pre_existing_conditions:
             self.issues.append('Pre-existing medical conditions is not answered.')
         elif (pre_existing_conditions == 'Yes') & (not medical_hx):
@@ -646,7 +647,7 @@ class COVIDcasereview(NBSdriver):
 ########### Vaccination Interperative Information Check Methods ################
     def CheckImmPactQuery(self):
         """ Ensure ImmPact was queried when age eligible. """
-        self.immpact = self.find_element(By.XPATH, '//*[@id="ME71100"]').get_attribute('innerText')
+        self.immpact = self.Read('//*[@id="ME71100"]')
         try:
             age = int((self.collection_date - self.dob).days//365.25)
             if (self.immpact != 'Yes') & (age >= 5):
@@ -660,13 +661,13 @@ class COVIDcasereview(NBSdriver):
 
     def CheckRecievedVax(self):
         """ Ever recieved vaccine should only be no when case not LTFU. """
-        self.vax_recieved = self.find_element(By.XPATH, '//*[@id="VAC126"]').get_attribute('innerText')
+        self.vax_recieved = self.ReadText('//*[@id="VAC126"]')
         if (self.vax_recieved == 'No') & (self.ltf != 'No'):
             self.issues.append('Unless lost to follow up is "No" vaccine recieved cannot be "No".')
         elif (self.ltf == 'No') & (not self.vax_recieved):
             self.issues.append('If the case is not lost to follow up then vaccine recieved must be answered.')
         elif self.vax_recieved == 'Yes':
-            dose_number = self.find_element(By.XPATH, '//*[@id="VAC140"]').get_attribute('innerText')
+            dose_number = self.ReadText('//*[@id="VAC140"]')
             if not dose_number:
                 self.issues.append('Doses prior to onset cannot be blank if Vacinated is "Yes".')
             elif dose_number == '0':
@@ -682,7 +683,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckFullyVaccinated(self):
         """ Validate fully vaccinated question"""
-        fully_vaccinated = self.find_element(By.XPATH, '//*[@id="ME70100"]').get_attribute('innerText')
+        fully_vaccinated = self.ReadText('//*[@id="ME70100"]')
         if (fully_vaccinated not in ['Yes', 'No']) & (self.ltf == 'No'):
             self.issues.append("Fully vaccinated cannot be blank or unknown when case is not lost to followup.")
         if (fully_vaccinated == 'Yes') & (self.vax_recieved == 'No'):
@@ -691,7 +692,7 @@ class COVIDcasereview(NBSdriver):
 ########################## COVID Testing Check Methods #########################
     def CheckTestingPreformed(self):
         """Ensure testing preformed is Yes or No."""
-        self.testing_preformed = self.find_element(By.XPATH, '//*[@id="INV740"]').get_attribute('innerText')
+        self.testing_preformed = self.ReadText('//*[@id="INV740"]')
         if self.testing_preformed not in ['Yes', 'No']:
             self.issues.append("Laboratory testing preformed connot be blank or unknown.")
 
@@ -816,6 +817,6 @@ class COVIDcasereview(NBSdriver):
     def CheckPregnancyAOE(self):
         """ Ensure that if AOEs show a patient is pregnany that the
         investigation matches."""
-        pregnant_status = self.find_element(By.XPATH, '//*[@id="INV178"]').get_attribute('innerText')
+        pregnant_status = self.ReadText('//*[@id="INV178"]')
         if self.preg_aoe & (pregnant_status != 'Yes'):
             self.issues.append('AOEs indicate that the case is pregnant, but the investigation does not.')

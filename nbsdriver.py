@@ -107,6 +107,7 @@ class NBSdriver(webdriver.Chrome):
     def CheckForValue(self, xpath, blank_message):
         """ If value is blank add appropriate message to list of issues. """
         value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+        value = value.replace('\n','')
         if not value:
             self.issues.append(blank_message)
         return value
@@ -123,7 +124,17 @@ class NBSdriver(webdriver.Chrome):
     def CheckIfField(self, parent_xpath, child_xpath, value, message):
         """ If parent field is value ensure that child field is not blank. """
         parent = self.find_element(By.XPATH, parent_xpath).get_attribute('innerText')
+        parent = parent.replace('\n','')
         if parent == value:
             child = self.find_element(By.XPATH, child_xpath).get_attribute('innerText')
+            child = child.replace('\n','')
             if not child:
                 self.issues.append(message)
+
+    def ReadText(self, xpath):
+        """ A method to read the text of any web element identified by an Xpath
+        and remove leading an trailing carriage returns sometimes included by
+        Selenium's get_attribute('innerText')."""
+        value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+        value = value.replace('\n','')
+        return value
