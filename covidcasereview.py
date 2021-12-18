@@ -423,9 +423,7 @@ class COVIDcasereview(NBSdriver):
         else:
             xpath = '//*[@id="ME60100"]/tbody/tr[1]/td/table/tbody'
         try:
-            html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
-            soup = BeautifulSoup(html, 'html.parser')
-            table = pd.read_html(str(soup))[0]
+            table = self.ReadTableToDF(xpath)
             num_listed_contacts = len(table)
         except ValueError:
             num_listed_contacts = 0
@@ -702,10 +700,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckLabTable(self):
         """ Ensure that labs listed in investigation support case status. """
-        html = self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table').get_attribute('innerHTML')
-        soup = BeautifulSoup(html, 'html.parser')
-        table = pd.read_html(str(soup))
-        inv_labs = table[0]
+        inv_labs = self.ReadTableToDF(self, '//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table')
         if len(inv_labs) == 0:
             self.issues.append('No labs listed in investigation.')
         if len(inv_labs.loc[inv_labs['Test Result'] != 'Positive']) > 0:
@@ -718,9 +713,7 @@ class COVIDcasereview(NBSdriver):
 ########################### Parse and process labs ############################
     def ReadAssociatedLabs(self):
         """ Read table of associated labs."""
-        html = self.find_element(By.XPATH, '//*[@id="viewSupplementalInformation1"]/tbody').get_attribute('innerHTML')
-        soup = BeautifulSoup(html, 'html.parser')
-        table = pd.read_html(str(soup))
+        table = self.ReadTableToDF(self, '//*[@id="viewSupplementalInformation1"]/tbody')
         self.labs = table[0]
         if self.labs['Date Received'][0] == 'Nothing found to display.':
             self.issues.append('No labs associated with investigation.')
