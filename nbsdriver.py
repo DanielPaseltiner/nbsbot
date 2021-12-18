@@ -21,6 +21,7 @@ class NBSdriver(webdriver.Chrome):
         self.options.add_argument('--ignore-certificate-errors')
         super(NBSdriver, self).__init__(executable_path= self.executable_path, options = self.options)
         self.issues = []
+        self.num_attempts = 3
 
 ########################### NBS Navigation Methods ############################
     def GetCredentials(self):
@@ -51,38 +52,83 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToHome(self):
         """ Go to NBS Home page. """
-        self.find_element(By.XPATH,'//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a').click()
+        xpath = '//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a'
+        for attempt in range(self.num_attempts):
+            try:
+                WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
+                self.find_element(By.XPATH, xpath).click()
+                self.home_loaded = True
+                break
+            except TimeoutException:
+                self.home_loaded = False
+        if not self.home_loaded:
+            print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered.")
+            break
 
     def GoToApprovalQueue(self):
         """ Navigate to approval queue from Home page. """
-        self.find_element(By.PARTIAL_LINK_TEXT,'Approval Queue for Initial Notifications').click()
-
+        partial_link = 'Approval Queue for Initial Notifications'
+        try:
+            WebDriverWait(self,60).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, partial_link)))
+            self.find_element(By.PARTIAL_LINK_TEXT, partial_link).click()
+        except TimeoutException:
+            self.HandleBadQueueReturn()
 
     def ReturnApprovalQueue(self):
         """ Return to Approval Queue from an investigation initally accessed from the queue. """
-        self.find_element(By.XPATH,'//*[@id="bd"]/div[1]/a').click()
+        xpath = '//*[@id="bd"]/div[1]/a'
+        try:
+            WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            self.find_element(By.XPATH, xpath).click()
+        except TimeoutException:
+            self.HandleBadQueueReturn()
 
     def SortApprovalQueue(self):
         """ Sort approval queue so that case are listed chronologically by
-        notification creation date and in alpha order so that
+        notification creation date and in reverse alpha order so that
         "2019 Novel..." is at the top. """
         clear_filter_path = '//*[@id="removeFilters"]/a/font'
         submit_date_path = '//*[@id="parent"]/thead/tr/th[3]/a'
         condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
-        # Clear all filters
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
-        self.find_element(By.XPATH, clear_filter_path).click()
-        # Double click submit date for chronological order.
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
-        self.find_element(By.XPATH, submit_date_path).click()
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
-        self.find_element(By.XPATH, submit_date_path).click()
-        # Double clikc condition for alpha order.
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
-        self.find_element(By.XPATH,condition_path).click()
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
-        self.find_element(By.XPATH,condition_path).click()
-        WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a')))
+        try:
+            # Clear all filters
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, clear_filter_path)))
+            self.find_element(By.XPATH, clear_filter_path).click()
+            # Double click submit date for chronological order.
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            self.find_element(By.XPATH, submit_date_path).click()
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            self.find_element(By.XPATH, submit_date_path).click()
+            # Double clikc condition for reverse alpha order.
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            self.find_element(By.XPATH,condition_path).click()
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            self.find_element(By.XPATH,condition_path).click()
+        except TimeoutException:
+            self.HandleBadQueueReturn()
+
+
+    def HandleBadQueueReturn(self):
+        """ When a request is sent to NBS to load or filter the approval queue
+        and "Nothing found to display", or anything other than the populated
+        queue is returned, navigate back to the home page and request the queue
+        again."""
+        # Recursion seems like a good idea here, but if the queue is truly empty there will be nothing to display and recursion will result in a stack overflow.
+
+        for attempt in range(self.num_attempts):
+            try:
+                self.GotToHome()
+                self.GoToApprovalQueue()
+                self.queue_loaded = True
+                break
+            except TimeoutException:
+                self.queue_loaded = False
+        if self.queue_loaded:
+            continue
+        else:
+            print(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
+            break
+
 
     def CheckFirstCase(self):
         """ Ensure that first case is COVID and save case's name for later use."""
@@ -91,8 +137,13 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
-        self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[8]/a').click()
-        self.issues = []
+        xpath = '//*[@id="parent"]/tbody/tr[1]/td[8]/a'
+        try:
+            WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            self.find_element(By.XPATH, xpath).click()
+        except TimeoutException:
+            self.HandleBadQueueReturn()
+
 
     def GoToCaseInfo(self):
         """ Within a COVID investigation navigate to the Case Info tab. """
