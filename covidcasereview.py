@@ -591,7 +591,7 @@ class COVIDcasereview(NBSdriver):
         symp_status = self.ReadText('//*[@id="NBS555"]')
 
         if not symp_status:
-            self.issues.append('Symptom status is blank')
+            self.issues.append('Symptom status is blank.')
         elif symp_status == 'Still symptomatic':
             if not symp_onset_date:
                 self.issues.append('Symptom onset date is blank.')
@@ -744,6 +744,7 @@ class COVIDcasereview(NBSdriver):
             self.status = 'S'
         else:
             self.status = ''
+            self.issues = self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
 
     def GetReportDate(self):
         """Find earliest report date by reviewing associated labs"""
