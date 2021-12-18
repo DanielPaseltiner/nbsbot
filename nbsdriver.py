@@ -104,6 +104,7 @@ class NBSdriver(webdriver.Chrome):
             self.find_element(By.XPATH,condition_path).click()
             WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
+            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
         except TimeoutException:
             self.HandleBadQueueReturn()
 

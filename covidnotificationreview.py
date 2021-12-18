@@ -188,17 +188,14 @@ class COVIDnotificationreview(COVIDcasereview):
             else:
                 self.CaseInvestigatorReview()
 
+            if not self.issues:
+                self.ApproveNotification()
             self.ReturnApprovalQueue()
             self.SortApprovalQueue()
             self.CheckFirstCase()
             self.final_name = self.patient_name
-            if self.final_name == self.initial_name:
-                if not self.issues:
-                    self.ApproveNotification()
-                    self.num_approved += 1
-                else:
-                    self.RejectNotification()
-                    self.num_rejected += 1
+            if (self.final_name == self.initial_name) & (self.issues):
+                self.RejectNotification()
             else:
                 print('Case at top of queue changed. No action was taken on the reviewed case.')
                 self.num_fail += 1
@@ -208,14 +205,15 @@ class COVIDnotificationreview(COVIDcasereview):
     def ApproveNotification(self):
         """ Approve notification on first case in notification queue. """
         main_window_handle = self.current_window_handle
-        self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[1]/img').click()
+        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
         for handle in self.window_handles:
             if handle != main_window_handle:
                 approval_comment_window = handle
                 break
         self.switch_to.window(approval_comment_window)
-        self.find_element(By.XPATH,'//*[@id="approve"]/table/tbody/tr[2]/td/input[1]').click()
+        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
         self.switch_to.window(main_window_handle)
+        self.num_approved += 1
 
     def RejectNotification(self):
         """ Reject notification on first case in notification queue.
@@ -232,3 +230,4 @@ class COVIDnotificationreview(COVIDcasereview):
         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
         self.switch_to.window(main_window_handle)
+        self.num_rejected += 1
