@@ -344,8 +344,10 @@ class COVIDcasereview(NBSdriver):
 
     def CheckDeathDate(self):
         """ Death date must be present."""
-        death_date = self.CheckForValue('//*[@id="INV146"]','Date of death is blank.')
-        if death_date > self.now:
+        death_date = self.ReadDate('//*[@id="INV146"]')
+        if not death_date:
+            self.issues.append('Date of death is blank.')
+        elif death_date > self.now:
             self.issues.append('Date of death date cannot be in the future')
 
 #################### Housing Check Methods ###################################
@@ -369,8 +371,8 @@ class COVIDcasereview(NBSdriver):
 #################### First Responder Check Methods #############################
     def CheckFirstResponder(self):
         """ Check if a patient is a first responder."""
-        self.first_responder =  self.ReadText()'//*[@id="ME59100"]')
-        if (self.investigator_name in self.outbreak_investigators) & (not self.first_responder):
+        self.first_responder =  self.ReadText('//*[@id="ME59100"]')
+        if (self.investigator) & (self.investigator_name not in self.outbreak_investigators) & (self.ltf != 'Yes') & (not self.first_responder):
             self.issues.append('First responder question must be answered.')
 
     def CheckFirstResponderOrg(self):
@@ -380,7 +382,7 @@ class COVIDcasereview(NBSdriver):
 #################### Healthcare Worker Check Methods ###########################
     def CheckHealthcareWorker(self):
         """ Check if patient is a healthcare worker."""
-        self.healthcare_worker = self.ReadText('//*[@id="ME59100"]')
+        self.healthcare_worker = self.ReadText('//*[@id="NBS540"]')
         if self.investigator:
             if (self.investigator_name in self.outbreak_investigators) & (self.healthcare_worker not in ['Yes', 'No']):
                 self.issues.append('Healthcare worker questions must be answered with "Yes" or "No".')
@@ -607,8 +609,9 @@ class COVIDcasereview(NBSdriver):
                 self.issues.append('Symptom onset date cannot be in the future.')
             if not symp_resolution_date:
                 self.issues.append('Symptom resolution date is blank. If date unknown choose "Symptoms resolved, unknown date" for symptom status.')
-            elif symp_resolution_date < symp_onset_date:
-                self.issues.append('Symptom resolution date cannot be prior to symptom onset date.')
+            elif symp_onset_date:
+                if symp_resolution_date < symp_onset_date:
+                    self.issues.append('Symptom resolution date cannot be prior to symptom onset date.')
             elif symp_resolution_date > self.now:
                 self.issues.append('Symptom resolution date cannot be in the future.')
         elif symp_status == 'Symptoms resolved, unknown date':
@@ -648,7 +651,7 @@ class COVIDcasereview(NBSdriver):
 ########### Vaccination Interperative Information Check Methods ################
     def CheckImmPactQuery(self):
         """ Ensure ImmPact was queried when age eligible. """
-        self.immpact = self.Read('//*[@id="ME71100"]')
+        self.immpact = self.ReadText('//*[@id="ME71100"]')
         try:
             age = int((self.collection_date - self.dob).days//365.25)
             if (self.immpact != 'Yes') & (age >= 5):

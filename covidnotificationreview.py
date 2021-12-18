@@ -140,9 +140,6 @@ class COVIDnotificationreview(COVIDcasereview):
         # Check AOEs
         if self.ltf == 'Yes':
             self.AOEChecks()
-        else:
-            self.ReadAoes()
-            self.CheckPregnancyAOE()
 
     def OutbreakInvestigatorReview(self):
         """A method to perfrom check specific to investigations assigned to outbreak investigators. """
@@ -194,9 +191,9 @@ class COVIDnotificationreview(COVIDcasereview):
             self.SortApprovalQueue()
             self.CheckFirstCase()
             self.final_name = self.patient_name
-            if (self.final_name == self.initial_name) & (self.issues):
+            if (self.final_name == self.initial_name) & (len(self.issues) > 0):
                 self.RejectNotification()
-            else:
+            elif (self.final_name != self.initial_name) & (len(self.issues) > 0):
                 print('Case at top of queue changed. No action was taken on the reviewed case.')
                 self.num_fail += 1
         else:

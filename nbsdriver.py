@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+import sys
 
 
 class NBSdriver(webdriver.Chrome):
@@ -22,6 +23,7 @@ class NBSdriver(webdriver.Chrome):
         super(NBSdriver, self).__init__(executable_path= self.executable_path, options = self.options)
         self.issues = []
         self.num_attempts = 3
+        self.queue_loaded = None
 
 ########################### NBS Navigation Methods ############################
     def GetCredentials(self):
@@ -62,8 +64,7 @@ class NBSdriver(webdriver.Chrome):
             except TimeoutException:
                 self.home_loaded = False
         if not self.home_loaded:
-            print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered.")
-            break
+            sys.exit(print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered."))
 
     def GoToApprovalQueue(self):
         """ Navigate to approval queue from Home page. """
@@ -124,11 +125,9 @@ class NBSdriver(webdriver.Chrome):
                 break
             except TimeoutException:
                 self.queue_loaded = False
-        if self.queue_loaded:
-            continue
-        else:
-            print(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
-            break
+        if not self.queue_loaded:
+            sys.exit(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
+
 
 
     def CheckFirstCase(self):
