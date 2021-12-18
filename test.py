@@ -33,17 +33,18 @@ for i in tqdm(range(num_cases)):
         if NBS.queue_loaded:
             NBS.queue_loaded = None
             continue
-        NBS.SortApprovalQueue()
-        if NBS.queue_loaded:
-            NBS.queue_loaded = None
-            continue
-        NBS.CheckFirstCase()
-        NBS.final_name = NBS.patient_name
-        if (NBS.final_name == NBS.initial_name) & (len(NBS.issues) > 0):
-            NBS.RejectNotification()
-        elif (NBS.final_name != NBS.initial_name) & (len(NBS.issues) > 0):
-            print('Case at top of queue changed. No action was taken on the reviewed case.')
-            NBS.num_fail += 1
+        if len(NBS.issues) > 0:
+            NBS.SortApprovalQueue()
+            if NBS.queue_loaded:
+                NBS.queue_loaded = None
+                continue
+            NBS.CheckFirstCase()
+            NBS.final_name = NBS.patient_name
+            if NBS.final_name == NBS.initial_name:
+                NBS.RejectNotification()
+            elif NBS.final_name != NBS.initial_name:
+                print('Case at top of queue changed. No action was taken on the reviewed case.')
+                NBS.num_fail += 1
     else:
         print("No COVID-19 cases in notification queue.")
 print(f'notifications approved: {NBS.num_approved}\nnotifications rejected: {NBS.num_rejected}\nnotifications failed: {NBS.num_fail}')
