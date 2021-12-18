@@ -24,6 +24,7 @@ class NBSdriver(webdriver.Chrome):
         self.issues = []
         self.num_attempts = 3
         self.queue_loaded = None
+        self.wait_before_timeout = 30
 
 ########################### NBS Navigation Methods ############################
     def GetCredentials(self):
@@ -39,7 +40,7 @@ class NBSdriver(webdriver.Chrome):
         self.find_element_by_id('username').send_keys(self.username)
         self.find_element_by_id('passcode').send_keys(self.passcode)
         self.find_element(By.XPATH,'/html/body/div[2]/p[2]/input[1]').click()
-        WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a')))
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a')))
         self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
 
     def GoToID(self, id):
@@ -57,7 +58,7 @@ class NBSdriver(webdriver.Chrome):
         xpath = '//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a'
         for attempt in range(self.num_attempts):
             try:
-                WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
+                WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
                 self.find_element(By.XPATH, xpath).click()
                 self.home_loaded = True
                 break
@@ -70,7 +71,7 @@ class NBSdriver(webdriver.Chrome):
         """ Navigate to approval queue from Home page. """
         partial_link = 'Approval Queue for Initial Notifications'
         try:
-            WebDriverWait(self,60).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, partial_link)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, partial_link)))
             self.find_element(By.PARTIAL_LINK_TEXT, partial_link).click()
         except TimeoutException:
             self.HandleBadQueueReturn()
@@ -79,7 +80,7 @@ class NBSdriver(webdriver.Chrome):
         """ Return to Approval Queue from an investigation initally accessed from the queue. """
         xpath = '//*[@id="bd"]/div[1]/a'
         try:
-            WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
             self.find_element(By.XPATH, xpath).click()
         except TimeoutException:
             self.HandleBadQueueReturn()
@@ -93,19 +94,19 @@ class NBSdriver(webdriver.Chrome):
         condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
         try:
             # Clear all filters
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, clear_filter_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, clear_filter_path)))
             self.find_element(By.XPATH, clear_filter_path).click()
             # Double click submit date for chronological order.
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()
             # Double clikc condition for reverse alpha order.
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
-            WebDriverWait(self,60).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
         except TimeoutException:
             self.HandleBadQueueReturn()
 
@@ -137,10 +138,14 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
-        xpath = '//*[@id="parent"]/tbody/tr[1]/td[8]/a'
+        xpath_to_case = '//*[@id="parent"]/tbody/tr[1]/td[8]/a'
+        xpath_to_first_name = '//*[@id="DEM104"]'
         try:
-            WebDriverWait(self,60).until(EC.presence_of_element_located((By.XPATH, xpath)))
-            self.find_element(By.XPATH, xpath).click()
+            # Make sure queue loads properly before navigating to first case.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_case)))
+            self.find_element(By.XPATH, xpath_to_case).click()
+            # Make sure first case loads properly before moving on.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_first_name)))
         except TimeoutException:
             self.HandleBadQueueReturn()
 
