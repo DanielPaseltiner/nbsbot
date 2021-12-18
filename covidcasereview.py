@@ -712,9 +712,8 @@ class COVIDcasereview(NBSdriver):
 
 ########################### Parse and process labs ############################
     def ReadAssociatedLabs(self):
-        """ Read table of associated labs."""
-        table = self.ReadTableToDF('//*[@id="viewSupplementalInformation1"]/tbody')
-        self.labs = table[0]
+        """ Read table of associated labs.""" 
+        self.labs = self.ReadTableToDF('//*[@id="viewSupplementalInformation1"]/tbody')
         if self.labs['Date Received'][0] == 'Nothing found to display.':
             self.issues.append('No labs associated with investigation.')
 
