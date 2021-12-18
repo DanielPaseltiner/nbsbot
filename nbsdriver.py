@@ -197,7 +197,7 @@ class NBSdriver(webdriver.Chrome):
 
     def ReadTableToDF(self, xpath):
         """ A method to read tables into pandas Data Frames for easy manipulation. """
-        html = self.find_element(By.XPATH, xpath').get_attribute('innerHTML')
+        html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
         soup = BeautifulSoup(html, 'html.parser')
         table = pd.read_html(str(soup))[0]
         table.fillna('', inplace = True)
