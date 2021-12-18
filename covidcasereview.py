@@ -700,7 +700,7 @@ class COVIDcasereview(NBSdriver):
 
     def CheckLabTable(self):
         """ Ensure that labs listed in investigation support case status. """
-        inv_labs = self.ReadTableToDF(self, '//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table')
+        inv_labs = self.ReadTableToDF('//*[@id="NBS_UI_GA21011"]/tbody/tr[1]/td/table')
         if len(inv_labs) == 0:
             self.issues.append('No labs listed in investigation.')
         if len(inv_labs.loc[inv_labs['Test Result'] != 'Positive']) > 0:
@@ -713,7 +713,7 @@ class COVIDcasereview(NBSdriver):
 ########################### Parse and process labs ############################
     def ReadAssociatedLabs(self):
         """ Read table of associated labs."""
-        table = self.ReadTableToDF(self, '//*[@id="viewSupplementalInformation1"]/tbody')
+        table = self.ReadTableToDF('//*[@id="viewSupplementalInformation1"]/tbody')
         self.labs = table[0]
         if self.labs['Date Received'][0] == 'Nothing found to display.':
             self.issues.append('No labs associated with investigation.')
