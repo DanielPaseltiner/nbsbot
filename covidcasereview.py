@@ -12,7 +12,7 @@ class COVIDcasereview(NBSdriver):
         self.Reset()
         self.GetObInvNames()
         self.not_a_case_log = []
-        self.failed_status_determination_log = []
+        self.lab_data_issues_log = []
         super(COVIDcasereview, self).__init__(production)
 
     def GetObInvNames(self):
@@ -548,8 +548,7 @@ class COVIDcasereview(NBSdriver):
         status_pairs = {'Confirmed':'C', 'Probable':'P', 'Suspect':'S', 'Not a Case':'N'}
         if current_case_status == 'Not a Case':
             self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
-            patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
-            self.not_a_case_log.append(patient_id)
+            self.not_a_case_log.append(self.ReadPatientID())
         elif not current_case_status:
             self.issues.append('Case satus is blank.')
         elif status_pairs[current_case_status] != self.status:
@@ -747,8 +746,7 @@ class COVIDcasereview(NBSdriver):
         else:
             self.status = ''
             self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
-            patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
-            self.failed_status_determination_log.append(patient_id)
+            self.lab_data_issues_log.append(self.ReadPatientID())
 
     def GetReportDate(self):
         """Find earliest report date by reviewing associated labs"""
@@ -763,6 +761,14 @@ class COVIDcasereview(NBSdriver):
         if self.labs['Date Received'][0] == 'Nothing found to display.':
             self.report_date = datetime(1900, 1, 1).date()
         else:
+            # Check for any associated labs missing collection date:
+            # 1. Set collection date to 01/01/2100 to avoid type errors.
+            # 2. Log patient id for manual review.
+            no_col_dt_labs = self.labs.loc[self.labs['Date Collected'] == 'No Date']
+            if len(no_col_dt_labs) > 0:
+                self.labs.loc[self.labs['Date Collected'] == 'No Date', 'Date Collected'] = '01/01/2100'
+                self.issues.insert(0,'**SOME ASSOCIATED LABS MISSING COLLECTION DATE: CENTRAL EPI REVIEW REQUIRED**')
+                self.lab_data_issues_log.append(self.ReadPatientID())
             self.labs['Date Collected'] = pd.to_datetime(self.labs['Date Collected'], format = '%m/%d/%Y').dt.date
             self.collection_date = self.labs['Date Collected'].min()
 

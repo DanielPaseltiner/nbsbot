@@ -204,3 +204,8 @@ class NBSdriver(webdriver.Chrome):
         table = pd.read_html(str(soup))[0]
         table.fillna('', inplace = True)
         return table
+
+    def ReadPatientID(self):
+        """ Read patient ID from within patient profile. """
+        patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
+        return patient_id
