@@ -489,7 +489,7 @@ class COVIDcasereview(NBSdriver):
                     if not other_school_name:
                         self.issues.append('Other school name is blank.')
                 if university_name == 'Other':
-                    other_univeristy_name = self.ReadText('//*[@id="ME62101Oth"]')
+                    other_university_name = self.ReadText('//*[@id="ME62101Oth"]')
                     if not other_university_name:
                         self.issues.append('Other university name is blank.')
 
