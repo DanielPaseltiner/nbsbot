@@ -391,23 +391,29 @@ class COVIDcasereview(NBSdriver):
 
     def CheckHealtcareWorkerFacility(self):
         """ If the patient is a healthcare worker then a facility name must be provided."""
-        healthcare_worker_fac =  self.CheckForValue('//*[@id="ME10103"]','Healthcare worker facility is blank.')
+        if (self.ltf != 'Yes') & (self.investigator):
+            healthcare_worker_fac =  self.CheckForValue('//*[@id="ME10103"]','Healthcare worker facility is blank.')
 
     def CheckHealthcareWorkerJob(self):
         """ If the patient is a healthcare worker then an occupation name must be provided."""
         xpath = '//*[@id="14679004"]'
-        if self.ltf != 'Yes':
+        if (self.ltf != 'Yes') & (self.investigator):
             self.healthcare_worker_job =  self.CheckForValue(xpath,'Healthcare worker occupation is blank.')
         else:
             self.healthcare_worker_job = self.ReadText(xpath)
 
     def CheckHealthcareWorkerJobOther(self):
         """ If the patient is a healthcare worker and occupation is other then name must be provided."""
-        healthcare_worker_job_other =  self.CheckForValue('//*[@id="14679004Oth"]','Healthcare worker other occupation is missing.')
+        if (self.ltf != 'Yes') & (self.investigator):
+            healthcare_worker_job_other =  self.CheckForValue('//*[@id="14679004Oth"]','Healthcare worker other occupation is missing.')
 
     def CheckHealthcareWorkerSetting(self):
         """ If the patient is a healthcare worker then healthcare setting name must be provided."""
-        self.healthcare_worker_setting =  self.CheckForValue('//*[@id="NBS683"]','Healthcare worker setting is blank.')
+        xpath = '//*[@id="NBS683"]'
+        if (self.ltf != 'Yes') & (self.investigator):
+            self.healthcare_worker_setting =  self.CheckForValue(xpath, 'Healthcare worker setting is blank.')
+        else:
+            self.healthcare_worker_setting =  self.ReadText(xpath)
 
     def CheckHealthcareWorkerSettingOther(self):
         """ If the patient is a healthcare worker and setting is other then name must be provided."""
@@ -712,7 +718,7 @@ class COVIDcasereview(NBSdriver):
 
 ########################### Parse and process labs ############################
     def ReadAssociatedLabs(self):
-        """ Read table of associated labs.""" 
+        """ Read table of associated labs."""
         self.labs = self.ReadTableToDF('//*[@id="viewSupplementalInformation1"]/tbody')
         if self.labs['Date Received'][0] == 'Nothing found to display.':
             self.issues.append('No labs associated with investigation.')
