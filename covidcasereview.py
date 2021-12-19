@@ -746,7 +746,7 @@ class COVIDcasereview(NBSdriver):
             self.status = 'S'
         else:
             self.status = ''
-            self.issues = self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
+            self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
             patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
             self.failed_status_determination_log.append(patient_id)
 
