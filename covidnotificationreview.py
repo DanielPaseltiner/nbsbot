@@ -165,7 +165,9 @@ class COVIDnotificationreview(COVIDcasereview):
         self.GoToCOVID()
         self.CheckSymptoms()
         self.CheckImmPactQuery()
-        self.CheckFullyVaccinated()
+        self.CheckRecievedVax()
+        if self.vax_recieved == 'Yes':
+            self.CheckFullyVaccinated()
         self.CheckTestingPreformed()
         # Check AOEs
         self.AOEChecks()
