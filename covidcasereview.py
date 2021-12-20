@@ -629,7 +629,7 @@ class COVIDcasereview(NBSdriver):
     def CheckIsolation(self):
         """ Ensure isolation release indicator, release date, and died from illness
         indicator are all consistent."""
-        isolation_release = self.ReadText('//*[@id="NBS555"]')
+        isolation_release = self.ReadText('//*[@id="ME59123"]')
         isolation_release_date = self.ReadDate('//*[@id="INV138"]')
         if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
             self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
