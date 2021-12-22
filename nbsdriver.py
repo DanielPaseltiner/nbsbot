@@ -7,6 +7,10 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
 import sys
+import win32com.client as win32
+import getpass
+from pathlib import Path
+from shutil import rmtree
 
 
 class NBSdriver(webdriver.Chrome):

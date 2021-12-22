@@ -233,16 +233,16 @@ class COVIDnotificationreview(COVIDcasereview):
 
     def SendManualReviewEmail(self):
         """ Send email containing NBS IDs that required manual review."""
-        recipient, cc, subject, message,
         recipient = 'MeCDC.COVIDCommander@maine.gov'
         cc = 'daniel.paseltiner@maine.gov'
-        subject 'Cases Requiring Manual Review'
+        subject = 'Cases Requiring Manual Review'
         message = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review\n\nNot a case:"
         for id in self.not_a_case_log:
             message = message + f'\n{id}'
         message = message + '\n\nAssociated lab issues:'
         for id in self.lab_data_issues_log:
             message = message + f'\n{id}'
+        message = message + '\n\n-Nbsbot'
         self.SendEmail(recipient, cc, subject, message)
         self.not_a_case_log = []
         self.lab_data_issues_log = []
