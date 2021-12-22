@@ -630,7 +630,7 @@ class COVIDcasereview(NBSdriver):
         """ Ensure isolation release indicator, release date, and died from illness
         indicator are all consistent."""
         isolation_release = self.ReadText('//*[@id="ME59123"]')
-        isolation_release_date = self.ReadDate('//*[@id="INV138"]')
+        isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
         if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
             self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
         if isolation_release == 'Yes':
@@ -724,7 +724,7 @@ class COVIDcasereview(NBSdriver):
 
     def AssignLabTypes(self):
         """ Determine lab type (PCR, Ag, or Ab) for each associated lab."""
-        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2']
+        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2', 'CEPHID', 'NAAT']
         ag_flags = ['AG', 'ANTIGEN', 'VERITOR']
         ab_flags = ['AB', 'IGG', 'IGM', 'IGA', 'Antibod', 'T-DETECT']
         test_types = [('pcr', pcr_flags), ('antigen', ag_flags), ('antibody', ab_flags)]

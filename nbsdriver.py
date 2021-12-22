@@ -27,6 +27,7 @@ class NBSdriver(webdriver.Chrome):
         self.num_attempts = 3
         self.queue_loaded = None
         self.wait_before_timeout = 30
+        self.sleep_duration = 3300 #Value in seconds
 
 ########################### NBS Navigation Methods ############################
     def GetCredentials(self):
@@ -129,9 +130,7 @@ class NBSdriver(webdriver.Chrome):
             except TimeoutException:
                 self.queue_loaded = False
         if not self.queue_loaded:
-            sys.exit(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
-
-
+            print(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
 
     def CheckFirstCase(self):
         """ Ensure that first case is COVID and save case's name for later use."""
@@ -209,3 +208,34 @@ class NBSdriver(webdriver.Chrome):
         """ Read patient ID from within patient profile. """
         patient_id = self.ReadText('//*[@id="bd"]/table[3]/tbody/tr[1]/td[2]/span[2]')
         return patient_id
+
+    def Sleep(self):
+        """ Pause all action for the specified number of seconds. """
+        for i in range(NBS.sleep_duration):
+            time_remaining = NBS.sleep_duration - i
+            print(f'Sleeping for: {time_remaining//60:02d}:{time_remaining%60:02d}', end='\r', flush=True)
+            time.sleep(1)
+        print('Sleeping for: 00:00', end='\r', flush=True)
+
+    def SendEmail (self, recipient, cc, subject, message, attachment = None):
+        self.ClearGenPy()
+        outlook = win32.Dispatch('outlook.application')
+        mail = outlook.CreateItem(0)
+        mail.GetInspector
+        mail.To = recipient
+        mail.CC = cc
+        mail.Subject = subject
+        mail.Body = message
+        if attachment != None:
+            mail.Attachments.Add(attachment)
+        mail.Send()
+
+    def ClearGenPy(self):
+        # Construct to path gen_py directory if it exists.
+        current_user = getpass.getuser().lower()
+        gen_py_path = r'C:\Users' +'\\' + current_user + '\AppData\Local\Temp\gen_py'
+        gen_py_path = Path(gen_py_path)
+
+        # If gen_py exists delete it and all contents.
+        if gen_py_path.exists() and gen_py_path.is_dir():
+            rmtree(gen_py_path)
