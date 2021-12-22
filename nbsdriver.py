@@ -11,6 +11,7 @@ import win32com.client as win32
 import getpass
 from pathlib import Path
 from shutil import rmtree
+import time
 
 
 class NBSdriver(webdriver.Chrome):
