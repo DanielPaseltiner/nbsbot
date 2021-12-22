@@ -215,8 +215,8 @@ class NBSdriver(webdriver.Chrome):
 
     def Sleep(self):
         """ Pause all action for the specified number of seconds. """
-        for i in range(NBS.sleep_duration):
-            time_remaining = NBS.sleep_duration - i
+        for i in range(self.sleep_duration):
+            time_remaining = self.sleep_duration - i
             print(f'Sleeping for: {time_remaining//60:02d}:{time_remaining%60:02d}', end='\r', flush=True)
             time.sleep(1)
         print('Sleeping for: 00:00', end='\r', flush=True)
