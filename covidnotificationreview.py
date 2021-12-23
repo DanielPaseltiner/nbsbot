@@ -237,7 +237,7 @@ class COVIDnotificationreview(COVIDcasereview):
             recipient = 'MeCDC.COVIDCommander@maine.gov'
             cc = 'daniel.paseltiner@maine.gov'
             subject = 'Cases Requiring Manual Review'
-            message = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review\n\nNot a case:"
+            message = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
             for id in self.not_a_case_log:
                 message = message + f'\n{id}'
             message = message + '\n\nAssociated lab issues:'

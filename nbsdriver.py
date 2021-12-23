@@ -129,7 +129,7 @@ class NBSdriver(webdriver.Chrome):
 
         for attempt in range(self.num_attempts):
             try:
-                self.GotToHome()
+                self.GoToHome()
                 self.GoToApprovalQueue()
                 self.queue_loaded = True
                 break
