@@ -12,6 +12,7 @@ import getpass
 from pathlib import Path
 from shutil import rmtree
 import time
+from selenium.common.exceptions import TimeoutException
 
 
 class NBSdriver(webdriver.Chrome):
