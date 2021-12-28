@@ -217,8 +217,10 @@ class COVIDnotificationreview(COVIDcasereview):
     def RejectNotification(self):
         """ Reject notification on first case in notification queue.
         To be used when issues were encountered during review of the case."""
+        reject_path = '//*[@id="parent"]/tbody/tr[1]/td[2]/img'
         main_window_handle = self.current_window_handle
-        self.find_element(By.XPATH,'//*[@id="parent"]/tbody/tr[1]/td[2]/img').click()
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
+        self.find_element(By.XPATH,reject_path).click()
         for handle in self.window_handles:
             if handle != main_window_handle:
                 rejection_comment_window = handle
