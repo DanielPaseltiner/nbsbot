@@ -366,7 +366,8 @@ class COVIDcasereview(NBSdriver):
 
     def CheckCongregateFacilityName(self):
         """ Need a congregate faciltiy name if patient lives in congregate setting."""
-        cong_fac_name = self.CheckForValue('//*[@id="ME134008"]','Name of congregate facility is missing.')
+        if self.investigator_name:
+            cong_fac_name = self.CheckForValue('//*[@id="ME134008"]','Name of congregate facility is missing.')
 
 #################### First Responder Check Methods #############################
     def CheckFirstResponder(self):
@@ -377,7 +378,8 @@ class COVIDcasereview(NBSdriver):
 
     def CheckFirstResponderOrg(self):
         """ Check first responder organization."""
-        first_responder_org = self.CheckForValue('//*[@id="ME59116"]','First responder organization is blank.')
+        if self.investigator_name:
+            first_responder_org = self.CheckForValue('//*[@id="ME59116"]','First responder organization is blank.')
 
 #################### Healthcare Worker Check Methods ###########################
     def CheckHealthcareWorker(self):
