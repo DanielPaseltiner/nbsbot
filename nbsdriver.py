@@ -103,19 +103,19 @@ class NBSdriver(webdriver.Chrome):
         condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
         try:
             # Clear all filters
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, clear_filter_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, clear_filter_path)))
             self.find_element(By.XPATH, clear_filter_path).click()
             # Double click submit date for chronological order.
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, submit_date_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()
             # Double clikc condition for reverse alpha order.
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
-            WebDriverWait(self,self.wait_before_timeout).until(EC.visibility_of_element_located((By.XPATH, condition_path)))
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
         except TimeoutException:
             self.HandleBadQueueReturn()
 
