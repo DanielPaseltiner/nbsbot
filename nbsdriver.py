@@ -13,7 +13,7 @@ from pathlib import Path
 from shutil import rmtree
 import time
 from selenium.common.exceptions import TimeoutException
-
+from selenium.common.exceptions import NoSuchElementException
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -110,7 +110,7 @@ class NBSdriver(webdriver.Chrome):
             self.find_element(By.XPATH, submit_date_path).click()
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()
-            # Double clikc condition for reverse alpha order.
+            # Double click condition for reverse alpha order.
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
@@ -140,8 +140,12 @@ class NBSdriver(webdriver.Chrome):
 
     def CheckFirstCase(self):
         """ Ensure that first case is COVID and save case's name for later use."""
-        self.condition = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[8]/a').get_attribute('innerText')
-        self.patient_name = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a').get_attribute('innerText')
+        try:
+            self.condition = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[8]/a').get_attribute('innerText')
+            self.patient_name = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a').get_attribute('innerText')
+        except NoSuchElementException:
+            self.condition = None
+            self.patient_name = None
 
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
