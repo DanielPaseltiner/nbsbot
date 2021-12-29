@@ -61,7 +61,7 @@ for _ in tqdm(generator()):
                 print('Case at top of queue changed. No action was taken on the reviewed case.')
                 NBS.num_fail += 1
     else:
-        if attempt_counter < self.num_attempts:
+        if attempt_counter < NBS.num_attempts:
             attempt_counter += 1
         else:
             attempt_counter = 0
