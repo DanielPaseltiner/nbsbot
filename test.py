@@ -14,6 +14,7 @@ NBS.GoToApprovalQueue()
 
 #num_cases = int(input('Enter the number of cases to review:'))
 #for i in tqdm(range(num_cases)):
+attempt_counter = 0
 for _ in tqdm(generator()):
     NBS.SortApprovalQueue()
 
@@ -60,7 +61,11 @@ for _ in tqdm(generator()):
                 print('Case at top of queue changed. No action was taken on the reviewed case.')
                 NBS.num_fail += 1
     else:
-        print("No COVID-19 cases in notification queue.")
-        NBS.SendManualReviewEmail()
-        NBS.Sleep()
+        if attempt_counter < self.num_attempts:
+            attempt_counter += 1
+        else:
+            attempt_counter = 0
+            print("No COVID-19 cases in notification queue.")
+            NBS.SendManualReviewEmail()
+            NBS.Sleep()
 #print(f'notifications approved: {NBS.num_approved}\nnotifications rejected: {NBS.num_rejected}\nnotifications failed: {NBS.num_fail}')
