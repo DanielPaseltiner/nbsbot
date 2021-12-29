@@ -825,7 +825,7 @@ class COVIDcasereview(NBSdriver):
         """ Ensure that if AOEs show a patient is a first responder that the
         investigation matches."""
         if self.fr_aoe & (self.first_responder != 'Yes'):
-            self.issues.append('AOEs indicate that the case lives is a first responder, but the investigation does not.')
+            self.issues.append('AOEs indicate that the case is a first responder, but the investigation does not.')
 
     def CheckPregnancyAOE(self):
         """ Ensure that if AOEs show a patient is pregnany that the
