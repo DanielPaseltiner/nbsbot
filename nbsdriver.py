@@ -14,6 +14,7 @@ from shutil import rmtree
 import time
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -116,7 +117,7 @@ class NBSdriver(webdriver.Chrome):
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
             self.find_element(By.XPATH,condition_path).click()
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, condition_path)))
-        except TimeoutException:
+        except (TimeoutException, ElementClickInterceptedException):
             self.HandleBadQueueReturn()
 
 
