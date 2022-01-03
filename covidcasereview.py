@@ -308,8 +308,9 @@ class COVIDcasereview(NBSdriver):
         discharge_date = self.ReadDate('//*[@id="INV133"]')
         if not discharge_date:
             self.issues.append('Discharge date is missing.')
-        elif discharge_date < self.admission_date:
-            self.issues.append('Discharge date must be after admission date.')
+        elif self.admission_date:
+            if discharge_date < self.admission_date:
+                self.issues.append('Discharge date must be after admission date.')
         elif discharge_date > self.now:
             self.issues.append('Discharge date cannot be in the future.')
 
