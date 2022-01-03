@@ -667,8 +667,6 @@ class COVIDcasereview(NBSdriver):
             if self.immpact != 'Yes':
                 self.issues.append('ImmPact has not been queried.')
 
-
-
     def CheckRecievedVax(self):
         """ Ever recieved vaccine should only be no when case not LTFU. """
         self.vax_recieved = self.ReadText('//*[@id="VAC126"]')
@@ -727,7 +725,7 @@ class COVIDcasereview(NBSdriver):
 
     def AssignLabTypes(self):
         """ Determine lab type (PCR, Ag, or Ab) for each associated lab."""
-        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2', 'CEPHID', 'NAAT']
+        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2', 'CEPHID', 'NAAT', 'PERFORMING LABORATORY NAME: CARY MEDICAL CENTER - (FINAL) SARS CORONAVIRUS [PRESENCE] IN SPECIMEN: DETECTED']
         ag_flags = ['AG', 'ANTIGEN', 'VERITOR']
         ab_flags = ['AB', 'IGG', 'IGM', 'IGA', 'Antibod', 'T-DETECT']
         test_types = [('pcr', pcr_flags), ('antigen', ag_flags), ('antibody', ab_flags)]
