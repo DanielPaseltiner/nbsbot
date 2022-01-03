@@ -750,7 +750,7 @@ class COVIDcasereview(NBSdriver):
             self.status = ''
             self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
             id = self.ReadPatientID()
-            if if not in self.lab_data_issues_log:
+            if id not in self.lab_data_issues_log:
                 self.lab_data_issues_log.append(self.ReadPatientID())
 
     def GetReportDate(self):
