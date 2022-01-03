@@ -552,7 +552,7 @@ class COVIDcasereview(NBSdriver):
         if current_case_status == 'Not a Case':
             self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
             id = self.ReadPatientID()
-            if if not in self.not_a_case_log:
+            if id not in self.not_a_case_log:
                 self.not_a_case_log.append(self.ReadPatientID())
         elif not current_case_status:
             self.issues.append('Case satus is blank.')
