@@ -551,7 +551,9 @@ class COVIDcasereview(NBSdriver):
         status_pairs = {'Confirmed':'C', 'Probable':'P', 'Suspect':'S', 'Not a Case':'N'}
         if current_case_status == 'Not a Case':
             self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
-            self.not_a_case_log.append(self.ReadPatientID())
+            id = self.ReadPatientID()
+            if if not in self.not_a_case_log:
+                self.not_a_case_log.append(self.ReadPatientID())
         elif not current_case_status:
             self.issues.append('Case satus is blank.')
         elif status_pairs[current_case_status] != self.status:
@@ -747,7 +749,9 @@ class COVIDcasereview(NBSdriver):
         else:
             self.status = ''
             self.issues.insert(0,'**UNABLE TO DETERMINE CORRECT STATUS: CENTRAL EPI REVIEW REQUIRED**')
-            self.lab_data_issues_log.append(self.ReadPatientID())
+            id = self.ReadPatientID()
+            if if not in self.lab_data_issues_log:
+                self.lab_data_issues_log.append(self.ReadPatientID())
 
     def GetReportDate(self):
         """Find earliest report date by reviewing associated labs"""
