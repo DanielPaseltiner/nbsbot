@@ -550,7 +550,7 @@ class COVIDcasereview(NBSdriver):
         current_case_status = self.ReadText('//*[@id="INV163"]')
         status_pairs = {'Confirmed':'C', 'Probable':'P', 'Suspect':'S', 'Not a Case':'N'}
         if current_case_status == 'Not a Case':
-            self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED**')
+            self.issues.insert(0,'**NOT A CASE: CENTRAL EPI REVIEW REQUIRED - NO FURTHER INVESTIGATOR ACTION REQUIRED**')
             id = self.ReadPatientID()
             if id not in self.not_a_case_log:
                 self.not_a_case_log.append(self.ReadPatientID())
@@ -727,7 +727,7 @@ class COVIDcasereview(NBSdriver):
 
     def AssignLabTypes(self):
         """ Determine lab type (PCR, Ag, or Ab) for each associated lab."""
-        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2', 'CEPHID', 'NAAT', 'PERFORMING LABORATORY NAME: CARY MEDICAL CENTER - (FINAL) SARS CORONAVIRUS [PRESENCE] IN SPECIMEN: DETECTED']
+        pcr_flags = ['RNA', 'PCR', 'NAA', 'GENE', 'PRL SCV2', 'CEPHID', 'NAAT', 'CARY MEDICAL CENTER']
         ag_flags = ['AG', 'ANTIGEN', 'VERITOR']
         ab_flags = ['AB', 'IGG', 'IGM', 'IGA', 'Antibod', 'T-DETECT']
         test_types = [('pcr', pcr_flags), ('antigen', ag_flags), ('antibody', ab_flags)]
