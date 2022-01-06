@@ -274,12 +274,13 @@ class COVIDcasereview(NBSdriver):
         """ Verify that first attempt to contact date is provided and greater
         than or equal to investigation start date. """
         first_attempt_date = self.ReadDate('//*[@id="ME64102"]')
-        if not first_attempt_date:
-            self.issues.append('First attempt to contact date is blank.')
-        elif first_attempt_date < self.investigation_start_date:
-            self.issues.append('First attempt to contact must be on or after investigation start date.')
-        elif first_attempt_date > self.now:
-            self.issues.append('First attempt to contact date cannot be in the future.')
+        if not ((self.ltf == 'Yes') & (self.cong_setting_indicator == 'Yes')):
+            if not first_attempt_date:
+                self.issues.append('First attempt to contact date is blank.')
+            elif first_attempt_date < self.investigation_start_date:
+                self.issues.append('First attempt to contact must be on or after investigation start date.')
+            elif first_attempt_date > self.now:
+                self.issues.append('First attempt to contact date cannot be in the future.')
 
 #################### Hospital Check Methods ###################################
     def CheckHospitalizationIndicator(self):
