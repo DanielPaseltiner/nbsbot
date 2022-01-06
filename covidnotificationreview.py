@@ -28,6 +28,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckZip()
         self.CheckCounty()
         self.CheckCountry()
+        self.CheckInvestigator()
         self.CheckEthnicity()
         self.CheckRace()
         # Read Associated labs
@@ -45,7 +46,6 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckInvestigationStatus()
         self.CheckSharedIndicator()
         self.CheckStateCaseID()
-        self.CheckInvestigator()
         self.CheckLostToFollowUp()
         self.CheckReportDate()
         self.CheckInvestigatorAssignDate()

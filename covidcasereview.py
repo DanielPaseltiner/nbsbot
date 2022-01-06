@@ -109,13 +109,21 @@ class COVIDcasereview(NBSdriver):
     def CheckEthnicity(self):
         """ Must provide ethnicity. """
         ethnicity = self.CheckForValue('//*[@id="DEM155"]','Ethnicity is blank.')
+        if (not self.investigator) & (ethnicity == 'Hispanic or Latino'):
+            self.issues.append('Case is Hispanic or Latinx and should be assigned for investigation.')
 
     def CheckRace(self):
         """ Must provide race and selection must make sense. """
         race = self.CheckForValue('//*[@id="patientRacesViewContainer"]','Race is blank.')
         # Race should only be unknown if no other options are selected.
-        if ('Unknown' in race) and (race != 'Unknown'):
-            self.issues.append('Unknown selected in addition to other options for race.')
+        ambiguous_answers = ['Unknown', 'Other', 'Refused to answer', 'Not Asked']
+        for answer in ambiguous_answers:
+            if (answer in race) and (race != answer):
+                self.issues.append('"'+ answer + '"' + ' selected in addition to other options for race.')
+        if not self.investigator:
+            non_white_races = ['Black or African American', 'Asian', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander']
+            if any(non_white_race in race for non_white_race in non_white_races):
+                self.isues.append('Race is non-white, case should be assigned for investigation.')
 
 ################### Investigation Details Check Methods ########################
     def CheckJurisdiction(self):
