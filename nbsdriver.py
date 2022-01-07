@@ -37,13 +37,13 @@ class NBSdriver(webdriver.Chrome):
         self.sleep_duration = 3300 #Value in seconds
 
 ########################### NBS Navigation Methods ############################
-    def GetCredentials(self):
+    def get_credentials(self):
         """ A method to prompt user to provide a valid username and RSA token
         to log in to NBS. Must """
         self.username = input('Enter your SOM username ("first_name.last_name"):')
         self.passcode = input('Enter your RSA passcode:')
 
-    def LogIn(self):
+    def log_in(self):
         """ Log in to NBS. """
         self.get(self.site)
         self.switch_to.frame("contentFrame")
@@ -53,17 +53,17 @@ class NBSdriver(webdriver.Chrome):
         WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a')))
         self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
 
-    def GoToID(self, id):
+    def go_to_id(self, id):
         """ Navigate to specifc patient by NBS ID from Home. """
         self.find_element(By.XPATH,'//*[@id="DEM229"]').send_keys(id)
         self.find_element(By.XPATH,'//*[@id="patientSearchByDetails"]/table[2]/tbody/tr[8]/td[2]/input[1]').click()
         self.find_element(By.XPATH,'//*[@id="searchResultsTable"]/tbody/tr/td[1]/a').click()
 
-    def GoToEvents(self):
+    def go_to_events(self):
         """ Within patient profile navigate to the Events tab. """
         self.find_element(By.XPATH,'//*[@id="tabs0head1"]').click()
 
-    def GoToHome(self):
+    def go_to_home(self):
         """ Go to NBS Home page. """
         xpath = '//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a'
         for attempt in range(self.num_attempts):
@@ -130,7 +130,7 @@ class NBSdriver(webdriver.Chrome):
 
         for attempt in range(self.num_attempts):
             try:
-                self.GoToHome()
+                self.go_to_home()
                 self.GoToApprovalQueue()
                 self.queue_loaded = True
                 break

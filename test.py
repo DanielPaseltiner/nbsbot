@@ -8,8 +8,8 @@ def generator():
 
 NBS = COVIDnotificationreview(production=True)
 #NBS = COVIDnotificationreview()
-NBS.GetCredentials()
-NBS.LogIn()
+NBS.get_credentials()
+NBS.log_in()
 NBS.GoToApprovalQueue()
 
 #num_cases = int(input('Enter the number of cases to review:'))

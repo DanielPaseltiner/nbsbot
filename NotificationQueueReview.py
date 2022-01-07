@@ -3,10 +3,10 @@ from NBSdriver import NBSdriver
 import time
 
 test = NBSdriver(production=True)
-test.LogIn()
+test.log_in()
 
 NBS = NotificationQueueReview(production=False)
-NBS.LogIn()
+NBS.log_in()
 def RunTest(NBS):
     NBS.Reset()
 
