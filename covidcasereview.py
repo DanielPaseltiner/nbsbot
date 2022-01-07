@@ -123,7 +123,7 @@ class COVIDcasereview(NBSdriver):
         if not self.investigator:
             non_white_races = ['Black or African American', 'Asian', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander']
             if any(non_white_race in race for non_white_race in non_white_races):
-                self.isues.append('Race is non-white, case should be assigned for investigation.')
+                self.issues.append('Race is non-white, case should be assigned for investigation.')
 
 ################### Investigation Details Check Methods ########################
     def CheckJurisdiction(self):
@@ -235,6 +235,7 @@ class COVIDcasereview(NBSdriver):
         reporting_organization = self.ReadText('//*[@id="INV183"]')
         if not reporting_organization:
             self.issues.append('Reporting organization is blank.')
+
 ############### Preforming Lab Check Methods ##################################
     def CheckPreformingLaboratory(self):
         """ Ensure that preforming laboratory is not empty. """
