@@ -121,11 +121,11 @@ class COVIDcasereview(NBSdriver):
         # Race should only be unknown if no other options are selected.
         ambiguous_answers = ['Unknown', 'Other', 'Refused to answer', 'Not Asked']
         for answer in ambiguous_answers:
-            if (answer in race) and (race != answer):
+            if (answer in self.race) and (self.race != answer):
                 self.issues.append('"'+ answer + '"' + ' selected in addition to other options for race.')
 
     def CheckNonWhiteRace(self):
-        """Ensure that all racially non-white cases are assigned for investigation."""  
+        """Ensure that all racially non-white cases are assigned for investigation."""
         if not self.investigator:
             non_white_races = ['Black or African American', 'Asian', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander']
             if any(non_white_race in self.race for non_white_race in non_white_races):
