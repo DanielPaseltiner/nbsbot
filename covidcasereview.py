@@ -108,21 +108,27 @@ class COVIDcasereview(NBSdriver):
 ############ Ethnicity and Race Information Check Methods #####################
     def CheckEthnicity(self):
         """ Must provide ethnicity. """
-        ethnicity = self.CheckForValue('//*[@id="DEM155"]','Ethnicity is blank.')
-        if (not self.investigator) & (ethnicity == 'Hispanic or Latino'):
+        self.ethnicity = self.CheckForValue('//*[@id="DEM155"]','Ethnicity is blank.')
+
+    def CheckNonWhiteEthnicity(self):
+        """Ensure that all ehthnicaly non-white cases are assigned for investigation."""
+        if (not self.investigator) & (self.ethnicity == 'Hispanic or Latino'):
             self.issues.append('Case is Hispanic or Latinx and should be assigned for investigation.')
 
     def CheckRace(self):
         """ Must provide race and selection must make sense. """
-        race = self.CheckForValue('//*[@id="patientRacesViewContainer"]','Race is blank.')
+        self.race = self.CheckForValue('//*[@id="patientRacesViewContainer"]','Race is blank.')
         # Race should only be unknown if no other options are selected.
         ambiguous_answers = ['Unknown', 'Other', 'Refused to answer', 'Not Asked']
         for answer in ambiguous_answers:
             if (answer in race) and (race != answer):
                 self.issues.append('"'+ answer + '"' + ' selected in addition to other options for race.')
+
+    def CheckNonWhiteRace(self):
+        """Ensure that all racially non-white cases are assigned for investigation."""  
         if not self.investigator:
             non_white_races = ['Black or African American', 'Asian', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander']
-            if any(non_white_race in race for non_white_race in non_white_races):
+            if any(non_white_race in self.race for non_white_race in non_white_races):
                 self.issues.append('Race is non-white, case should be assigned for investigation.')
 
 ################### Investigation Details Check Methods ########################
