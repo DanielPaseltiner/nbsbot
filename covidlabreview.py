@@ -15,8 +15,29 @@ class COVIDlabreview(NBSdriver):
         """ Read information required to connect to the NBS database."""
         self.nbs_db_driver = self.config.get('NBSdb', 'driver')
         self.nbs_db_server = self.config.get('NBSdb', 'server')
-        self.nbs_db_name = self.config.get('NBSdb', 'database')
+        self.nbs_rdb_name = self.config.get('NBSdb', 'rdb')
+        self.nbs_odse_name = self.config.get('NBSdb', 'odse')
         self.nbs_unassigned_covid_lab_table = self.config.get('NBSdb', 'unassigned_covid_lab_table')
+        self.nbs_patient_list_view = self.config.get('NBSdb', 'patient_list_view')
+
+    def get_patient_table(self):
+        """ Execute a view in the nbs_odse database to return all patients in
+        NBS including firt name, last name, birth date, and parent id. This data
+        is then stored in a DataFrame for future use."""
+
+        # Connect to database
+        print(f'Connecting to {self.nbs_db_name} database...')
+        Connection = pyodbc.connect(f"Driver={{self.nbs_db_driver}};"
+                              fr"Server={self.nbs_db_server};"
+                              f"Database={self.nbs_ods_name};"
+                              "Trusted_Connection=yes;")
+
+        # Execute query and close connection
+        print (f'Connected to {self.nbs_db_name}. Executing query...')
+        query = f'SELECT * FROM {self.nbs_patient_list_view}'
+        self.patient_list = pd.read_sql_query(query, Connection)
+        Connection.close()
+        print ('Data recieved and database connection closed.')
 
     def get_unassigned_covid_labs(self):
         """ Connect to the analyis NBS database and execute a query to return a
@@ -72,9 +93,9 @@ class COVIDlabreview(NBSdriver):
         query = " ".join(['SELECT', variables, 'FROM', self.nbs_unassigned_covid_lab_table, where, order_by] )
         # Connect to database
         print(f'Connecting to {self.nbs_db_name} database...')
-        Connection = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
-                              r"Server=sql-dhhs-nbs-prod.som.w2k.state.me.us\NBS;"
-                              "Database=rdb;"
+        Connection = pyodbc.connect(f"Driver={{self.nbs_db_driver}};"
+                              fr"Server={self.nbs_db_server};"
+                              f"Database={self.nbs_rdb_name};"
                               "Trusted_Connection=yes;")
         # Execute query and close connection
         print (f'Connected to {self.nbs_db_name}. Executing query...')
@@ -127,6 +148,7 @@ class COVIDlabreview(NBSdriver):
             self.min_delay = 0
         else:
             self.min_delay = int(self.min_delay)
+
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)
