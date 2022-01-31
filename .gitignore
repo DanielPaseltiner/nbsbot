@@ -1,3 +1,4 @@
 .exe
-.cfg
+*.pyo
+*.pyc
 env\
