@@ -7,13 +7,10 @@ def generator():
         yield
 
 NBS = COVIDnotificationreview(production=True)
-#NBS = COVIDnotificationreview()
 NBS.get_credentials()
 NBS.log_in()
 NBS.GoToApprovalQueue()
 
-#num_cases = int(input('Enter the number of cases to review:'))
-#for i in tqdm(range(num_cases)):
 attempt_counter = 0
 for _ in tqdm(generator()):
     NBS.SortApprovalQueue()
@@ -68,4 +65,3 @@ for _ in tqdm(generator()):
             print("No COVID-19 cases in notification queue.")
             NBS.SendManualReviewEmail()
             NBS.Sleep()
-#print(f'notifications approved: {NBS.num_approved}\nnotifications rejected: {NBS.num_rejected}\nnotifications failed: {NBS.num_fail}')
