@@ -15,6 +15,7 @@ import time
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
+import configparser
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -120,7 +121,6 @@ class NBSdriver(webdriver.Chrome):
         except (TimeoutException, ElementClickInterceptedException):
             self.HandleBadQueueReturn()
 
-
     def HandleBadQueueReturn(self):
         """ When a request is sent to NBS to load or filter the approval queue
         and "Nothing found to display", or anything other than the populated
@@ -160,7 +160,6 @@ class NBSdriver(webdriver.Chrome):
             WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_first_name)))
         except TimeoutException:
             self.HandleBadQueueReturn()
-
 
     def GoToCaseInfo(self):
         """ Within a COVID investigation navigate to the Case Info tab. """
@@ -229,6 +228,7 @@ class NBSdriver(webdriver.Chrome):
         print('Sleeping for: 00:00', end='\r', flush=True)
 
     def SendEmail (self, recipient, cc, subject, message, attachment = None):
+        """ Send an email using local Outlook client."""
         self.ClearGenPy()
         outlook = win32.Dispatch('outlook.application')
         mail = outlook.CreateItem(0)
@@ -242,6 +242,8 @@ class NBSdriver(webdriver.Chrome):
         mail.Send()
 
     def ClearGenPy(self):
+        """ Clear the contents of the the gen_py directory to ensure emails can
+        always be sent."""
         # Construct to path gen_py directory if it exists.
         current_user = getpass.getuser().lower()
         gen_py_path = r'C:\Users' +'\\' + current_user + '\AppData\Local\Temp\gen_py'
@@ -250,3 +252,8 @@ class NBSdriver(webdriver.Chrome):
         # If gen_py exists delete it and all contents.
         if gen_py_path.exists() and gen_py_path.is_dir():
             rmtree(gen_py_path)
+
+    def read_config(self):
+        """ Read in data from config.cfg"""
+        self.config = configparser.ConfigParser()
+        self.config.read('config.cfg')
