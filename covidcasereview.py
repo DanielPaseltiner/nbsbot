@@ -9,17 +9,16 @@ class COVIDcasereview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
     methods for reviewing COVID case investigations for data accuracy and completeness. """
     def __init__(self, production=False):
+        super(COVIDcasereview, self).__init__(production)
         self.Reset()
+        self.read_config()
         self.GetObInvNames()
         self.not_a_case_log = []
         self.lab_data_issues_log = []
-        super(COVIDcasereview, self).__init__(production)
 
     def GetObInvNames(self):
-        """ Read list of congregate setting outbreak investigators from config file. """
-        outbreak_investigators = configparser.ConfigParser()
-        outbreak_investigators.read('cong_outbreak_investigators.cfg')
-        self.outbreak_investigators = outbreak_investigators.get('OutbreakInvestigators', 'Investigators').split(', ')
+        """ Read list of congregate setting outbreak investigators from config.cfg. """
+        self.outbreak_investigators = self.config.get('OutbreakInvestigators', 'Investigators').split(', ')
 
     def Reset(self):
         """ Clear values of attributes assigned during case investigation review.
@@ -689,7 +688,7 @@ class COVIDcasereview(NBSdriver):
         """ Ever recieved vaccine should only be no when case not LTFU. """
         self.vax_recieved = self.ReadText('//*[@id="VAC126"]')
         if (self.vax_recieved == 'No') & (self.ltf != 'No'):
-            self.issues.append('Unless lost to follow up is "No" vaccine recieved cannot be "No".')
+            self.issues.append("If LTF == 'Yes' or blank, Vaccine Received must be blank or 'Yes'.")
         elif (self.ltf == 'No') & (not self.vax_recieved):
             self.issues.append('If the case is not lost to follow up then vaccine recieved must be answered.')
         elif self.vax_recieved == 'Yes':
@@ -780,7 +779,7 @@ class COVIDcasereview(NBSdriver):
     def GetCollectionDate(self):
         """Find earliest collection date by reviewing associated labs"""
         if self.labs['Date Received'][0] == 'Nothing found to display.':
-            self.report_date = datetime(1900, 1, 1).date()
+            self.collection_date = datetime(1900, 1, 1).date()
         else:
             # Check for any associated labs missing collection date:
             # 1. Set collection date to 01/01/2100 to avoid type errors.
