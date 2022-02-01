@@ -26,16 +26,16 @@ class COVIDlabreview(NBSdriver):
         is then stored in a DataFrame for future use."""
 
         # Connect to database
-        print(f'Connecting to {self.nbs_db_name} database...')
-        Connection = pyodbc.connect(f"Driver={{self.nbs_db_driver}};"
+        print(f'Connecting to {self.nbs_odse_name} database...')
+        Connection = pyodbc.connect("Driver={" + self.nbs_db_driver + "};"
                               fr"Server={self.nbs_db_server};"
-                              f"Database={self.nbs_ods_name};"
+                              f"Database={self.nbs_odse_name};"
                               "Trusted_Connection=yes;")
-
         # Execute query and close connection
-        print (f'Connected to {self.nbs_db_name}. Executing query...')
-        query = f'SELECT * FROM {self.nbs_patient_list_view}'
+        print (f'Connected to {self.nbs_odse_name}. Executing query...')
+        query = f'SELECT PERSON_PARENT_UID, UPPER(FIRST_NM) AS FIRST_NM, UPPER(LAST_NM) AS LAST_NM, BIRTH_DT FROM {self.nbs_patient_list_view} WHERE (FIRST_NM IS NOT NULL) AND (LAST_NM IS NOT NULL) AND (BIRTH_DT IS NOT NULL)'
         self.patient_list = pd.read_sql_query(query, Connection)
+        self.patient_list = self.patient_list.drop_duplicates(ignore_index=True)
         Connection.close()
         print ('Data recieved and database connection closed.')
 
@@ -49,10 +49,11 @@ class COVIDlabreview(NBSdriver):
         self.get_db_connection_info()
         variables = ('Lab_Local_ID'
                         ,'CAST(Lab_Rpt_Received_By_PH_Dt AS DATE) AS Lab_Rpt_Received_By_PH_Dt'
+                        ,'CAST(Specimen_Coll_DT AS DATE) AS Specimen_Coll_DT'
                         ,'Perform_Facility_Name'
-                        ,'First_Name'
-                        ,'Middle_Name'
-                        ,'Last_Name'
+                        ,'UPPER(First_Name) AS First_Name'
+                        ,'UPPER(Middle_Name) AS Middle_Name'
+                        ,'UPPER(Last_Name) AS Last_Name'
                         ,'Patient_Local_ID'
                         ,'Current_Sex_Cd'
                         ,'CAST(Birth_Dt AS DATE) AS Birth_Dt'
@@ -67,11 +68,8 @@ class COVIDlabreview(NBSdriver):
                         ,'Address_Two'
                         ,'City'
                         ,'State'
-                        ,'CASE WHEN (County_Desc IS NOT NULL) THEN County_Desc '
-                        'WHEN (Ordering_Provider_County_Desc IS NOT NULL) THEN Ordering_Provider_County_Desc '
-                        'WHEN (Ordering_Facility_County_Desc IS NOT NULL) THEN Ordering_Facility_County_Desc '
-                        'WHEN (Reporting_Facility_County_Desc IS NOT NULL) THEN Reporting_Facility_County_Desc '
-                        'END AS county'
+                        ,'County_Desc'
+                        ,'Jurisdiction_Nm'
                         ,'Reporting_Facility_Name'
                         ,'EMPLOYED_IN_HEALTHCARE'
                         ,'ILLNESS_ONSET_DATE'
@@ -80,30 +78,30 @@ class COVIDlabreview(NBSdriver):
                         ,'RESIDENT_CONGREGATE_SETTING'
                         ,'SYMPTOMATIC_FOR_DISEASE'
                         ,'TestType'
-                        ,'DATEDIFF(DAY, Lab_Rpt_Received_By_PH_Dt, GETDATE()) AS review_delay'
+                        ,'DATEDIFF(DAY, Specimen_Coll_DT, GETDATE()) AS review_delay'
                         )
         variables = ', '.join(variables)
         # If a lab is not positive an investigation should not be created for it.
         # All cases with AOEs indicating hospitalization, or death should be assigned out for investigation. These cases should not be opened and closed.
-        where = "WHERE (Result_Category = 'Positive') AND (HOSPITALIZED IS NULL OR UPPER(HOSPITALIZED) NOT LIKE 'Y%') AND (ICU IS NULL OR UPPER(ICU) NOT LIKE 'Y%') AND (Patient_Death_Ind IS NULL OR UPPER(Patient_Death_Ind) NOT LIKE 'Y%')"
+        where = "WHERE (Result_Category = 'Positive') AND (TestType IN ('PCR', 'Antigen')) AND (HOSPITALIZED IS NULL OR UPPER(HOSPITALIZED) NOT LIKE 'Y%') AND (ICU IS NULL OR UPPER(ICU) NOT LIKE 'Y%') AND (Patient_Death_Ind IS NULL OR UPPER(Patient_Death_Ind) NOT LIKE 'Y%')"
         if self.min_delay:
             where = where + f'AND (DATEDIFF(DAY, Lab_Rpt_Received_By_PH_Dt ,GETDATE())) >= {self.min_delay}'
         order_by = 'ORDER BY Lab_Rpt_Received_By_PH_Dt'
         # Construct Query
         query = " ".join(['SELECT', variables, 'FROM', self.nbs_unassigned_covid_lab_table, where, order_by] )
         # Connect to database
-        print(f'Connecting to {self.nbs_db_name} database...')
-        Connection = pyodbc.connect(f"Driver={{self.nbs_db_driver}};"
+        print(f'Connecting to {self.nbs_rdb_name} database...')
+        Connection = pyodbc.connect("Driver={" + self.nbs_db_driver + "};"
                               fr"Server={self.nbs_db_server};"
                               f"Database={self.nbs_rdb_name};"
                               "Trusted_Connection=yes;")
         # Execute query and close connection
-        print (f'Connected to {self.nbs_db_name}. Executing query...')
+        print (f'Connected to {self.nbs_rdb_name}. Executing query...')
         self.unassociated_labs = pd.read_sql_query(query, Connection)
-        self.unassociated_labs.county = self.unassociated_labs.county.str.replace(' County', '')
+        self.unassociated_labs.County_Desc = self.unassociated_labs.County_Desc.str.replace(' County', '')
         Connection.close()
         if self.counties:
-            self.unassociated_labs = self.unassociated_labs[self.unassociated_labs.county.isin(self.counties)].reset_index(drop=True)
+            self.unassociated_labs = self.unassociated_labs[self.unassociated_labs.Jurisdiction_Nm.isin(self.counties)].reset_index(drop=True)
         print ('Data recieved and database connection closed.')
 
     def select_counties(self):
@@ -149,8 +147,17 @@ class COVIDlabreview(NBSdriver):
         else:
             self.min_delay = int(self.min_delay)
 
+    def check_for_possible_merges(self, fname, lname, dob):
+        """ Given a patient's first name, last name, and dob search for possible matches amoung all patients in NBS."""
+
+        self.matches = self.patient_list.loc[(self.patient_list.FIRST_NM.str[:2] == fname[:2]) & (self.patient_list.LAST_NM.str[:2] == lname[:2]) & (self.patient_list.BIRTH_DT == dob)]
+        self.unique_profiles = self.matches.PERSON_PARENT_UID.unique()
+        if len(self.unique_profiles) >= 2:
+            self.possible_merges = True
+        else:
+            self.possible_merges = False
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)
     NBS.get_unassigned_covid_labs()
-    NBS.unassociated_labs
+    NBS.get_patient_table()
