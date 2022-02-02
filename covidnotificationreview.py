@@ -240,8 +240,6 @@ class COVIDnotificationreview(COVIDcasereview):
     def SendManualReviewEmail(self):
         """ Send email containing NBS IDs that required manual review."""
         if (len(self.not_a_case_log) > 0) | (len(self.lab_data_issues_log) > 0):
-            recipient = 'MeCDC.COVIDCommander@maine.gov'
-            cc = 'daniel.paseltiner@maine.gov'
             subject = 'Cases Requiring Manual Review'
             email_name = 'manual review email'
             body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
