@@ -5,3 +5,4 @@ pywin32==303
 selenium==4.1.0
 tqdm==4.62.3
 lxml==4.7.1
+html5lib==1.1
