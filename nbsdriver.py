@@ -16,11 +16,14 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
 import configparser
+import smtplib
+from email.message import EmailMessage
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
         self.production = production
+        self.read_config()
         if self.production:
             self.site = 'https://nbs.iphis.maine.gov/'
         else:
@@ -227,9 +230,9 @@ class NBSdriver(webdriver.Chrome):
             time.sleep(1)
         print('Sleeping for: 00:00', end='\r', flush=True)
 
-    def SendEmail (self, recipient, cc, subject, message, attachment = None):
+    def send_email_local_outlook_client (self, recipient, cc, subject, message, attachment = None):
         """ Send an email using local Outlook client."""
-        self.ClearGenPy()
+        self.clear_gen_py()
         outlook = win32.Dispatch('outlook.application')
         mail = outlook.CreateItem(0)
         mail.GetInspector
@@ -241,7 +244,7 @@ class NBSdriver(webdriver.Chrome):
             mail.Attachments.Add(attachment)
         mail.Send()
 
-    def ClearGenPy(self):
+    def clear_gen_py(self):
         """ Clear the contents of the the gen_py directory to ensure emails can
         always be sent."""
         # Construct to path gen_py directory if it exists.
@@ -257,3 +260,26 @@ class NBSdriver(webdriver.Chrome):
         """ Read in data from config.cfg"""
         self.config = configparser.ConfigParser()
         self.config.read('config.cfg')
+
+    def get_email_info(self):
+        """ Read information required for NBSbot to send emails via an smtp
+        server to various email lists."""
+        self.smtp_server = self.config.get('email', 'smtp_server')
+        self.nbsbot_email = self.config.get('email', 'nbs_bot_email')
+        self.covid_informatics_list = self.config.get('email', 'covid_informatics_list')
+        self.covid_admin_list = self.config.get('email', 'covid_admin_list')
+        self.covid_commander = self.config.get('email', 'covid_commander')
+
+    def send_smtp_email(self, receiver, subject, body, email_name):
+        """ Send emails using an SMTP server """
+        message = EmailMessage()
+        message.set_content(body)
+        message['Subject'] = subject
+        message['From'] = self.nbsbot_email
+        message['To'] = ', ',join([receiver, self.covid_informatics_list])
+        try:
+           smtpObj = smtplib.SMTP(self.smtp_server)
+           smtpObj.send_message(message)
+           print(f"Successfully sent {email_name}.")
+        except SMTPException:
+           print(f"Error: unable to send {email_name}.")

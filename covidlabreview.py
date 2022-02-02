@@ -9,7 +9,6 @@ class COVIDlabreview(NBSdriver):
 
     def __init__(self, production=False):
         super(COVIDlabreview, self).__init__(production)
-        self.read_config()
 
     def get_db_connection_info(self):
         """ Read information required to connect to the NBS database."""

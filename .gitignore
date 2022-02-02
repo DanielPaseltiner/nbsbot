@@ -2,3 +2,4 @@
 *.pyo
 *.pyc
 env\
+smtptest.py

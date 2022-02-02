@@ -243,13 +243,15 @@ class COVIDnotificationreview(COVIDcasereview):
             recipient = 'MeCDC.COVIDCommander@maine.gov'
             cc = 'daniel.paseltiner@maine.gov'
             subject = 'Cases Requiring Manual Review'
-            message = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
+            email_name = 'manual review email'
+            body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
             for id in self.not_a_case_log:
-                message = message + f'\n{id}'
-            message = message + '\n\nAssociated lab issues:'
+                body = body + f'\n{id}'
+            body = body + '\n\nAssociated lab issues:'
             for id in self.lab_data_issues_log:
-                message = message + f'\n{id}'
-            message = message + '\n\n-Nbsbot'
-            self.SendEmail(recipient, cc, subject, message)
+                body = body + f'\n{id}'
+            body = body + '\n\n-Nbsbot'
+            #self.send_smtp_email(recipient, cc, subject, body)
+            self.send_smtp_email(self.covid_commander, subject, body, email_name)
             self.not_a_case_log = []
             self.lab_data_issues_log = []
