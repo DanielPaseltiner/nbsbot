@@ -18,12 +18,14 @@ from selenium.common.exceptions import ElementClickInterceptedException
 import configparser
 import smtplib
 from email.message import EmailMessage
+from selenium.webdriver.common.by import By
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
         self.production = production
         self.read_config()
+        self.get_email_info()
         if self.production:
             self.site = 'https://nbs.iphis.maine.gov/'
         else:
@@ -39,6 +41,7 @@ class NBSdriver(webdriver.Chrome):
         self.queue_loaded = None
         self.wait_before_timeout = 30
         self.sleep_duration = 3300 #Value in seconds
+
 
 ########################### NBS Navigation Methods ############################
     def get_credentials(self):
@@ -172,6 +175,30 @@ class NBSdriver(webdriver.Chrome):
         """ Within a COVID investigation navigate to the COVID tab. """
         self.find_element(By.XPATH,'//*[@id="tabs0head2"]').click()
 
+    def go_to_lab(self, lab_id):
+        """ Navigate to a lab from a patient profile navigate to a lab. """
+        lab_report_table_path = '//*[@id="lab1"]'
+        lab_report_table = self.ReadTableToDF(lab_report_table_path)
+        if len(lab_report_table) > 1:
+            lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
+            lab_row_index = str(int(lab_row_index) + 1)
+            lab_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[5]/div/table/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/a'
+        else:
+            lab_path = '/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[5]/div/table/tbody/tr/td/table/tbody/tr/td[1]/a'
+        self.find_element(By.XPATH,lab_path).click()
+
+    def read_investigation_table(self):
+        """ Read the investigations table in the Events tab of a patient profile
+        of all investigations on record, both open and closed."""
+        investigation_table_path = '//*[@id="inv1"]'
+        investigation_table = self.ReadTableToDF(investigation_table_path)
+        investigation_table['Start Date'] = pd.to_datetime(investigation_table['Start Date'])
+        return investigation_table
+
+    def click_submit(self):
+        """ Click submit button to save changes."""
+        submit_button_path = '//*[@id="Submit"]'
+        self.find_element(By.XPATH, submit_button_path).click()
 ############################# Data Reading/Validation Methods ##################################
 
     def CheckForValue(self, xpath, blank_message):
@@ -265,7 +292,7 @@ class NBSdriver(webdriver.Chrome):
         """ Read information required for NBSbot to send emails via an smtp
         server to various email lists."""
         self.smtp_server = self.config.get('email', 'smtp_server')
-        self.nbsbot_email = self.config.get('email', 'nbs_bot_email')
+        self.nbsbot_email = self.config.get('email', 'nbsbot_email')
         self.covid_informatics_list = self.config.get('email', 'covid_informatics_list')
         self.covid_admin_list = self.config.get('email', 'covid_admin_list')
         self.covid_commander = self.config.get('email', 'covid_commander')
@@ -276,7 +303,7 @@ class NBSdriver(webdriver.Chrome):
         message.set_content(body)
         message['Subject'] = subject
         message['From'] = self.nbsbot_email
-        message['To'] = ', ',join([receiver, self.covid_informatics_list])
+        message['To'] = ', '.join([receiver, self.covid_informatics_list, 'daniel.paseltiner@maine.gov', 'sara.robinson@maine.gov'])
         try:
            smtpObj = smtplib.SMTP(self.smtp_server)
            smtpObj.send_message(message)

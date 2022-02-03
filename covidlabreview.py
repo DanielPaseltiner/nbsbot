@@ -147,7 +147,8 @@ class COVIDlabreview(NBSdriver):
             self.min_delay = int(self.min_delay)
 
     def check_for_possible_merges(self, fname, lname, dob):
-        """ Given a patient's first name, last name, and dob search for possible matches amoung all patients in NBS."""
+        """ Given a patient's first name, last name, and dob search for possible
+        matches amoung all patients in NBS."""
 
         self.matches = self.patient_list.loc[(self.patient_list.FIRST_NM.str[:2] == fname[:2]) & (self.patient_list.LAST_NM.str[:2] == lname[:2]) & (self.patient_list.BIRTH_DT == dob)]
         self.unique_profiles = self.matches.PERSON_PARENT_UID.unique()
@@ -155,6 +156,71 @@ class COVIDlabreview(NBSdriver):
             self.possible_merges = True
         else:
             self.possible_merges = False
+
+    def check_for_existing_investigation(self, collection_date):
+        """ Review the Investigations table in the Events tab of a patient profile
+        to determine if the case already has an existing investigation. """
+        investigation_table = self.read_investigation_table()
+        investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (x-collection_date).days)
+        existing_investgations = investigation_table[(investigation_table.days_prior <= 90)
+                                & (investigation_table.condition == '2019 Novel Coronavirus (2019-nCoV)')]
+        self.num_investigations = len(existing_investgations)
+        if self.num_investigations >= 1:
+            self.existing_investigation_index = existing_investgations.index.tolist()[0]
+            self.existing_investigation_index = str(int(self.existing_investigation_index) + 1)
+        else:
+            self.existing_investigation_index = None
+
+    def check_patient_status(self):
+        """ Check Patient Status at Specimen Collection from inside a lab report.
+        Occasionally there are cases that indicate a status of 'inpatient' without an AOE inidicating a hospitalization.
+        In this case the bot will not open and closed a case, but instead leave the lab for human review."""
+        patient_status = self.ReadText(self, 'xpath').upper()
+        if patient_status in ['HOSPITALIZED', 'INPATIENT']:
+            self.possible_hospitalization = True
+        else:
+            self.possible_hospitalization = False
+
+    def create_investigation(self):
+        """Create a new investigation from within a lab report when one does not already exist ."""
+        create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
+        self.find_element(By.XPATH, create_investigation_button_path).click()
+        select_condition_field_path = '//*[@id="ccd_ac_table"]/tbody/tr[1]/td/input'
+        condition = '2019 Novel Coronavirus (2019-nCoV)'
+        self.find_element(By.XPATH, select_condition_field_path).send_keys(condition)
+        self.click_submit()
+
+    def go_to_existing_investigation(self):
+        """Navigate to an existing investigation that a lab in question should be associated with."""
+        existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr{self.existing_investigation_index}/td[1]/a'
+        self.find_element(By.XPATH, existing_investigation_path).click()
+
+    def associate_lab_with_investigation(self):
+        """Associate a lab with an existing investigation when one for the case has already been started."""
+        manage_associations_path = '//*[@id="manageAssociations"]'
+        self.find_element(By.XPATH, manage_associations_path).click()
+        lab_report_table_path = '//*[@id="lablist"]'
+        lab_report_table = self.ReadTableToDF(lab_report_table_path)
+        if len(lab_report_table) > 1:
+            lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
+            lab_row_index = str(int(lab_row_index) + 1)
+            lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
+        self.find_element(By.XPATH,lab_path).click()
+        self.click_submit()
+
+    def go_to_lab(self, lab_id):
+        """ Navigate to a lab from a patient profile navigate to a lab. """
+        lab_report_table_path = '//*[@id="lab1"]'
+        lab_report_table = self.ReadTableToDF(lab_report_table_path)
+        if len(lab_report_table) > 1:
+            lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
+            lab_row_index = str(int(lab_row_index) + 1)
+            lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
+        else:
+            lab_path = '/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[5]/div/table/tbody/tr/td/table/tbody/tr/td[1]/a'
+        self.find_element(By.XPATH,lab_path).click()
+
+
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)
