@@ -2,6 +2,7 @@ from nbsdriver import NBSdriver
 import configparser
 import pyodbc
 import pandas as pd
+from selenium.webdriver.common.by import By
 
 class COVIDlabreview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
@@ -171,7 +172,7 @@ class COVIDlabreview(NBSdriver):
         else:
             self.existing_investigation_index = None
 
-    def check_patient_status(self):
+    def check_patient_hospitalization_status(self):
         """ Check Patient Status at Specimen Collection from inside a lab report.
         Occasionally there are cases that indicate a status of 'inpatient' without an AOE inidicating a hospitalization.
         In this case the bot will not open and closed a case, but instead leave the lab for human review."""
@@ -192,13 +193,14 @@ class COVIDlabreview(NBSdriver):
 
     def go_to_existing_investigation(self):
         """Navigate to an existing investigation that a lab in question should be associated with."""
-        existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr{self.existing_investigation_index}/td[1]/a'
+        if self.num_investigations > 1:
+            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr[{self.existing_investigation_index}]/td[1]/a'
+        else:
+            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a'
         self.find_element(By.XPATH, existing_investigation_path).click()
 
-    def associate_lab_with_investigation(self):
+    def associate_lab_with_investigation(self, lab_id):
         """Associate a lab with an existing investigation when one for the case has already been started."""
-        manage_associations_path = '//*[@id="manageAssociations"]'
-        self.find_element(By.XPATH, manage_associations_path).click()
         lab_report_table_path = '//*[@id="lablist"]'
         lab_report_table = self.ReadTableToDF(lab_report_table_path)
         if len(lab_report_table) > 1:
@@ -206,7 +208,6 @@ class COVIDlabreview(NBSdriver):
             lab_row_index = str(int(lab_row_index) + 1)
             lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
         self.find_element(By.XPATH,lab_path).click()
-        self.click_submit()
 
     def go_to_lab(self, lab_id):
         """ Navigate to a lab from a patient profile navigate to a lab. """
@@ -218,9 +219,49 @@ class COVIDlabreview(NBSdriver):
             lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
         else:
             lab_path = '/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[5]/div/table/tbody/tr/td/table/tbody/tr/td[1]/a'
-        self.find_element(By.XPATH,lab_path).click()
+        self.find_element(By.XPATH, lab_path).click()
 
+    def query_immpact(self):
+        """ Click the query registry button, submit the query to immpact, and read the results into a DataFrame."""
+        query_registry_button = '//*[@id="events3"]/tbody/tr/td/div/input[1]'
+        self.find_element(By.XPATH, query_registry_button).click()
+        self.switch_to_secondary_window()
+        submit_query = '//*[@id="doc4"]/div[2]/input[1]'
+        self.find_element(By.XPATH, submit_query).click()
+        self.switch_to_secondary_window()
+        results_table_path = '//*[@id="section1"]/div/table'
+        results_table = self.ReadTableToDF(results_table_path)
+        if len(results_table) == 1:
+            record_path = '//*[@id="parent"]/tbody/tr/td[1]/a'
+            self.find_element(By.XPATH, record_path).click()
+            self.switch_to_secondary_window()
+            vax_table_path = '//*[@id="section1"]/div/table[2]'
+            self.vax_table = self.ReadTableToDF(vax_table_path)
+        else:
+            print('Immpact returned more than one patient as a possible. Unable to proceed with the automated query.')
 
+    def id_covid_vaccinations(self):
+        """Identify COVID vaccines by their specific brand."""
+        covid_vax_dict = {'Pfizer':'COVID-19, mRNA, LNP-S, PF, 30 mcg/0.3 mL dose','Moderna':'COVID-19, mRNA, LNP-S, PF, 100 mcg/0.5 mL dose', 'JJ':'COVID-19 vaccine, vector-nr, rS-Ad26, PF, 0.5 mL'}
+        for key in covid_vax_dict.keys():
+            self.vax_table[key] = self.vax_table['Vaccine Administered'].apply(lambda x: covid_vax_dict[key] in x)
+
+    def import_covid_vaccinations(self):
+        """ Select COVID vaccinations in the list returned by Immpact and import them."""
+        covid_vax_indexes = self.vax_table.loc[self.vax_table.Pfizer | self.vax_table.Moderna | self.vax_table.JJ].index
+        num_covid_vaccinations = len(covid_vax_indexes)
+        if num_covid_vaccinations > 0:
+            if (len(vax_table) == 1) & (len(covid_vax_indexes) == 1):
+                select_path = '/html/body/form/div[2]/div/div[4]/div/table[2]/tbody/tr/td/table/tbody/tr/td[1]/input'
+                self.find_element(By.XPATH, select_path).click()
+            else:
+                for idx in covid_vax_indexes:
+                    select_path = f'/html/body/form/div[2]/div/div[4]/div/table[2]/tbody/tr/td/table/tbody/tr[{idx}]/td[1]/input'
+                    self.find_element(By.XPATH, select_path).click()
+            import_path = '/html/body/form/div[2]/div/div[6]/input[1]'
+            self.find_element(By.XPATH, import_path).click()
+
+    #def determine_vaccination_status(self):
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)

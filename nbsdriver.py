@@ -199,6 +199,11 @@ class NBSdriver(webdriver.Chrome):
         """ Click submit button to save changes."""
         submit_button_path = '//*[@id="Submit"]'
         self.find_element(By.XPATH, submit_button_path).click()
+
+    def manage_associations(self):
+        """ Click button to navigate to the Manage Associations page from an investigation."""
+        manage_associations_path = '//*[@id="manageAssociations"]'
+        self.find_element(By.XPATH, manage_associations_path).click()
 ############################# Data Reading/Validation Methods ##################################
 
     def CheckForValue(self, xpath, blank_message):
@@ -310,3 +315,17 @@ class NBSdriver(webdriver.Chrome):
            print(f"Successfully sent {email_name}.")
         except SMTPException:
            print(f"Error: unable to send {email_name}.")
+
+    def get_main_window_handle(self):
+        """ Run after login to identify and store the main window handle that the handles for pop-up windows can be differentiated."""
+        self.main_window_handle = self.current_window_handle
+
+    def switch_to_secondary_window(self):
+        """ Set a secondary window as the current window in order to interact with the pop up."""
+        new_window_handle = None
+        for handle in self.window_handles:
+            if handle != self.main_window_handle:
+                new_window_handle = handle
+                break
+        if new_window_handle:
+            self.switch_to.window(new_window_handle)
