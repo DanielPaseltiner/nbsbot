@@ -133,7 +133,6 @@ class NBSdriver(webdriver.Chrome):
         queue is returned, navigate back to the home page and request the queue
         again."""
         # Recursion seems like a good idea here, but if the queue is truly empty there will be nothing to display and recursion will result in a stack overflow.
-
         for attempt in range(self.num_attempts):
             try:
                 self.go_to_home()
@@ -329,3 +328,15 @@ class NBSdriver(webdriver.Chrome):
                 break
         if new_window_handle:
             self.switch_to.window(new_window_handle)
+
+    def select_checkbox(self, xpath):
+        """ Ensure the a given checkbox or radio button is selected. If not selected then click it to select."""
+        checkbox = self.find_element(By.XPATH, xpath)
+        if not checkbox.is_selected():
+            checkbox.click()
+
+    def unselect_checkbox(self, xpath):
+        """ Ensure the a given checkbox or radio button is not selected. If selected then click it to un-select."""
+        checkbox = self.find_element(By.XPATH, xpath)
+        if checkbox.is_selected():
+            checkbox.click()
