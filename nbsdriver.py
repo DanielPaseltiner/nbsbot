@@ -27,6 +27,7 @@ class NBSdriver(webdriver.Chrome):
         self.production = production
         self.read_config()
         self.get_email_info()
+        self.get_usps_user_id()
         if self.production:
             self.site = 'https://nbs.iphis.maine.gov/'
         else:
@@ -195,6 +196,11 @@ class NBSdriver(webdriver.Chrome):
         investigation_table['Start Date'] = pd.to_datetime(investigation_table['Start Date'])
         return investigation_table
 
+    def return_to_patient_profile(self):
+        """ Go back to the patient profile from within an investigation."""
+        return_to_file_path = '//*[@id="bd"]/div[1]/a'
+        self.find_element(By.XPATH, submit_button_path).click()
+
     def click_submit(self):
         """ Click submit button to save changes."""
         submit_button_path = '//*[@id="Submit"]'
@@ -302,6 +308,11 @@ class NBSdriver(webdriver.Chrome):
         self.covid_admin_list = self.config.get('email', 'covid_admin_list')
         self.covid_commander = self.config.get('email', 'covid_commander')
 
+    def get_usps_user_id(self):
+        """ Extract the USPS User ID from the config file for later use in the
+        zip_code_lookup() method."""
+        self.usps_user_id = self.config.get('usps', 'user_id')
+
     def send_smtp_email(self, receiver, subject, body, email_name):
         """ Send emails using an SMTP server """
         message = EmailMessage()
@@ -344,7 +355,7 @@ class NBSdriver(webdriver.Chrome):
 
     def county_lookup(self, city, state):
         """ Use the Nominatim geocode service via the geopy API to look up the county of a given town/city and state."""
-        geolocator = Nominatim()
+        geolocator = Nominatim(user_agent = 'nbsbot')
         location = geolocator.geocode(city + ', ' + state)
         location = location[0].split(', ')
         county = [x for x in location if 'County' in x]
@@ -353,3 +364,21 @@ class NBSdriver(webdriver.Chrome):
         else:
             county = ''
         return county
+
+    def zip_code_lookup(self, street, city, state):
+        """ Given a street address, city, and state use the USPS API via the usps
+        Python package to lookup the associated zip code."""
+        address = Address(
+            name='',
+            address_1=street,
+            city=city,
+            state=state,
+            zipcode=''
+        )
+        usps = USPSApi(self.usps_user_id, test=True)
+        validation = usps.validate_address(address)
+        if not 'Address Not Found' in json.dumps(validation.result):
+            zip_code = validation.result['AddressValidateResponse']['Address']['Zip5']
+        else:
+            zip_code = ''
+        return zip_code
