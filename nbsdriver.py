@@ -19,6 +19,7 @@ import configparser
 import smtplib
 from email.message import EmailMessage
 from selenium.webdriver.common.by import By
+from geopy.geocoders import Nominatim
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -340,3 +341,15 @@ class NBSdriver(webdriver.Chrome):
         checkbox = self.find_element(By.XPATH, xpath)
         if checkbox.is_selected():
             checkbox.click()
+
+    def county_lookup(self, city, state):
+        """ Use the Nominatim geocode service via the geopy API to look up the county of a given town/city and state."""
+        geolocator = Nominatim()
+        location = geolocator.geocode(city + ', ' + state)
+        location = location[0].split(', ')
+        county = [x for x in location if 'County' in x]
+        if len(county) == 1:
+            county = county[0].split(' ')[0]
+        else:
+            county = ''
+        return county
