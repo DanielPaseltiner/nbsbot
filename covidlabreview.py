@@ -5,6 +5,7 @@ import pandas as pd
 from selenium.webdriver.common.by import By
 from datetime import datetime
 from epiweeks import Week
+import keyboard
 
 class COVIDlabreview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
@@ -13,6 +14,23 @@ class COVIDlabreview(NBSdriver):
     def __init__(self, production=False):
         super(COVIDlabreview, self).__init__(production)
         self.reset()
+        self.incomplete_address_log = []
+        self.unambigous_races = ['American Indian or Alaska Native'
+                                  ,'Asian'
+                                  ,'Black or African American'
+                                  ,'Native Hawaiian or Other Pacific Islander'
+                                  ,'White']
+        # The xpaths are set here because they are required by multiple methods. This creates one maintenance point in the event of future change.
+        self.unambiguous_race_paths = ['//*[@id="NBS_UI_9"]/tbody/tr[2]/td[2]/input'
+                                      ,'//*[@id="NBS_UI_9"]/tbody/tr[3]/td[2]/input'
+                                      ,'//*[@id="NBS_UI_9"]/tbody/tr[4]/td[2]/input'
+                                      ,'//*[@id="NBS_UI_9"]/tbody/tr[5]/td[2]/input'
+                                      ,'//*[@id="NBS_UI_9"]/tbody/tr[6]/td[2]/input']
+        self.ethnicity_path = '//*[@id="NBS_UI_9"]/tbody/tr[1]/td[2]/input'
+        self.street_path = '//*[@id="DEM159"]'
+        self.city_path = '//*[@id="DEM161"]'
+        self.zip_path = '//*[@id="DEM163"]'
+        self.county_path = '//*[@id="NBS_UI_15"]/tbody/tr[6]/td[2]/input'
 
     def reset(self):
         """ Clear values of attributes assigned during case investigation review.
@@ -20,12 +38,7 @@ class COVIDlabreview(NBSdriver):
 
         self.now = datetime.now().date()
         self.now_str = today = self.now.strftime('%m/%d/%Y')
-        self.missing_address = []
-        self.issue = []
-        self.possible_merges = None
         self.address_complete = None
-        self.possible_hospitalization = None
-        self.num_investigations = None
         self.existing_investigation_index = None
         self.vax_table = None
         self.covid_vaccinations = None
@@ -33,6 +46,16 @@ class COVIDlabreview(NBSdriver):
         self.num_doses_prior_to_onset = None
         self.last_dose_date = None
         self.current_collection_date = None
+        self.street = None
+        self.city = None
+        self.county = None
+        self.zip_code = None
+        self.unambiguous_race = None
+        self.ethnicity = None
+        self.demo_address = None
+        self.demo_race = None
+        self.demo_ethnicity = None
+        self.investigation_id = None
 
     def get_db_connection_info(self):
         """ Read information required to connect to the NBS database."""
@@ -55,8 +78,8 @@ class COVIDlabreview(NBSdriver):
                               f"Database={self.nbs_odse_name};"
                               "Trusted_Connection=yes;")
         # Execute query and close connection
-        print (f'Connected to {self.nbs_odse_name}. Executing query...')
-        query = f'SELECT PERSON_PARENT_UID, UPPER(FIRST_NM) AS FIRST_NM, UPPER(LAST_NM) AS LAST_NM, BIRTH_DT FROM {self.nbs_patient_list_view} WHERE (FIRST_NM IS NOT NULL) AND (LAST_NM IS NOT NULL) AND (BIRTH_DT IS NOT NULL)'
+        print (f'RETRIEVE NBS PATIENT LIST:\nConnected to {self.nbs_odse_name}. Executing query...')
+        query = f"SELECT PERSON_PARENT_UID, UPPER(FIRST_NM) AS FIRST_NM, UPPER(LAST_NM) AS LAST_NM, BIRTH_DT FROM {self.nbs_patient_list_view} WHERE (FIRST_NM IS NOT NULL) AND (LAST_NM IS NOT NULL) AND (BIRTH_DT IS NOT NULL) AND (RECORD_STATUS_CD = 'ACTIVE')"
         self.patient_list = pd.read_sql_query(query, Connection)
         self.patient_list = self.patient_list.drop_duplicates(ignore_index=True)
         Connection.close()
@@ -93,16 +116,20 @@ class COVIDlabreview(NBSdriver):
                         ,'State'
                         ,'County_Desc'
                         ,'Jurisdiction_Nm'
-                        ,'Perform_Facility_Name'
                         ,'EMPLOYED_IN_HEALTHCARE'
+                        ,'HOSPITALIZED'
                         ,'ILLNESS_ONSET_DATE'
                         ,'PATIENT_AGE'
                         ,'PREGNANT'
                         ,'RESIDENT_CONGREGATE_SETTING'
                         ,'SYMPTOMATIC_FOR_DISEASE'
-                        ,'CAST(ILLNESS_ONSET_DATE AS DATE) AS ILLNESS_ONSET_DATE'
+                        ,"CASE WHEN ILLNESS_ONSET_DATE LIKE '[0-9][0-9][/-][0-9][0-9][/-][0-9][0-9][0-9][0-9]' THEN CAST(ILLNESS_ONSET_DATE AS DATE) "
+		                "WHEN ILLNESS_ONSET_DATE LIKE '[0-9][0-9][0-9][0-9][/-][0-9][0-9][/-][0-9][0-9]' THEN CAST(ILLNESS_ONSET_DATE AS DATE) "
+		                "WHEN ILLNESS_ONSET_DATE LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' THEN CAST(ILLNESS_ONSET_DATE AS DATE) "
+		                "ELSE NULL END AS ILLNESS_ONSET_DATE"
+                        ,'FIRST_RESPONDER'
                         ,'TestType'
-                        ,'DATEDIFF(DAY, Specimen_Coll_DT, GETDATE()) AS review_delay'
+                        ,'DATEDIFF(DAY, CAST(Specimen_Coll_DT AS DATE), GETDATE()) AS review_delay'
                         )
         variables = ', '.join(variables)
         # If a lab is not positive an investigation should not be created for it.
@@ -114,7 +141,7 @@ class COVIDlabreview(NBSdriver):
         # Construct Query
         query = " ".join(['SELECT', variables, 'FROM', self.nbs_unassigned_covid_lab_table, where, order_by] )
         # Connect to database
-        print(f'Connecting to {self.nbs_rdb_name} database...')
+        print(f'RETRIEVE UNASSOCIATED LAB LIST:\nConnecting to {self.nbs_rdb_name} database...')
         Connection = pyodbc.connect("Driver={" + self.nbs_db_driver + "};"
                               fr"Server={self.nbs_db_server};"
                               f"Database={self.nbs_rdb_name};"
@@ -126,6 +153,7 @@ class COVIDlabreview(NBSdriver):
         Connection.close()
         if self.counties:
             self.unassociated_labs = self.unassociated_labs[self.unassociated_labs.Jurisdiction_Nm.isin(self.counties)].reset_index(drop=True)
+        self.unassociated_labs.Patient_Local_ID = self.unassociated_labs.Patient_Local_ID.apply(self.clean_patient_id)
         print ('Data recieved and database connection closed.')
 
     def select_counties(self):
@@ -174,54 +202,60 @@ class COVIDlabreview(NBSdriver):
     def check_for_possible_merges(self, fname, lname, dob):
         """ Given a patient's first name, last name, and dob search for possible
         matches amoung all patients in NBS."""
-
         matches = self.patient_list.loc[(self.patient_list.FIRST_NM.str[:2] == fname[:2]) & (self.patient_list.LAST_NM.str[:2] == lname[:2]) & (self.patient_list.BIRTH_DT == dob)]
         unique_profiles = matches.PERSON_PARENT_UID.unique()
         if len(unique_profiles) >= 2:
-            self.possible_merges = True
+            possible_merges = True
         else:
-            self.possible_merges = False
-
-    def check_for_existing_investigation(self, collection_date):
-        """ Review the Investigations table in the Events tab of a patient profile
-        to determine if the case already has an existing investigation. """
-        investigation_table = self.read_investigation_table()
-        investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (x-collection_date).days)
-        existing_investgations = investigation_table[(investigation_table.days_prior <= 90)
-                                & (investigation_table.condition == '2019 Novel Coronavirus (2019-nCoV)')]
-        self.num_investigations = len(existing_investgations)
-        if self.num_investigations >= 1:
-            self.existing_investigation_index = existing_investgations.index.tolist()[0]
-            self.existing_investigation_index = str(int(self.existing_investigation_index) + 1)
-        else:
-            self.existing_investigation_index = None
+            possible_merges = False
+        return possible_merges
 
     def check_patient_hospitalization_status(self):
         """ Check Patient Status at Specimen Collection from inside a lab report.
         Occasionally there are cases that indicate a status of 'inpatient' without an AOE inidicating a hospitalization.
         In this case the bot will not open and closed a case, but instead leave the lab for human review."""
-        patient_status = self.ReadText(self, 'xpath').upper()
+        patient_status_path = '//*[@id="NBS_LAB330"]'
+        patient_status = self.ReadText(patient_status_path).upper()
         if patient_status in ['HOSPITALIZED', 'INPATIENT']:
-            self.possible_hospitalization = True
+            possible_hospitalization = True
         else:
-            self.possible_hospitalization = False
+            possible_hospitalization = False
+        return possible_hospitalization
+
+    def check_for_existing_investigation(self, collection_date):
+        """ Review the Investigations table in the Events tab of a patient profile
+        to determine if the case already has an existing investigation. """
+        investigation_table = self.read_investigation_table()
+        if investigation_table:
+            investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (x.date()-collection_date).days)
+            existing_investigations = investigation_table[(investigation_table.days_prior <= 90)
+                                    & (investigation_table.Condition == '2019 Novel Coronavirus (2019-nCoV)')]
+            if len(existing_investigations) >= 1:
+                self.existing_investigation_index = existing_investigations.index.tolist()[0]
+                self.existing_investigation_index = int(self.existing_investigation_index) + 1
+                inv_found = True
+                if len(existing_investigations.loc[existing_investigations['Case Status'] == 'Not a Case']) > 0:
+                    existing_not_a_case = True
+                else:
+                    existing_not_a_case = False
+            else:
+                self.existing_investigation_index = None
+                inv_found = False
+                existing_not_a_case = False
+        else:
+            inv_found = False
+            existing_not_a_case = False
+        return inv_found, existing_not_a_case
 
     def create_investigation(self):
         """Create a new investigation from within a lab report when one does not already exist ."""
-        create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
+        create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[2]'
         self.find_element(By.XPATH, create_investigation_button_path).click()
         select_condition_field_path = '//*[@id="ccd_ac_table"]/tbody/tr[1]/td/input'
         condition = '2019 Novel Coronavirus (2019-nCoV)'
         self.find_element(By.XPATH, select_condition_field_path).send_keys(condition)
-        self.click_submit()
-
-    def go_to_existing_investigation(self):
-        """Navigate to an existing investigation that a lab in question should be associated with."""
-        if self.num_investigations > 1:
-            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr[{self.existing_investigation_index}]/td[1]/a'
-        else:
-            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a'
-        self.find_element(By.XPATH, existing_investigation_path).click()
+        submit_button_path = '/html/body/table/tbody/tr/td/table/tbody/tr[3]/td/table/thead/tr[2]/td/div/table/tbody/tr/td/table/tbody/tr/td[4]/table[1]/tbody/tr[1]/td/input'
+        self.find_element(By.XPATH, submit_button_path).click()
 
     def associate_lab_with_investigation(self, lab_id):
         """Associate a lab with an existing investigation when one for the case has already been started."""
@@ -232,18 +266,6 @@ class COVIDlabreview(NBSdriver):
             lab_row_index = str(int(lab_row_index) + 1)
             lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
         self.find_element(By.XPATH,lab_path).click()
-
-    def go_to_lab(self, lab_id):
-        """ Navigate to a lab from a patient profile navigate to a lab. """
-        lab_report_table_path = '//*[@id="lab1"]'
-        lab_report_table = self.ReadTableToDF(lab_report_table_path)
-        if len(lab_report_table) > 1:
-            lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
-            lab_row_index = str(int(lab_row_index) + 1)
-            lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
-        else:
-            lab_path = '/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[5]/div/table/tbody/tr/td/table/tbody/tr/td[1]/a'
-        self.find_element(By.XPATH, lab_path).click()
 
     def query_immpact(self):
         """ Click the query registry button, submit the query to immpact, and read the results into a DataFrame."""
@@ -261,8 +283,14 @@ class COVIDlabreview(NBSdriver):
             self.switch_to_secondary_window()
             vax_table_path = '//*[@id="section1"]/div/table[2]'
             self.vax_table = self.ReadTableToDF(vax_table_path)
+            good_query = True
         else:
+            good_query = False
             print('Immpact returned more than one patient as a possible. Unable to proceed with the automated query.')
+            cancel_path = '//*[@id="bd""]/div[1]/input'
+            self.find_element(By.XPATH, cancel_path).click()
+            keyboard.press_and_release('enter')
+        return good_query
 
     def id_covid_vaccinations(self):
         """Identify COVID vaccines by their specific brand."""
@@ -301,56 +329,141 @@ class COVIDlabreview(NBSdriver):
         else:
             self.full_vaccinated = False
 
-    def check_address(self):
-        """ Check if city, zip code, county, and country fields are complete."""
-        address_paths = {'City':'//*[@id="DEM161"]'
-                        ,'Zip':'//*[@id="DEM163"]'
-                        ,'County':'//*[@id="NBS_UI_15"]/tbody/tr[6]/td[2]/input'
-                        ,'Country':'//*[@id="NBS_UI_15"]/tbody/tr[7]/td[2]/input'}
-        self.issues = []
-        for addr_part, path in address_paths.items():
-            self.CheckForValue(path, f'{addr_part} is blank.')
-        if self.issues:
-            self.address_complete = False
-        else:
-            self.address_complete = True
+    def read_street(self):
+        """ Read the current street address."""
+        self.street = self.find_element(By.XPATH, self.street_path).get_attribute('value')
+
+    def read_city(self):
+        """Read the current city/town."""
+        self.city = self.find_element(By.XPATH, self.city_path).get_attribute('value')
+
+    def read_zip(self):
+        """Read the current zip code. """
+        self.zip_code = self.find_element(By.XPATH, self.zip_path).get_attribute('value')
+
+    def write_zip(self):
+        """Write zip code. Intended for use after looking up a missing zip code with zip_code_lookup()."""
+        self.find_element(By.XPATH, self.zip_path).send_keys(self.zip_code)
+
+    def read_county(self):
+        """Read the current county. """
+        self.county = self.find_element(By.XPATH, self.county_path).get_attribute('value')
+
+    def write_county(self):
+        """Write county. Intended for use after looking up a missing missing count with county_lookup()."""
+        self.find_element(By.XPATH, self.county_path).send_keys(self.county)
+
+    def read_address(self):
+        """ Read parts of the patient address except for state and country."""
+        self.read_street()
+        self.read_city()
+        self.read_zip()
+        self.read_county()
+
+    def set_state(self, state):
+        """Set state value in patient address."""
+        path = '//*[@id="NBS_UI_15"]/tbody/tr[4]/td[2]/input'
+        self.find_element(By.XPATH, path).clear()
+        self.find_element(By.XPATH, path).send_keys(state)
+
+    def set_country(self, country):
+        """Set country value in patient address."""
+        path = '//*[@id="NBS_UI_15"]/tbody/tr[7]/td[2]/input'
+        self.find_element(By.XPATH, path).clear()
+        self.find_element(By.XPATH, path).send_keys(country)
 
     def check_ethnicity(self):
         """ Check if ethnicity is completed and if not set the values to unknown."""
-        ethnicity_path = '//*[@id="NBS_UI_9"]/tbody/tr[1]/td[2]/input'
-        ethnicity = self.ReadText(ethnicity_path)
-        if not ethnicity:
-            self.find_element(By.XPATH, ethnicity_path).send_keys('unknown')
+        self.ethnicity = self.ReadText(self.ethnicity_path)
+        if not self.ethnicity:
+            self.find_element(By.XPATH, self.ethnicity_path).send_keys('unknown')
 
     def clear_ambiguous_race_answers(self):
         """ Ensure all ambiguous race answers (refused to answer, not answered, and unknown) are not selected."""
-        ambiguous_answer_paths = ['//*[@id="NBS_UI_9"]/tbody/tr[10]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[11]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[12]/td[2]/input']
+        ambiguous_answer_paths = ['//*[@id="NBS_UI_9"]/tbody/tr[8]/td[2]/input'
+                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[9]/td[2]/input'
+                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[10]/td[2]/input']
         for path in ambiguous_answer_paths:
             self.unselect_checkbox(path)
 
     def check_race(self):
-        unambiguous_race_paths = ['//*[@id="NBS_UI_9"]/tbody/tr[2]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[3]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[4]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[5]/td[2]/input'
-                                 ,'//*[@id="NBS_UI_9"]/tbody/tr[6]/td[2]/input']
+        """Review current race value. If any combination of non-ambiguous options
+        are selection make sure all other choice are not selected. Accept "other"
+        only when no unambigious answer is present. When race is not clearly
+        defined or other set value to unknown."""
         other_race_path = '//*[@id="NBS_UI_9"]/tbody/tr[7]/td[2]/input'
         unknown_race_path = '//*[@id="NBS_UI_9"]/tbody/tr[12]/td[2]/input'
-        for path in unambiguous_race_paths:
+        for path in self.unambiguous_race_paths:
             if self.find_element(By.XPATH, path).is_selected():
-                unambiguous_race = True
+                self.unambiguous_race = True
                 break
             else:
-                unambiguous_race = False
+                self.unambiguous_race = False
         self.clear_ambiguous_race_answers()
-        if unambiguous_race:
+        if self.unambiguous_race:
             self.unselect_checkbox(other_race_path)
         elif self.find_element(By.XPATH, other_race_path).is_selected():
             self.select_checkbox(other_race_path)
         else:
             self.find_element(By.XPATH, unknown_race_path).click()
+
+    def read_demographic_address(self, state=''):
+        """ Read address table from the demographics tab of a patient profile and
+        select the most recent address from within the last year that is consistent
+        with all parts of the address reported in the current lab report."""
+        address_table_path = '//*[@id="patSearch8"]'
+        address_table = self.ReadTableToDF(address_table_path)
+        address_table['As of'] = pd.to_datetime(address_table['As of'], format = "%m/%d/%Y")
+        address_table = address_table.loc[address_table['As of'] >= (self.now - datetime.timedelta(days=365))]
+        if self.street:
+            address_table = address_table.loc[address_table.Address.str.upper() == self.street.upper()]
+        if self.city:
+            address_table = address_table.loc[address_table.City.str.upper() == self.city.upper()]
+        if state:
+            address_table = address_table.loc[address_table.State == 'Maine']
+        if self.zip:
+            address_table = address_table.loc[address_table.Zip.map(str) == self.street]
+        if len(address_table) > 0:
+            self.demo_address = address_table.iloc[0]
+
+    def write_demographic_address(self):
+        """ After reading an address from the demographics tab, moving back into
+        an investigation, and entering edit mode, write the data to the address
+        fields."""
+        self.find_element(By.XPATH, self.street_path).send_keys(self.demo_address.Address[0])
+        self.find_element(By.XPATH, self.city_path).send_keys(self.demo_address.City[0])
+        self.find_element(By.XPATH, self.zip_path).send_keys(str(self.demo_address.Zip[0]))
+        self.find_element(By.XPATH, self.county_path).send_keys(self.demo_address.Address[0])
+
+    def read_demographic_race(self):
+        """Read the race table in the demographics tab and select the most recent
+        nonambigous value, if present."""
+        race_table_path = '//*[@id="patSearch14"]'
+        race_table = self.ReadTableToDF(race_table_path)
+        all_race_values = race_table.Race.tolist()
+        unambiguous_race_values = [x for x in all_race_values if any(y for y in self.unambigous_races in x)]
+        if unambiguous_race_values:
+            self.demo_race = unambiguous_race_values[0]
+
+    def write_demographic_race(self):
+        """ After reading a race from the demographics tab, moving back into an
+        investigation, and entering edit mode, write the data to the race field."""
+        for race, path in zip(self.unambigous_races, self.unambiguous_race_paths):
+            if race in self.demo_race:
+                self.find_element(By.XPATH, path).send_keys(race)
+
+    def read_demographic_ethnicity(self):
+        """Read the ethnicity table in the demographics tab and select the most
+        recent non-unknown value, if present."""
+        ethnicity_path = '//*[@id="NBS108"]'
+        ethnicity = self.ReadText(ethnicity_path)
+        if ethnicity in ['Hispanic or Latino', 'Not Hispanic or Latino']:
+            self.demo_ethnicity = ethnicty
+
+    def write_demographic_ethnicity(self):
+        """ After reading an ethnicity from the demographics tab, moving back into an
+        investigation, and entering edit mode, write the data to the ethnicity field."""
+        self.find_element(By.XPATH, self.ethnicity_path).send_keys(self.demo_ethnicity)
 
     def set_investigation_start_date(self):
         """ Set investigation start date to today."""
@@ -360,6 +473,7 @@ class COVIDlabreview(NBSdriver):
     def set_investigation_status_closed(self):
         """Set investigation status to closed."""
         investigation_status_path = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/input'
+        self.find_element(By.XPATH, investigation_status_path).clear()
         self.find_element(By.XPATH, investigation_status_path).send_keys('Closed')
 
     def set_state_case_id(self):
@@ -367,6 +481,11 @@ class COVIDlabreview(NBSdriver):
         state_case_id_path = '//*[@id="INV173"]'
         patient_id = self.ReadPatientID()
         self.find_element(By.XPATH, state_case_id_path).send_keys(patient_id)
+
+    def read_investigation_id(self):
+        """ From within an investigation read the investigation id."""
+        investigation_id_path = '/html/body/div/div/form/div[2]/div[1]/table[3]/tbody/tr[2]/td[1]/span[2]'
+        self.investigation_id = self.ReadText(investigation_id_path)
 
     def set_county_and_state_report_dates(self, report_to_ph_date):
         """ Set Earliest Date Reported to County and Earliest Date Reported to
@@ -391,32 +510,30 @@ class COVIDlabreview(NBSdriver):
         the collection date of the current lab. This additional check allows this
         method to be used when creating investigations or associating labs with
         existing investigations."""
-
-        colletion_date_path = '//*[@id="NBS550"]'
+        collection_date_path = '//*[@id="NBS550"]'
         self.current_collection_date = self.ReadDate(collection_date_path)
-        if not current_collection_date:
+        if (not self.current_collection_date) | (lab_collection_date <= self.current_collection_date):
             self.current_collection_date = lab_collection_date
             lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, colletion_date_path).send_keys(lab_collection_date)
-        elif lab_collection_date <= current_collection_date:
-            self.current_collection_date = lab_collection_date
-            lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, colletion_date_path).send_keys(lab_collection_date)
+            self.find_element(By.XPATH, collection_date_path).clear()
+            self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
 
     def set_case_status(self, status):
         """ Set all three fields related to case status based on the provided status."""
         current_status_path = '//*[@id="NBS_UI_GA21015"]/tbody/tr[3]/td[2]/input'
         probable_reason_path = '//*[@id="NBS_UI_GA21015"]/tbody/tr[4]/td[2]/input'
         case_status_path = '//*[@id="NBS_UI_2"]/tbody/tr[5]/td[2]/input'
-
         if status == 'Confirmed':
             current_status = 'Laboratory-confirmed case'
             probable_reason = ''
         elif status == 'Probable':
             current_status = 'Probable Case'
             probable_reason == 'Meets Presump Lab and Clinical or Epi'
+        self.find_element(By.XPATH, current_status_path).clear()
         self.find_element(By.XPATH, current_status_path).send_keys(current_status)
+        self.find_element(By.XPATH, probable_reason_path).clear()
         self.find_element(By.XPATH, probable_reason_path).send_keys(probable_reason)
+        self.find_element(By.XPATH, case_status_path).clear()
         self.find_element(By.XPATH, case_status_path).send_keys(status)
 
     def review_case_status(self, lab_type):
@@ -424,10 +541,10 @@ class COVIDlabreview(NBSdriver):
         accordingly. This method can be used for creating investigations or
         associating additional labs with existing investigations."""
         case_status_path = '//*[@id="NBS_UI_2"]/tbody/tr[5]/td[2]/input'
-        currect_case_status = self.ReadText(case_status_path)
+        current_case_status = self.ReadText(case_status_path)
         if lab_type == 'PCR':
             self.set_case_status('Confirmed')
-        elif not current_case_status:
+        elif lab_type == 'Antigen':
             self.set_case_status('Probable')
 
     def update_aoe(self, aoe_path, lab_aoe):
@@ -435,13 +552,13 @@ class COVIDlabreview(NBSdriver):
         its current value and the value in the current lab. An affirmative
         response in either the investigation or the lab takes precedence, followed
         by negative, unknown, and null responses respectively."""
-          investigation_aoe = self.ReadText(case_status_path)
-          if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
-              self.find_element(By.XPATH, aoe_path).send_keys('Yes')
-          elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
-              self.find_element(By.XPATH, aoe_path).send_keys('No')
-          elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
-              self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
+        investigation_aoe = self.ReadText(aoe_path)
+        if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
+          self.find_element(By.XPATH, aoe_path).send_keys('Yes')
+        elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
+          self.find_element(By.XPATH, aoe_path).send_keys('No')
+        elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
+          self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
 
     def update_all_aoes(self, hosp_aoe, cong_aoe, responder_aoe, hcw_aoe, pregnant_aoe):
         """ For every AOE except symptom status apply the update_aoe() method."""
@@ -450,8 +567,9 @@ class COVIDlabreview(NBSdriver):
                          ,'//*[@id="ME59137"]/tbody/tr[1]/td[2]/input' : responder_aoe
                          ,'//*[@id="UI_ME59106"]/tbody/tr[1]/td[2]/input' : hcw_aoe
                          ,'//*[@id="ME58100"]/tbody/tr[1]/td[2]/input' : pregnant_aoe}
-        for aoe_path, aoe_valye in aoe_dictionary.items():
-            self.update_aoe(aoe_path, aoe_value)
+        for aoe_path, aoe_value in aoe_dictionary.items():
+            if aoe_value:
+                self.update_aoe(aoe_path, aoe_value)
 
     def update_symptom_aoe(self, lab_symptom_aoe, lab_onset_date):
         """ Update symptom status based on values in an investigation and values
@@ -471,9 +589,9 @@ class COVIDlabreview(NBSdriver):
             self.find_element(By.XPATH, symptom_path).send_keys('Yes')
             lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
             self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
-        elif (investigation_symtom_status == 'No') | (lab_symptom_aoe[0].upper() == 'N')::
+        elif (investigation_symtom_status == 'No') | (lab_symptom_aoe[0].upper() == 'N'):
             self.find_element(By.XPATH, symptom_path).send_keys('No')
-        elif (investigation_symtom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U')::
+        elif (investigation_symtom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U'):
             self.find_element(By.XPATH, symptom_path).send_keys('Unknown')
 
     def set_confirmation_date(self):
@@ -498,7 +616,7 @@ class COVIDlabreview(NBSdriver):
             self.find_element(By.XPATH, vaccinated_path).send_keys('Yes')
             num_doses = str(self.num_doses_prior_to_onset)
             self.find_element(By.XPATH, num_dose_path).send_keys(num_doses)
-            last_dose_date = self.last_dose_date..strftime('%m/%d/%Y')
+            last_dose_date = self.last_dose_date.strftime('%m/%d/%Y')
             self.find_element(By.XPATH, last_dose_path).send_keys(last_dose_date)
             if self.fully_vaccinated:
                 self.find_element(By.XPATH, fully_vax_path).send_keys('Yes')
@@ -518,7 +636,6 @@ class COVIDlabreview(NBSdriver):
         year = str(mmwr_date.year)
         self.find_element(By.XPATH, week_path).send_keys(week)
         self.find_element(By.XPATH, year_path).send_keys(year)
-
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)

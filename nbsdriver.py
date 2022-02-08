@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -20,6 +21,8 @@ import smtplib
 from email.message import EmailMessage
 from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
+from usps import USPSApi, Address
+import keyboard
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -67,6 +70,15 @@ class NBSdriver(webdriver.Chrome):
         self.find_element(By.XPATH,'//*[@id="DEM229"]').send_keys(id)
         self.find_element(By.XPATH,'//*[@id="patientSearchByDetails"]/table[2]/tbody/tr[8]/td[2]/input[1]').click()
         self.find_element(By.XPATH,'//*[@id="searchResultsTable"]/tbody/tr/td[1]/a').click()
+
+    def clean_patient_id(self, patient_id):
+        """Remove the leading and trailing characters from local patient
+        ids to leave an id that is searchable in through the front end of NBS."""
+        if patient_id[0:4] == 'PSN1':
+            patient_id = patient_id[4:len(patient_id)-4]
+        elif patient_id[0:4] == 'PSN2':
+            patient_id = '1' + patient_id[4:len(patient_id)-4]
+        return patient_id
 
     def go_to_events(self):
         """ Within patient profile navigate to the Events tab. """
@@ -193,20 +205,53 @@ class NBSdriver(webdriver.Chrome):
         of all investigations on record, both open and closed."""
         investigation_table_path = '//*[@id="inv1"]'
         investigation_table = self.ReadTableToDF(investigation_table_path)
-        investigation_table['Start Date'] = pd.to_datetime(investigation_table['Start Date'])
+        if investigation_table:
+            investigation_table['Start Date'] = pd.to_datetime(investigation_table['Start Date'])
         return investigation_table
 
-    def return_to_patient_profile(self):
+    def go_to_investigation_by_index(self, index):
+        """Navigate to an existing investigation based on its position in the
+        Investigations table in the Events tab of a patient profile."""
+        if index > 1:
+            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr[{str(index)}]/td[1]/a'
+        elif index == 1:
+            existing_investigation_path = f'/html/body/div[2]/form/div/table[4]/tbody/tr[2]/td/div[2]/table/tbody/tr/td/div[1]/div[3]/div/table/tbody/tr[2]/td/table/tbody/tr/td[1]/a'
+        self.find_element(By.XPATH, existing_investigation_path).click()
+
+    def go_to_investigation_by_id(self, inv_id):
+        """Navigate to an investigation with a given id from a patient profile."""
+        inv_table = self.read_investigation_table()
+        inv_row = inv_table[inv_table['Investigation ID'] == inv_id]
+        inv_index = int(inv_row.index.to_list()[0]) + 1
+        self.got_to_investigation_by_index(inv_index)
+
+    def return_to_patient_profile_from_inv(self):
         """ Go back to the patient profile from within an investigation."""
         return_to_file_path = '//*[@id="bd"]/div[1]/a'
-        self.find_element(By.XPATH, submit_button_path).click()
+        self.find_element(By.XPATH, return_to_file_path).click()
+
+    def return_to_patient_profile_from_lab(self):
+        """ Go back to the patient profile from within a lab report."""
+        return_to_file_path = '//*[@id="doc3"]/div[1]/a'
+        self.find_element(By.XPATH, return_to_file_path).click()
 
     def click_submit(self):
         """ Click submit button to save changes."""
-        submit_button_path = '//*[@id="Submit"]'
+        submit_button_path = '/html/body/div/div/form/div[2]/div[1]/table[2]/tbody/tr/td[2]/table/tbody/tr/td[1]/input'
         self.find_element(By.XPATH, submit_button_path).click()
 
-    def manage_associations(self):
+    def enter_edit_mode(self):
+        """From within an investigation click the edit button to enter edit mode."""
+        edit_button_path = '/html/body/div/div/form/div[2]/div[1]/table[2]/tbody/tr/td[2]/table/tbody/tr/td[1]/input'
+        self.find_element(By.XPATH, edit_button_path).click()
+
+    def click_cancel(self):
+        """ Click cancel."""
+        cancel_path = '//*[@id="Cancel"]'
+        self.find_element(By.XPATH, cancel_path).click()
+        keyboard.press_and_release('enter')
+
+    def go_to_manage_associations(self):
         """ Click button to navigate to the Manage Associations page from an investigation."""
         manage_associations_path = '//*[@id="manageAssociations"]'
         self.find_element(By.XPATH, manage_associations_path).click()
@@ -219,6 +264,15 @@ class NBSdriver(webdriver.Chrome):
         if not value:
             self.issues.append(blank_message)
         return value
+
+    def check_for_value_bool(self, path):
+        """ Return boolean value based on whether a value is present."""
+        value = self.ReadText(path)
+        if value:
+            check = True
+        else:
+            check = False
+        return check
 
     def ReadDate(self, xpath):
         """ Read date from NBS and return a datetime.date object. """
@@ -249,10 +303,13 @@ class NBSdriver(webdriver.Chrome):
 
     def ReadTableToDF(self, xpath):
         """ A method to read tables into pandas Data Frames for easy manipulation. """
-        html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
-        soup = BeautifulSoup(html, 'html.parser')
-        table = pd.read_html(str(soup))[0]
-        table.fillna('', inplace = True)
+        try:
+            html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
+            soup = BeautifulSoup(html, 'html.parser')
+            table = pd.read_html(str(soup))[0]
+            table.fillna('', inplace = True)
+        except ValueError:
+            table = None
         return table
 
     def ReadPatientID(self):
