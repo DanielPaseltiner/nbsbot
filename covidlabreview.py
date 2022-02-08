@@ -72,13 +72,13 @@ class COVIDlabreview(NBSdriver):
         is then stored in a DataFrame for future use."""
 
         # Connect to database
-        print(f'Connecting to {self.nbs_odse_name} database...')
+        print(f'RETRIEVE NBS PATIENT LIST:\nConnecting to {self.nbs_odse_name} database...')
         Connection = pyodbc.connect("Driver={" + self.nbs_db_driver + "};"
                               fr"Server={self.nbs_db_server};"
                               f"Database={self.nbs_odse_name};"
                               "Trusted_Connection=yes;")
         # Execute query and close connection
-        print (f'RETRIEVE NBS PATIENT LIST:\nConnected to {self.nbs_odse_name}. Executing query...')
+        print (f'Connected to {self.nbs_odse_name}. Executing query...')
         query = f"SELECT PERSON_PARENT_UID, UPPER(FIRST_NM) AS FIRST_NM, UPPER(LAST_NM) AS LAST_NM, BIRTH_DT FROM {self.nbs_patient_list_view} WHERE (FIRST_NM IS NOT NULL) AND (LAST_NM IS NOT NULL) AND (BIRTH_DT IS NOT NULL) AND (RECORD_STATUS_CD = 'ACTIVE')"
         self.patient_list = pd.read_sql_query(query, Connection)
         self.patient_list = self.patient_list.drop_duplicates(ignore_index=True)
