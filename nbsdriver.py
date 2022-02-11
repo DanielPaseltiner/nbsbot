@@ -87,10 +87,14 @@ class NBSdriver(webdriver.Chrome):
 
     def go_to_events(self):
         """ Within patient profile navigate to the Events tab. """
-        self.find_element(By.XPATH,'//*[@id="tabs0head1"]').click()
+        events_path = '//*[@id="tabs0head1"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, events_path)))
+        self.find_element(By.XPATH, events_path).click()
 
     def go_to_demographics(self):
         """ Within a patient profile navigate to the Demographics tab."""
+        demographics_path = '//*[@id="tabs0head2"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, demographics_path)))
         self.find_element(By.XPATH,'//*[@id="tabs0head2"]').click()
 
     def go_to_home(self):
@@ -191,11 +195,15 @@ class NBSdriver(webdriver.Chrome):
 
     def GoToCaseInfo(self):
         """ Within a COVID investigation navigate to the Case Info tab. """
-        self.find_element(By.XPATH,'//*[@id="tabs0head1"]').click()
+        case_info_tab_path = '//*[@id="tabs0head1"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, case_info_tab_path)))
+        self.find_element(By.XPATH,covid_tab_path).click()
 
     def GoToCOVID(self):
         """ Within a COVID investigation navigate to the COVID tab. """
-        self.find_element(By.XPATH,'//*[@id="tabs0head2"]').click()
+        covid_tab_path = '//*[@id="tabs0head2"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, covid_tab_path)))
+        self.find_element(By.XPATH,).click()
 
     def go_to_lab(self, lab_id):
         """ Navigate to a lab from a patient profile navigate to a lab. """
