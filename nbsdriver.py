@@ -16,6 +16,7 @@ import time
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import NoAlertPresentException
 import configparser
 import smtplib
 from email.message import EmailMessage
@@ -23,6 +24,7 @@ from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
 from usps import USPSApi, Address
 import keyboard
+import json
 
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
@@ -80,9 +82,17 @@ class NBSdriver(webdriver.Chrome):
             patient_id = '1' + patient_id[4:len(patient_id)-4]
         return patient_id
 
+    def go_to_summary(self):
+        """ Within a patient profile navigate to the Summary tab."""
+        self.find_element(By.XPATH,'//*[@id="tabs0head0"]').click()
+
     def go_to_events(self):
         """ Within patient profile navigate to the Events tab. """
         self.find_element(By.XPATH,'//*[@id="tabs0head1"]').click()
+
+    def go_to_demographics(self):
+        """ Within a patient profile navigate to the Demographics tab."""
+        self.find_element(By.XPATH,'//*[@id="tabs0head2"]').click()
 
     def go_to_home(self):
         """ Go to NBS Home page. """
@@ -205,7 +215,7 @@ class NBSdriver(webdriver.Chrome):
         of all investigations on record, both open and closed."""
         investigation_table_path = '//*[@id="inv1"]'
         investigation_table = self.ReadTableToDF(investigation_table_path)
-        if investigation_table:
+        if type(investigation_table) == pd.core.frame.DataFrame:
             investigation_table['Start Date'] = pd.to_datetime(investigation_table['Start Date'])
         return investigation_table
 
@@ -223,7 +233,7 @@ class NBSdriver(webdriver.Chrome):
         inv_table = self.read_investigation_table()
         inv_row = inv_table[inv_table['Investigation ID'] == inv_id]
         inv_index = int(inv_row.index.to_list()[0]) + 1
-        self.got_to_investigation_by_index(inv_index)
+        self.go_to_investigation_by_index(inv_index)
 
     def return_to_patient_profile_from_inv(self):
         """ Go back to the patient profile from within an investigation."""
@@ -240,21 +250,34 @@ class NBSdriver(webdriver.Chrome):
         submit_button_path = '/html/body/div/div/form/div[2]/div[1]/table[2]/tbody/tr/td[2]/table/tbody/tr/td[1]/input'
         self.find_element(By.XPATH, submit_button_path).click()
 
+    def click_manage_associations_submit(self):
+        """ Click submit button in the Manage Associations window."""
+        submit_button_path = '/html/body/div[2]/div/table[2]/tbody/tr/td/table/tbody/tr/td[2]/input'
+        self.find_element(By.XPATH, submit_button_path).click()
+
     def enter_edit_mode(self):
         """From within an investigation click the edit button to enter edit mode."""
         edit_button_path = '/html/body/div/div/form/div[2]/div[1]/table[2]/tbody/tr/td[2]/table/tbody/tr/td[1]/input'
         self.find_element(By.XPATH, edit_button_path).click()
+        try:
+            self.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
 
     def click_cancel(self):
         """ Click cancel."""
         cancel_path = '//*[@id="Cancel"]'
         self.find_element(By.XPATH, cancel_path).click()
-        keyboard.press_and_release('enter')
+        self.switch_to.alert.accept()
 
     def go_to_manage_associations(self):
         """ Click button to navigate to the Manage Associations page from an investigation."""
         manage_associations_path = '//*[@id="manageAssociations"]'
         self.find_element(By.XPATH, manage_associations_path).click()
+        try:
+            self.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
 ############################# Data Reading/Validation Methods ##################################
 
     def CheckForValue(self, xpath, blank_message):
@@ -390,7 +413,7 @@ class NBSdriver(webdriver.Chrome):
 
     def switch_to_secondary_window(self):
         """ Set a secondary window as the current window in order to interact with the pop up."""
-        new_window_handle = None
+        self.new_window_handle = None
         for handle in self.window_handles:
             if handle != self.main_window_handle:
                 new_window_handle = handle

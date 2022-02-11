@@ -3,9 +3,12 @@ import configparser
 import pyodbc
 import pandas as pd
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from datetime import datetime
+from datetime import timedelta
 from epiweeks import Week
-import keyboard
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import NoSuchElementException
 
 class COVIDlabreview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
@@ -14,7 +17,9 @@ class COVIDlabreview(NBSdriver):
     def __init__(self, production=False):
         super(COVIDlabreview, self).__init__(production)
         self.reset()
+        self.get_main_window_handle()
         self.incomplete_address_log = []
+        self.failed_immpact_query_log = []
         self.unambigous_races = ['American Indian or Alaska Native'
                                   ,'Asian'
                                   ,'Black or African American'
@@ -56,6 +61,7 @@ class COVIDlabreview(NBSdriver):
         self.demo_race = None
         self.demo_ethnicity = None
         self.investigation_id = None
+        self.new_window_handle = None
 
     def get_db_connection_info(self):
         """ Read information required to connect to the NBS database."""
@@ -118,7 +124,6 @@ class COVIDlabreview(NBSdriver):
                         ,'Jurisdiction_Nm'
                         ,'EMPLOYED_IN_HEALTHCARE'
                         ,'HOSPITALIZED'
-                        ,'ILLNESS_ONSET_DATE'
                         ,'PATIENT_AGE'
                         ,'PREGNANT'
                         ,'RESIDENT_CONGREGATE_SETTING'
@@ -226,9 +231,10 @@ class COVIDlabreview(NBSdriver):
         """ Review the Investigations table in the Events tab of a patient profile
         to determine if the case already has an existing investigation. """
         investigation_table = self.read_investigation_table()
-        if investigation_table:
-            investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (x.date()-collection_date).days)
+        if type(investigation_table) == pd.core.frame.DataFrame:
+            investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (collection_date - x.date()).days)
             existing_investigations = investigation_table[(investigation_table.days_prior <= 90)
+                                    & (investigation_table.days_prior >= -10)
                                     & (investigation_table.Condition == '2019 Novel Coronavirus (2019-nCoV)')]
             if len(existing_investigations) >= 1:
                 self.existing_investigation_index = existing_investigations.index.tolist()[0]
@@ -249,7 +255,7 @@ class COVIDlabreview(NBSdriver):
 
     def create_investigation(self):
         """Create a new investigation from within a lab report when one does not already exist ."""
-        create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[2]'
+        create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
         self.find_element(By.XPATH, create_investigation_button_path).click()
         select_condition_field_path = '//*[@id="ccd_ac_table"]/tbody/tr[1]/td/input'
         condition = '2019 Novel Coronavirus (2019-nCoV)'
@@ -259,7 +265,7 @@ class COVIDlabreview(NBSdriver):
 
     def associate_lab_with_investigation(self, lab_id):
         """Associate a lab with an existing investigation when one for the case has already been started."""
-        lab_report_table_path = '//*[@id="lablist"]'
+        lab_report_table_path = '//*[@id="events1"]'
         lab_report_table = self.ReadTableToDF(lab_report_table_path)
         if len(lab_report_table) > 1:
             lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
@@ -277,7 +283,7 @@ class COVIDlabreview(NBSdriver):
         self.switch_to_secondary_window()
         results_table_path = '//*[@id="section1"]/div/table'
         results_table = self.ReadTableToDF(results_table_path)
-        if len(results_table) == 1:
+        if (len(results_table) == 1) & (results_table['Patient Name'][0] != 'Nothing found to display.'):
             record_path = '//*[@id="parent"]/tbody/tr/td[1]/a'
             self.find_element(By.XPATH, record_path).click()
             self.switch_to_secondary_window()
@@ -286,45 +292,57 @@ class COVIDlabreview(NBSdriver):
             good_query = True
         else:
             good_query = False
-            print('Immpact returned more than one patient as a possible. Unable to proceed with the automated query.')
-            cancel_path = '//*[@id="bd""]/div[1]/input'
+            print('Immpact returned more than one patient as a possible, or found no matching patients. Unable to proceed with the automated query.')
+            cancel_path = '/html/body/form/div[2]/div/div[1]/input'
             self.find_element(By.XPATH, cancel_path).click()
-            keyboard.press_and_release('enter')
+            self.switch_to.alert.accept()
         return good_query
 
     def id_covid_vaccinations(self):
         """Identify COVID vaccines by their specific brand."""
-        covid_vax_dict = {'Pfizer':'COVID-19, mRNA, LNP-S, PF, 30 mcg/0.3 mL dose','Moderna':'COVID-19, mRNA, LNP-S, PF, 100 mcg/0.5 mL dose', 'JJ':'COVID-19 vaccine, vector-nr, rS-Ad26, PF, 0.5 mL'}
+        covid_vax_dict = {'Pfizer':'COVID-19, mRNA, LNP-S, PF, 30 mcg/0.3 mL dose'
+                        ,'Moderna':'COVID-19, mRNA, LNP-S, PF, 100 mcg/ 0.5 mL dose'
+                        ,'JJ':'COVID-19 vaccine, vector-nr, rS-Ad26, PF, 0.5 mL'
+                        ,'Pfizer_5to12': 'Tris-sucrose formula, 10 mcg/0.2 mL for ages 5 yrs to < 12 yrs'}
         for key in covid_vax_dict.keys():
             self.vax_table[key] = self.vax_table['Vaccine Administered'].apply(lambda x: covid_vax_dict[key] in x)
-        self.covid_vaccinations = self.vax_table.loc[self.vax_table.Pfizer | self.vax_table.Moderna | self.vax_table.JJ]
+        self.covid_vaccinations = self.vax_table.loc[self.vax_table.Pfizer | self.vax_table.Moderna | self.vax_table.JJ | self.vax_table.Pfizer_5to12]
+        self.covid_vaccinations['Date Administered'] = pd.to_datetime(self.covid_vaccinations['Date Administered'])
+        self.covid_vaccinations['Date Administered'] = self.covid_vaccinations['Date Administered'].dt.date
 
     def import_covid_vaccinations(self):
         """ Select all COVID vaccinations in the list returned by Immpact and import them."""
-        covid_vax_indexes = self.covid_vaccinations.index
+        covid_vax_indexes = self.covid_vaccinations.index + 1
         num_covid_vaccinations = len(covid_vax_indexes)
         if num_covid_vaccinations > 0:
-            if (len(vax_table) == 1) & (len(covid_vax_indexes) == 1):
+            if (len(self.vax_table) == 1) & (len(covid_vax_indexes) == 1):
                 select_path = '/html/body/form/div[2]/div/div[4]/div/table[2]/tbody/tr/td/table/tbody/tr/td[1]/input'
                 self.find_element(By.XPATH, select_path).click()
             else:
                 for idx in covid_vax_indexes:
                     select_path = f'/html/body/form/div[2]/div/div[4]/div/table[2]/tbody/tr/td/table/tbody/tr[{idx}]/td[1]/input'
                     self.find_element(By.XPATH, select_path).click()
-            import_path = '/html/body/form/div[2]/div/div[6]/input[1]'
+            import_path = '/html/body/form/div[2]/div/div[1]/input[1]'
             self.find_element(By.XPATH, import_path).click()
+            self.switch_to.alert.accept()
+        else:
+            cancel_path = '/html/body/form/div[2]/div/div[1]/input[2]'
+            self.find_element(By.XPATH, cancel_path).click()
+            self.switch_to.alert.accept()
 
     def determine_vaccination_status(self, collection_date):
         """ Determine vaccination status at time of illness and other required vaccination data points."""
         covid_vaccinations_prior_to_onset = self.covid_vaccinations.loc[self.covid_vaccinations['Date Administered'] < collection_date ]
         self.num_doses_prior_to_onset = len(covid_vaccinations_prior_to_onset)
         self.last_dose_date = covid_vaccinations_prior_to_onset['Date Administered'].max()
-        complete_vaccinations = self.covid_vaccinations.loc[vax_table['Date Administered'] <= (collection_date - datetime.timedelta(days=14))]
+        complete_vaccinations = self.covid_vaccinations.loc[self.covid_vaccinations['Date Administered'] <= (collection_date - timedelta(days=14))]
         if len(complete_vaccinations.loc[complete_vaccinations.Pfizer]) >= 2:
             self.fully_vaccinated = True
         elif len(complete_vaccinations.loc[complete_vaccinations.Moderna]) >= 2:
             self.fully_vaccinated = True
         elif len(complete_vaccinations.loc[complete_vaccinations.JJ]) >= 1:
+            self.fully_vaccinated = True
+        elif len(complete_vaccinations.loc[complete_vaccinations.Pfizer_5to12]) >= 2:
             self.fully_vaccinated = True
         else:
             self.full_vaccinated = False
@@ -363,20 +381,20 @@ class COVIDlabreview(NBSdriver):
     def set_state(self, state):
         """Set state value in patient address."""
         path = '//*[@id="NBS_UI_15"]/tbody/tr[4]/td[2]/input'
-        self.find_element(By.XPATH, path).clear()
+        self.find_element(By.XPATH, path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, path).send_keys(state)
 
     def set_country(self, country):
         """Set country value in patient address."""
         path = '//*[@id="NBS_UI_15"]/tbody/tr[7]/td[2]/input'
-        self.find_element(By.XPATH, path).clear()
+        self.find_element(By.XPATH, path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, path).send_keys(country)
 
     def check_ethnicity(self):
         """ Check if ethnicity is completed and if not set the values to unknown."""
-        self.ethnicity = self.ReadText(self.ethnicity_path)
+        self.ethnicity = self.find_element(By.XPATH, self.ethnicity_path).get_attribute('value')
         if not self.ethnicity:
-            self.find_element(By.XPATH, self.ethnicity_path).send_keys('unknown')
+            self.find_element(By.XPATH, self.ethnicity_path).send_keys('u')
 
     def clear_ambiguous_race_answers(self):
         """ Ensure all ambiguous race answers (refused to answer, not answered, and unknown) are not selected."""
@@ -392,7 +410,7 @@ class COVIDlabreview(NBSdriver):
         only when no unambigious answer is present. When race is not clearly
         defined or other set value to unknown."""
         other_race_path = '//*[@id="NBS_UI_9"]/tbody/tr[7]/td[2]/input'
-        unknown_race_path = '//*[@id="NBS_UI_9"]/tbody/tr[12]/td[2]/input'
+        unknown_race_path = '//*[@id="NBS_UI_9"]/tbody/tr[10]/td[2]/input'
         for path in self.unambiguous_race_paths:
             if self.find_element(By.XPATH, path).is_selected():
                 self.unambiguous_race = True
@@ -413,27 +431,28 @@ class COVIDlabreview(NBSdriver):
         with all parts of the address reported in the current lab report."""
         address_table_path = '//*[@id="patSearch8"]'
         address_table = self.ReadTableToDF(address_table_path)
+        address_table = address_table[address_table['As of'] != '']
         address_table['As of'] = pd.to_datetime(address_table['As of'], format = "%m/%d/%Y")
-        address_table = address_table.loc[address_table['As of'] >= (self.now - datetime.timedelta(days=365))]
+        address_table = address_table.loc[address_table['As of'].dt.date >= (self.now - timedelta(days=365))].reset_index(drop=True)
+        address_table.Zip = address_table.Zip.apply(lambda x: str(int(x)).zfill(5) if type(x) == float else x )
         if self.street:
-            address_table = address_table.loc[address_table.Address.str.upper() == self.street.upper()]
+            address_table = address_table.loc[address_table.Address.str.upper() == self.street.upper()].reset_index(drop=True)
         if self.city:
             address_table = address_table.loc[address_table.City.str.upper() == self.city.upper()]
-        if state:
-            address_table = address_table.loc[address_table.State == 'Maine']
-        if self.zip:
-            address_table = address_table.loc[address_table.Zip.map(str) == self.street]
+        address_table = address_table.loc[address_table.State == 'Maine'].reset_index(drop=True)
+        if self.zip_code:
+            address_table = address_table.loc[address_table.Zip.map(str) == self.street].reset_index(drop=True)
         if len(address_table) > 0:
-            self.demo_address = address_table.iloc[0]
+            self.demo_address = address_table.reset_index(drop=True).iloc[0]
 
     def write_demographic_address(self):
         """ After reading an address from the demographics tab, moving back into
         an investigation, and entering edit mode, write the data to the address
         fields."""
-        self.find_element(By.XPATH, self.street_path).send_keys(self.demo_address.Address[0])
-        self.find_element(By.XPATH, self.city_path).send_keys(self.demo_address.City[0])
-        self.find_element(By.XPATH, self.zip_path).send_keys(str(self.demo_address.Zip[0]))
-        self.find_element(By.XPATH, self.county_path).send_keys(self.demo_address.Address[0])
+        self.find_element(By.XPATH, self.street_path).send_keys(self.demo_address.Address)
+        self.find_element(By.XPATH, self.city_path).send_keys(self.demo_address.City)
+        self.find_element(By.XPATH, self.zip_path).send_keys(str(self.demo_address.Zip))
+        self.find_element(By.XPATH, self.county_path).send_keys(self.demo_address.Address)
 
     def read_demographic_race(self):
         """Read the race table in the demographics tab and select the most recent
@@ -441,7 +460,7 @@ class COVIDlabreview(NBSdriver):
         race_table_path = '//*[@id="patSearch14"]'
         race_table = self.ReadTableToDF(race_table_path)
         all_race_values = race_table.Race.tolist()
-        unambiguous_race_values = [x for x in all_race_values if any(y for y in self.unambigous_races in x)]
+        unambiguous_race_values = [x for x in all_race_values if x in self.unambigous_races]
         if unambiguous_race_values:
             self.demo_race = unambiguous_race_values[0]
 
@@ -450,7 +469,8 @@ class COVIDlabreview(NBSdriver):
         investigation, and entering edit mode, write the data to the race field."""
         for race, path in zip(self.unambigous_races, self.unambiguous_race_paths):
             if race in self.demo_race:
-                self.find_element(By.XPATH, path).send_keys(race)
+                self.select_checkbox(path)
+        self.clear_ambiguous_race_answers()
 
     def read_demographic_ethnicity(self):
         """Read the ethnicity table in the demographics tab and select the most
@@ -463,6 +483,7 @@ class COVIDlabreview(NBSdriver):
     def write_demographic_ethnicity(self):
         """ After reading an ethnicity from the demographics tab, moving back into an
         investigation, and entering edit mode, write the data to the ethnicity field."""
+        self.find_element(By.XPATH, self.ethnicity_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, self.ethnicity_path).send_keys(self.demo_ethnicity)
 
     def set_investigation_start_date(self):
@@ -472,9 +493,10 @@ class COVIDlabreview(NBSdriver):
 
     def set_investigation_status_closed(self):
         """Set investigation status to closed."""
-        investigation_status_path = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/input'
-        self.find_element(By.XPATH, investigation_status_path).clear()
-        self.find_element(By.XPATH, investigation_status_path).send_keys('Closed')
+        incestigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
+        closed_option = '//*[@id="INV109"]/option[1]'
+        self.find_element(By.XPATH, incestigation_status_down_arrow).click()
+        self.find_element(By.XPATH, closed_option).click()
 
     def set_state_case_id(self):
         """ Set the State Case ID to the NBS patient ID."""
@@ -499,8 +521,9 @@ class COVIDlabreview(NBSdriver):
 
     def set_performing_lab(self, performing_lab):
         """ Set performing laboratory name based on lab report."""
-        performing_lab_path = '//*[@id="ME6105"]'
-        self.find_element(By.XPATH, performing_lab_path).send_keys(performing_lab)
+        if performing_lab:
+            performing_lab_path = '//*[@id="ME6105"]'
+            self.find_element(By.XPATH, performing_lab_path).send_keys(performing_lab)
 
     def set_earliest_positive_collection_date(self, lab_collection_date):
         """ Read the earliest positive speciment collection date field. If there
@@ -512,10 +535,15 @@ class COVIDlabreview(NBSdriver):
         existing investigations."""
         collection_date_path = '//*[@id="NBS550"]'
         self.current_collection_date = self.ReadDate(collection_date_path)
-        if (not self.current_collection_date) | (lab_collection_date <= self.current_collection_date):
+        if not self.current_collection_date:
             self.current_collection_date = lab_collection_date
             lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, collection_date_path).clear()
+            self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
+            self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+        elif lab_collection_date <= self.current_collection_date:
+            self.current_collection_date = lab_collection_date
+            lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
+            self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
             self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
 
     def set_case_status(self, status):
@@ -528,12 +556,12 @@ class COVIDlabreview(NBSdriver):
             probable_reason = ''
         elif status == 'Probable':
             current_status = 'Probable Case'
-            probable_reason == 'Meets Presump Lab and Clinical or Epi'
-        self.find_element(By.XPATH, current_status_path).clear()
+            probable_reason = 'Meets Presump Lab and Clinical or Epi'
+        self.find_element(By.XPATH, current_status_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, current_status_path).send_keys(current_status)
-        self.find_element(By.XPATH, probable_reason_path).clear()
+        self.find_element(By.XPATH, probable_reason_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, probable_reason_path).send_keys(probable_reason)
-        self.find_element(By.XPATH, case_status_path).clear()
+        self.find_element(By.XPATH, case_status_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, case_status_path).send_keys(status)
 
     def review_case_status(self, lab_type):
@@ -552,47 +580,59 @@ class COVIDlabreview(NBSdriver):
         its current value and the value in the current lab. An affirmative
         response in either the investigation or the lab takes precedence, followed
         by negative, unknown, and null responses respectively."""
-        investigation_aoe = self.ReadText(aoe_path)
-        if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
-          self.find_element(By.XPATH, aoe_path).send_keys('Yes')
-        elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
-          self.find_element(By.XPATH, aoe_path).send_keys('No')
-        elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
-          self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
+        if lab_aoe:
+            investigation_aoe = self.ReadText(aoe_path)
+            self.find_element(By.XPATH, aoe_path).send_keys(Keys.CONTROL+'a')
+            if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
+                self.find_element(By.XPATH, aoe_path).send_keys('Yes')
+            elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
+                self.find_element(By.XPATH, aoe_path).send_keys('No')
+            elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
+                self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
 
-    def update_all_aoes(self, hosp_aoe, cong_aoe, responder_aoe, hcw_aoe, pregnant_aoe):
-        """ For every AOE except symptom status apply the update_aoe() method."""
+    def update_case_info_aoes(self, hosp_aoe, cong_aoe, responder_aoe, hcw_aoe):
+        """ Update every AOE on the Case Info tabe using the update_aoe() method."""
         aoe_dictionary = {'//*[@id="NBS_UI_NBS_INV_GENV2_UI_3"]/tbody/tr[1]/td[2]/input' : hosp_aoe
-                         ,'//*[@id="ME59136"]/tbody/tr[1]/td[2]/input' : cong_aoe
+                         ,'//*[@id="ME59136"]/tbody/tr[3]/td[2]/input' : cong_aoe
                          ,'//*[@id="ME59137"]/tbody/tr[1]/td[2]/input' : responder_aoe
-                         ,'//*[@id="UI_ME59106"]/tbody/tr[1]/td[2]/input' : hcw_aoe
-                         ,'//*[@id="ME58100"]/tbody/tr[1]/td[2]/input' : pregnant_aoe}
+                         ,'//*[@id="UI_ME59106"]/tbody/tr[1]/td[2]/input' : hcw_aoe}
         for aoe_path, aoe_value in aoe_dictionary.items():
             if aoe_value:
                 self.update_aoe(aoe_path, aoe_value)
 
+    def update_pregnant_aoe(self, pregnant_aoe):
+        """ Update pregnancy status AOE on COVID tab."""
+        try:
+            pregnant_aoe_path = '//*[@id="ME58100"]/tbody/tr[1]/td[2]/input'
+            self.update_aoe(pregnant_aoe_path, pregnant_aoe)
+        except ElementNotInteractableException:
+            pass
+
     def update_symptom_aoe(self, lab_symptom_aoe, lab_onset_date):
         """ Update symptom status based on values in an investigation and values
         reported in the current lab."""
-        symptom_path = '//*[@id="NBS_UI_GA21003"]/tbody/tr[3]/td[2]/input'
-        onset_date_path = '//*[@id="INV137"]'
-        if lab_onset_date:
-            lab_symptom_aoe = 'Yes'
-        investigation_symtom_status = self.ReadText(symptom_path)
-        if investigation_symptom_status == 'Yes':
-            investigation_onset_date = self.ReadDate(onsed_date_path)
-            if (lab_onset_date) & (investigation_onset_date):
-                if lab_onset_date < investigation_onset_date:
+        if lab_symptom_aoe and lab_onset_date:
+            symptom_path = '//*[@id="NBS_UI_GA21003"]/tbody/tr[3]/td[2]/input'
+            onset_date_path = '//*[@id="INV137"]'
+            if lab_onset_date:
+                lab_symptom_aoe = 'Yes'
+            investigation_symptom_status = self.ReadText(symptom_path)
+            if investigation_symptom_status == 'Yes':
+                investigation_onset_date = self.ReadDate(onsed_date_path)
+                if (lab_onset_date) & (investigation_onset_date):
+                    if lab_onset_date < investigation_onset_date:
+                        lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
+                        self.find_element(By.XPATH, onset_date_path).send_keys(Keys.CONTROL+'a')
+                        self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
+            elif lab_symptom_aoe[0].upper() == 'Y':
+                self.find_element(By.XPATH, symptom_path).send_keys('Yes')
+                if lab_onset_date:
                     lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
                     self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
-        elif lab_symptom_aoe[0].upper() == 'Y':
-            self.find_element(By.XPATH, symptom_path).send_keys('Yes')
-            lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
-        elif (investigation_symtom_status == 'No') | (lab_symptom_aoe[0].upper() == 'N'):
-            self.find_element(By.XPATH, symptom_path).send_keys('No')
-        elif (investigation_symtom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U'):
-            self.find_element(By.XPATH, symptom_path).send_keys('Unknown')
+            elif (investigation_symptom_status == 'No') | (lab_symptom_aoe[0].upper() == 'N'):
+                self.find_element(By.XPATH, symptom_path).send_keys('No')
+            elif (investigation_symptom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U'):
+                self.find_element(By.XPATH, symptom_path).send_keys('Unknown')
 
     def set_confirmation_date(self):
         """Set confirmation date to today when creating a new investigation."""
@@ -604,23 +644,33 @@ class COVIDlabreview(NBSdriver):
         closed_date_path = '//*[@id="ME11163"]'
         self.find_element(By.XPATH, closed_date_path).send_keys(self.now_str)
 
+    def set_immpact_query_to_yes(self):
+        """Set the answer to the "Was ImmPact Queried?" question to yes."""
+        immpact_query_path = '//*[@id="ME10064101"]/tbody/tr[9]/td[2]/input'
+        self.find_element(By.XPATH, immpact_query_path).send_keys('Yes')
+
     def set_vaccination_fields(self):
         """Fill in all vaccination specific fields on the COVID tab after querying
         Immpact when creating a new investigation."""
-        vaccinated_path = '//*[@id="ME10064101"]/tbody/tr[1]/td[2]/input'
-        num_dose_path = '//*[@id="VAC140"]'
-        last_dose_path = '//*[@id="VAC142"]'
-        fully_vax_path = '//*[@id="ME10064101"]/tbody/tr[4]/td[2]/input'
-        immpact_query_path = '//*[@id="ME10064101"]/tbody/tr[9]/td[2]/input'
-        if len(self.covid_vaccinations) > 0:
-            self.find_element(By.XPATH, vaccinated_path).send_keys('Yes')
-            num_doses = str(self.num_doses_prior_to_onset)
-            self.find_element(By.XPATH, num_dose_path).send_keys(num_doses)
-            last_dose_date = self.last_dose_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, last_dose_path).send_keys(last_dose_date)
-            if self.fully_vaccinated:
-                self.find_element(By.XPATH, fully_vax_path).send_keys('Yes')
-        self.find_element(By.XPATH, immpact_query_path).send_keys('Yes')
+        try:
+            vaccinated_path = '//*[@id="ME10064101"]/tbody/tr[1]/td[2]/input'
+            num_dose_path = '//*[@id="VAC140"]'
+            last_dose_path = '//*[@id="VAC142"]'
+            fully_vax_path = '//*[@id="ME10064101"]/tbody/tr[4]/td[2]/input'
+
+            if len(self.covid_vaccinations) > 0:
+                self.find_element(By.XPATH, vaccinated_path).send_keys('Yes')
+                self.find_element(By.XPATH, vaccinated_path).send_keys(Keys.TAB)
+                num_doses = str(self.num_doses_prior_to_onset)
+                self.find_element(By.XPATH, num_dose_path).send_keys(num_doses)
+                last_dose_date = self.last_dose_date.strftime('%m/%d/%Y')
+                self.find_element(By.XPATH, last_dose_path).send_keys(last_dose_date)
+                if self.fully_vaccinated:
+                    self.find_element(By.XPATH, fully_vax_path).send_keys('Yes')
+        except ElementNotInteractableException:
+            self.GoToCOVID()
+            self.set_vaccination_fields()
+
 
     def set_lab_testing_performed(self):
         """Set the laboratory testing performed question to 'Yes' when creating a new investigation."""
@@ -633,11 +683,30 @@ class COVIDlabreview(NBSdriver):
         year_path = '//*[@id="INV166"]'
         mmwr_date = Week.fromdate(self.current_collection_date)
         week = str(mmwr_date.week)
+        if len(week) == 1:
+            week = '0' + week
         year = str(mmwr_date.year)
+        self.find_element(By.XPATH, week_path).clear()
         self.find_element(By.XPATH, week_path).send_keys(week)
+        self.find_element(By.XPATH, year_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, year_path).send_keys(year)
+
+    def create_notification(self):
+        """After completing a case create notification for it."""
+        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+        self.switch_to_secondary_window()
+        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+        self.switch_to.window(self.main_window_handle)
 
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)
-    NBS.get_unassigned_covid_labs()
-    NBS.get_patient_table()
+    NBS.get_credentials()
+    NBS.log_in()
+    NBS.go_to_id('2751373')
+    NBS.go_to_events()
+    NBS.go_to_investigation_by_index(1)
+    NBS.go_to_manage_associations()
+    NBS.query_immpact()
+    NBS.id_covid_vaccinations()
+    NBS.import_covid_vaccinations()
+    NBS.covid_vaccinations
