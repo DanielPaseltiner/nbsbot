@@ -23,7 +23,6 @@ from email.message import EmailMessage
 from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
 from usps import USPSApi, Address
-import keyboard
 import json
 
 class NBSdriver(webdriver.Chrome):
