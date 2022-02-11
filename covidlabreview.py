@@ -736,8 +736,11 @@ class COVIDlabreview(NBSdriver):
                 self.find_element(By.XPATH, vaccinated_path).send_keys(Keys.TAB)
                 num_doses = str(self.num_doses_prior_to_onset)
                 self.find_element(By.XPATH, num_dose_path).send_keys(num_doses)
-                last_dose_date = self.last_dose_date.strftime('%m/%d/%Y')
-                self.find_element(By.XPATH, last_dose_path).send_keys(last_dose_date)
+                try:
+                    last_dose_date = self.last_dose_date.strftime('%m/%d/%Y')
+                    self.find_element(By.XPATH, last_dose_path).send_keys(last_dose_date)
+                except AttributeError:
+                    pass
                 if self.fully_vaccinated:
                     self.find_element(By.XPATH, fully_vax_path).send_keys('Yes')
         except ElementNotInteractableException:
