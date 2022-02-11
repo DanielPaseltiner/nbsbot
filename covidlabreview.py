@@ -199,7 +199,7 @@ class COVIDlabreview(NBSdriver):
 
         self.min_delay = input('\nSET MINIMUM REVIEW DELAY:\n'
                                 'Enter the minimum integer number of days between the earliest date a lab was reported and today that unassociated labs should be reviewed from.\n'
-                                'Press enter "0" or simply press enter to skip this step and review all unassociated labs regardless of reporting age.\n'
+                                'Enter "0" or simply press enter to skip this step and review all unassociated labs regardless of reporting delay.\n'
                                 '>>>')
         if not self.min_delay:
             self.min_delay = 0
@@ -586,17 +586,16 @@ class COVIDlabreview(NBSdriver):
         existing investigations."""
         try:
             collection_date_path = '//*[@id="NBS550"]'
+            lab_collection_date_str = lab_collection_date.strftime('%m/%d/%Y')
             self.current_collection_date = self.ReadDate(collection_date_path, 'value')
             if not self.current_collection_date:
                 self.current_collection_date = lab_collection_date
-                lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
                 self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
-                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date_str)
             elif lab_collection_date <= self.current_collection_date:
                 self.current_collection_date = lab_collection_date
-                lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
                 self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
-                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date_str)
         except ElementNotInteractableException:
             self.GoToCaseInfo()
             self.set_earliest_positive_collection_date(lab_collection_date)
@@ -639,15 +638,19 @@ class COVIDlabreview(NBSdriver):
         its current value and the value in the current lab. An affirmative
         response in either the investigation or the lab takes precedence, followed
         by negative, unknown, and null responses respectively."""
-        if lab_aoe:
-            investigation_aoe = self.ReadText(aoe_path)
-            self.find_element(By.XPATH, aoe_path).send_keys(Keys.CONTROL+'a')
-            if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
-                self.find_element(By.XPATH, aoe_path).send_keys('Yes')
-            elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
-                self.find_element(By.XPATH, aoe_path).send_keys('No')
-            elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
-                self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
+        try:
+            if lab_aoe:
+                investigation_aoe = self.ReadText(aoe_path)
+                self.find_element(By.XPATH, aoe_path).send_keys(Keys.CONTROL+'a')
+                if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('Yes')
+                elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('No')
+                elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.update_aoe(aoe_path, lab_aoe, 'case_info')
 
     def update_case_info_aoes(self, hosp_aoe, cong_aoe, responder_aoe, hcw_aoe):
         """ Update every AOE on the Case Info tabe using the update_aoe() method."""
@@ -661,9 +664,18 @@ class COVIDlabreview(NBSdriver):
 
     def update_pregnant_aoe(self, pregnant_aoe):
         """ Update pregnancy status AOE on COVID tab."""
+        lab_aoe = pregnant_aoe
         try:
-            pregnant_aoe_path = '//*[@id="ME58100"]/tbody/tr[1]/td[2]/input'
-            self.update_aoe(pregnant_aoe_path, pregnant_aoe)
+            if lab_aoe:
+                aoe_path = '//*[@id="ME58100"]/tbody/tr[1]/td[2]/input'
+                investigation_aoe = self.ReadText(aoe_path)
+                self.find_element(By.XPATH, aoe_path).send_keys(Keys.CONTROL+'a')
+                if (investigation_aoe == 'Yes') | (lab_aoe[0].upper() == 'Y'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('Yes')
+                elif (investigation_aoe == 'No') | (lab_aoe[0].upper() == 'N'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('No')
+                elif (investigation_aoe == 'Unknown') | (lab_aoe[0].upper() == 'U'):
+                    self.find_element(By.XPATH, aoe_path).send_keys('Unknown')
         except ElementNotInteractableException:
             pass
 

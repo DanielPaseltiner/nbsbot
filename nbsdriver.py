@@ -399,7 +399,7 @@ class NBSdriver(webdriver.Chrome):
         message.set_content(body)
         message['Subject'] = subject
         message['From'] = self.nbsbot_email
-        message['To'] = ', '.join([receiver, self.covid_informatics_list, 'daniel.paseltiner@maine.gov', 'sara.robinson@maine.gov'])
+        message['To'] = ', '.join([receiver])
         try:
            smtpObj = smtplib.SMTP(self.smtp_server)
            smtpObj.send_message(message)

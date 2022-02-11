@@ -13,7 +13,7 @@ try:
     NBS.get_unassigned_covid_labs()
     NBS.get_patient_table()
 
-    for _, lab in tqdm(NBS.unassociated_labs.iloc[5:10].iterrows(), total=NBS.unassociated_labs.iloc[0:5].shape[0]):
+    for _, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_labs.shape[0]):
         NBS.pause_for_database()
         NBS.reset()
         if NBS.check_for_possible_merges(lab.First_Name, lab.Last_Name, lab.Birth_Dt):
@@ -141,6 +141,7 @@ try:
     NBS.send_failed_query_email()
 except:
     tb = traceback.format_exc()
+    print(tb)
     NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(COVID open/close) AKA Hoover', tb, 'error email')
     NBS.send_bad_address_email()
     NBS.send_failed_query_email()
@@ -149,7 +150,7 @@ except:
 # message.set_content('test')
 # message['Subject'] = 'TEST'
 # message['From'] = NBS.nbsbot_email
-# message['To'] = ', '.join([NBS.covid_admin_list, 'daniel.paseltiner@maine.gov'])
+# message['To'] = ', '.join([NBS.covid_informatics_list])
 # try:
 #    smtpObj = smtplib.SMTP(NBS.smtp_server)
 #    smtpObj.send_message(message)
