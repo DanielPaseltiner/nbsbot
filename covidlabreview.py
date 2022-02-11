@@ -9,6 +9,7 @@ from datetime import timedelta
 from epiweeks import Week
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import NoSuchElementException
+from time import sleep
 
 class COVIDlabreview(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
@@ -62,6 +63,7 @@ class COVIDlabreview(NBSdriver):
         self.demo_ethnicity = None
         self.investigation_id = None
         self.new_window_handle = None
+        self.multiple_possible_patients_in_immpact = False
 
     def get_db_connection_info(self):
         """ Read information required to connect to the NBS database."""
@@ -234,7 +236,7 @@ class COVIDlabreview(NBSdriver):
         if type(investigation_table) == pd.core.frame.DataFrame:
             investigation_table['days_prior'] = investigation_table['Start Date'].apply(lambda x: (collection_date - x.date()).days)
             existing_investigations = investigation_table[(investigation_table.days_prior <= 90)
-                                    & (investigation_table.days_prior >= -10)
+                                    & (investigation_table.days_prior >= -35)
                                     & (investigation_table.Condition == '2019 Novel Coronavirus (2019-nCoV)')]
             if len(existing_investigations) >= 1:
                 self.existing_investigation_index = existing_investigations.index.tolist()[0]
@@ -296,6 +298,8 @@ class COVIDlabreview(NBSdriver):
             cancel_path = '/html/body/form/div[2]/div/div[1]/input'
             self.find_element(By.XPATH, cancel_path).click()
             self.switch_to.alert.accept()
+            if len(results_table) > 1:
+                self.multiple_possible_patients_in_immpact = True
         return good_query
 
     def id_covid_vaccinations(self):
@@ -307,8 +311,10 @@ class COVIDlabreview(NBSdriver):
         for key in covid_vax_dict.keys():
             self.vax_table[key] = self.vax_table['Vaccine Administered'].apply(lambda x: covid_vax_dict[key] in x)
         self.covid_vaccinations = self.vax_table.loc[self.vax_table.Pfizer | self.vax_table.Moderna | self.vax_table.JJ | self.vax_table.Pfizer_5to12]
-        self.covid_vaccinations['Date Administered'] = pd.to_datetime(self.covid_vaccinations['Date Administered'])
-        self.covid_vaccinations['Date Administered'] = self.covid_vaccinations['Date Administered'].dt.date
+        #self.covid_vaccinations['Date Administered'] = pd.to_datetime(self.covid_vaccinations['Date Administered'])
+        #self.covid_vaccinations['Date Administered'] = self.covid_vaccinations['Date Administered'].dt.date
+        self.covid_vaccinations.loc[self.covid_vaccinations['Date Administered'].notna(), 'Date Administered'] = pd.to_datetime(self.covid_vaccinations['Date Administered']).dt.date
+
 
     def import_covid_vaccinations(self):
         """ Select all COVID vaccinations in the list returned by Immpact and import them."""
@@ -493,16 +499,24 @@ class COVIDlabreview(NBSdriver):
 
     def set_investigation_status_closed(self):
         """Set investigation status to closed."""
-        incestigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
-        closed_option = '//*[@id="INV109"]/option[1]'
-        self.find_element(By.XPATH, incestigation_status_down_arrow).click()
-        self.find_element(By.XPATH, closed_option).click()
+        try:
+            incestigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
+            closed_option = '//*[@id="INV109"]/option[1]'
+            self.find_element(By.XPATH, incestigation_status_down_arrow).click()
+            self.find_element(By.XPATH, closed_option).click()
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.set_investigation_start_date()
 
     def set_state_case_id(self):
         """ Set the State Case ID to the NBS patient ID."""
-        state_case_id_path = '//*[@id="INV173"]'
-        patient_id = self.ReadPatientID()
-        self.find_element(By.XPATH, state_case_id_path).send_keys(patient_id)
+        try:
+            state_case_id_path = '//*[@id="INV173"]'
+            patient_id = self.ReadPatientID()
+            self.find_element(By.XPATH, state_case_id_path).send_keys(patient_id)
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.set_state_case_id()
 
     def read_investigation_id(self):
         """ From within an investigation read the investigation id."""
@@ -511,19 +525,56 @@ class COVIDlabreview(NBSdriver):
 
     def set_county_and_state_report_dates(self, report_to_ph_date):
         """ Set Earliest Date Reported to County and Earliest Date Reported to
-        State based on Lab_Rpt_Received_By_PH_Dt. This method should only be used
-        when creating new investigations and not when associating additional labs
-        with an existing investigation."""
-        report_date_paths = ['//*[@id="INV120"]', '//*[@id="INV121"]']
-        report_to_ph_date = report_to_ph_date.strftime('%m/%d/%Y')
-        for path in report_date_paths:
-            self.find_element(By.XPATH, path).send_keys(report_to_ph_date)
+        State based on Lab_Rpt_Received_By_PH_Dt. This method may be used when
+        creating new investigations or when associating additional labs with an
+        existing investigation. In the case where there is an existing report
+        date in the existing invesitigation it will only be replaced when the
+        provided report date is earlier."""
+        try:
+            report_date_paths = ['//*[@id="INV120"]', '//*[@id="INV121"]']
+            report_to_ph_date_str = report_to_ph_date.strftime('%m/%d/%Y')
+            for path in report_date_paths:
+                current_report_date = self.ReadDate(path, 'value')
+                if current_report_date:
+                    if report_to_ph_date < current_report_date:
+                        self.find_element(By.XPATH, path ).send_keys(Keys.CONTROL+'a')
+                        self.find_element(By.XPATH, path).send_keys(report_to_ph_date_str)
+                else:
+                    self.find_element(By.XPATH, path).send_keys(report_to_ph_date_str)
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.set_county_and_state_report_dates(report_to_ph_date)
+
+    def update_report_date(self, report_to_ph_date):
+        """When associating a lab with an existing investigation check to see if
+        the new lab was reported prior to the report date currently assigned to
+        the investigation. If so, replace it with the report date of the new lab.
+        If not, do nothing."""
+        try:
+            report_date_path = '//*[@id="INV111"]'
+            current_report_date = self.ReadDate(report_date_path, 'value')
+            report_to_ph_date_str = report_to_ph_date.strftime('%m/%d/%Y')
+            if current_report_date:
+                if report_to_ph_date < current_report_date:
+                    self.find_element(By.XPATH, report_date_path ).send_keys(Keys.CONTROL+'a')
+                    self.find_element(By.XPATH, report_date_path ).send_keys(report_to_ph_date_str)
+            else:
+                report_to_ph_date = report_to_ph_date.strftime('%m/%d/%Y')
+                self.find_element(By.XPATH, report_date_path ).send_keys(report_to_ph_date_str)
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.update_report_date(report_to_ph_date)
 
     def set_performing_lab(self, performing_lab):
         """ Set performing laboratory name based on lab report."""
-        if performing_lab:
-            performing_lab_path = '//*[@id="ME6105"]'
-            self.find_element(By.XPATH, performing_lab_path).send_keys(performing_lab)
+        try:
+            if performing_lab:
+                performing_lab_path = '//*[@id="ME6105"]'
+                self.find_element(By.XPATH, performing_lab_path).send_keys(performing_lab)
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.set_performing_lab(performing_lab)
+
 
     def set_earliest_positive_collection_date(self, lab_collection_date):
         """ Read the earliest positive speciment collection date field. If there
@@ -533,18 +584,22 @@ class COVIDlabreview(NBSdriver):
         the collection date of the current lab. This additional check allows this
         method to be used when creating investigations or associating labs with
         existing investigations."""
-        collection_date_path = '//*[@id="NBS550"]'
-        self.current_collection_date = self.ReadDate(collection_date_path)
-        if not self.current_collection_date:
-            self.current_collection_date = lab_collection_date
-            lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
-            self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
-        elif lab_collection_date <= self.current_collection_date:
-            self.current_collection_date = lab_collection_date
-            lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
-            self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
-            self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+        try:
+            collection_date_path = '//*[@id="NBS550"]'
+            self.current_collection_date = self.ReadDate(collection_date_path, 'value')
+            if not self.current_collection_date:
+                self.current_collection_date = lab_collection_date
+                lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
+                self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
+                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+            elif lab_collection_date <= self.current_collection_date:
+                self.current_collection_date = lab_collection_date
+                lab_collection_date = lab_collection_date.strftime('%m/%d/%Y')
+                self.find_element(By.XPATH, collection_date_path).send_keys(Keys.CONTROL+'a')
+                self.find_element(By.XPATH, collection_date_path).send_keys(lab_collection_date)
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.set_earliest_positive_collection_date(lab_collection_date)
 
     def set_case_status(self, status):
         """ Set all three fields related to case status based on the provided status."""
@@ -568,12 +623,16 @@ class COVIDlabreview(NBSdriver):
         """ Review current case status and current lab type. Then set case status
         accordingly. This method can be used for creating investigations or
         associating additional labs with existing investigations."""
-        case_status_path = '//*[@id="NBS_UI_2"]/tbody/tr[5]/td[2]/input'
-        current_case_status = self.ReadText(case_status_path)
-        if lab_type == 'PCR':
-            self.set_case_status('Confirmed')
-        elif lab_type == 'Antigen':
-            self.set_case_status('Probable')
+        try:
+            case_status_path = '//*[@id="NBS_UI_2"]/tbody/tr[5]/td[2]/input'
+            current_case_status = self.ReadText(case_status_path)
+            if lab_type == 'PCR':
+                self.set_case_status('Confirmed')
+            elif lab_type == 'Antigen':
+                self.set_case_status('Probable')
+        except ElementNotInteractableException:
+            self.GoToCaseInfo()
+            self.review_case_status(lab_type)
 
     def update_aoe(self, aoe_path, lab_aoe):
         """ Update a specific AOE associated investigation field by considering
@@ -611,28 +670,29 @@ class COVIDlabreview(NBSdriver):
     def update_symptom_aoe(self, lab_symptom_aoe, lab_onset_date):
         """ Update symptom status based on values in an investigation and values
         reported in the current lab."""
-        if lab_symptom_aoe and lab_onset_date:
-            symptom_path = '//*[@id="NBS_UI_GA21003"]/tbody/tr[3]/td[2]/input'
-            onset_date_path = '//*[@id="INV137"]'
-            if lab_onset_date:
-                lab_symptom_aoe = 'Yes'
-            investigation_symptom_status = self.ReadText(symptom_path)
-            if investigation_symptom_status == 'Yes':
-                investigation_onset_date = self.ReadDate(onsed_date_path)
-                if (lab_onset_date) & (investigation_onset_date):
-                    if lab_onset_date < investigation_onset_date:
-                        lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
-                        self.find_element(By.XPATH, onset_date_path).send_keys(Keys.CONTROL+'a')
-                        self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
-            elif lab_symptom_aoe[0].upper() == 'Y':
-                self.find_element(By.XPATH, symptom_path).send_keys('Yes')
-                if lab_onset_date:
-                    lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
-                    self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
+        symptom_path = '//*[@id="NBS_UI_GA21003"]/tbody/tr[3]/td[2]/input'
+        onset_date_path = '//*[@id="INV137"]'
+        investigation_symptom_status = self.ReadText(symptom_path)
+        if lab_onset_date:
+            lab_symptom_aoe = 'Yes'
+        if lab_symptom_aoe:
+            self.find_element(By.XPATH, symptom_path).send_keys(Keys.CONTROL+'a')
+            if (investigation_symptom_status == 'Yes') | (lab_symptom_aoe[0].upper() == 'Y'):
+                self.find_element(By.XPATH, symptom_path).send_keys(Keys.CONTROL+'a')
             elif (investigation_symptom_status == 'No') | (lab_symptom_aoe[0].upper() == 'N'):
                 self.find_element(By.XPATH, symptom_path).send_keys('No')
             elif (investigation_symptom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U'):
                 self.find_element(By.XPATH, symptom_path).send_keys('Unknown')
+            if investigation_symptom_status == 'Yes':
+                investigation_onset_date = self.ReadDate(onsed_date_path, 'value')
+                if investigation_onset_date and lab_onset_date:
+                    if lab_onset_date < investigation_onset_date:
+                        lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
+                        self.find_element(By.XPATH, onset_date_path).send_keys(Keys.CONTROL+'a')
+                        self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
+                elif lab_onset_date:
+                    lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
+                    self.find_element(By.XPATH, onset_date_path).send_keys(lab_onset_date)
 
     def set_confirmation_date(self):
         """Set confirmation date to today when creating a new investigation."""
@@ -659,6 +719,7 @@ class COVIDlabreview(NBSdriver):
             fully_vax_path = '//*[@id="ME10064101"]/tbody/tr[4]/td[2]/input'
 
             if len(self.covid_vaccinations) > 0:
+                self.find_element(By.XPATH, vaccinated_path).send_keys(Keys.CONTROL+'a')
                 self.find_element(By.XPATH, vaccinated_path).send_keys('Yes')
                 self.find_element(By.XPATH, vaccinated_path).send_keys(Keys.TAB)
                 num_doses = str(self.num_doses_prior_to_onset)
@@ -671,14 +732,15 @@ class COVIDlabreview(NBSdriver):
             self.GoToCOVID()
             self.set_vaccination_fields()
 
-
     def set_lab_testing_performed(self):
-        """Set the laboratory testing performed question to 'Yes' when creating a new investigation."""
+        """Set the laboratory testing performed question to 'Yes' when creating
+        a new investigation."""
         lab_testing_path = '//*[@id="ME58101"]/tbody/tr/td[2]/input'
         self.find_element(By.XPATH, lab_testing_path).send_keys('Yes')
 
     def set_mmwr(self):
-        """Set the values of the MMWR week and year correctly based on first positive speciment collection date."""
+        """Set the values of the MMWR week and year correctly based on first
+        positive speciment collection date."""
         week_path = '//*[@id="INV165"]'
         year_path = '//*[@id="INV166"]'
         mmwr_date = Week.fromdate(self.current_collection_date)
@@ -691,6 +753,27 @@ class COVIDlabreview(NBSdriver):
         self.find_element(By.XPATH, year_path).send_keys(Keys.CONTROL+'a')
         self.find_element(By.XPATH, year_path).send_keys(year)
 
+    def check_jurisdiction(self):
+        """ After completing an investigation check if the patient's county and
+        jurisdiction match. If a county is available that does not match the
+        jurisdication then update the jurisdiction accordingly."""
+        county_path = '//*[@id="DEM165"]'
+        jurisdiction_path = '//*[@id="INV107"]'
+        transfer_ownership_path = '//*[@id="createNoti"]'
+        new_jurisdiction_path = '//*[@id="subsect_transferOwn"]/tbody/tr[2]/td[2]/input'
+        submit_jurisdiction_path = '//*[@id="topButtId"]/input[1]'
+        county = self.ReadText(county_path)
+        if county:
+            self.GoToCaseInfo()
+            jurisdiction = self.ReadText(jurisdiction_path)
+            if not jurisdiction in county:
+                self.find_element(By.XPATH, transfer_ownership_path).click()
+                self.switch_to_secondary_window()
+                self.find_element(By.XPATH, new_jurisdiction_path).send_keys(Keys.CONTROL+'a')
+                self.find_element(By.XPATH, new_jurisdiction_path).send_keys(county[0:3])
+                self.find_element(By.XPATH, submit_jurisdiction_path).click()
+                self.switch_to.window(self.main_window_handle)
+
     def create_notification(self):
         """After completing a case create notification for it."""
         self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
@@ -698,15 +781,40 @@ class COVIDlabreview(NBSdriver):
         self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
         self.switch_to.window(self.main_window_handle)
 
+    def send_bad_address_email(self):
+        """Email the COVID Admin the list of patients with incomplete addresses."""
+        if self.incomplete_address_log:
+            body = 'Hello COVID Admin Team,\n\nThe following cases have incomplete addresses:\n\n'
+            for id in self.incomplete_address_log:
+                body = body + id +'\n'
+            body = body + '\n-NBSbot(COVID open/close) AKA Hoover'
+            self.send_smtp_email(self.covid_admin_list, 'Incomplete Addresses', body, 'incomplete address email')
+        else:
+            print('Incomplete addresse log is empty. No email sent.')
+
+    def send_failed_query_email(self):
+        """Email the COVID Admin the list of patients where the Immpact query failed."""
+        if self.failed_immpact_query_log:
+            body = 'Hello COVID Commander,\n\nThe Immpact query for following cases failed:\n\n'
+            for id in self.failed_immpact_query_log:
+                body = body + id +'\n'
+            body = body + '\n-NBSbot(COVID open/close) AKA Hoover'
+            self.send_smtp_email(self.covid_commander, 'Failed Immpact Querries', body, 'failed query email')
+        else:
+            print('Failed query log is empty. No email sent.')
+
+    def pause_for_database(self):
+        """ If the time is between midnight and 0200 pause until after 0200."""
+        now = datetime.now()
+        stop_time = now.replace(hour = 23, minute = 55, second = 0, microsecond = 0)
+        if now >= stop_time:
+            print('Sleeping untill 02:05...')
+            time.sleep(3300)
+            self.go_to_home()
+            time.sleep(3300)
+            self.go_to_home()
+            time.sleep(1200)
+            self.go_to_home()
+
 if __name__ == "__main__":
     NBS = COVIDlabreview(production=True)
-    NBS.get_credentials()
-    NBS.log_in()
-    NBS.go_to_id('2751373')
-    NBS.go_to_events()
-    NBS.go_to_investigation_by_index(1)
-    NBS.go_to_manage_associations()
-    NBS.query_immpact()
-    NBS.id_covid_vaccinations()
-    NBS.import_covid_vaccinations()
-    NBS.covid_vaccinations

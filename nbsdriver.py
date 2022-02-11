@@ -297,9 +297,9 @@ class NBSdriver(webdriver.Chrome):
             check = False
         return check
 
-    def ReadDate(self, xpath):
+    def ReadDate(self, xpath, attribute='innerText'):
         """ Read date from NBS and return a datetime.date object. """
-        date = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+        date = self.find_element(By.XPATH, xpath).get_attribute(attribute)
         try:
             date = datetime.strptime(date, '%m/%d/%Y').date()
         except ValueError:
