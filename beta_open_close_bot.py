@@ -2,18 +2,19 @@ from covidlabreview import COVIDlabreview
 from tqdm import tqdm
 import pandas as pd
 import traceback
-try:
-    #Initialize NBSbot
-    NBS = COVIDlabreview(production=True)
-    #Log in to NBS
-    NBS.get_credentials()
-    NBS.log_in()
-    #Specify the types of labs that the bot should run on and query the database accordingly.
-    NBS.get_db_connection_info()
-    NBS.get_unassigned_covid_labs()
-    NBS.get_patient_table()
 
-    for _, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_labs.shape[0]):
+#Initialize NBSbot
+NBS = COVIDlabreview(production=True)
+#Log in to NBS
+NBS.get_credentials()
+NBS.log_in()
+#Specify the types of labs that the bot should run on and query the database accordingly.
+NBS.get_db_connection_info()
+NBS.get_unassigned_covid_labs()
+NBS.get_patient_table()
+
+for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_labs.shape[0]):
+    try:
         NBS.pause_for_database()
         NBS.reset()
         if NBS.check_for_possible_merges(lab.First_Name, lab.Last_Name, lab.Birth_Dt):
@@ -137,14 +138,21 @@ try:
             NBS.check_jurisdiction()
             NBS.create_notification()
         NBS.go_to_home()
-    NBS.send_bad_address_email()
-    NBS.send_failed_query_email()
-except:
-    tb = traceback.format_exc()
-    print(tb)
-    NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(COVID open/close) AKA Hoover', tb, 'error email')
-    NBS.send_bad_address_email()
-    NBS.send_failed_query_email()
+
+    except:
+        tb = traceback.format_exc()
+        print(tb)
+        NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(COVID open/close) AKA Hoover', tb, 'error email')
+        NBS.send_bad_address_email()
+        NBS.send_failed_query_email()
+        if NBS.check_for_error_page():
+            NBS.go_to_home_from_error_page()
+        else:
+            break
+NBS.send_bad_address_email()
+NBS.send_failed_query_email()
+if idx + 1 == len(NBS.unassociated_labs):
+    print('No additional labs to review.')
 
 # message = EmailMessage()
 # message.set_content('test')

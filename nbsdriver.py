@@ -70,7 +70,9 @@ class NBSdriver(webdriver.Chrome):
         """ Navigate to specifc patient by NBS ID from Home. """
         self.find_element(By.XPATH,'//*[@id="DEM229"]').send_keys(id)
         self.find_element(By.XPATH,'//*[@id="patientSearchByDetails"]/table[2]/tbody/tr[8]/td[2]/input[1]').click()
-        self.find_element(By.XPATH,'//*[@id="searchResultsTable"]/tbody/tr/td[1]/a').click()
+        search_result_path = '//*[@id="searchResultsTable"]/tbody/tr/td[1]/a'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, search_result_path)))
+        self.find_element(By.XPATH, search_result_path).click()
 
     def clean_patient_id(self, patient_id):
         """Remove the leading and trailing characters from local patient
@@ -469,3 +471,29 @@ class NBSdriver(webdriver.Chrome):
         else:
             zip_code = ''
         return zip_code
+
+    def check_for_error_page(self):
+        """ See if NBS encountered an error."""
+        error_page_path = '/html/body/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[1]'
+        try:
+            if self.ReadText(error_page_path) == '\xa0Error Page':
+                nbs_error = True
+            else:
+                nbs_error = False
+        except:
+            nbs_error = False
+        return nbs_error
+
+    def go_to_home_from_error_page(self):
+        """ Go to NBS Home page from an NBS error page. """
+        xpath = '/html/body/table/tbody/tr/td/table/tbody/tr[1]/td/table/tbody/tr/td/table/tbody/tr/td[1]/a'
+        for attempt in range(self.num_attempts):
+            try:
+                WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
+                self.find_element(By.XPATH, xpath).click()
+                self.home_loaded = True
+                break
+            except TimeoutException:
+                self.home_loaded = False
+        if not self.home_loaded:
+            sys.exit(print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered."))

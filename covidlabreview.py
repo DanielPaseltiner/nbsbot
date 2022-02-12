@@ -4,6 +4,8 @@ import pyodbc
 import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
 from datetime import timedelta
 from epiweeks import Week
@@ -793,7 +795,9 @@ class COVIDlabreview(NBSdriver):
         """After completing a case create notification for it."""
         self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
         self.switch_to_secondary_window()
-        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+        submit_button_path = '//*[@id="botcreatenotId"]/input[1]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, submit_button_path)))
+        self.find_element(By.XPATH, submit_button_path).click()
         self.switch_to.window(self.main_window_handle)
 
     def send_bad_address_email(self):
@@ -824,11 +828,11 @@ class COVIDlabreview(NBSdriver):
         stop_time = now.replace(hour = 23, minute = 55, second = 0, microsecond = 0)
         if now >= stop_time:
             print('Sleeping untill 02:05...')
-            time.sleep(3300)
+            sleep(3300)
             self.go_to_home()
-            time.sleep(3300)
+            sleep(3300)
             self.go_to_home()
-            time.sleep(1200)
+            sleep(1200)
             self.go_to_home()
 
 if __name__ == "__main__":
