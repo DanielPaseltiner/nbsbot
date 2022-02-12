@@ -780,7 +780,7 @@ class COVIDlabreview(NBSdriver):
         jurisdication then update the jurisdiction accordingly."""
         county_path = '//*[@id="DEM165"]'
         jurisdiction_path = '//*[@id="INV107"]'
-        transfer_ownership_path = '//*[@id="createNoti"]'
+        transfer_ownership_path = '/html/body/div/div/form/div[2]/div[1]/table[2]/tbody/tr/td[1]/table/tbody/tr/td[3]/input'
         new_jurisdiction_path = '//*[@id="subsect_transferOwn"]/tbody/tr[2]/td[2]/input'
         submit_jurisdiction_path = '//*[@id="topButtId"]/input[1]'
         county = self.ReadText(county_path)

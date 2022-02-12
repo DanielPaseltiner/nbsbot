@@ -136,8 +136,8 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
                     if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):
                         NBS.incomplete_address_log.append(NBS.ReadPatientID())
                     NBS.click_submit()
-            NBS.check_jurisdiction()
             NBS.create_notification()
+            NBS.check_jurisdiction()
         NBS.go_to_home()
 
     except:
