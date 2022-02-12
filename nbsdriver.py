@@ -90,8 +90,13 @@ class NBSdriver(webdriver.Chrome):
     def go_to_events(self):
         """ Within patient profile navigate to the Events tab. """
         events_path = '//*[@id="tabs0head1"]'
-        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, events_path)))
-        self.find_element(By.XPATH, events_path).click()
+        try:
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, events_path)))
+            self.find_element(By.XPATH, events_path).click()
+            error_encountered = False
+        except TimeoutException:
+            error_encountered = True
+        return error_encountered
 
     def go_to_demographics(self):
         """ Within a patient profile navigate to the Demographics tab."""

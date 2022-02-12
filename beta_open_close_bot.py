@@ -21,7 +21,11 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             print('Possible merge(s) found. Lab skipped.')
             continue
         NBS.go_to_id(lab.Patient_Local_ID)
-        NBS.go_to_events()
+        error_flag = NBS.go_to_events()
+        if error_flag:
+            NBS.go_to_home()
+            print("Issue encountered navigating to patient. Continuing to next unassociated lab.")
+            continue
         NBS.go_to_lab(lab.Lab_Local_ID)
         if NBS.check_patient_hospitalization_status():
             print('Possible hospitalization. Lab skipped.')
@@ -117,7 +121,6 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
                 NBS.go_to_demographics()
                 if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):
                     NBS.read_demographic_address()
-                    NBS.demo_address
                 if not NBS.unambiguous_race:
                     NBS.read_demographic_race()
                 if (not NBS.ethnicity) | (NBS.ethnicity == 'unknown'):
