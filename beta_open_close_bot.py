@@ -28,11 +28,13 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             continue
         NBS.go_to_lab(lab.Lab_Local_ID)
         if NBS.check_patient_hospitalization_status():
+            NBS.go_to_home()
             print('Possible hospitalization. Lab skipped.')
             continue
         NBS.return_to_patient_profile_from_lab()
         inv_found, existing_not_a_case = NBS.check_for_existing_investigation(lab.Specimen_Coll_DT)
         if existing_not_a_case:
+            NBS.go_to_home()
             print('Existing COVID investigation in the last 90 days with Not a Case status. Lab skipped.')
             continue
         elif inv_found:
