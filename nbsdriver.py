@@ -446,10 +446,13 @@ class NBSdriver(webdriver.Chrome):
         """ Use the Nominatim geocode service via the geopy API to look up the county of a given town/city and state."""
         geolocator = Nominatim(user_agent = 'nbsbot')
         location = geolocator.geocode(city + ', ' + state)
-        location = location[0].split(', ')
-        county = [x for x in location if 'County' in x]
-        if len(county) == 1:
-            county = county[0].split(' ')[0]
+        if location:
+            location = location[0].split(', ')
+            county = [x for x in location if 'County' in x]
+            if len(county) == 1:
+                county = county[0].split(' ')[0]
+            else:
+                county = ''
         else:
             county = ''
         return county
