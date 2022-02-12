@@ -62,7 +62,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             if not NBS.county and NBS.city:
                 NBS.county = NBS.county_lookup(NBS.city, 'Maine')
                 NBS.write_county()
-            if not NBS.zip_code and NBS.street:
+            if not NBS.zip_code and NBS.street and NBS.city:
                 NBS.zip_code = NBS.zip_code_lookup(NBS.street, NBS.city, 'ME')
                 NBS.write_zip()
             NBS.check_ethnicity()
