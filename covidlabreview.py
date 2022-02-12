@@ -102,6 +102,7 @@ class COVIDlabreview(NBSdriver):
         """
         self.select_counties()
         self.select_min_delay()
+        self.get_age_range()
         self.get_db_connection_info()
         variables = ('Lab_Local_ID'
                         ,'CAST(Lab_Rpt_Received_By_PH_Dt AS DATE) AS Lab_Rpt_Received_By_PH_Dt'
@@ -207,6 +208,19 @@ class COVIDlabreview(NBSdriver):
             self.min_delay = 0
         else:
             self.min_delay = int(self.min_delay)
+
+    def get_age_range(self):
+        """Prompt user to provide the minimum and maximum patient age of unassociated labs to be opened and closed."""
+        default_min = '-5'
+        default_max = '150'
+        self.min_age = input('\nSET MINIMUM AGE:\n'
+                             'Enter the minimum age in years that cases should be opened and closed for.\n'
+                             f'If no age is specified the minimum value will be set to {default_min} years.\n'
+                             '>>>')
+        self.max_age = input('\nSET MAXIMUM AGE:\n'
+                             'Enter the maximum age in years that cases should be opened and closed for.\n'
+                             f'If no age is specified the maximum value will be set to {default_max} years.\n'
+                             '>>>')
 
     def check_for_possible_merges(self, fname, lname, dob):
         """ Given a patient's first name, last name, and dob search for possible
@@ -518,7 +532,7 @@ class COVIDlabreview(NBSdriver):
             self.find_element(By.XPATH, closed_option).click()
         except ElementNotInteractableException:
             self.GoToCaseInfo()
-            self.set_investigation_start_date()
+            self.set_investigation_status_closed()
 
     def set_state_case_id(self):
         """ Set the State Case ID to the NBS patient ID."""
