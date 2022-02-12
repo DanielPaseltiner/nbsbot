@@ -470,6 +470,9 @@ class COVIDlabreview(NBSdriver):
         race_table_path = '//*[@id="patSearch14"]'
         WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, race_table_path)))
         race_table = self.ReadTableToDF(race_table_path)
+        if type(race_table) != pd.core.frame.DataFrame:
+            sleep(1)
+            race_table = self.ReadTableToDF(race_table_path)
         all_race_values = race_table.Race.tolist()
         unambiguous_race_values = [x for x in all_race_values if x in self.unambigous_races]
         if unambiguous_race_values:
