@@ -719,7 +719,7 @@ class COVIDcasereview(NBSdriver):
         """Ensure testing preformed is Yes or No."""
         self.testing_preformed = self.ReadText('//*[@id="INV740"]')
         if self.testing_preformed not in ['Yes', 'No']:
-            self.issues.append("Laboratory testing preformed connot be blank or unknown.")
+            self.issues.append("Laboratory testing performed cannot be blank or unknown.")
 
     def CheckLabTable(self):
         """ Ensure that labs listed in investigation support case status. """
