@@ -280,6 +280,7 @@ class COVIDlabreview(NBSdriver):
     def query_immpact(self):
         """ Click the query registry button, submit the query to immpact, and read the results into a DataFrame."""
         query_registry_button = '//*[@id="events3"]/tbody/tr/td/div/input[1]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, query_registry_button)))
         self.find_element(By.XPATH, query_registry_button).click()
         self.switch_to_secondary_window()
         submit_query = '//*[@id="doc4"]/div[2]/input[1]'
