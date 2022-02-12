@@ -21,7 +21,6 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             print('Possible merge(s) found. Lab skipped.')
             continue
         NBS.go_to_id(lab.Patient_Local_ID)
-        NBS.go_to_events()
         NBS.go_to_lab(lab.Lab_Local_ID)
         if NBS.check_patient_hospitalization_status():
             print('Possible hospitalization. Lab skipped.')

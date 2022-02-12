@@ -438,6 +438,7 @@ class COVIDlabreview(NBSdriver):
         select the most recent address from within the last year that is consistent
         with all parts of the address reported in the current lab report."""
         address_table_path = '//*[@id="patSearch8"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, address_table_path)))
         address_table = self.ReadTableToDF(address_table_path)
         address_table = address_table[address_table['As of'] != '']
         address_table['As of'] = pd.to_datetime(address_table['As of'], format = "%m/%d/%Y")
@@ -466,6 +467,7 @@ class COVIDlabreview(NBSdriver):
         """Read the race table in the demographics tab and select the most recent
         nonambigous value, if present."""
         race_table_path = '//*[@id="patSearch14"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, race_table_path)))
         race_table = self.ReadTableToDF(race_table_path)
         all_race_values = race_table.Race.tolist()
         unambiguous_race_values = [x for x in all_race_values if x in self.unambigous_races]
@@ -484,6 +486,7 @@ class COVIDlabreview(NBSdriver):
         """Read the ethnicity table in the demographics tab and select the most
         recent non-unknown value, if present."""
         ethnicity_path = '//*[@id="NBS108"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, ethnicity_path)))
         ethnicity = self.ReadText(ethnicity_path)
         if ethnicity in ['Hispanic or Latino', 'Not Hispanic or Latino']:
             self.demo_ethnicity = ethnicty
