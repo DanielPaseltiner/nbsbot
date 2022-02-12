@@ -338,7 +338,6 @@ class COVIDlabreview(NBSdriver):
         #self.covid_vaccinations['Date Administered'] = self.covid_vaccinations['Date Administered'].dt.date
         self.covid_vaccinations.loc[self.covid_vaccinations['Date Administered'].notna(), 'Date Administered'] = pd.to_datetime(self.covid_vaccinations['Date Administered']).dt.date
 
-
     def import_covid_vaccinations(self):
         """ Select all COVID vaccinations in the list returned by Immpact and import them."""
         covid_vax_indexes = self.covid_vaccinations.index + 1
@@ -354,10 +353,18 @@ class COVIDlabreview(NBSdriver):
             import_path = '/html/body/form/div[2]/div/div[1]/input[1]'
             self.find_element(By.XPATH, import_path).click()
             self.switch_to.alert.accept()
+            if len(self.window_handles) > 1:
+                for handle in self.window_handles:
+                    if handle != self.main_window_handle:
+                        self.switch_to.window(handle)
+                        self.close()
+                self.switch_to.window(self.main_window_handle)
+                self.failed_immpact_query_log.append(self.patient_id)
         else:
             cancel_path = '/html/body/form/div[2]/div/div[1]/input[2]'
             self.find_element(By.XPATH, cancel_path).click()
             self.switch_to.alert.accept()
+
 
     def determine_vaccination_status(self, collection_date):
         """ Determine vaccination status at time of illness and other required vaccination data points."""

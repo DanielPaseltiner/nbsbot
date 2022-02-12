@@ -17,6 +17,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
     try:
         NBS.pause_for_database()
         NBS.reset()
+        NBS.get_main_window_handle()
         if NBS.check_for_possible_merges(lab.First_Name, lab.Last_Name, lab.Birth_Dt):
             print('Possible merge(s) found. Lab skipped.')
             continue
@@ -94,6 +95,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             NBS.set_lab_testing_performed()
             NBS.click_submit()
             NBS.click_submit()
+            NBS.patient_id = NBS.ReadPatientID()
             NBS.go_to_manage_associations()
             #Atempt collection vaccine records from Immpact
             if NBS.query_immpact():
