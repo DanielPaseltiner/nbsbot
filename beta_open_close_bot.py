@@ -48,6 +48,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
                                 ,lab.FIRST_RESPONDER
                                 ,lab.EMPLOYED_IN_HEALTHCARE)
             NBS.GoToCOVID()
+            NBS.GoToCOVID()
             NBS.update_pregnant_aoe(lab.PREGNANT)
             NBS.update_symptom_aoe(lab.SYMPTOMATIC_FOR_DISEASE, lab.ILLNESS_ONSET_DATE)
             NBS.click_submit()
