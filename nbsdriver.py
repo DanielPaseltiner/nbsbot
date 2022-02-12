@@ -106,11 +106,14 @@ class NBSdriver(webdriver.Chrome):
 
     def go_to_home(self):
         """ Go to NBS Home page. """
-        xpath = '//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a'
+        #xpath = '//*[@id="bd"]/table[1]/tbody/tr/td[1]/table/tbody/tr/td[1]/a'
+        partial_link = 'Home'
         for attempt in range(self.num_attempts):
             try:
-                WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
-                self.find_element(By.XPATH, xpath).click()
+                #WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
+                #self.find_element(By.XPATH, xpath).click()
+                WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, partial_link)))
+                self.find_element(By.PARTIAL_LINK_TEXT, partial_link).click()
                 self.home_loaded = True
                 break
             except TimeoutException:

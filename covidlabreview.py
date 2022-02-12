@@ -441,6 +441,9 @@ class COVIDlabreview(NBSdriver):
         address_table_path = '//*[@id="patSearch8"]'
         WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, address_table_path)))
         address_table = self.ReadTableToDF(address_table_path)
+        if type(address_table) != pd.core.frame.DataFrame:
+            sleep(1)
+            address_table = self.ReadTableToDF(address_table_path)
         address_table = address_table[address_table['As of'] != '']
         address_table['As of'] = pd.to_datetime(address_table['As of'], format = "%m/%d/%Y")
         address_table = address_table.loc[address_table['As of'].dt.date >= (self.now - timedelta(days=365))].reset_index(drop=True)
