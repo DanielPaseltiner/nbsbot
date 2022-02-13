@@ -430,7 +430,7 @@ class NBSdriver(webdriver.Chrome):
 
     def switch_to_secondary_window(self):
         """ Set a secondary window as the current window in order to interact with the pop up."""
-        self.new_window_handle = None
+        new_window_handle = None
         for handle in self.window_handles:
             if handle != self.main_window_handle:
                 new_window_handle = handle
@@ -476,10 +476,13 @@ class NBSdriver(webdriver.Chrome):
             zipcode=''
         )
         usps = USPSApi(self.usps_user_id, test=True)
-        validation = usps.validate_address(address)
-        if not 'Address Not Found' in json.dumps(validation.result):
-            zip_code = validation.result['AddressValidateResponse']['Address']['Zip5']
-        else:
+        try:
+            validation = usps.validate_address(address)
+            if not 'Address Not Found' in json.dumps(validation.result):
+                zip_code = validation.result['AddressValidateResponse']['Address']['Zip5']
+            else:
+                zip_code = ''
+        except:
             zip_code = ''
         return zip_code
 

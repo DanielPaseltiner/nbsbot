@@ -203,8 +203,8 @@ class COVIDlabreview(NBSdriver):
         If 3 is select then NBSbot will only review unassocated labs that were reported 3 or more days ago."""
 
         self.min_delay = input('\nSET MINIMUM REVIEW DELAY:\n'
-                                'Enter the minimum integer number of days between the earliest date a lab was reported and today that unassociated labs should be reviewed from.\n'
-                                'Enter "0" or simply press enter to skip this step and review all unassociated labs regardless of reporting delay.\n'
+                                'Enter the minimum integer number of days between the date a lab was collected and today that unassociated labs should be reviewed from.\n'
+                                'Enter "0" or simply press enter to skip this step and review all unassociated labs regardless of review delay.\n'
                                 '>>>')
         if not self.min_delay:
             self.min_delay = 0
@@ -280,11 +280,14 @@ class COVIDlabreview(NBSdriver):
     def create_investigation(self):
         """Create a new investigation from within a lab report when one does not already exist ."""
         create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, create_investigation_button_path)))
         self.find_element(By.XPATH, create_investigation_button_path).click()
         select_condition_field_path = '//*[@id="ccd_ac_table"]/tbody/tr[1]/td/input'
         condition = '2019 Novel Coronavirus (2019-nCoV)'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, select_condition_field_path)))
         self.find_element(By.XPATH, select_condition_field_path).send_keys(condition)
         submit_button_path = '/html/body/table/tbody/tr/td/table/tbody/tr[3]/td/table/thead/tr[2]/td/div/table/tbody/tr/td/table/tbody/tr/td[4]/table[1]/tbody/tr[1]/td/input'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, submit_button_path)))
         self.find_element(By.XPATH, submit_button_path).click()
 
     def associate_lab_with_investigation(self, lab_id):
@@ -295,6 +298,7 @@ class COVIDlabreview(NBSdriver):
             lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
             lab_row_index = str(int(lab_row_index) + 1)
             lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, lab_path)))
         self.find_element(By.XPATH,lab_path).click()
 
     def query_immpact(self):
