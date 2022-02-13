@@ -511,3 +511,8 @@ class NBSdriver(webdriver.Chrome):
                 self.home_loaded = False
         if not self.home_loaded:
             sys.exit(print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered."))
+
+    def write_general_comment(self, note):
+        """Write a note in the general comments box of an investigation."""
+        xpath = '//*[@id="INV167"]'
+        self.find_element(By.XPATH, xpath).send_keys(note)

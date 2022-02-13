@@ -55,6 +55,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
                                 ,lab.RESIDENT_CONGREGATE_SETTING
                                 ,lab.FIRST_RESPONDER
                                 ,lab.EMPLOYED_IN_HEALTHCARE)
+            NBS.write_general_comment(f' Associated lab {lab.Patient_Local_ID}. -nbsbot {NBS.now_str}')
             NBS.GoToCOVID()
             NBS.GoToCOVID()
             NBS.update_pregnant_aoe(lab.PREGNANT)
@@ -89,6 +90,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             NBS.set_confirmation_date()
             NBS.set_mmwr()
             NBS.set_closed_date()
+            NBS.write_general_comment(f'Created investigation from lab {lab.Patient_Local_ID}. -nbsbot {NBS.now_str}')
             NBS.GoToCOVID()
             NBS.update_symptom_aoe(lab.SYMPTOMATIC_FOR_DISEASE, lab.ILLNESS_ONSET_DATE)
             NBS.update_pregnant_aoe(lab.PREGNANT)
