@@ -334,7 +334,7 @@ class COVIDlabreview(NBSdriver):
             lab_row_index = lab_report_table[lab_report_table['Event ID'] == lab_id].index.tolist()[0]
             lab_row_index = str(int(lab_row_index) + 1)
             lab_path = f'/html/body/div[2]/div/form/div/div/div/table[2]/tbody/tr/td/table/tbody/tr[{lab_row_index}]/td[1]/div/input'
-        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, lab_path)))
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, lab_path)))
         self.find_element(By.XPATH,lab_path).click()
 
     def query_immpact(self):
