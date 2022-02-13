@@ -857,7 +857,7 @@ class COVIDlabreview(NBSdriver):
         new_jurisdiction_path = '//*[@id="subsect_transferOwn"]/tbody/tr[2]/td[2]/input'
         submit_jurisdiction_path = '//*[@id="topButtId"]/input[1]'
         county = self.ReadText(county_path)
-        if county:
+        if county and (not county.isnumeric()):
             self.GoToCaseInfo()
             jurisdiction = self.ReadText(jurisdiction_path)
             if not jurisdiction in county:
