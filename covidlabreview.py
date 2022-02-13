@@ -150,13 +150,13 @@ class COVIDlabreview(NBSdriver):
             where = where + f' AND (DATEDIFF(DAY, Lab_Rpt_Received_By_PH_Dt ,GETDATE())) >= {self.min_delay}'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 > {self.min_age})'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 < {self.max_age})'
-        if self.cong_aoe_lab:
+        if self.cong_aoe_lab == '1':
             where = where + " AND (RESIDENT_CONGREGATE_SETTING IS NULL OR UPPER(RESIDENT_CONGREGATE_SETTING) NOT LIKE 'Y%')"
-        if self.hcw_aoe_lab:
+        if self.hcw_aoe_lab == '1':
             where = where + " AND (EMPLOYED_IN_HEALTHCARE IS NULL OR UPPER(EMPLOYED_IN_HEALTHCARE) NOT LIKE 'Y%')"
-        if self.responder_aoe_lab:
+        if self.responder_aoe_lab == '1':
             where = where + " AND (FIRST_RESPONDER IS NULL OR UPPER(FIRST_RESPONDER) NOT LIKE 'Y%')"
-        if self.pregnant_aoe_lab:
+        if self.pregnant_aoe_lab == '1':
             where = where + " AND (PREGNANT IS NULL OR UPPER(PREGNANT) NOT LIKE 'Y%')"
         order_by = 'ORDER BY Lab_Rpt_Received_By_PH_Dt'
         # Construct Query
