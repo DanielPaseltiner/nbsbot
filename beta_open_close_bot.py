@@ -14,6 +14,7 @@ NBS.get_unassigned_covid_labs()
 NBS.get_patient_table()
 
 for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_labs.shape[0]):
+    emails_sent = False
     try:
         NBS.pause_for_database()
         NBS.reset()
@@ -153,12 +154,14 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
         NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(COVID open/close) AKA Hoover', tb, 'error email')
         NBS.send_bad_address_email()
         NBS.send_failed_query_email()
+        emails_sent = True
         if NBS.check_for_error_page():
             NBS.go_to_home_from_error_page()
         else:
             break
-NBS.send_bad_address_email()
-NBS.send_failed_query_email()
+if not emails_sent:
+    NBS.send_bad_address_email()
+    NBS.send_failed_query_email()
 if idx + 1 == len(NBS.unassociated_labs):
     print('No additional labs to review.')
 
