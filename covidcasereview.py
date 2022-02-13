@@ -120,7 +120,7 @@ class COVIDcasereview(NBSdriver):
         # Race should only be unknown if no other options are selected.
         ambiguous_answers = ['Unknown', 'Other', 'Refused to answer', 'Not Asked']
         for answer in ambiguous_answers:
-            if (answer in self.race) and (self.race != answer):
+            if (answer in self.race) and (self.race != answer) and (self.race == 'Native Hawaiian or Other Pacific Islander'):
                 self.issues.append('"'+ answer + '"' + ' selected in addition to other options for race.')
 
     def CheckNonWhiteRace(self):
@@ -695,11 +695,9 @@ class COVIDcasereview(NBSdriver):
             dose_number = self.ReadText('//*[@id="VAC140"]')
             if not dose_number:
                 self.issues.append('Doses prior to onset cannot be blank if Vacinated is "Yes".')
-            elif dose_number == '0':
-                self.issues.append('Number of doses prior to onset cannot be zero.')
             last_dose_date = self.ReadDate('//*[@id="VAC142"]')
             first_vax_date = datetime(2020, 12, 15).date()
-            if not last_dose_date:
+            if (not last_dose_date) & (dose_number != '0'):
                 self.issues.append('Last dose date is blank.')
             elif last_dose_date < first_vax_date:
                 self.issues.append('Last dose date is prior to when vaccinations become available.')
