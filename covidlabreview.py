@@ -103,6 +103,7 @@ class COVIDlabreview(NBSdriver):
         self.select_counties()
         self.select_min_delay()
         self.get_age_range()
+        self.select_aoe_filters()
         self.get_db_connection_info()
         variables = ('Lab_Local_ID'
                         ,'CAST(Lab_Rpt_Received_By_PH_Dt AS DATE) AS Lab_Rpt_Received_By_PH_Dt'
@@ -149,6 +150,14 @@ class COVIDlabreview(NBSdriver):
             where = where + f' AND (DATEDIFF(DAY, Lab_Rpt_Received_By_PH_Dt ,GETDATE())) >= {self.min_delay}'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 > {self.min_age})'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 < {self.max_age})'
+        if self.cong_aoe_lab:
+            where = where + " AND (RESIDENT_CONGREGATE_SETTING IS NULL OR UPPER(RESIDENT_CONGREGATE_SETTING) NOT LIKE 'Y%')"
+        if self.hcw_aoe_lab:
+            where = where + " AND (EMPLOYED_IN_HEALTHCARE IS NULL OR UPPER(EMPLOYED_IN_HEALTHCARE) NOT LIKE 'Y%')"
+        if self.responder_aoe_lab:
+            where = where + " AND (FIRST_RESPONDER IS NULL OR UPPER(FIRST_RESPONDER) NOT LIKE 'Y%')"
+        if self.pregnant_aoe_lab:
+            where = where + " AND (PREGNANT IS NULL OR UPPER(PREGNANT) NOT LIKE 'Y%')"
         order_by = 'ORDER BY Lab_Rpt_Received_By_PH_Dt'
         # Construct Query
         query = " ".join(['SELECT', variables, 'FROM', self.nbs_unassigned_covid_lab_table, where, order_by] )
@@ -227,6 +236,33 @@ class COVIDlabreview(NBSdriver):
             self.min_age = default_min
         if not self.max_age:
             self.max_age = default_max
+
+    def select_aoe_filters(self):
+        """Prompt user to decide if they would like to filter out unassociated las on the basis of affirmative AOE respones."""
+        self.cong_aoe_lab = input('\nSET CONGREGATE AOE FILTER:\n'
+                             '0: Review unassociated labs with an affirmative congregate setting AOE response.\n'
+                             '1: DO NOT review unassociated labs with an affirmative congregate setting AOE response.\n'
+                             'To review labs with an affirmative congregte setting AOE response enter "0" or simply press enter.\n'
+                             'If you would NOT like to review unasocciated labs with an affiramtive congregate setting AOE enter "1".\n'
+                             '>>>')
+        self.hcw_aoe_lab = input('\nSET HEALTHCARE WORKER AOE FILTER:\n'
+                             '0: Review unassociated labs with an affirmative heathcare worker AOE response.\n'
+                             '1: DO NOT review unassociated labs with an affirmative healthcare worker AOE response.\n'
+                             'To review labs with an affirmative healthcare worker AOE response enter "0" or simply press enter.\n'
+                             'If you would NOT like to review unasocciated labs with an affiramtive healthcare worker AOE enter "1".\n'
+                             '>>>')
+        self.responder_aoe_lab = input('\nSET FIRST RESPONDER AOE FILTER:\n'
+                             '0: Review unassociated labs with an affirmative first responder AOE response.\n'
+                             '1: DO NOT review unassociated labs with an affirmative frist responder AOE response.\n'
+                             'To review labs with an affirmative first responder AOE response enter "0" or simply press enter.\n'
+                             'If you would NOT like to review unasocciated labs with an affiramtive first responder AOE enter "1".\n'
+                             '>>>')
+        self.pregnant_aoe_lab = input('\nSET PREGNANT AOE FILTER:\n'
+                             '0: Review unassociated labs with an affirmative congregate setting AOE response.\n'
+                             '1: DO NOT  Review unassociated labs with an affirmative congregate setting AOE response.\n'
+                             'To review labs with an affirmative congregte setting AOE response enter "0" or simply press enter.\n'
+                             'If you would NOT like to review unasocciated labs with an affiramtive congregate setting AOE enter "1".\n'
+                             '>>>')
 
     def check_for_possible_merges(self, fname, lname, dob):
         """ Given a patient's first name, last name, and dob search for possible
