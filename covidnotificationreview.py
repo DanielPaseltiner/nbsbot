@@ -122,7 +122,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckFirstAttemptDate()
 
         if self.ltf != 'Yes':
-            self.CheckNumCloseContacts()
+            #self.CheckNumCloseContacts()
             self.ExposureChecks()
         # Check COVID Tab.
         self.GoToCOVID()
