@@ -867,6 +867,8 @@ class COVIDlabreview(NBSdriver):
                 self.find_element(By.XPATH, new_jurisdiction_path).send_keys(county[0:3])
                 self.find_element(By.XPATH, submit_jurisdiction_path).click()
                 self.switch_to.window(self.main_window_handle)
+        elif county.isnumeric():
+            self.incomplete_address_log.append(self.ReadPatientID())
 
     def create_notification(self):
         """After completing a case create notification for it."""
