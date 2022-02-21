@@ -62,7 +62,7 @@ for idx, lab in tqdm(NBS.unassociated_labs.iterrows(), total=NBS.unassociated_la
             NBS.update_symptom_aoe(lab.SYMPTOMATIC_FOR_DISEASE, lab.ILLNESS_ONSET_DATE)
             NBS.click_submit()
         else:
-            #If an existing investigation was not found create an new investigation.
+            #If an existing investigation was not found create a new investigation.
             NBS.go_to_lab(lab.Lab_Local_ID)
             NBS.create_investigation()
             NBS.read_address()
