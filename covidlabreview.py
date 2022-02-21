@@ -579,9 +579,9 @@ class COVIDlabreview(NBSdriver):
     def set_investigation_status_closed(self):
         """Set investigation status to closed."""
         try:
-            incestigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
-            closed_option = '//*[@id="INV109"]/option[1]'
-            self.find_element(By.XPATH, incestigation_status_down_arrow).click()
+            investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
+            closed_option = '//*[@id="INV109"]/option[2]'
+            self.find_element(By.XPATH, investigation_status_down_arrow).click()
             self.find_element(By.XPATH, closed_option).click()
         except ElementNotInteractableException:
             self.GoToCaseInfo()
@@ -880,15 +880,15 @@ class COVIDlabreview(NBSdriver):
         self.switch_to.window(self.main_window_handle)
 
     def send_bad_address_email(self):
-        """Email the COVID Admin the list of patients with incomplete addresses."""
+        """Email the COVID Admin the list of patients with incomplete s."""
         if self.incomplete_address_log:
-            body = 'Hello COVID Admin Team,\n\nThe following cases have incomplete addresses:\n\n'
+            body = 'Hello COVID Admin Team,\n\nThe following cases have incomplete s:\n\n'
             for id in self.incomplete_address_log:
                 body = body + id +'\n'
             body = body + '\n-NBSbot(COVID open/close) AKA Hoover'
-            self.send_smtp_email(self.covid_admin_list, 'Incomplete Addresses', body, 'incomplete address email')
+            self.send_smtp_email(self.covid_admin_list, 'Incomplete s', body, 'incomplete address email')
         else:
-            print('Incomplete addresse log is empty. No email sent.')
+            print('Incomplete address log is empty. No email sent.')
 
     def send_failed_query_email(self):
         """Email the COVID Admin the list of patients where the Immpact query failed."""
@@ -897,7 +897,7 @@ class COVIDlabreview(NBSdriver):
             for id in self.failed_immpact_query_log:
                 body = body + id +'\n'
             body = body + '\n-NBSbot(COVID open/close) AKA Hoover'
-            self.send_smtp_email(self.covid_commander, 'Failed Immpact Querries', body, 'failed query email')
+            self.send_smtp_email(self.covid_commander, 'Failed Immpact Queries', body, 'failed query email')
         else:
             print('Failed query log is empty. No email sent.')
 
