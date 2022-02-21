@@ -243,25 +243,25 @@ class COVIDlabreview(NBSdriver):
                              '0: Review unassociated labs with an affirmative congregate setting AOE response.\n'
                              '1: DO NOT review unassociated labs with an affirmative congregate setting AOE response.\n'
                              'To review labs with an affirmative congregte setting AOE response enter "0" or simply press enter.\n'
-                             'If you would NOT like to review unasocciated labs with an affiramtive congregate setting AOE enter "1".\n'
+                             'If you would NOT like to review unassociated labs with an affirmative congregate setting AOE enter "1".\n'
                              '>>>')
         self.hcw_aoe_lab = input('\nSET HEALTHCARE WORKER AOE FILTER:\n'
                              '0: Review unassociated labs with an affirmative heathcare worker AOE response.\n'
                              '1: DO NOT review unassociated labs with an affirmative healthcare worker AOE response.\n'
                              'To review labs with an affirmative healthcare worker AOE response enter "0" or simply press enter.\n'
-                             'If you would NOT like to review unasocciated labs with an affiramtive healthcare worker AOE enter "1".\n'
+                             'If you would NOT like to review unassociated labs with an affirmative healthcare worker AOE enter "1".\n'
                              '>>>')
         self.responder_aoe_lab = input('\nSET FIRST RESPONDER AOE FILTER:\n'
                              '0: Review unassociated labs with an affirmative first responder AOE response.\n'
                              '1: DO NOT review unassociated labs with an affirmative frist responder AOE response.\n'
                              'To review labs with an affirmative first responder AOE response enter "0" or simply press enter.\n'
-                             'If you would NOT like to review unasocciated labs with an affiramtive first responder AOE enter "1".\n'
+                             'If you would NOT like to review unassociated labs with an affirmative first responder AOE enter "1".\n'
                              '>>>')
         self.pregnant_aoe_lab = input('\nSET PREGNANT AOE FILTER:\n'
                              '0: Review unassociated labs with an affirmative congregate setting AOE response.\n'
                              '1: DO NOT  Review unassociated labs with an affirmative congregate setting AOE response.\n'
                              'To review labs with an affirmative congregte setting AOE response enter "0" or simply press enter.\n'
-                             'If you would NOT like to review unasocciated labs with an affiramtive congregate setting AOE enter "1".\n'
+                             'If you would NOT like to review unassociated labs with an affirmative congregate setting AOE enter "1".\n'
                              '>>>')
 
     def check_for_possible_merges(self, fname, lname, dob):
@@ -880,13 +880,13 @@ class COVIDlabreview(NBSdriver):
         self.switch_to.window(self.main_window_handle)
 
     def send_bad_address_email(self):
-        """Email the COVID Admin the list of patients with incomplete s."""
+        """Email the COVID Admin the list of patients with incomplete addresses."""
         if self.incomplete_address_log:
-            body = 'Hello COVID Admin Team,\n\nThe following cases have incomplete s:\n\n'
+            body = 'Hello COVID Admin Team,\n\nThe following cases have incomplete addresses:\n\n'
             for id in self.incomplete_address_log:
                 body = body + id +'\n'
             body = body + '\n-NBSbot(COVID open/close) AKA Hoover'
-            self.send_smtp_email(self.covid_admin_list, 'Incomplete s', body, 'incomplete address email')
+            self.send_smtp_email(self.covid_admin_list, 'Incomplete addresses', body, 'incomplete address email')
         else:
             print('Incomplete address log is empty. No email sent.')
 
