@@ -580,7 +580,7 @@ class COVIDlabreview(NBSdriver):
         """Set investigation status to closed."""
         try:
             investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
-            closed_option = '//*[@id="INV109"]/option[2]'
+            closed_option = '//*[@id="INV109"]/option[1]'
             self.find_element(By.XPATH, investigation_status_down_arrow).click()
             self.find_element(By.XPATH, closed_option).click()
         except ElementNotInteractableException:
