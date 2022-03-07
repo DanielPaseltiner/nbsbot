@@ -699,10 +699,10 @@ class COVIDcasereview(NBSdriver):
             first_vax_date = datetime(2020, 12, 15).date()
             if (not last_dose_date) & (dose_number != '0'):
                 self.issues.append('Last dose date is blank.')
-            elif (last_dose_date != None) & (last_dose_date < first_vax_date):
-                self.issues.append('Last dose date is prior to when vaccinations become available.')
-            elif (last_dose_date != None) & last_dose_date > self.now:
-                self.issues.append('Last dose date cannot be in the future.')
+            # elif (last_dose_date != None) & (last_dose_date < first_vax_date):
+               # self.issues.append('Last dose date is prior to when vaccinations become available.')
+            #elif (last_dose_date != None) & last_dose_date > self.now:
+               # self.issues.append('Last dose date cannot be in the future.')
 
     def CheckFullyVaccinated(self):
         """ Validate fully vaccinated question"""
