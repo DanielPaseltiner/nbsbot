@@ -158,7 +158,7 @@ class COVIDlabreview(NBSdriver):
             where = where + " AND (FIRST_RESPONDER IS NULL OR UPPER(FIRST_RESPONDER) NOT LIKE 'Y%')"
         if self.pregnant_aoe_lab == '1':
             where = where + " AND (PREGNANT IS NULL OR UPPER(PREGNANT) NOT LIKE 'Y%')"
-        order_by = 'ORDER BY Lab_Rpt_Received_By_PH_Dt'
+        order_by = 'ORDER BY Specimen_Coll_DT'
         # Construct Query
         query = " ".join(['SELECT', variables, 'FROM', self.nbs_unassigned_covid_lab_table, where, order_by] )
         # Connect to database
