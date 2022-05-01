@@ -147,7 +147,7 @@ class COVIDlabreview(NBSdriver):
         # All cases with AOEs indicating hospitalization, or death should be assigned out for investigation. These cases should not be opened and closed.
         where = "WHERE (Result_Category = 'Positive') AND (State = 'ME') AND (TestType IN ('PCR', 'Antigen')) AND (HOSPITALIZED IS NULL OR UPPER(HOSPITALIZED) NOT LIKE 'Y%') AND (ICU IS NULL OR UPPER(ICU) NOT LIKE 'Y%') AND (Patient_Death_Ind IS NULL OR UPPER(Patient_Death_Ind) NOT LIKE 'Y%')"
         if self.min_delay:
-            where = where + f' AND (DATEDIFF(DAY, Lab_Rpt_Received_By_PH_Dt ,GETDATE())) >= {self.min_delay}'
+            where = where + f' AND (DATEDIFF(DAY, Specimen_Coll_DT ,GETDATE())) >= {self.min_delay}'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 > {self.min_age})'
         where = where + f' AND (DATEDIFF(DAY, CAST(Birth_Dt AS DATE), CAST(Specimen_Coll_DT AS DATE))/365.25 < {self.max_age})'
         if self.cong_aoe_lab == '1':
