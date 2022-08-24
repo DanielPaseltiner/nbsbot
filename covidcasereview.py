@@ -570,7 +570,7 @@ class COVIDcasereview(NBSdriver):
             if id not in self.not_a_case_log:
                 self.not_a_case_log.append(self.ReadPatientID())
         elif not current_case_status:
-            self.issues.append('Case satus is blank.')
+            self.issues.append('Case status is blank.')
         elif status_pairs[current_case_status] != self.status:
             self.issues.append('Case status mismatch.')
 
@@ -714,7 +714,7 @@ class COVIDcasereview(NBSdriver):
 
 ########################## COVID Testing Check Methods #########################
     def CheckTestingPreformed(self):
-        """Ensure testing preformed is Yes or No."""
+        """Ensure testing performed is Yes or No."""
         self.testing_preformed = self.ReadText('//*[@id="INV740"]')
         if self.testing_preformed not in ['Yes', 'No']:
             self.issues.append("Laboratory testing performed cannot be blank or unknown.")
