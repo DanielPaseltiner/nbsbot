@@ -646,18 +646,18 @@ class COVIDcasereview(NBSdriver):
             self.issues.append('Symptom status cannot be "Unknown symptom status".')
 
 ########################### Isolation Check Methods ############################
-    def CheckIsolation(self):
+    #def CheckIsolation(self):
         """ Ensure isolation release indicator, release date, and died from illness
         indicator are all consistent."""
-        isolation_release = self.ReadText('//*[@id="ME59123"]')
-        isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
-        if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
-            self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
-        if isolation_release == 'Yes':
-            if not isolation_release_date:
-                self.issues.append('Must provide release date if released from isolation.')
-            elif isolation_release_date > self.now:
-                self.issues.append('Isolation release date cannot be in the future.')
+        #isolation_release = self.ReadText('//*[@id="ME59123"]')
+        #isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
+        #if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
+            #self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
+        #if isolation_release == 'Yes':
+            #if not isolation_release_date:
+                #self.issues.append('Must provide release date if released from isolation.')
+            #elif isolation_release_date > self.now:
+                #self.issues.append('Isolation release date cannot be in the future.')
 
 ############### Pre-existing Medical Conditions Check Methods ##################
     def CheckPreExistingConditions(self):
