@@ -102,6 +102,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckDomesticTravel()
         self.CheckShipTravel()
         self.CheckSchoolExposure()
+        self.CheckDaycareExposure()
         self.CheckOutbreakExposure()
         self.CheckTransmissionMode()
         self.CheckDetectionMethod()
@@ -129,7 +130,8 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckSymptoms()
         if (self.symptoms == 'Yes') & (self.ltf != 'Yes'):
             self.CheckSymptomDatesAndStatus()
-        self.CheckIsolation()
+        self.CheckIllness_Duration()
+        #self.CheckIsolation()
         if self.ltf != 'Yes':
             self.CheckPreExistingConditions()
         self.CheckImmPactQuery()

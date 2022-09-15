@@ -492,16 +492,15 @@ class COVIDcasereview(NBSdriver):
         self.CheckIfField(parent_xpath, child_xpath, 'Yes', message)
 
     def CheckSchoolExposure(self):
-        """ If school/daycare exposure is indicated ensure that facility name is
+        """ If school exposure is indicated ensure that facility name is
         provided."""
         if self.site == 'https://nbs.iphis.maine.gov/':
-            school_exposure = self.ReadText('//*[@id="NBS688"]')
+            school_exposure = self.ReadText('//*[@id="257698009"]')
             if school_exposure == 'Yes':
                 school_name = self.ReadText('//*[@id="ME62100"]')
                 university_name = self.ReadText('//*[@id="ME62101"]')
-                daycare_name = self.ReadText('//*[@id="ME10106"]')
-                if (not school_name) & (not university_name) & (not daycare_name):
-                    self.issues.append("If school/daycare/university exposure is indicated then school/daycare/university name must be specified.")
+                if (not school_name) & (not university_name):
+                    self.issues.append("If school/university exposure is indicated then school/university name must be specified.")
                 if school_name == 'Other':
                     other_school_name = self.ReadText('//*[@id="ME62100Oth"]')
                     if not other_school_name:
@@ -510,6 +509,17 @@ class COVIDcasereview(NBSdriver):
                     other_university_name = self.ReadText('//*[@id="ME62101Oth"]')
                     if not other_university_name:
                         self.issues.append('Other university name is blank.')
+
+    def CheckDaycareExposure(self):
+        """ If daycare exposure is indicated ensure that facility name is
+        provided."""
+        if self.site == 'https://nbs.iphis.maine.gov/':
+            daycare_exposure = self.ReadText('//*[@id="413817003"]')
+            if daycare_exposure == 'Yes':
+                daycare_name = self.ReadText('//*[@id="ME10106"]')
+                if (not daycare_name):
+                    self.issues.append("If daycare exposure is indicated then daycare name must be specified.")
+
 
     def CheckOutbreakExposure(self):
         """ If outbreak exposure is indicated then outbreak name must be provided.
@@ -645,10 +655,18 @@ class COVIDcasereview(NBSdriver):
         elif symp_status == 'Unknown symptom status':
             self.issues.append('Symptom status cannot be "Unknown symptom status".')
 
+    def CheckIllness_Duration(self):
+        """ Ensure if there is a number for illness duration that there is also an illness duration units.  Added Sept 2022 to account for notifications that were failing.STILL NEED TO FIX!!!"""
+        Illness_Duration = self.ReadText('//*[@id="INV139"]')
+        if Illness_Duration == 'Yes':
+            Illness_Duration_Units = self.ReadDate('//*[@id="INV140"]')
+            if (not Illness_Duration_Units):
+                self.issues.append("If ilness duration has a number then illness duration units must be specified.")
+
 ########################### Isolation Check Methods ############################
     #def CheckIsolation(self):
         """ Ensure isolation release indicator, release date, and died from illness
-        indicator are all consistent."""
+        indicator are all consistent.  Retired this section Sept 2022"""
         #isolation_release = self.ReadText('//*[@id="ME59123"]')
         #isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
         #if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
