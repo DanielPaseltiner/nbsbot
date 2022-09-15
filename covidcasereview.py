@@ -467,7 +467,7 @@ class COVIDcasereview(NBSdriver):
 ###################### Exposure Information Check Methods ######################
     def CheckExposureSection(self):
         """ Make sure that exposure section contains at least one 'Yes' and if
-        more than one that "Uknown exposure" is not included."""
+        more than one that "Unknown exposure" is not included."""
         html = self.find_element(By.XPATH, '//*[@id="NBS_UI_GA21014"]/tbody').get_attribute('innerHTML')
         soup = BeautifulSoup(html, 'html.parser')
         num_exposures = str(soup).count('Yes')

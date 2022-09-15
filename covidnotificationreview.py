@@ -153,7 +153,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckSymptoms()
         if self.symptoms == 'Yes':
             self.CheckSymptomDatesAndStatus()
-        self.CheckIsolation()
+        #self.CheckIsolation()
         self.CheckImmPactQuery()
         self.CheckRecievedVax()
         if self.vax_recieved == 'Yes':
