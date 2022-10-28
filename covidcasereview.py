@@ -664,18 +664,18 @@ class COVIDcasereview(NBSdriver):
                 self.issues.append("If ilness duration has a number then illness duration units must be specified.")
 
 ########################### Isolation Check Methods ############################
-    #def CheckIsolation(self):
+    def CheckIsolation(self):
         """ Ensure isolation release indicator, release date, and died from illness
-        indicator are all consistent.  Retired this section Sept 2022"""
-        #isolation_release = self.ReadText('//*[@id="ME59123"]')
-        #isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
-        #if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
-            #self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
-        #if isolation_release == 'Yes':
-            #if not isolation_release_date:
-                #self.issues.append('Must provide release date if released from isolation.')
-            #elif isolation_release_date > self.now:
-                #self.issues.append('Isolation release date cannot be in the future.')
+        indicator are all consistent.  Retired this section Sept 2022 Reactivated for hospitalized cases Oct 2022"""
+        isolation_release = self.ReadText('//*[@id="ME59123"]')
+        isolation_release_date = self.ReadDate('//*[@id="ME59106"]')
+        if (self.death_indicator == 'Yes') & (isolation_release != 'No'):
+            self.issues.append('Died from illness indicator and isolation release indicator are inconsistent.')
+        if isolation_release == 'Yes':
+            if not isolation_release_date:
+                self.issues.append('Must provide release date if released from isolation.')
+            elif isolation_release_date > self.now:
+                self.issues.append('Isolation release date cannot be in the future.')
 
 ############### Pre-existing Medical Conditions Check Methods ##################
     def CheckPreExistingConditions(self):
@@ -731,10 +731,10 @@ class COVIDcasereview(NBSdriver):
             self.issues.append("Fully vaccinated cannot be Yes is vaccine recieved is No.")
 
 ########################## COVID Testing Check Methods #########################
-    def CheckTestingPreformed(self):
+    def CheckTestingPerformed(self):
         """Ensure testing performed is Yes or No."""
-        self.testing_preformed = self.ReadText('//*[@id="INV740"]')
-        if self.testing_preformed not in ['Yes', 'No']:
+        self.testing_performed = self.ReadText('//*[@id="INV740"]')
+        if self.testing_performed not in ['Yes', 'No']:
             self.issues.append("Laboratory testing performed cannot be blank or unknown.")
 
     def CheckLabTable(self):

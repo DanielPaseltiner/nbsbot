@@ -138,8 +138,8 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckRecievedVax()
         if self.vax_recieved == 'Yes':
             self.CheckFullyVaccinated()
-        self.CheckTestingPreformed()
-        if self.testing_preformed == 'Yes':
+        self.CheckTestingPerformed()
+        if self.testing_performed == 'Yes':
             self.CheckLabTable()
         # Check AOEs
         if self.ltf == 'Yes':
@@ -158,8 +158,8 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckRecievedVax()
         if self.vax_recieved == 'Yes':
             self.CheckFullyVaccinated()
-        self.CheckTestingPreformed()
-        if self.testing_preformed == 'Yes':
+        self.CheckTestingPerformed()
+        if self.testing_performed == 'Yes':
             self.CheckLabTable()
         self.AOEChecks()
 
@@ -172,7 +172,7 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckRecievedVax()
         if self.vax_recieved == 'Yes':
             self.CheckFullyVaccinated()
-        self.CheckTestingPreformed()
+        self.CheckTestingPerformed()
         # Check AOEs
         self.AOEChecks()
 
