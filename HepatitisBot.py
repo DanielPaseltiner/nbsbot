@@ -59,10 +59,7 @@ for _ in tqdm(generator()):
     NBS.find_element(By.XPATH, clear_filter_path).click()
     time.sleep(5)
     
-    NBS.find_element(By.XPATH, '//*[@id="myQueues"]/div/div[3]/ul/li[3]/a').click()
-    
-    
-    
+    #NBS.find_element(By.XPATH, '//*[@id="myQueues"]/div/div[3]/ul/li[3]/a').click()
     #open description dropdown menu
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, description_path)))
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, description_path)))
@@ -661,14 +658,14 @@ for _ in tqdm(generator()):
     
     ###If there is an open investigation, associate the lab to that investigation###
     if acute_inv is not None:
-        if "Open" in acute_inv["Status"]:
+        if "Open" in acute_inv["Status"].iloc[0]:
             associate = True
             mark_reviewed = False
             create_inv = False
             update_status = False
             update_inv_type = False
     if chronic_inv is not None:
-        if "Open" in chronic_inv["Status"]:
+        if "Open" in chronic_inv["Status"].iloc[0]:
             associate = True
             mark_reviewed = False
             create_inv = False
@@ -756,7 +753,7 @@ for _ in tqdm(generator()):
         NBS.set_confirmation_date()
         #doesn't work NBS.set_mmwr()
         
-        NBS.write_general_comment(f'Created investigation from lab {lab_report_table["Event ID"].iloc[0]}. -nbsbot {NBS.now_str}')
+        NBS.write_general_comment(f'Created investigation from lab {event_id}. -nbsbot {NBS.now_str}')
         
         #add in lab info
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head2"]')))
@@ -913,13 +910,13 @@ for _ in tqdm(generator()):
         inv_type = inv_type_elem.text
         
         if test_condition == "Hepatitis B" and test_type in ("Antigen", "DNA", "RNA") and "acute" in inv_type:
-            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ within 6 months. Case classification is changed from probable to confirmed. Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ within 6 months. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis B" and test_type in ("Antigen", "DNA", "RNA") and "Chronic" in inv_type:
-            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ 6 months or more apart. Case classification is changed from probable to confirmed. Case classification is changed from probable to confirmed. Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ 6 months or more apart. Case classification is changed from probable to confirmed. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis C" and test_type in ("Genotype", "RNA") and "acute" in inv_type:
-            NBS.write_general_comment(f'\nNew hepatitis C NAAT within 1 year. Case classification is changed from probable to confirmed. Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.write_general_comment(f'\nNew hepatitis C NAAT within 1 year. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis C" and test_type in ("Genotype", "RNA") and "chronic" in inv_type:
-            NBS.write_general_comment(f'\nNew hepatitis C NAAT. Case classification is changed from probable to confirmed. Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.write_general_comment(f'\nNew hepatitis C NAAT. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
             
         if not_a_case:
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="NBS_UI_2"]/tbody/tr[5]/td[2]/img')))
@@ -1058,12 +1055,12 @@ for _ in tqdm(generator()):
         #leave comment
         if condition == "Hepatitis B, acute":
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="DEM196"]')))
-            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew IgM anti-HBc+ within 6 months. Case classification is changed from probable chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew IgM anti-HBc+ within 6 months. Case classification is changed from probable chronic to confirmed acute. -nbsbot Lab Id: {event_id} -nbsbot {NBS.now_str}')
             #NBS.write_general_comment(f'\nNew IgM anti-HBc+ within 6 months. Case classification is changed from probable chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
             '//*[@id="DEM196"]'
         elif condition == "Hepatitis C, acute":
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="DEM196"]')))
-            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {event_id} -nbsbot {NBS.now_str}')
             #NBS.write_general_comment(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
         #set investigation status to closed
         investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
@@ -1106,9 +1103,7 @@ for _ in tqdm(generator()):
                 elif resulted_test_table["Text Result"].iloc[0] != "":    
                     NBS.find_element(By.XPATH, '//*[@id="1742_6"]').send_keys(resulted_test_table["Text Result"].iloc[0])
                 NBS.find_element(By.XPATH, '//*[@id="INV826"]').send_keys(lab_date.strftime('%m/%d/%Y'))
-                #ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
-                #upper_limit_text = ref_range[0]
-                #upper_limit = upper_limit_text.rsplit('-',1)[-1]
+                
                 WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV827"]')))
                 NBS.find_element(By.XPATH, '//*[@id="INV827"]').send_keys(resulted_test_table["Ref Range To"].iloc[0])
                 
