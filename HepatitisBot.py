@@ -40,9 +40,9 @@ NBS = COVIDlabreview(production=False)
 NBS.get_credentials()
 NBS.log_in()
 attempt_counter = 0
-NBS.get_db_connection_info()
-NBS.get_patient_table()
-NBS.pause_for_database()
+#NBS.get_db_connection_info()
+#NBS.get_patient_table()
+#NBS.pause_for_database()
 for _ in tqdm(generator()):
     #Go to Document Requiring Review
     partial_link = 'Documents Requiring Review'
@@ -1055,6 +1055,66 @@ for _ in tqdm(generator()):
         NBS.find_element(By.XPATH, '//*[@id="confirmationText"]/tbody/tr[11]/td/input[1]').click()
         #go back to original window
         NBS.switch_to.window(original_window)
+        #leave comment
+        if condition == "Hepatitis B, acute":
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="DEM196"]')))
+            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew IgM anti-HBc+ within 6 months. Case classification is changed from probable chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            #NBS.write_general_comment(f'\nNew IgM anti-HBc+ within 6 months. Case classification is changed from probable chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            '//*[@id="DEM196"]'
+        elif condition == "Hepatitis C, acute":
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="DEM196"]')))
+            NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            #NBS.write_general_comment(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+        #set investigation status to closed
+        investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
+        closed_option = '//*[@id="INV109"]/option[1]' 
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, investigation_status_down_arrow)))
+        NBS.find_element(By.XPATH, investigation_status_down_arrow).click()
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, closed_option)))
+        NBS.find_element(By.XPATH, closed_option).click()
+        #set case status to confirmed
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, case_status_path)))
+        NBS.find_element(By.XPATH, case_status_path).send_keys("Confirmed")
+        
+        #go to hepatitis core tab
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head2"]')))
+        NBS.find_element(By.XPATH, '//*[@id="tabs0head2"]').click()
+        
+        #fill in lab info
+        if test_type == "Antigen":
+            if any(x in str(resulted_test_table["Resulted Test"]) for x in ["surface", "Surface", "SURFACE"]): 
+                date_path = '//*[@id="LP38331_2_DT"]'
+                text_path = '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[8]/td[2]/input'
+            elif any(x in str(resulted_test_table["Resulted Test"]) for x in ["e Ag", "e ag", "E Ag", "E ag", "e An", "e an", "E An", "E an"]): 
+                date_path = '//*[@id="LP38329_6_DT"]'
+                text_path = '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[16]/td[2]/input'
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, date_path)))
+            date_elem = NBS.find_element(By.XPATH, date_path)
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, text_path)))
+            text_elem = NBS.find_element(By.XPATH, text_path)
+            if date_elem.get_attribute("value") == '' and text_elem.get_attribute("value") == '':
+                NBS.find_element(By.XPATH, date_path).send_keys(lab_date.strftime('%m/%d/%Y'))
+                NBS.find_element(By.XPATH, text_path).send_keys("Positive")
+        elif test_type == "Alanine":
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="1742_6"]')))
+            text_elem = NBS.find_element(By.XPATH, '//*[@id="1742_6"]')
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV826"]')))
+            date_elem = NBS.find_element(By.XPATH, '//*[@id="INV826"]')
+            if date_elem.get_attribute("value") == '' and text_elem.get_attribute("value") == '':
+                if resulted_test_table["Numeric Result"].iloc[0] != "":
+                    NBS.find_element(By.XPATH, '//*[@id="1742_6"]').send_keys(resulted_test_table["Numeric Result"].iloc[0])  
+                elif resulted_test_table["Text Result"].iloc[0] != "":    
+                    NBS.find_element(By.XPATH, '//*[@id="1742_6"]').send_keys(resulted_test_table["Text Result"].iloc[0])
+                NBS.find_element(By.XPATH, '//*[@id="INV826"]').send_keys(lab_date.strftime('%m/%d/%Y'))
+                #ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
+                #upper_limit_text = ref_range[0]
+                #upper_limit = upper_limit_text.rsplit('-',1)[-1]
+                WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV827"]')))
+                NBS.find_element(By.XPATH, '//*[@id="INV827"]').send_keys(resulted_test_table["Ref Range To"].iloc[0])
+                
+        #click submit
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
+        NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
         print("Update investigation to acute")
         what_do.append("Update investigation to acute")
     #associate with investigation
