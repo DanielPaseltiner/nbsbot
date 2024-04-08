@@ -479,95 +479,98 @@ for _ in tqdm(generator()):
                 
         ###Hepatitis B Logic###
         if test_condition == "Hepatitis B":
-            IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
-            IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("HEPATITIS B|HBV|Hepatitis B")]
-            IgM_lab["Date Collected"] = pd.to_datetime(IgM_lab["Date Collected"]).dt.date
-            IgM_lab = IgM_lab[IgM_lab["Date Collected"]>lab_date-relativedelta(months=6)]
-            Neg_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Neg|NEG|See Below")]
-            Pos_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Pos|POS|Det|DET|REA|Rea")]
-            if acute_inv is None and chronic_inv is None:
-                if len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]): #add in logic for IgM
-                    mark_reviewed = True
-                elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
-                    #create_inv = True
-                    #condition = "Hepatitis B, acute"
-                    print("Hepatitis B, acute investigation to be assigned out")
-                    what_do.append("Hepatitis B, acute investigation to be assigned out")
-                    NBS.go_to_home()
-                    continue
-                elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
-                    mark_reviewed = True
-                elif test_type in ("Antigen", "DNA", "RNA"):
-                    #add in logic to check IgM and ALT results
-                    if len(IgM_lab) == 0:
-                        #create_inv = True
-                        if alt_lab is not None:
-                            if alt_lab["num_res"].iloc[0] <= 200:            
-                                #condition = 'Hepatitis B virus infection, chronic'
-                                print("Hepatitis B, chronic investigation to be assigned out")
-                                what_do.append("Hepatitis B, chronic investigation to be assigned out")
-                                NBS.go_to_home()
-                                continue
-                            else:
-                                #condition = "Hepatitis B, acute"
-                                print("Hepatitis B, acute investigation to be assigned out")
-                                what_do.append("Hepatitis B, acute investigation to be assigned out")
-                                NBS.go_to_home()
-                                continue
-                        else:
-                            #condition = 'Hepatitis B virus infection, chronic'
-                            print("Hepatitis B, chronic investigation to be assigned out")
-                            what_do.append("Hepatitis B, chronic investigation to be assigned out")
-                            NBS.go_to_home()
-                            continue
-                    elif len(Pos_IgM_lab) > 0:
+            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"] or "Below threshold" in resulted_test_table["Coded Result / Organism Name"] or "Not Detected" in resulted_test_table["Text Result"] or "Below threshold" in resulted_test_table["Text Result"] or "Unable" in resulted_test_table["Text Result"] or "Unable" in resulted_test_table["Coded Result / Organism Name"] or "not detected" in resulted_test_table["Text Result"] or "not detected" in resulted_test_table["Coded Result / Organism Name"] or "UNDETECTED" in resulted_test_table["Text Result"] or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"]:
+                mark_reviewed = True
+            else:
+                IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
+                IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("HEPATITIS B|HBV|Hepatitis B")]
+                IgM_lab["Date Collected"] = pd.to_datetime(IgM_lab["Date Collected"]).dt.date
+                IgM_lab = IgM_lab[IgM_lab["Date Collected"]>lab_date-relativedelta(months=6)]
+                Neg_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Neg|NEG|See Below")]
+                Pos_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Pos|POS|Det|DET|REA|Rea")]
+                if acute_inv is None and chronic_inv is None:
+                    if len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]): #add in logic for IgM
+                        mark_reviewed = True
+                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
                         #create_inv = True
                         #condition = "Hepatitis B, acute"
                         print("Hepatitis B, acute investigation to be assigned out")
                         what_do.append("Hepatitis B, acute investigation to be assigned out")
                         NBS.go_to_home()
                         continue
-                    elif len(Neg_IgM_lab) > 0:
-                        #create_inv = True
-                        #condition = "Hepatitis B virus infection, Chronic"
-                        print("Hepatitis B, chronic investigation to be assigned out")
-                        what_do.append("Hepatitis B, chronic investigation to be assigned out")
-                        NBS.go_to_home()
-                        continue
-            elif chronic_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
-                if len(chronic_inv) > 0 and "Confirmed" in chronic_inv["Case Status"].values:
-                    mark_reviewed = True
-                elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and diff_days >= 183 and test_type == "Antigen":
-                    update_status = True
-                elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and diff_days < 183 and test_type == "Antigen":
-                    mark_reviewed = True
-                elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and test_type in ("DNA", "RNA"):
-                    update_status = True
-            elif acute_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
-                if len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days >= 183:
-                    create_inv = True
-                    condition = "Hepatitis B virus infection, Chronic"
-                elif len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days < 183:
-                    associate = True
-                #elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and test_type == "DNA":
-                    #change case status to confirmed
-                    #update_status = True
-                elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days < 183:
-                    #change case status to confirmed
-                    update_status = True
-                elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days >= 183:
-                    create_inv = True
-                    condition = "Hepatitis B virus infection, Chronic"
-            elif acute_inv is not None and test_type in "Antibody":
-                if len(acute_inv) > 0:
-                    mark_reviewed = True
-            elif chronic_inv is not None and test_type in "Antibody":
-                if "IgM" in str(resulted_test_table["Resulted Test"]) and diff_days < 183 and len(acute_inv) == 0 and "Probable" in chronic_inv["Case Status"].values:
-                    #change to confirmed acute
-                    update_inv_type = True
-                    condition = "Hepatitis B, acute"
-                else:
-                    mark_reviewed = True
+                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
+                        mark_reviewed = True
+                    elif test_type in ("Antigen", "DNA", "RNA"):
+                        #add in logic to check IgM and ALT results
+                        if len(IgM_lab) == 0:
+                            #create_inv = True
+                            if alt_lab is not None:
+                                if alt_lab["num_res"].iloc[0] <= 200:            
+                                    #condition = 'Hepatitis B virus infection, chronic'
+                                    print("Hepatitis B, chronic investigation to be assigned out")
+                                    what_do.append("Hepatitis B, chronic investigation to be assigned out")
+                                    NBS.go_to_home()
+                                    continue
+                                else:
+                                    #condition = "Hepatitis B, acute"
+                                    print("Hepatitis B, acute investigation to be assigned out")
+                                    what_do.append("Hepatitis B, acute investigation to be assigned out")
+                                    NBS.go_to_home()
+                                    continue
+                            else:
+                                #condition = 'Hepatitis B virus infection, chronic'
+                                print("Hepatitis B, chronic investigation to be assigned out")
+                                what_do.append("Hepatitis B, chronic investigation to be assigned out")
+                                NBS.go_to_home()
+                                continue
+                        elif len(Pos_IgM_lab) > 0:
+                            #create_inv = True
+                            #condition = "Hepatitis B, acute"
+                            print("Hepatitis B, acute investigation to be assigned out")
+                            what_do.append("Hepatitis B, acute investigation to be assigned out")
+                            NBS.go_to_home()
+                            continue
+                        elif len(Neg_IgM_lab) > 0:
+                            #create_inv = True
+                            #condition = "Hepatitis B virus infection, Chronic"
+                            print("Hepatitis B, chronic investigation to be assigned out")
+                            what_do.append("Hepatitis B, chronic investigation to be assigned out")
+                            NBS.go_to_home()
+                            continue
+                elif chronic_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
+                    if len(chronic_inv) > 0 and "Confirmed" in chronic_inv["Case Status"].values:
+                        mark_reviewed = True
+                    elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and diff_days >= 183 and test_type == "Antigen":
+                        update_status = True
+                    elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and diff_days < 183 and test_type == "Antigen":
+                        mark_reviewed = True
+                    elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and test_type in ("DNA", "RNA"):
+                        update_status = True
+                elif acute_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
+                    if len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days >= 183:
+                        create_inv = True
+                        condition = "Hepatitis B virus infection, Chronic"
+                    elif len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days < 183:
+                        associate = True
+                    #elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and test_type == "DNA":
+                        #change case status to confirmed
+                        #update_status = True
+                    elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days < 183:
+                        #change case status to confirmed
+                        update_status = True
+                    elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days >= 183:
+                        create_inv = True
+                        condition = "Hepatitis B virus infection, Chronic"
+                elif acute_inv is not None and test_type in "Antibody":
+                    if len(acute_inv) > 0:
+                        mark_reviewed = True
+                elif chronic_inv is not None and test_type in "Antibody":
+                    if "IgM" in str(resulted_test_table["Resulted Test"]) and diff_days < 183 and len(acute_inv) == 0 and "Probable" in chronic_inv["Case Status"].values:
+                        #change to confirmed acute
+                        update_inv_type = True
+                        condition = "Hepatitis B, acute"
+                    else:
+                        mark_reviewed = True
                     
         ###ALT Logic###
         #Sometimes the numeric result will have a < or > in it which converts the type to a string so we have to deal with that
@@ -658,14 +661,14 @@ for _ in tqdm(generator()):
     
     ###If there is an open investigation, associate the lab to that investigation###
     if acute_inv is not None:
-        if "Open" in acute_inv["Status"].iloc[0]:
+        if "Open" in acute_inv["Status"]:
             associate = True
             mark_reviewed = False
             create_inv = False
             update_status = False
             update_inv_type = False
     if chronic_inv is not None:
-        if "Open" in chronic_inv["Status"].iloc[0]:
+        if "Open" in chronic_inv["Status"]:
             associate = True
             mark_reviewed = False
             create_inv = False
@@ -716,7 +719,8 @@ for _ in tqdm(generator()):
         NBS.GoToCaseInfo()
         #NBS.set_investigation_status_closed()
         investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
-        closed_option = '//*[@id="INV109"]/option[1]' 
+        #set this to option[2] for open or option[1] for closed
+        closed_option = '//*[@id="INV109"]/option[2]' 
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, investigation_status_down_arrow)))
         NBS.find_element(By.XPATH, investigation_status_down_arrow).click()
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, closed_option)))
@@ -848,12 +852,13 @@ for _ in tqdm(generator()):
                     #NBS.incomplete_address_log.append(NBS.ReadPatientID())
                 #NBS.click_submit()
         ####################################################################################################################
-        try:
-            NBS.create_notification()
-        except NoSuchElementException:
-            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
-            NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
-            NBS.create_notification()
+        #turning this off so we can review investigations before sending notifications to start
+        #try:
+            #NBS.create_notification()
+        #except NoSuchElementException:
+            #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
+            #NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
+            #NBS.create_notification()
         NBS.check_jurisdiction()
         #in covidlabreview, changed transfer_ownership_path to [4] instead of [3]
         print("Create Investigation: " + condition)
