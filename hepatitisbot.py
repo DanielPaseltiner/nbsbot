@@ -29,6 +29,7 @@ import re
 import numpy as np
 from dateutil.relativedelta import relativedelta
 from pandas._libs.tslibs.parsing import DateParseError
+from epiweeks import Week
 
 def generator():
     while True:
@@ -79,7 +80,7 @@ for _ in tqdm(generator()):
             results = NBS.find_elements(By.XPATH,f"//label[contains(text(),'{test}')]")
             for result in results:
                 result.click()
-        except NoSuchElementException:
+        except (NoSuchElementException, ElementNotInteractableException) as e:
             pass
     time.sleep(1)
     
@@ -342,6 +343,13 @@ for _ in tqdm(generator()):
                     what_do.append("Multiple Investigations of same condition")
                     continue
 
+        #If there is a "<" in the resulsts skip for now, could be either negative or positive and it is hard to tell without manual review
+        if "<" in resulted_test_table["Coded Result / Organism Name"].values or "<" in resulted_test_table["Text Result"].values or "<" in resulted_test_table["Numeric Result"].values:
+            print("< in result, skip")
+            what_do.append("< in result, skip")
+            NBS.go_to_home()
+            continue
+
         ###Hepatitis A, skip for now###
         if test_condition == "Hepatitis A":
             if test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]) and "IGM" not in str(resulted_test_table["Resulted Test"]):
@@ -352,8 +360,7 @@ for _ in tqdm(generator()):
                 NBS.go_to_home()
                 continue
         
-        #list of result types: "POS", "NEG", "Reactive", "Positive", "POSITIVE", "REACTIVE", "Not Detected", "NEGATIVE", "Negative"
-        #What do we do with presumptive positive tests?
+        
         ###Hepatitis C Antibody test logic###
         if test_condition == "Hepatitis C" and test_type == "Antibody":
             if (any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE"]) or any(x in str(resulted_test_table["Text Result"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE"])) and ("Non-Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non-Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "Non Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]): 
@@ -367,10 +374,14 @@ for _ in tqdm(generator()):
                     Gen_rna_lab["Date Received"] = pd.to_datetime(Gen_rna_lab["Date Received"]).dt.date
                     Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Date Received"]<lab_date]
                 
+                
+                year = int(datetime.today().strftime("%Y"))
+                mmwr_week = Week(year, 1)
+                
                 #put space in front to avoid grabbing tests that have the results in the reference range
-                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| See Below| UNDETECTED| Undetected| undetected")]
+                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| See Below| UNDETECTED| Undetected| undetected| Non-Reactive| NON-REACTIVE")]
                 Neg_Gen_rna_lab["Date Collected"] = pd.to_datetime(Neg_Gen_rna_lab["Date Collected"]).dt.date
-                Neg_Gen_rna_lab = Neg_Gen_rna_lab[Neg_Gen_rna_lab["Date Collected"]>lab_date-relativedelta(years=1)]
+                Neg_Gen_rna_lab = Neg_Gen_rna_lab[Neg_Gen_rna_lab["Date Collected"]>mmwr_week.startdate()]
                 #grab all negative labs within a year, add a space for the name so it doesn't trigger on the reference range
                 Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| Not Detected| NOT DETECTED| UNDETECTED| Undetected| undetected")]
                 Neg_lab = Neg_lab[Neg_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
@@ -500,7 +511,7 @@ for _ in tqdm(generator()):
                 
         ###Hepatitis B Logic###
         if test_condition == "Hepatitis B":
-            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"].values or "Below threshold" in resulted_test_table["Coded Result / Organism Name"].values or "Not Detected" in resulted_test_table["Text Result"].values or "Below threshold" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Coded Result / Organism Name"].values or "not detected" in resulted_test_table["Text Result"].values or "not detected" in resulted_test_table["Coded Result / Organism Name"].values or "UNDETECTED" in resulted_test_table["Text Result"].values or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"].values:
+            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"].values or "Below threshold" in resulted_test_table["Coded Result / Organism Name"].values or "Not Detected" in resulted_test_table["Text Result"].values or "Below threshold" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Coded Result / Organism Name"].values or "not detected" in resulted_test_table["Text Result"].values or "not detected" in resulted_test_table["Coded Result / Organism Name"].values or "UNDETECTED" in resulted_test_table["Text Result"].values or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"].values or "UNDETECTED" in resulted_test_table["Numeric Result"].values:
                 mark_reviewed = True
             else:
                 IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
@@ -582,11 +593,10 @@ for _ in tqdm(generator()):
                     elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days >= 183:
                         create_inv = True
                         condition = "Hepatitis B virus infection, Chronic"
-                elif acute_inv is not None and test_type in "Antibody":
+                elif acute_inv is not None and chronic_inv is not None and test_type in "Antibody":
                     if len(acute_inv) > 0:
                         mark_reviewed = True
-                elif chronic_inv is not None and test_type in "Antibody":
-                    if "IgM" in str(resulted_test_table["Resulted Test"]) and diff_days < 183 and len(acute_inv) == 0 and "Probable" in chronic_inv["Case Status"].values:
+                    elif "IgM" in str(resulted_test_table["Resulted Test"]) and diff_days < 183 and len(acute_inv) == 0 and "Probable" in chronic_inv["Case Status"].values:
                         #change to confirmed acute
                         update_inv_type = True
                         condition = "Hepatitis B, acute"
@@ -840,6 +850,7 @@ for _ in tqdm(generator()):
             
         #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
         #NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
+        time.sleep(3)
         NBS.click_submit()
         #NBS.click_submit()
         
@@ -1143,6 +1154,7 @@ for _ in tqdm(generator()):
     if associate == True:
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[2]')))
         NBS.find_element(By.XPATH, '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[2]').click()
+        time.sleep(3)
         #identify investigation, name and date? maybe index from investigations table
         inv_to_assoc = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
         for i in inv_to_assoc.index:
