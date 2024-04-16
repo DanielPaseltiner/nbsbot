@@ -343,14 +343,14 @@ for _ in tqdm(generator()):
                     what_do.append("Multiple Investigations of same condition")
                     continue
 
-        #If there is a "<" in the resulsts skip for now, could be either negative or positive and it is hard to tell without manual review
+        #If there is a "<" in the results skip for now, could be either negative or positive and it is hard to tell without manual review
         if "<" in resulted_test_table["Coded Result / Organism Name"].values or "<" in resulted_test_table["Text Result"].values or "<" in resulted_test_table["Numeric Result"].values:
             print("< in result, skip")
             what_do.append("< in result, skip")
             NBS.go_to_home()
             continue
 
-        ###Hepatitis A, skip for now###
+        ###Hepatitis A###
         if test_condition == "Hepatitis A":
             if test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]) and "IGM" not in str(resulted_test_table["Resulted Test"]):
                 mark_reviewed = True
@@ -379,9 +379,12 @@ for _ in tqdm(generator()):
                 mmwr_week = Week(year, 1)
                 
                 #put space in front to avoid grabbing tests that have the results in the reference range
-                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| See Below| UNDETECTED| Undetected| undetected| Non-Reactive| NON-REACTIVE")]
+                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| See Below| UNDETECTED| Undetected| undetected| Non-Reactive| NON-REACTIVE| NOT DETECTED| Not Detected")]
+                #grab all negative genotype or RNA tests to use as an index to find all positive genotype or RNA tests
+                Pos_Gen_rna_lab = Gen_rna_lab.drop(Neg_Gen_rna_lab.index)
                 Neg_Gen_rna_lab["Date Collected"] = pd.to_datetime(Neg_Gen_rna_lab["Date Collected"]).dt.date
                 Neg_Gen_rna_lab = Neg_Gen_rna_lab[Neg_Gen_rna_lab["Date Collected"]>mmwr_week.startdate()]
+                
                 #grab all negative labs within a year, add a space for the name so it doesn't trigger on the reference range
                 Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| Not Detected| NOT DETECTED| UNDETECTED| Undetected| undetected")]
                 Neg_lab = Neg_lab[Neg_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
@@ -393,7 +396,7 @@ for _ in tqdm(generator()):
                         mark_reviewed = True
                     elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values or "Confirmed" in acute_inv["Case Status"].values:
                         mark_reviewed = True
-                elif len(Gen_rna_lab) == 0:
+                elif len(Pos_Gen_rna_lab) == 0:
                     create_inv = True
                     if alt_lab is not None:    
                         if alt_lab["num_res"].iloc[0] <= 200 and len(Neg_lab) == 0:            
@@ -404,9 +407,9 @@ for _ in tqdm(generator()):
                         condition = "Hepatitis C, chronic"
                 elif len(Neg_Gen_rna_lab) >= 1:
                     mark_reviewed = True
-                elif len(Gen_rna_lab) > 0:
-                    print("Skip, Previous positive RNA/Genotype. Should already have investigation created")
-                    what_do.append("Skip, Previous positive RNA/Genotype. Should already have investigation created")
+                elif len(Pos_Gen_rna_lab) > 0:
+                        print("Skip, Previous positive RNA/Genotype. Should already have investigation created")
+                        what_do.append("Skip, Previous positive RNA/Genotype. Should already have investigation created")
                     
             else:
                 #Mark as reviewed
@@ -609,7 +612,9 @@ for _ in tqdm(generator()):
            if len(resulted_test_table) == 1:
                if type(resulted_test_table["Numeric Result"].iloc[0]) == str  and resulted_test_table["Numeric Result"].iloc[0] != "" and bool(re.search(r'\d', resulted_test_table["Numeric Result"].iloc[0])):
                     if resulted_test_table["Numeric Result"].str.extract(r'(\d+)').astype(int).loc[0,0] > 200:
-                        if acute_inv is not None and chronic_inv is not None and diff_days < 92:
+                        if acute_inv is not None and chronic_inv is not None and diff_days > 92:
+                            mark_reviewed = True
+                        elif acute_inv is not None and chronic_inv is not None and diff_days < 92:
                             if len(acute_inv) > 0:
                                 mark_reviewed = True
                             elif chronic_inv["Status"].iloc[0] == "Open":
@@ -617,7 +622,6 @@ for _ in tqdm(generator()):
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis C" in chronic_inv["Condition"].iloc[0]:
                                 associate = True
-                                update_inv_type = True
                                 condition = "Hepatitis C, acute"
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis B" in chronic_inv["Condition"].iloc[0]:
@@ -628,7 +632,9 @@ for _ in tqdm(generator()):
                          mark_reviewed = True
                elif type(resulted_test_table["Text Result"].iloc[0]) == str  and resulted_test_table["Text Result"].iloc[0] != "" and bool(re.search(r'\d', resulted_test_table["Text Result"].iloc[0])):
                     if resulted_test_table["Text Result"].str.extract(r'(\d+)').astype(int).loc[0,0] > 200:
-                        if acute_inv is not None and chronic_inv is not None  and diff_days < 92:
+                        if acute_inv is not None and chronic_inv is not None and diff_days > 92:
+                            mark_reviewed = True
+                        elif acute_inv is not None and chronic_inv is not None and diff_days < 92:
                             if len(acute_inv) > 0:
                                 mark_reviewed = True
                             elif chronic_inv["Status"].iloc[0] == "Open":
@@ -636,7 +642,6 @@ for _ in tqdm(generator()):
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis C" in chronic_inv["Condition"].iloc[0]:
                                 associate = True
-                                update_inv_type = True
                                 condition = "Hepatitis C, acute"
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis B" in chronic_inv["Condition"].iloc[0]:
@@ -650,7 +655,9 @@ for _ in tqdm(generator()):
                        mark_reviewed = True
                    elif int(resulted_test_table["Numeric Result"].iloc[0]) > 200:
                        #add in within 3 months of lab specimen collection date in investigation
-                       if acute_inv is not None and chronic_inv is not None and diff_days < 92:
+                       if acute_inv is not None and chronic_inv is not None and diff_days > 92:
+                           mark_reviewed = True
+                       elif acute_inv is not None and chronic_inv is not None and diff_days < 92:
                            if len(acute_inv) > 0:
                                mark_reviewed = True
                            elif chronic_inv["Status"].iloc[0] == "Open":
@@ -658,7 +665,6 @@ for _ in tqdm(generator()):
                                send_alt_email = True
                            elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis C" in chronic_inv["Condition"].iloc[0]:
                                associate = True
-                               update_inv_type = True
                                condition = "Hepatitis C, acute"
                                send_alt_email = True
                            elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis B" in chronic_inv["Condition"].iloc[0]:
@@ -670,7 +676,9 @@ for _ in tqdm(generator()):
                         mark_reviewed = True
                     elif int(resulted_test_table["Text Result"].iloc[0]) > 200:
                         #add in within 3 months of lab specimen collection date in investigation
-                        if acute_inv is not None and chronic_inv is not None and diff_days < 92:  
+                        if acute_inv is not None and chronic_inv is not None and diff_days > 92:
+                            mark_reviewed = True
+                        elif acute_inv is not None and chronic_inv is not None and diff_days < 92:  
                             if len(acute_inv) > 0:
                                 mark_reviewed = True
                             elif chronic_inv["Status"].iloc[0] == "Open":
@@ -678,7 +686,6 @@ for _ in tqdm(generator()):
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis C" in chronic_inv["Condition"].iloc[0]:
                                 associate = True
-                                update_inv_type = True
                                 condition = "Hepatitis C, acute"
                                 send_alt_email = True
                             elif chronic_inv["Status"].iloc[0] == "Closed" and "Hepatitis B" in chronic_inv["Condition"].iloc[0]:
@@ -846,8 +853,12 @@ for _ in tqdm(generator()):
             NBS.find_element(By.XPATH, '//*[@id="1742_6"]').send_keys(re.findall(r'\b\d+\b',alt_lab["Test Results"].iloc[0])[0])
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV826"]')))
             NBS.find_element(By.XPATH, '//*[@id="INV826"]').send_keys(re.findall(r'\b\d{2}/\d{2}/\d{4}\b',lab_report_table["Date Received"].iloc[0])[0])
-            ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
-            upper_limit_text = ref_range[0]
+            try:
+                ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
+                upper_limit_text = ref_range[0]
+            except IndexError:
+                ref_range = re.findall(r'(\d+ - \d+)',alt_lab["Test Results"].iloc[0])
+                upper_limit_text = ref_range[0]
             upper_limit = upper_limit_text.rsplit('-',1)[-1]
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV827"]')))
             NBS.find_element(By.XPATH, '//*[@id="INV827"]').send_keys(upper_limit)
@@ -953,7 +964,7 @@ for _ in tqdm(generator()):
         if test_condition == "Hepatitis B" and test_type in ("Antigen", "DNA", "RNA") and "acute" in inv_type and not_a_case == False:
             NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ within 6 months. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis B" and test_type in ("Antigen", "DNA", "RNA") and "Chronic" in inv_type and not_a_case == False:
-            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ 6 months or more apart. Case classification is changed from probable to confirmed. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
+            NBS.write_general_comment(f'\nNew HBsAg+, HBeAg+, HBV DNA+ 6 months or more apart. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis C" and test_type in ("Genotype", "RNA") and "acute" in inv_type and not_a_case == False:
             NBS.write_general_comment(f'\nNew hepatitis C NAAT within 1 year. Case classification is changed from probable to confirmed. Lab Id: {event_id} -nbsbot {NBS.now_str}')
         if test_condition == "Hepatitis C" and test_type in ("Genotype", "RNA") and "chronic" in inv_type and not_a_case == False:
@@ -1044,8 +1055,12 @@ for _ in tqdm(generator()):
             if date_elem.get_attribute("value") == '' and text_elem.get_attribute("value") == '':
                 NBS.find_element(By.XPATH, '//*[@id="1742_6"]').send_keys(re.findall(r'\b\d+\b',alt_lab["Test Results"].iloc[0])[0])
                 NBS.find_element(By.XPATH, '//*[@id="INV826"]').send_keys(re.findall(r'\b\d{2}/\d{2}/\d{4}\b',lab_report_table["Date Received"].iloc[0])[0])
-                ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
-                upper_limit_text = ref_range[0]
+                try:
+                    ref_range = re.findall(r'(\d+-\d+)',alt_lab["Test Results"].iloc[0])
+                    upper_limit_text = ref_range[0]
+                except IndexError:
+                    ref_range = re.findall(r'(\d+ - \d+)',alt_lab["Test Results"].iloc[0])
+                    upper_limit_text = ref_range[0]
                 upper_limit = upper_limit_text.rsplit('-',1)[-1]
                 WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="INV827"]')))
                 NBS.find_element(By.XPATH, '//*[@id="INV827"]').send_keys(upper_limit)
