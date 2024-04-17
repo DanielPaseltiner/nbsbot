@@ -136,7 +136,7 @@ for _ in tqdm(generator()):
     #check the patient name if it is a source patient skip, look for numbers in the name
     pat_name_elem = NBS.find_element(By.XPATH, '//*[@id="Name"]')
     pat_name = pat_name_elem.text
-    if bool(re.search(r'\d', pat_name)):
+    if bool(re.search(r'\d', pat_name)) or bool(re.search(r'SRC', pat_name)):
         print("Source patient, skip")
         what_do.append("Source patient, skip")
         continue
@@ -344,7 +344,7 @@ for _ in tqdm(generator()):
                     continue
 
         #If there is a "<" in the results skip for now, could be either negative or positive and it is hard to tell without manual review
-        if "<" in resulted_test_table["Coded Result / Organism Name"].values or "<" in resulted_test_table["Text Result"].values or "<" in resulted_test_table["Numeric Result"].values:
+        if resulted_test_table["Coded Result / Organism Name"].astype(str).str.contains("<").iloc[0] or resulted_test_table["Text Result"].astype(str).str.contains("<").iloc[0] or resulted_test_table["Numeric Result"].astype(str).str.contains("<").iloc[0]:
             print("< in result, skip")
             what_do.append("< in result, skip")
             NBS.go_to_home()
@@ -466,8 +466,7 @@ for _ in tqdm(generator()):
                     elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values:
                         #update investigation to confirmed
                         update_status = True
-
-                    if len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days < 365:
+                    elif len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days < 365:
                         #Mark as reviewed
                         mark_reviewed = True
                     elif len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days >= 365:  
@@ -702,15 +701,10 @@ for _ in tqdm(generator()):
     print(review_queue_table[review_queue_table["Local ID"] == event_id]["Patient"])
     
     ###If there is an open investigation, associate the lab to that investigation###
-    if acute_inv is not None:
-        if "Open" in acute_inv["Status"].values:
-            associate = True
-            mark_reviewed = False
-            create_inv = False
-            update_status = False
-            update_inv_type = False
-    if chronic_inv is not None:
-        if "Open" in chronic_inv["Status"].values:
+    open_inv = None
+    open_inv = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
+    open_inv = open_inv[open_inv["Condition"].str.contains("Open")]
+    if len(open_inv) >= 1:
             associate = True
             mark_reviewed = False
             create_inv = False
@@ -730,11 +724,11 @@ for _ in tqdm(generator()):
             what_do.append("Female patient between 14-49, let an epi handle this investigation")
             NBS.go_to_home()
             continue
-        #if NBS.check_for_possible_merges(pat_name.split()[0], pat_name.split()[1], pat_dob.strftime('%Y-%m-%d')):
-            #print('Possible merge(s) found. Lab skipped.')
-            #what_do.append('Possible merge(s) found. Lab skipped.')
-            #NBS.go_to_home()
-            #continue
+        if NBS.check_for_possible_merges(pat_name.split()[0], pat_name.split()[1], pat_dob.strftime('%Y-%m-%d')):
+            print('Possible merge(s) found. Lab skipped.')
+            what_do.append('Possible merge(s) found. Lab skipped.')
+            NBS.go_to_home()
+            continue
         #create investigation
         create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, create_investigation_button_path)))
