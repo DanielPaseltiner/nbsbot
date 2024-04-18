@@ -701,15 +701,16 @@ for _ in tqdm(generator()):
     print(review_queue_table[review_queue_table["Local ID"] == event_id]["Patient"])
     
     ###If there is an open investigation, associate the lab to that investigation###
-    open_inv = None
-    open_inv = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
-    open_inv = open_inv[open_inv["Condition"].str.contains("Open")]
-    if len(open_inv) >= 1:
-            associate = True
-            mark_reviewed = False
-            create_inv = False
-            update_status = False
-            update_inv_type = False
+    if investigation_table is not None:
+        open_inv = None
+        open_inv = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
+        open_inv = open_inv[open_inv["Condition"].str.contains("Open")]
+        if len(open_inv) >= 1:
+                associate = True
+                mark_reviewed = False
+                create_inv = False
+                update_status = False
+                update_inv_type = False
     
     #Now that we have determined what action we want to take, we need to actually do it
     if mark_reviewed == True and create_inv == False and update_status == False:
@@ -729,13 +730,23 @@ for _ in tqdm(generator()):
             what_do.append('Possible merge(s) found. Lab skipped.')
             NBS.go_to_home()
             continue
+        #check to make sure the address is from Maine
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="Address"]')))
+        add_elem = NBS.find_element(By.XPATH, '//*[@id="Address"]')
+        address = add_elem.text
+        if ' ME ' not in address:
+            print('Out of State Patient Lab skipped.')
+            what_do.append('Out of State Patient Lab skipped.')
+            NBS.go_to_home()
+            continue
+        
         #create investigation
         create_investigation_button_path = '//*[@id="doc3"]/div[2]/table/tbody/tr/td[2]/input[1]'
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, create_investigation_button_path)))
         NBS.find_element(By.XPATH, create_investigation_button_path).click()
         select_condition_field_path = '//*[@id="ccd_ac_table"]/tbody/tr[1]/td/input'
         
-        #check to make sure the address is from Maine
+        
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, select_condition_field_path)))
         NBS.find_element(By.XPATH, select_condition_field_path).send_keys(condition)
         submit_button_path = '/html/body/table/tbody/tr/td/table/tbody/tr[3]/td/table/thead/tr[2]/td/div/table/tbody/tr/td/table/tbody/tr/td[4]/table[1]/tbody/tr[1]/td/input'
@@ -1037,10 +1048,19 @@ for _ in tqdm(generator()):
             text_elem = NBS.find_element(By.XPATH, '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[30]/td[2]/input')
             if date_elem.get_attribute("value") == '' and text_elem.get_attribute("value") == '':
                 NBS.find_element(By.XPATH, '//*[@id="ME121009"]').send_keys(lab_date.strftime('%m/%d/%Y'))
+                #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[30]/td[2]/input')))
                 NBS.find_element(By.XPATH, '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[30]/td[2]/input').send_keys("Yes")
-                #enter genotype
-                WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="ME121011"]')))
-                NBS.find_element(By.XPATH, '//*[@id="NBS_INV_HEP_UI_8"]/tbody/tr[30]/td[2]/input').send_keys(resulted_test_table["Coded Result / Organism Name"].iloc[0])
+                if resulted_test_table["Coded Result / Organism Name"].iloc[0] != "":
+                    if pd.isna(resulted_test_table["Coded Result / Organism Name"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                        genotype = resulted_test_table["Coded Result / Organism Name"].str.extract(r'(\d+)').loc[0,0]
+                    elif not pd.isna(resulted_test_table["Coded Result / Organism Name"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                        genotype = resulted_test_table["Coded Result / Organism Name"].str.extract(r'(\d+[A-Za-z])').loc[0,0]
+                elif resulted_test_table["Text Result"].iloc[0] != "":
+                    if pd.isna(resulted_test_table["Text Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                        genotype = resulted_test_table["Text Result"].str.extract(r'(\d+)').loc[0,0]
+                    elif not pd.isna(resulted_test_table["Text Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                        genotype = resulted_test_table["Text Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]
+                NBS.find_element(By.XPATH, '//*[@id="ME121011"]').send_keys(genotype)
         if alt_lab is not None:
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="1742_6"]')))
             text_elem = NBS.find_element(By.XPATH, '//*[@id="1742_6"]')
