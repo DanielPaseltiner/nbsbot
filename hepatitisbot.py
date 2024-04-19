@@ -392,7 +392,7 @@ for _ in tqdm(generator()):
                 Neg_lab = Neg_lab[Neg_lab["Date Collected"]>lab_date-relativedelta(years=1)]
                 #check investigation status
                 if chronic_inv is not None and acute_inv is not None:    
-                    if len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values or "Confirmed" in chronic_inv["Case Status"].values:
+                    if len(chronic_inv) > 0 and chronic_inv["Case Status"].str.contains("Probable").any() or chronic_inv["Case Status"].str.contains("Confirmed").any():
                         mark_reviewed = True
                     elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values or "Confirmed" in acute_inv["Case Status"].values:
                         mark_reviewed = True
@@ -513,7 +513,7 @@ for _ in tqdm(generator()):
                 
         ###Hepatitis B Logic###
         if test_condition == "Hepatitis B":
-            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"].values or "Below threshold" in resulted_test_table["Coded Result / Organism Name"].values or "Not Detected" in resulted_test_table["Text Result"].values or "Below threshold" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Text Result"].values or "Unable" in resulted_test_table["Coded Result / Organism Name"].values or "not detected" in resulted_test_table["Text Result"].values or "not detected" in resulted_test_table["Coded Result / Organism Name"].values or "UNDETECTED" in resulted_test_table["Text Result"].values or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"].values or "UNDETECTED" in resulted_test_table["Numeric Result"].values:
+            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "Below threshold" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "Not Detected" in resulted_test_table["Text Result"].iloc[0] or "Below threshold" in resulted_test_table["Text Result"].iloc[0] or "Unable" in resulted_test_table["Text Result"].iloc[0] or "Unable" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "not detected" in resulted_test_table["Text Result"].iloc[0] or "not detected" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "UNDETECTED" in resulted_test_table["Text Result"].iloc[0] or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "UNDETECTED" in resulted_test_table["Numeric Result"].iloc[0]:
                 mark_reviewed = True
             else:
                 IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
@@ -704,7 +704,7 @@ for _ in tqdm(generator()):
     if investigation_table is not None:
         open_inv = None
         open_inv = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
-        open_inv = open_inv[open_inv["Condition"].str.contains("Open")]
+        open_inv = open_inv[open_inv["Status"].str.contains("Open")]
         if len(open_inv) >= 1:
                 associate = True
                 mark_reviewed = False
@@ -720,9 +720,15 @@ for _ in tqdm(generator()):
         what_do.append("Mark as Reviewed")
     elif create_inv == True and update_status == False:
         #don't create an investigation for female patients that are 14-49 
-        if test_condition == "Hepatitis C" and pat_gen == "Female" and  5113 <= age.days <= 17898:
+        if test_condition == "Hepatitis C" and pat_gen == "Female" and  5113 <= age.days <= 18263:
             print("Female patient between 14-49, let an epi handle this investigation")
             what_do.append("Female patient between 14-49, let an epi handle this investigation")
+            NBS.go_to_home()
+            continue
+        #Hep C acute investigations need to be followed up by a field epi
+        if condition == "Hepatitis C, acute":
+            print("Hepatitis C, acute investigation. Leave for field epi follow up.")
+            what_do.append("Hepatitis C, acute investigation. Leave for field epi follow up.")
             NBS.go_to_home()
             continue
         if NBS.check_for_possible_merges(pat_name.split()[0], pat_name.split()[1], pat_dob.strftime('%Y-%m-%d')):
@@ -1134,7 +1140,7 @@ for _ in tqdm(generator()):
         elif condition == "Hepatitis C, acute":
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="DEM196"]')))
             NBS.find_element(By.XPATH, '//*[@id="DEM196"]').send_keys(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {event_id} -nbsbot {NBS.now_str}')
-            #NBS.write_general_comment(f'\nNew ALT lab >200 within 3 months. Case classification is changed from chronic to confirmed acute. -nbsbot Lab Id: {lab_report_table["Event ID"].iloc[0]} -nbsbot {NBS.now_str}')
+            
         #set investigation status to closed
         investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
         closed_option = '//*[@id="INV109"]/option[1]' 
