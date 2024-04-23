@@ -513,7 +513,7 @@ for _ in tqdm(generator()):
                 
         ###Hepatitis B Logic###
         if test_condition == "Hepatitis B":
-            if "Not Detected" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "Below threshold" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "Not Detected" in resulted_test_table["Text Result"].iloc[0] or "Below threshold" in resulted_test_table["Text Result"].iloc[0] or "Unable" in resulted_test_table["Text Result"].iloc[0] or "Unable" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "not detected" in resulted_test_table["Text Result"].iloc[0] or "not detected" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "UNDETECTED" in resulted_test_table["Text Result"].iloc[0] or "UNDETECTED" in resulted_test_table["Coded Result / Organism Name"].iloc[0] or "UNDETECTED" in resulted_test_table["Numeric Result"].iloc[0]:
+            if "Not Detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Below threshold" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Not Detected" in str(resulted_test_table["Text Result"].iloc[0]) or "Below threshold" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "not detected" in str(resulted_test_table["Text Result"].iloc[0]) or "not detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Text Result"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Numeric Result"].iloc[0]) or "Negative" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Negative" in str(resulted_test_table["Numeric Result"].iloc[0]):
                 mark_reviewed = True
             else:
                 IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
@@ -731,11 +731,25 @@ for _ in tqdm(generator()):
             what_do.append("Hepatitis C, acute investigation. Leave for field epi follow up.")
             NBS.go_to_home()
             continue
-        if NBS.check_for_possible_merges(pat_name.split()[0], pat_name.split()[1], pat_dob.strftime('%Y-%m-%d')):
+        
+        #We need a smart way to grab the first and last name of a patient, this isn't it but I think it will catch most of what we want.
+        #Sometime a patient name in NBS will be just FIRST LAST, other times it can be FIRST I LAST or with suffixes.
+        #If it is just FIRST LAST, grab those. If it is anything more complicated, the last name is usually third in the string so grab that.
+        #This will run into problems with hyphenated last names or if they are St.something.
+        #We only check the first two characters in the merge function though so hopefully it will be alright.
+        if len(pat_name.split()) > 2:
+            first_name = pat_name.split()[0]
+            last_name = pat_name.split()[2]
+        else:
+            first_name = pat_name.split()[0]
+            last_name = pat_name.split()[1]
+            
+        if NBS.check_for_possible_merges(first_name, last_name, pat_dob):
             print('Possible merge(s) found. Lab skipped.')
             what_do.append('Possible merge(s) found. Lab skipped.')
             NBS.go_to_home()
             continue
+    
         #check to make sure the address is from Maine
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="Address"]')))
         add_elem = NBS.find_element(By.XPATH, '//*[@id="Address"]')
@@ -917,7 +931,13 @@ for _ in tqdm(generator()):
             #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
             #NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
             #NBS.create_notification()
-        NBS.check_jurisdiction()
+        try:
+            NBS.check_jurisdiction()
+        except NoSuchElementException:
+            WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
+            NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
+            NBS.check_jurisdiction()
+        
         #in covidlabreview, changed transfer_ownership_path to [4] instead of [3]
         print("Create Investigation: " + condition)
         what_do.append("Create Investigation: " + condition)
@@ -1213,11 +1233,11 @@ for _ in tqdm(generator()):
             what_do.append("Associate with Investigation")
     if send_alt_email == True:
         body = f"An Alanine Aminotransferase ELR needs to be manually reviewed. The lab ID is {event_id}"
-        NBS.send_smtp_email("jared.strauch@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Athena', body, 'Hepatitis Manual Review email')
+        NBS.send_smtp_email("chloe.manchester@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Manual Review email')
         what_do.append("Send ALT Email")
     if send_inv_email == True:
         body = f"A patient has multiple Hepatitis investigations of the same condition with a probable/confirmed status. {existing_investigations}"
-        NBS.send_smtp_email("jared.strauch@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Athena', body, 'Hepatitis Investigation Review email')
+        NBS.send_smtp_email("chloe.manchester@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Investigation Review email')
         what_do.append("Send Multiple Investigation Email")
     NBS.go_to_home()
     time.sleep(3)
