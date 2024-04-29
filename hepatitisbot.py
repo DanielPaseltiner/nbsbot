@@ -37,6 +37,7 @@ def generator():
 
 reviewed_ids = []
 what_do = []
+merges = []
 
 NBS = COVIDlabreview(production=True)
 NBS.get_credentials()
@@ -245,6 +246,7 @@ for _ in tqdm(generator()):
     acute_inv = None
     chronic_inv = None
     Genotype_test = None
+    NBS.incomplete_address_log = []
     if len(resulted_test_table) == 2:
         #check for ELRs that have two Hep B tests, if so only look at the antigen test
         resulted_test_table_B = resulted_test_table[resulted_test_table["Resulted Test"].str.contains("HBV|Hepatitis B")]
@@ -294,9 +296,16 @@ for _ in tqdm(generator()):
         if type(investigation_table) == pd.core.frame.DataFrame:
             existing_investigations = investigation_table[investigation_table["Condition"].str.contains(test_condition)]
             existing_investigations = existing_investigations[existing_investigations["Case Status"].str.contains("Confirmed|Probable")]
-            #need to make this deal with more than one hepatitis investigation
+            
             if len(existing_investigations) >= 1:
                 inv_found = True
+                #If there is an existing perinatal investigation we are going to leave the ELR alone.
+                perinatal_inv = existing_investigations[existing_investigations["Condition"].str.contains("perinatal")]
+                if len(perinatal_inv) >= 1:
+                    print("Patient has a perinatal investigation, leave for an epi")
+                    what_do.append("Patient has a perinatal investigation, leave for an epi")
+                    NBS.go_to_home()
+                    continue
                 #Sometimes the C is capitalised in chronic investigations and sometimes 
                 #it is not so we are just going to look for "hronic" to avoid it
                 chronic_inv = existing_investigations[existing_investigations["Condition"].str.contains("hronic")]
@@ -363,7 +372,7 @@ for _ in tqdm(generator()):
         
         ###Hepatitis C Antibody test logic###
         if test_condition == "Hepatitis C" and test_type == "Antibody":
-            if (any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE"]) or any(x in str(resulted_test_table["Text Result"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE"])) and ("Non-Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non-Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "Non Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]): 
+            if (any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"]) or any(x in str(resulted_test_table["Text Result"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"])) and ("Non-Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non-Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "Non Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]): 
                 #grab all negative RNA\Genotype labs within a year, but not after
                 Gen_rna_lab = lab_report_table[lab_report_table["Test Results"].str.contains("Gen|RNA")]
                 Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
@@ -747,6 +756,7 @@ for _ in tqdm(generator()):
         if NBS.check_for_possible_merges(first_name, last_name, pat_dob):
             print('Possible merge(s) found. Lab skipped.')
             what_do.append('Possible merge(s) found. Lab skipped.')
+            merges.append(event_id)
             NBS.go_to_home()
             continue
     
@@ -754,7 +764,7 @@ for _ in tqdm(generator()):
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="Address"]')))
         add_elem = NBS.find_element(By.XPATH, '//*[@id="Address"]')
         address = add_elem.text
-        if ' ME ' not in address:
+        if 'ME' not in address:
             print('Out of State Patient Lab skipped.')
             what_do.append('Out of State Patient Lab skipped.')
             NBS.go_to_home()
@@ -783,11 +793,19 @@ for _ in tqdm(generator()):
             NBS.write_zip()
         NBS.check_ethnicity()
         NBS.check_race()
+        NBS.patient_id = NBS.ReadPatientID()
+        if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county, NBS.unambiguous_race, NBS.ethnicity]):
+            NBS.incomplete_address_log.append(NBS.ReadPatientID())
+            body = f"A new investigation has been created for patient {NBS.ReadPatientID()}, but they are missing address information. The investigation has been left open for manual review."
+            NBS.send_smtp_email("chloe.manchester@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Investigation Missing Address Info email')
         NBS.GoToCaseInfo()
         #NBS.set_investigation_status_closed()
         investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
         #set this to option[2] for open or option[1] for closed
-        closed_option = '//*[@id="INV109"]/option[2]' 
+        if len(NBS.incomplete_address_log) > 0: 
+            closed_option = '//*[@id="INV109"]/option[2]' 
+        else:
+            closed_option = '//*[@id="INV109"]/option[2]' 
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, investigation_status_down_arrow)))
         NBS.find_element(By.XPATH, investigation_status_down_arrow).click()
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, closed_option)))
@@ -896,10 +914,9 @@ for _ in tqdm(generator()):
         
         #not sure what this does
         #######################################################################################################################
-        NBS.patient_id = NBS.ReadPatientID()
         #NBS.go_to_manage_associations()
         #why did it reopen the investigation
-        #if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county, NBS.unambiguous_race, NBS.ethnicity]):
+        
             #NBS.read_investigation_id()
             #NBS.return_to_patient_profile_from_inv()
             #NBS.go_to_demographics()
@@ -920,8 +937,7 @@ for _ in tqdm(generator()):
                 #if NBS.demo_ethnicity:
                     #NBS.write_demographic_ethnicity()
                 #NBS.read_address()
-                #if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):
-                    #NBS.incomplete_address_log.append(NBS.ReadPatientID())
+                #if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):   
                 #NBS.click_submit()
         ####################################################################################################################
         #turning this off so we can review investigations before sending notifications to start
@@ -1242,7 +1258,10 @@ for _ in tqdm(generator()):
     NBS.go_to_home()
     time.sleep(3)
     
-    
+if len(merges) >= 1:
+    body = f"Potential merges have been identified for patients associated with the following ELRs: {merges}."
+    NBS.send_smtp_email("disease.reporting@maine.gov", 'Merge Report: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Merge Review email')
+
 bot_act = pd.DataFrame(
     {'Lab ID': reviewed_ids,
      'Action': what_do
