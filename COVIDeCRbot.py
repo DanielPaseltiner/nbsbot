@@ -47,9 +47,9 @@ for _ in tqdm(generator()):
     NBS.find_element(By.PARTIAL_LINK_TEXT, partial_link).click()
     time.sleep(1)
     
-    #Sort review queue so that only hepatitis cases are listed
+    #Sort review queue so that only case reports are listed
     clear_filter_path = '//*[@id="removeFilters"]/table/tbody/tr/td[2]/a'
-    document_path = '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/img'
+    document_path = '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/img'
     
     #clear all filters
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, clear_filter_path)))
@@ -63,8 +63,8 @@ for _ in tqdm(generator()):
     time.sleep(1)
     
     #clear checkboxes
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[2]/input')))
-    NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[2]/input').click()
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[2]')))
+    NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[2]').click()
     time.sleep(1)
     
     #select Case Reports
@@ -78,12 +78,12 @@ for _ in tqdm(generator()):
     
     #click ok
     try:
-        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[5]/input[1]')))
-        NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[5]/input[1]').click()
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[1]/input[1]')))
+        NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[1]/input[1]').click()
     except NoSuchElementException:
         #click cancel and go back to home page to wait for more ELRs
-        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[5]/input[2]')))
-        NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[1]/div/label[5]/input[2]').click()
+        WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[1]/input[2]')))
+        NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[2]/div/label[1]/input[2]').click()
         NBS.go_to_home()
         time.sleep(3)
         NBS.Sleep()
@@ -127,13 +127,18 @@ for _ in tqdm(generator()):
     #grab from the results section, check for the various test names. Maybe use a while loop?
     tests = ["SARS", "COVID", "nCoV", "qPCR (Rutgers)", "Severe Acute Respiratory Syndrome"]
     for test in tests:
-        f"//li[contains(text(),{test})]"
+        #test_elem = NBS.find_element(By.XPATH, f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]')
+        test_table_path = f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]'
+        html = NBS.find_element(By.XPATH, test_table_path).get_attribute('outerHTML')
+        soup = BeautifulSoup(html, 'html.parser')
+        test_table = pd.read_html(StringIO(str(soup)))[0]
+
         
     #go to the patient file to review investigations
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="srtLink"]/div/a[1]')))
     NBS.find_element(By.XPATH, '//*[@id="srtLink"]/div/a[1]').click()
     
-    #click on 'Events' tab 
+    #Go to events tab
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head1"]')))
     NBS.find_element(By.XPATH, '//*[@id="tabs0head1"]').click()
     
@@ -144,41 +149,34 @@ for _ in tqdm(generator()):
         inv_found = False
         existing_not_a_case = False 
     
-    #Navigate to the lab report to be processed using the Event ID from the patient page
+    #Navigate to the lab report to be processed using the Document ID from the patient page
     case_report_table_path = '//*[@id="caseReports"]'
-    case_report_table = NBS.ReadTableToDF(lab_report_table_path)
+    case_report_table = NBS.ReadTableToDF(case_report_table_path)
     
-    lab_row = lab_report_table[lab_report_table['Document ID'] == re.findall(r'DOC\d+ME\d+',event_id)[0]]
-    lab_index = int(lab_row.index.to_list()[0]) + 1
+    case_row = case_report_table[case_report_table['Event ID'] == re.findall(r'DOC\d+ME\d+',doc_id)[0]]
+    case_index = int(case_row.index.to_list()[0]) + 1
     
     if case_index > 1:
         case_path = f'//*[@id="eventCaseReports"]/tbody/tr[{str(case_index)}]/td[1]/a'
     elif case_index == 1:
         case_path = '//*[@id="eventCaseReports"]/tbody/tr[1]/td[1]/a'
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, lab_path)))
-    NBS.find_element(By.XPATH, lab_path).click()
-    
-    """ Review the Investigations table in the Events tab of a patient profile
-       to determine if the case already has an existing investigation. """
-       existing_investigations = None
-       if type(investigation_table) == pd.core.frame.DataFrame:
-           existing_investigations = investigation_table[investigation_table["Condition"].str.contains(2019 Novel Coronavirus (2019-nCoV))]
-           if len(existing_investigations) >= 1:
-               inv_found = True
-           else:
-               inv_found = False
-              
-          # existing_investigations = existing_investigations[existing_investigations["Case Status"].str.contains("Confirmed|Probable")]
-           #need to make this deal with more than one hepatitis investigation
-          
-         
-         
-       else:
-               inv_found = False
-               existing_not_a_case = False
-               
-       if inv_found True and cov_pos:
-           #associate to previous investigation
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, case_path)))
+    NBS.find_element(By.XPATH, case_path).click()
+
+    existing_investigations = None
+    if type(investigation_table) == pd.core.frame.DataFrame:
+        existing_investigations = investigation_table[investigation_table["Condition"].str.contains("2019 Novel Coronavirus (2019-nCoV)")]
+        if len(existing_investigations) >= 1:
+            inv_found = True
+        else:
+            inv_found = False
            
-           else: NBS.go_to_home
-               
+       # existing_investigations = existing_investigations[existing_investigations["Case Status"].str.contains("Confirmed|Probable")]
+        #need to make this deal with more than one hepatitis investigation
+    else:
+            inv_found = False
+            existing_not_a_case = False
+            
+    if inv_found and cov_pos:
+        #associate to previous investigation
+    else: NBS.go_to_home
