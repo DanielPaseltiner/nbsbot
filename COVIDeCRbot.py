@@ -133,7 +133,13 @@ for _ in tqdm(generator()):
         soup = BeautifulSoup(html, 'html.parser')
         test_table = pd.read_html(StringIO(str(soup)))[0]
 
-        
+        html = NBS.page_source
+        soup = BeautifulSoup(html, "html.parser")
+        for tag in soup.find_all("tr"):
+            if "SARS" in tag.text or "COVID" in tag.text:
+                print(tag.text)
+                if "Detected" in tag.text:
+                    print("True")
     #go to the patient file to review investigations
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="srtLink"]/div/a[1]')))
     NBS.find_element(By.XPATH, '//*[@id="srtLink"]/div/a[1]').click()
@@ -147,7 +153,7 @@ for _ in tqdm(generator()):
         investigation_table = NBS.read_investigation_table()
     except NoSuchElementException:
         inv_found = False
-        existing_not_a_case = False 
+
     
     #Navigate to the lab report to be processed using the Document ID from the patient page
     case_report_table_path = '//*[@id="caseReports"]'
@@ -166,17 +172,17 @@ for _ in tqdm(generator()):
     existing_investigations = None
     if type(investigation_table) == pd.core.frame.DataFrame:
         existing_investigations = investigation_table[investigation_table["Condition"].str.contains("2019 Novel Coronavirus (2019-nCoV)")]
+        #existing_investigations = existing_investigations[existing_investigations["Case Status"].str.contains("Confirmed|Probable")]
         if len(existing_investigations) >= 1:
             inv_found = True
         else:
-            inv_found = False
-           
-       # existing_investigations = existing_investigations[existing_investigations["Case Status"].str.contains("Confirmed|Probable")]
-        #need to make this deal with more than one hepatitis investigation
+            inv_found = False     
     else:
             inv_found = False
-            existing_not_a_case = False
             
     if inv_found and cov_pos:
         #associate to previous investigation
-    else: NBS.go_to_home
+        what_do.append("Associate to investigation")
+    else: 
+        what_do.append("Do not associate to investigation")
+        NBS.go_to_home
