@@ -18,6 +18,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import TimeoutException
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
@@ -38,6 +39,7 @@ def generator():
 reviewed_ids = []
 what_do = []
 merges = []
+merge_ids = []
 
 NBS = COVIDlabreview(production=True)
 NBS.get_credentials()
@@ -159,16 +161,16 @@ for _ in tqdm(generator()):
     
     time.sleep(3)
     
+    #Go to events tab
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head1"]')))
+    NBS.find_element(By.XPATH, '//*[@id="tabs0head1"]').click()
+     
     try:
         investigation_table = NBS.read_investigation_table()
     except NoSuchElementException:
         inv_found = False
         existing_not_a_case = False   
-    
-    #Go to events tab
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head1"]')))
-    NBS.find_element(By.XPATH, '//*[@id="tabs0head1"]').click()
-    
+        
     #Navigate to the lab report to be processed using the Event ID from the patient page
     lab_report_table_path = '//*[@id="lab1"]'
     lab_report_table = NBS.ReadTableToDF(lab_report_table_path)
@@ -216,7 +218,15 @@ for _ in tqdm(generator()):
             alt_lab_table["num_res"] = alt_lab_table['Test Results'].str.extract(r'(\d+)').astype(int)
             alt_lab = alt_lab_table[alt_lab_table.index == alt_lab_table["num_res"].idxmax()]
         except ValueError:
-            pass
+            try:
+                alt_lab_table['Date Received'] = pd.to_datetime(alt_lab_table['Date Received'])
+                keep = (alt_lab_table["Date Received"] <= lab_date  + pd.DateOffset(months=3)) & (alt_lab_table["Date Received"] >= lab_date - pd.DateOffset(months=3))
+                alt_lab_table = alt_lab_table[keep]
+                #need to make sure the first number is always the result. pretty sure it is
+                alt_lab_table["num_res"] = alt_lab_table['Test Results'].str.extract(r'(\d+)').astype(int)
+                alt_lab = alt_lab_table[alt_lab_table.index == alt_lab_table["num_res"].idxmax()]
+            except ValueError:
+                pass
     
     
     #grab date reported to public health from lab report
@@ -234,6 +244,7 @@ for _ in tqdm(generator()):
     resulted_test_table = NBS.ReadTableToDF(resulted_test_path)
     
     #Process the ELR so that it is easier to go through the logic trees for Hepatitis B and C ELRs
+    test_type = None
     mark_reviewed = False
     create_inv = False
     update_status = False
@@ -277,7 +288,7 @@ for _ in tqdm(generator()):
         #Check if the test is antibody, antigen, RNA, DNA or genotype
         if any(x in str(resulted_test_table["Resulted Test"]) for x in ["Ab", "AB", "IgG", "IgM", "ANTIBODY", "Antibody", "antibody", "IGG", "IgG"]):
              test_type = "Antibody"
-        if "RNA" in str(resulted_test_table["Resulted Test"]):
+        if any(x in str(resulted_test_table["Resulted Test"]) for x in ["RNA", "Qnt"]):
              test_type = "RNA"
         if "DNA" in str(resulted_test_table["Resulted Test"]):
              test_type = "DNA"
@@ -372,14 +383,14 @@ for _ in tqdm(generator()):
         
         ###Hepatitis C Antibody test logic###
         if test_condition == "Hepatitis C" and test_type == "Antibody":
-            if (any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"]) or any(x in str(resulted_test_table["Text Result"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"])) and ("Non-Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non-Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "Non Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]): 
+            if (any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"]) or any(x in str(resulted_test_table["Text Result"]) for x in ["POS", "Positive", "POSITIVE", "Reactive", "REACTIVE", "Detected", "DETECTED"])) and ("Non-Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non Reactive" not in resulted_test_table["Text Result"].iloc[0] and "Non-Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "Non Reactive" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "NON-REACTIVE" not in resulted_test_table["Coded Result / Organism Name"].iloc[0] and "NON-REACTIVE" not in resulted_test_table["Text Result"].iloc[0]): 
                 #grab all negative RNA\Genotype labs within a year, but not after
                 Gen_rna_lab = lab_report_table[lab_report_table["Test Results"].str.contains("Gen|RNA")]
                 Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
                 try:
                     Gen_rna_lab["Date Collected"] = pd.to_datetime(Gen_rna_lab["Date Collected"]).dt.date
                     Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Date Collected"]<lab_date]
-                except DateParseError:
+                except (DateParseError, ValueError):
                     Gen_rna_lab["Date Received"] = pd.to_datetime(Gen_rna_lab["Date Received"]).dt.date
                     Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Date Received"]<lab_date]
                 
@@ -388,14 +399,14 @@ for _ in tqdm(generator()):
                 mmwr_week = Week(year, 1)
                 
                 #put space in front to avoid grabbing tests that have the results in the reference range
-                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| See Below| UNDETECTED| Undetected| undetected| Non-Reactive| NON-REACTIVE| NOT DETECTED| Not Detected")]
+                Neg_Gen_rna_lab = Gen_rna_lab[Gen_rna_lab["Test Results"].str.contains(" Neg| NEG| neg| See Below| UNDETECTED| Undetected| undetected| Non-Reactive| NON-REACTIVE| NOT DETECTED| Not Detected")]
                 #grab all negative genotype or RNA tests to use as an index to find all positive genotype or RNA tests
                 Pos_Gen_rna_lab = Gen_rna_lab.drop(Neg_Gen_rna_lab.index)
                 Neg_Gen_rna_lab["Date Collected"] = pd.to_datetime(Neg_Gen_rna_lab["Date Collected"]).dt.date
                 Neg_Gen_rna_lab = Neg_Gen_rna_lab[Neg_Gen_rna_lab["Date Collected"]>mmwr_week.startdate()]
                 
                 #grab all negative labs within a year, add a space for the name so it doesn't trigger on the reference range
-                Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| Not Detected| NOT DETECTED| UNDETECTED| Undetected| undetected")]
+                Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| neg| Not Detected| NOT DETECTED| UNDETECTED| Undetected| undetected")]
                 Neg_lab = Neg_lab[Neg_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
                 Neg_lab["Date Collected"] = pd.to_datetime(Neg_lab["Date Collected"]).dt.date
                 Neg_lab = Neg_lab[Neg_lab["Date Collected"]>lab_date-relativedelta(years=1)]
@@ -459,10 +470,12 @@ for _ in tqdm(generator()):
             elif type(resulted_test_table["Text Result"].iloc[0]) == int:
                  if int(resulted_test_table["Text Result"].iloc[0])  > 0:
                      num_res = True
+            elif resulted_test_table["Coded Result / Organism Name"].iloc[0] == "Detected":
+                num_res = True
             else:
                 num_res = False
             #grab negative labs within the last year, put a space for the name so that we don't grab the reference range by accident
-            Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| Not Detected| NOT DETECTED")]
+            Neg_lab = lab_report_table[lab_report_table["Test Results"].str.contains(" Neg| NEG| Not Detected| NOT DETECTED| UNDETECTED")]
             Neg_lab = Neg_lab[Neg_lab["Test Results"].str.contains("HEPATITIS C|HCV|Hepatitis C")]
             Neg_lab["Date Collected"] = pd.to_datetime(Neg_lab["Date Collected"]).dt.date
             Neg_lab = Neg_lab[Neg_lab["Date Collected"]>lab_date-relativedelta(years=1)]
@@ -498,11 +511,13 @@ for _ in tqdm(generator()):
                         condition = "Hepatitis C, chronic"
             elif any(x in str(resulted_test_table["Coded Result / Organism Name"]) for x in ["Undetected", "Not Detected", "UNDETECTED", "NOT DETECTED", "Negative", "NEGATIVE", "Unable"])  or any(x in str(resulted_test_table["Text Result"]) for x in ["Undetected", "Not Detected", "UNDETECTED", "NOT DETECTED", "Negative", "NEGATIVE", "Unable"]) or any(x in str(resulted_test_table["Result Comments"]) for x in ["HCV RNA Not Detected"]):
                 if acute_inv is not None and chronic_inv is not None: 
-                    if len(acute_inv) > 0  and diff_days < 365 and test_type == "RNA" and "Probable" in acute_inv["Case Status"].values:
+                    year = int(datetime.today().strftime("%Y"))
+                    mmwr_week = Week(year, 1)
+                    if len(acute_inv) > 0  and inv_date > mmwr_week.startdate() and test_type == "RNA" and "Probable" in acute_inv["Case Status"].values:
                         update_status = True
                         not_a_case = True
                         associate = True  
-                    elif len(chronic_inv) > 0  and diff_days < 365 and test_type == "RNA" and "Probable" in chronic_inv["Case Status"].values:
+                    elif len(chronic_inv) > 0  and inv_date > mmwr_week.startdate() and test_type == "RNA" and "Probable" in chronic_inv["Case Status"].values:
                         update_status = True
                         not_a_case = True
                         associate = True
@@ -522,26 +537,32 @@ for _ in tqdm(generator()):
                 
         ###Hepatitis B Logic###
         if test_condition == "Hepatitis B":
-            if "Not Detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Below threshold" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Not Detected" in str(resulted_test_table["Text Result"].iloc[0]) or "Below threshold" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "not detected" in str(resulted_test_table["Text Result"].iloc[0]) or "not detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Text Result"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Numeric Result"].iloc[0]) or "Negative" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Negative" in str(resulted_test_table["Numeric Result"].iloc[0]):
+            if "Not Detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Below threshold" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Not Detected" in str(resulted_test_table["Text Result"].iloc[0]) or "Below threshold" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Text Result"].iloc[0]) or "Unable" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "not detected" in str(resulted_test_table["Text Result"].iloc[0]) or "not detected" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Text Result"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "UNDETECTED" in str(resulted_test_table["Numeric Result"].iloc[0]) or "Negative" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Negative" in str(resulted_test_table["Numeric Result"].iloc[0]) or "Non-Reactive" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "Non-Reactive" in str(resulted_test_table["Numeric Result"].iloc[0]) or "Non-Reactive" in str(resulted_test_table["Text Result"].iloc[0]) or "NEG" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "NEG" in str(resulted_test_table["Numeric Result"].iloc[0]) or "NEG" in str(resulted_test_table["Text Result"].iloc[0]) or "NON-REACTIVE" in str(resulted_test_table["Coded Result / Organism Name"].iloc[0]) or "NON-REACTIVE" in str(resulted_test_table["Numeric Result"].iloc[0]) or "NON-REACTIVE" in str(resulted_test_table["Text Result"].iloc[0]):
                 mark_reviewed = True
             else:
                 IgM_lab = lab_report_table[lab_report_table["Test Results"].str.contains("IgM|IGM")]
                 IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("HEPATITIS B|HBV|Hepatitis B")]
-                IgM_lab["Date Collected"] = pd.to_datetime(IgM_lab["Date Collected"]).dt.date
-                IgM_lab = IgM_lab[IgM_lab["Date Collected"]>lab_date-relativedelta(months=6)]
+            
+                try:
+                    IgM_lab["Date Collected"] = pd.to_datetime(IgM_lab["Date Collected"]).dt.date
+                    IgM_lab = IgM_lab[IgM_lab["Date Collected"]>lab_date-relativedelta(months=6)]
+                except DateParseError:
+                    IgM_lab["Date Received"] = pd.to_datetime(IgM_lab["Date Received"]).dt.date
+                    IgM_lab = IgM_lab[IgM_lab["Date Received"]>lab_date-relativedelta(months=6)]
+                    
                 Neg_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Neg|NEG|See Below")]
                 Pos_IgM_lab = IgM_lab[IgM_lab["Test Results"].str.contains("Pos|POS|Det|DET|REA|Rea")]
                 if acute_inv is None and chronic_inv is None:
-                    if len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]): #add in logic for IgM
+                    if len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" not in str(resulted_test_table["Resulted Test"]) and "IGM" not in str(resulted_test_table["Resulted Test"]): #add in logic for IgM
                         mark_reviewed = True
-                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
+                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and ("IgM" in str(resulted_test_table["Resulted Test"]) or "IGM" in str(resulted_test_table["Resulted Test"])) and "EQUIVOCAL" not in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
                         #create_inv = True
                         #condition = "Hepatitis B, acute"
                         print("Hepatitis B, acute investigation to be assigned out")
                         what_do.append("Hepatitis B, acute investigation to be assigned out")
                         NBS.go_to_home()
                         continue
-                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and "IgM" in str(resulted_test_table["Resulted Test"]) and "EQUIVOCAL" in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
+                    elif len(resulted_test_table) == 1 and test_type == "Antibody" and ("IgM" in str(resulted_test_table["Resulted Test"]) or "IGM" in str(resulted_test_table["Resulted Test"]))  and "EQUIVOCAL" in resulted_test_table["Coded Result / Organism Name"].iloc[0]:
                         mark_reviewed = True
                     elif test_type in ("Antigen", "DNA", "RNA"):
                         #add in logic to check IgM and ALT results
@@ -580,7 +601,7 @@ for _ in tqdm(generator()):
                             what_do.append("Hepatitis B, chronic investigation to be assigned out")
                             NBS.go_to_home()
                             continue
-                elif chronic_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
+                elif chronic_inv is not None and acute_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
                     if len(chronic_inv) > 0 and "Confirmed" in chronic_inv["Case Status"].values:
                         mark_reviewed = True
                     elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and diff_days >= 183 and test_type == "Antigen":
@@ -589,10 +610,14 @@ for _ in tqdm(generator()):
                         mark_reviewed = True
                     elif len(chronic_inv) > 0 and "Probable" in chronic_inv["Case Status"].values and test_type in ("DNA", "RNA"):
                         update_status = True
-                elif acute_inv is not None and test_type in ("Antigen", "DNA", "RNA"):
-                    if len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days >= 183:
-                        create_inv = True
-                        condition = "Hepatitis B virus infection, Chronic"
+
+                    if len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days >= 183 and len(chronic_inv) == 0:
+                        #create_inv = True
+                        #condition = "Hepatitis B virus infection, Chronic"
+                        print("Hepatitis B, chronic investigation to be assigned out")
+                        what_do.append("Hepatitis B, chronic investigation to be assigned out")
+                        NBS.go_to_home()
+                        continue
                     elif len(acute_inv) > 0 and "Confirmed" in acute_inv["Case Status"].values and diff_days < 183:
                         associate = True
                     #elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and test_type == "DNA":
@@ -601,9 +626,13 @@ for _ in tqdm(generator()):
                     elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days < 183:
                         #change case status to confirmed
                         update_status = True
-                    elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days >= 183:
-                        create_inv = True
-                        condition = "Hepatitis B virus infection, Chronic"
+                    elif len(acute_inv) > 0 and "Probable" in acute_inv["Case Status"].values and diff_days >= 183 and len(chronic_inv) == 0:
+                        #create_inv = True
+                        #condition = "Hepatitis B virus infection, Chronic"
+                        print("Hepatitis B, chronic investigation to be assigned out")
+                        what_do.append("Hepatitis B, chronic investigation to be assigned out")
+                        NBS.go_to_home()
+                        continue
                 elif acute_inv is not None and chronic_inv is not None and test_type in "Antibody":
                     if len(acute_inv) > 0:
                         mark_reviewed = True
@@ -665,7 +694,7 @@ for _ in tqdm(generator()):
                        #add in within 3 months of lab specimen collection date in investigation
                        if acute_inv is not None and chronic_inv is not None and diff_days > 92:
                            mark_reviewed = True
-                       elif acute_inv is not None and chronic_inv is not None and diff_days < 92:
+                       elif acute_inv is not None and chronic_inv is not None and diff_days <= 92:
                            if len(acute_inv) > 0:
                                mark_reviewed = True
                            elif chronic_inv["Status"].iloc[0] == "Open":
@@ -707,6 +736,9 @@ for _ in tqdm(generator()):
         #pass
         print("More than one test in ELR")
         what_do.append("Skip, more than one test in ELR")
+        print(review_queue_table[review_queue_table["Local ID"] == event_id]["Patient"])
+        NBS.go_to_home()
+        continue
     print(review_queue_table[review_queue_table["Local ID"] == event_id]["Patient"])
     
     ###If there is an open investigation, associate the lab to that investigation###
@@ -753,10 +785,14 @@ for _ in tqdm(generator()):
             first_name = pat_name.split()[0]
             last_name = pat_name.split()[1]
             
-        if NBS.check_for_possible_merges(first_name, last_name, pat_dob):
+            
+        matches = NBS.patient_list.loc[(NBS.patient_list.FIRST_NM.str[:2] == first_name[:2]) & (NBS.patient_list.LAST_NM.str[:2] == last_name[:2]) & (NBS.patient_list.BIRTH_DT == pat_dob)]
+        unique_profiles = matches.PERSON_PARENT_UID.unique()
+        if len(unique_profiles) >= 2:
             print('Possible merge(s) found. Lab skipped.')
             what_do.append('Possible merge(s) found. Lab skipped.')
             merges.append(event_id)
+            merge_ids.append(str(unique_profiles))
             NBS.go_to_home()
             continue
     
@@ -794,10 +830,10 @@ for _ in tqdm(generator()):
         NBS.check_ethnicity()
         NBS.check_race()
         NBS.patient_id = NBS.ReadPatientID()
-        if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county, NBS.unambiguous_race, NBS.ethnicity]):
+        if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county, NBS.ethnicity, NBS.unambiguous_race]):
             NBS.incomplete_address_log.append(NBS.ReadPatientID())
-            body = f"A new investigation has been created for patient {NBS.ReadPatientID()}, but they are missing address information. The investigation has been left open for manual review."
-            NBS.send_smtp_email("chloe.manchester@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Investigation Missing Address Info email')
+            body = f"A new investigation has been created for patient {NBS.ReadPatientID()}, but they are missing demographic information. The investigation has been left open for manual review."
+            NBS.send_smtp_email("chloe.manchester@maine.gov", 'ERROR REPORT: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Investigation Missing Demographic Info email')
         NBS.GoToCaseInfo()
         #NBS.set_investigation_status_closed()
         investigation_status_down_arrow = '//*[@id="NBS_UI_19"]/tbody/tr[4]/td[2]/img'
@@ -805,7 +841,7 @@ for _ in tqdm(generator()):
         if len(NBS.incomplete_address_log) > 0: 
             closed_option = '//*[@id="INV109"]/option[2]' 
         else:
-            closed_option = '//*[@id="INV109"]/option[2]' 
+            closed_option = '//*[@id="INV109"]/option[1]' 
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, investigation_status_down_arrow)))
         NBS.find_element(By.XPATH, investigation_status_down_arrow).click()
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, closed_option)))
@@ -840,7 +876,6 @@ for _ in tqdm(generator()):
             NBS.find_element(By.XPATH, '//*[@id="INV161"]/option[7]').click()
         
         NBS.set_confirmation_date()
-        #doesn't work NBS.set_mmwr()
         
         NBS.write_general_comment(f'Created investigation from lab {event_id}. -nbsbot {NBS.now_str}')
         
@@ -888,6 +923,13 @@ for _ in tqdm(generator()):
                     genotype = resulted_test_table["Text Result"].str.extract(r'(\d+)').loc[0,0]
                 elif not pd.isna(resulted_test_table["Text Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
                     genotype = resulted_test_table["Text Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]
+            elif resulted_test_table["Numeric Result"].iloc[0] != "":
+                if type(resulted_test_table["Numeric Result"].iloc[0]) == float:
+                    genotype = int(resulted_test_table["Numeric Result"].iloc[0])
+                elif pd.isna(resulted_test_table["Numeric Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                    genotype = resulted_test_table["Numeric Result"].str.extract(r'(\d+)').loc[0,0]
+                elif not pd.isna(resulted_test_table["Numeric Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]):
+                    genotype = resulted_test_table["Numeric Result"].str.extract(r'(\d+[A-Za-z])').loc[0,0]
             NBS.find_element(By.XPATH, '//*[@id="ME121011"]').send_keys(genotype)
             
         
@@ -910,50 +952,17 @@ for _ in tqdm(generator()):
         #NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
         time.sleep(3)
         NBS.click_submit()
-        #NBS.click_submit()
         
-        #not sure what this does
-        #######################################################################################################################
-        #NBS.go_to_manage_associations()
-        #why did it reopen the investigation
-        
-            #NBS.read_investigation_id()
-            #NBS.return_to_patient_profile_from_inv()
-            #NBS.go_to_demographics()
-            #if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):
-                #NBS.read_demographic_address()
-            #if not NBS.unambiguous_race:
-                #NBS.read_demographic_race()
-            #if (not NBS.ethnicity) | (NBS.ethnicity == 'unknown'):
-                #NBS.read_demographic_ethnicity()
-            #NBS.go_to_events()
-            #NBS.go_to_investigation_by_id(NBS.investigation_id)
-            #if (type(NBS.demo_address) == pd.core.series.Series) | (any([NBS.demo_race, NBS.demo_ethnicity])):
-                #NBS.enter_edit_mode()
-                #if type(NBS.demo_address) == pd.core.series.Series:
-                    #NBS.write_demographic_address()
-                #if NBS.demo_race:
-                    #NBS.write_demographic_race()
-                #if NBS.demo_ethnicity:
-                    #NBS.write_demographic_ethnicity()
-                #NBS.read_address()
-                #if not all([NBS.street, NBS.city, NBS.zip_code, NBS.county]):   
-                #NBS.click_submit()
-        ####################################################################################################################
-        #turning this off so we can review investigations before sending notifications to start
-        #try:
-            #NBS.create_notification()
-        #except NoSuchElementException:
-            #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
-            #NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
-            #NBS.create_notification()
         try:
             NBS.check_jurisdiction()
         except NoSuchElementException:
             WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="SubmitTop"]')))
             NBS.find_element(By.XPATH, '//*[@id="SubmitTop"]').click()
             NBS.check_jurisdiction()
-        
+        if len(NBS.incomplete_address_log) > 0: 
+            pass
+        else:
+            NBS.create_notification() 
         #in covidlabreview, changed transfer_ownership_path to [4] instead of [3]
         print("Create Investigation: " + condition)
         what_do.append("Create Investigation: " + condition)
@@ -976,9 +985,12 @@ for _ in tqdm(generator()):
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="delete"]')))
         NBS.find_element(By.XPATH, '//*[@id="delete"]').click()
         #click okay
-        WebDriverWait(NBS, 10).until(EC.alert_is_present())
-        NBS.switch_to.alert.accept()
-        time.sleep(5)
+        try:
+            WebDriverWait(NBS, 10).until(EC.alert_is_present())
+            NBS.switch_to.alert.accept()
+            time.sleep(5)
+        except TimeoutException:
+            pass
         #click case info tab 
         #WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="tabs0head1"]')))
         #NBS.find_element(By.XPATH, '//*[@id="tabs0head1"]').click()
@@ -1259,6 +1271,7 @@ for _ in tqdm(generator()):
     time.sleep(3)
     
 if len(merges) >= 1:
+    # Patient Ids: {merge_ids}
     body = f"Potential merges have been identified for patients associated with the following ELRs: {merges}."
     NBS.send_smtp_email("disease.reporting@maine.gov", 'Merge Report: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Merge Review email')
 
