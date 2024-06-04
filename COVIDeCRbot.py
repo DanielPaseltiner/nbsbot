@@ -37,7 +37,7 @@ def generator():
 reviewed_ids = []
 what_do = []
 
-NBS = COVIDlabreview(production=False)
+NBS = COVIDlabreview(production=True)
 NBS.get_credentials()
 NBS.log_in()
 attempt_counter = 0
@@ -125,22 +125,53 @@ for _ in tqdm(generator()):
         anc = NBS.find_element(By.XPATH,f"//font[contains(text(),'{doc_id}')]/../../td/a")
     anc.click()
     #grab from the results section, check for the various test names. Maybe use a while loop?
-    tests = ["SARS", "COVID", "nCoV", "qPCR (Rutgers)", "Severe Acute Respiratory Syndrome"]
-    for test in tests:
-        #test_elem = NBS.find_element(By.XPATH, f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]')
-        test_table_path = f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]'
-        html = NBS.find_element(By.XPATH, test_table_path).get_attribute('outerHTML')
+    
+    results_table = None
+    covid_results = None
+    pos_covid_results = None
+    cov_pos = False
+    investigation_table = None
+    inv_found = False
+    
+    try:
+        html = NBS.find_element(By.XPATH, '//*[@id="xmlBlock"]/table[12]').get_attribute('outerHTML')
         soup = BeautifulSoup(html, 'html.parser')
-        test_table = pd.read_html(StringIO(str(soup)))[0]
-
-        html = NBS.page_source
-        soup = BeautifulSoup(html, "html.parser")
-        for tag in soup.find_all("tr"):
-            if "SARS" in tag.text or "COVID" in tag.text:
-                print(tag.text)
-                if "Detected" in tag.text:
-                    print("True")
-    #go to the patient file to review investigations
+        results_table = pd.read_html(StringIO(str(soup)))[0]
+        covid_results = results_table[results_table["Lab Test Name"].str.contains("SARS|COVID|nCoV|qPCR (Rutgers)|Severe Acute Respiratory Syndrome")]
+        pos_covid_results = covid_results[covid_results["Lab Test Result Value"].str.contains("Positive|Detected|Present|Reactive")]
+        if len(pos_covid_results) > 0:
+            cov_pos = True
+    except KeyError:
+        try:
+        # "qPCR (Rutgers)", "Severe Acute Respiratory Syndrome"
+            tests = ["SARS", "COVID", "nCoV"]
+            for test in tests:
+                #test_elem = NBS.find_element(By.XPATH, f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]')
+                test_table_path = f'//*[@id="xmlBlock"]/ul[1]/li[contains(text(),{test})]/table[1]'
+                elems = NBS.find_elements(By.XPATH, test_table_path)
+                for elem in elems:
+                    html = elem.get_attribute('outerHTML')
+                    soup = BeautifulSoup(html, 'html.parser')
+                    results_table = pd.read_html(StringIO(str(soup)))[0]
+                    covid_results = results_table[results_table["Component"].str.contains("SARS|COVID|nCoV|qPCR (Rutgers)|Severe Acute Respiratory Syndrome")]
+                    covid_results["Value"] = covid_results["Value"].astype(str)
+                    pos_covid_results = covid_results[covid_results["Value"].str.contains("Positive|Detected|Present|Reactive")]
+                    if len(pos_covid_results) > 0:
+                        cov_pos = True
+        except KeyError:
+            pass
+        
+        
+        
+        #html = NBS.page_source
+        #soup = BeautifulSoup(html, "html.parser")
+        #for tag in soup.find_all("tr"):
+            #if "SARS" in tag.text or "COVID" in tag.text or "nCoV"in tag.text or "qPCR (Rutgers)" in tag.text or "Severe Acute Respiratory Syndrome" in tag.text:
+                #print(tag.text)
+                #if "Detected" in tag.text or "Positive" in tag.text or "Reactive" in tag.text or " Present " in tag.text:
+                    #print("True")
+                    
+    #Go to patient file
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="srtLink"]/div/a[1]')))
     NBS.find_element(By.XPATH, '//*[@id="srtLink"]/div/a[1]').click()
     
@@ -185,4 +216,4 @@ for _ in tqdm(generator()):
         what_do.append("Associate to investigation")
     else: 
         what_do.append("Do not associate to investigation")
-        NBS.go_to_home
+        NBS.go_to_home()
