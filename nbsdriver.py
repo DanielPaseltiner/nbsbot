@@ -24,8 +24,10 @@ import smtplib
 from email.message import EmailMessage
 from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
-from usps import USPSApi, Address
+#from usps import USPSApi, Address
 import json
+from io import StringIO
+
 
 
 class NBSdriver(webdriver.Chrome):
@@ -378,7 +380,7 @@ class NBSdriver(webdriver.Chrome):
         try:
             html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
             soup = BeautifulSoup(html, 'html.parser')
-            table = pd.read_html(str(soup))[0]
+            table = pd.read_html(StringIO(str(soup)))[0]
             table.fillna('', inplace = True)
         except ValueError:
             table = None
