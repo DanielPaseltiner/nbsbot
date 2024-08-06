@@ -2,7 +2,10 @@ from covidcasereview import COVIDcasereview
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from datetime import datetime
+from datetime import datetime, date
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+driver=webdriver.Chrome()
 
 class COVIDnotificationreview(COVIDcasereview):
     """ A class to review COVID-19 cases in the notification queue.
@@ -66,7 +69,8 @@ class COVIDnotificationreview(COVIDcasereview):
         self.CheckIcuIndicator()
         if self.icu_indicator == 'Yes':
             self.CheckIcuAdmissionDate()
-            self.CheckIcuDischargeDate()
+            if type(self.icu_admission_date) is date:
+                self.CheckIcuDischargeDate()
 
         self.CheckDieFromIllness()
         if self.death_indicator == 'Yes':

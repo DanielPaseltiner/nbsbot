@@ -1,4 +1,6 @@
 from selenium import webdriver
+driver=webdriver.Chrome()
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -25,6 +27,7 @@ from geopy.geocoders import Nominatim
 from usps import USPSApi, Address
 import json
 
+
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
@@ -36,17 +39,19 @@ class NBSdriver(webdriver.Chrome):
             self.site = 'https://nbs.iphis.maine.gov/'
         else:
             self.site = 'https://nbstest.state.me.us/'
-        self.executable_path = r'chromedriver.exe'
+
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('log-level=3')
         self.options.add_argument('--ignore-ssl-errors=yes')
         self.options.add_argument('--ignore-certificate-errors')
-        super(NBSdriver, self).__init__(executable_path= self.executable_path, options = self.options)
+        super(NBSdriver, self).__init__(options = self.options)
         self.issues = []
         self.num_attempts = 3
         self.queue_loaded = None
         self.wait_before_timeout = 30
         self.sleep_duration = 3300 #Value in seconds
+
+
 
 
 ########################### NBS Navigation Methods ############################
@@ -60,14 +65,17 @@ class NBSdriver(webdriver.Chrome):
         """ Log in to NBS. """
         self.get(self.site)
         self.switch_to.frame("contentFrame")
-        self.find_element_by_id('username').send_keys(self.username)
-        self.find_element_by_id('passcode').send_keys(self.passcode)
+        self.find_element(By.ID, "username").send_keys(self.username) #find_element_by_id() has been deprecated
+        self.find_element(By.ID, 'passcode').send_keys(self.passcode)
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/p[2]/input[1]')))
         self.find_element(By.XPATH,'/html/body/div[2]/p[2]/input[1]').click()
-        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a')))
+        time.sleep(3) #wait for the page to load, I'm not sure why the following wait to be clickable does not handle this, but this fixed the error
+        #print(str(self.current_url))
+        print(self.page_source) #for some reason removing this makes nbsbot unable to log in to nbs
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
         self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
-
     def go_to_id(self, id):
-        """ Navigate to specifc patient by NBS ID from Home. """
+        """ Navigate to specific patient by NBS ID from Home. """
         self.find_element(By.XPATH,'//*[@id="DEM229"]').send_keys(id)
         self.find_element(By.XPATH,'//*[@id="patientSearchByDetails"]/table[2]/tbody/tr[8]/td[2]/input[1]').click()
         search_result_path = '//*[@id="searchResultsTable"]/tbody/tr/td[1]/a'
@@ -146,10 +154,34 @@ class NBSdriver(webdriver.Chrome):
         clear_filter_path = '//*[@id="removeFilters"]/a/font'
         submit_date_path = '//*[@id="parent"]/thead/tr/th[3]/a'
         condition_path = '//*[@id="parent"]/thead/tr/th[8]/a'
+        description_path = '//html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/img'
+        clear_checkbox_path = '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[2]/input'
         try:
             # Clear all filters
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, clear_filter_path)))
             self.find_element(By.XPATH, clear_filter_path).click()
+            # The logic for this is somewhat weird but here is my understanding of what happens.
+            # If we have anything in the queue that isn't covid-19 the bot will run until it hits that case and then stall out.
+            # To prevent this we can select covid-19 cases from the condition menu, but if there are no covid-19 cases we still
+            # have to pick something from the dropdown menu or cancel out. We will cancel out of the dropdown menu if there are
+            # no covid-19 cases which will give us only non-covid-19 cases. The check for covid-19 later on will prevent us
+            # from reviewing the next case in the queue and it will hit the wait until we have more covid-19 cases. I think this
+            # will allow for conditions besides covid-19 in the queue and allow us to process all covid-19 cases without
+            # stalling the bot permanently once it runs into a non-covid-19 case.
+            # Open Condition dropdown menu
+            time.sleep(3)
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, description_path)))
+            self.find_element(By.XPATH, description_path).click()
+            # Clear checkboxes
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, clear_checkbox_path)))
+            self.find_element(By.XPATH, clear_checkbox_path).click()
+            try:
+                # Click on the 2019 Novel Coronavirus checkbox
+                self.find_element(By.XPATH, "//label[contains(text(),'2019 Novel Coronavirus')]/input").click()
+                # Click on the okay button
+                self.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[1]').click()
+            except NoSuchElementException:
+                self.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[2]').click()             
             # Double click submit date for chronological order.
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
             self.find_element(By.XPATH, submit_date_path).click()

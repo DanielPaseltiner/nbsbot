@@ -4,7 +4,7 @@ import pandas as pd
 import traceback
 
 #Initialize NBSbot
-NBS = COVIDlabreview(production=True)
+NBS = COVIDlabreview(production=False) #If you are running in NBS Test you need to edit the config file to specify the NBS test server
 #Log in to NBS
 NBS.get_credentials()
 NBS.log_in()
