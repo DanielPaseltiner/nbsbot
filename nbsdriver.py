@@ -24,7 +24,7 @@ import smtplib
 from email.message import EmailMessage
 from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
-#from usps import USPSApi, Address
+from usps import USPSApi, Address
 import json
 from io import StringIO
 
@@ -66,6 +66,7 @@ class NBSdriver(webdriver.Chrome):
     def log_in(self):
         """ Log in to NBS. """
         self.get(self.site)
+        print('passed')
         self.switch_to.frame("contentFrame")
         self.find_element(By.ID, "username").send_keys(self.username) #find_element_by_id() has been deprecated
         self.find_element(By.ID, 'passcode').send_keys(self.passcode)
@@ -455,7 +456,7 @@ class NBSdriver(webdriver.Chrome):
            smtpObj = smtplib.SMTP(self.smtp_server)
            smtpObj.send_message(message)
            print(f"Successfully sent {email_name}.")
-        except SMTPException:
+        except smtplib.SMTPException:
            print(f"Error: unable to send {email_name}.")
 
     def get_main_window_handle(self):
@@ -550,3 +551,21 @@ class NBSdriver(webdriver.Chrome):
         """Write a note in the general comments box of an investigation."""
         xpath = '//*[@id="INV167"]'
         self.find_element(By.XPATH, xpath).send_keys(note)
+
+    #new code added from covidnotificationbot, it also inherits from here
+    def SendManualReviewEmail(self):
+        """ Send email containing NBS IDs that required manual review."""
+        if (len(self.not_a_case_log) > 0) | (len(self.lab_data_issues_log) > 0):
+            subject = 'Cases Requiring Manual Review'
+            email_name = 'manual review email'
+            body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
+            for id in self.not_a_case_log:
+                body = body + f'\n{id}'
+            body = body + '\n\nAssociated lab issues:'
+            for id in self.lab_data_issues_log:
+                body = body + f'\n{id}'
+            body = body + '\n\n-Nbsbot'
+            #self.send_smtp_email(recipient, cc, subject, body)
+            self.send_smtp_email(self.covid_commander, subject, body, email_name)
+            self.not_a_case_log = []
+            self.lab_data_issues_log = []

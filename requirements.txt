@@ -1,7 +1,7 @@
 beautifulsoup4==4.10.0
 pandas==1.4.0
 pyodbc==4.0.32
-pywin32==303
+
 selenium==4.1.0
 tqdm==4.62.3
 lxml==4.7.1

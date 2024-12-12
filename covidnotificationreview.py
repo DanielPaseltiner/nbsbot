@@ -243,19 +243,19 @@ class COVIDnotificationreview(COVIDcasereview):
             self.switch_to.window(main_window_handle)
             self.num_rejected += 1
 
-    def SendManualReviewEmail(self):
-        """ Send email containing NBS IDs that required manual review."""
-        if (len(self.not_a_case_log) > 0) | (len(self.lab_data_issues_log) > 0):
-            subject = 'Cases Requiring Manual Review'
-            email_name = 'manual review email'
-            body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
-            for id in self.not_a_case_log:
-                body = body + f'\n{id}'
-            body = body + '\n\nAssociated lab issues:'
-            for id in self.lab_data_issues_log:
-                body = body + f'\n{id}'
-            body = body + '\n\n-Nbsbot'
-            #self.send_smtp_email(recipient, cc, subject, body)
-            self.send_smtp_email(self.covid_commander, subject, body, email_name)
-            self.not_a_case_log = []
-            self.lab_data_issues_log = []
+    # def SendManualReviewEmail(self):
+    #     """ Send email containing NBS IDs that required manual review."""
+    #     if (len(self.not_a_case_log) > 0) | (len(self.lab_data_issues_log) > 0):
+    #         subject = 'Cases Requiring Manual Review'
+    #         email_name = 'manual review email'
+    #         body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
+    #         for id in self.not_a_case_log:
+    #             body = body + f'\n{id}'
+    #         body = body + '\n\nAssociated lab issues:'
+    #         for id in self.lab_data_issues_log:
+    #             body = body + f'\n{id}'
+    #         body = body + '\n\n-Nbsbot'
+    #         #self.send_smtp_email(recipient, cc, subject, body)
+    #         self.send_smtp_email(self.covid_commander, subject, body, email_name)
+    #         self.not_a_case_log = []
+    #         self.lab_data_issues_log = []

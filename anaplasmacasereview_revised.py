@@ -244,6 +244,7 @@ class Anaplasmacasereview_revised(COVIDcasereview_revised):
         
     def CheckSymptoms(self):
         """ Check patient symptoms, Patient needs one if they have a DNA test or two if there have an antibody test. """
+        self.ClinicCompIndicator = self.ReadText('//*[@id="ME12174"]')
         if self.ClinicCompIndicator == 'Unknown':                                                                       #new code, this exits early without performing symptom checks if the indicator is unknown
             return                                                                                                      #new code
         self.Fever = self.CheckForValue('//*[@id="ME14101"]','Fever should not be left blank.')

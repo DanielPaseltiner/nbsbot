@@ -156,6 +156,8 @@ class Anaplasmacasereview(COVIDcasereview):
                 self.issues.append('Admission date is missing.')
             elif self.admission_date > self.now:
                 self.issues.append('Admission date cannot be in the future.')
+        elif not self.hospitalization_indicator:
+            self.issues.append("'Was patient hospitalized' wasn't filled out")
     def CheckIllnessDurationUnits(self):
         """ Read Illness duration units, should be either Day, Month, or Year """
         self.IllnessDurationUnits = self.ReadText('//*[@id="INV140"]')

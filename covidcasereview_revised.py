@@ -9,7 +9,7 @@ class COVIDcasereview_revised(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
     methods for reviewing COVID case investigations for data accuracy and completeness. """
     def __init__(self, production=False):
-        super(COVIDcasereview, self).__init__(production)
+        super(COVIDcasereview_revised, self).__init__(production)
         self.Reset()
         self.read_config()
         self.GetObInvNames()
@@ -44,6 +44,7 @@ class COVIDcasereview_revised(NBSdriver):
         self.immpact = None
         self.investigation_start_date = None
         self.investigator = None
+        self.jurisdiction = None #new variable to allow access from multiple functions
         self.labs = None
         self.ltf = None
         self.preg_aoe = None
@@ -52,6 +53,9 @@ class COVIDcasereview_revised(NBSdriver):
         self.symp_aoe = None
         self.symptoms = None
         self.vax_recieved = None
+        self.initial_name = None #new variable initially undeclared
+        self.final_name = None  #new variable initially undeclared
+        self.CaseStatus = None  #new variable initially undeclared
 
 ######################### Name Information Check Methods #######################
     def CheckFirstName(self):
@@ -135,12 +139,13 @@ class COVIDcasereview_revised(NBSdriver):
 ################### Investigation Details Check Methods ########################
     def CheckJurisdiction(self):
         """ Jurisdiction and county must match unless jurisdiction is 'Out of State'. """
-        jurisdiction = self.CheckForValue('//*[@id="INV107"]','Jurisdiction is blank.')
-        if jurisdiction == 'Out of State' and self.CaseStatus == 'Not a Case':                 #new code
-            self.approve_notification() #approve and skip further checks                      #new code
-            return
-        if self.county not in jurisdiction and jurisdiction != 'Out of State':                    #new code
+        self.jurisdiction = self.CheckForValue('//*[@id="INV107"]','Jurisdiction is blank.')
+        if self.jurisdiction == 'Out of State' and self.CaseStatus == 'Not a Case':                 #new code
+            # self.approve_notification() #approve and skip further checks                      #new code
+            return True
+        if self.county not in self.jurisdiction and self.jurisdiction != 'Out of State':                    #new code
             self.issues.append('County and jurisdiction mismatch.')                               #new code
+            return False
 
     def CheckProgramArea(self):
         """ Program area must be Airborne. """
@@ -326,7 +331,8 @@ class COVIDcasereview_revised(NBSdriver):
     def CheckDischargeDate(self):
         """ Check for hospital discharge date."""
         discharge_date = self.ReadDate('//*[@id="INV133"]')
-        #if not discharge_date:                                                         #commented out
+        if not discharge_date:                                                         #commented out
+            return
             #self.issues.append('Discharge date is missing.')                           #commented out
         if self.admission_date:
             if discharge_date < self.admission_date:
@@ -564,6 +570,8 @@ class COVIDcasereview_revised(NBSdriver):
     def CheckDetectionMethod(self):
         """ Ensure Detection Method is not blank. """
         detection_method = self.CheckForValue( '//*[@id="INV159"]', 'Detection method is blank.')
+        if not detection_method: #new code
+            self.issues.append('Detection method is missing')
 
     def CheckConfirmationDate(self):
         """ Confirmation date must be on or after report date. """
@@ -574,6 +582,8 @@ class COVIDcasereview_revised(NBSdriver):
             self.issues.append('Confirmation date cannot be prior to report date.')
         elif confirmation_date > self.now:
             self.issues.append('Confirmation date cannot be in the future.')
+        
+        return confirmation_date
 
     def CheckCaseStatus(self):
         """ Case status must be consistent with associated labs. """
