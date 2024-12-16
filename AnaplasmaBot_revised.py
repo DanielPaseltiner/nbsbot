@@ -128,7 +128,9 @@ for _ in tqdm(generator()):
                 NBS.CheckCounty()
                 #NBS.CheckCityCountyMatch()
             NBS.CheckState()
-            NBS.CheckCountry()
+            # NBS.CheckCountry()
+            if NBS.country != 'UNITED STATES':
+                continue
             NBS.CheckPhone()
             NBS.CheckEthnicity()
             NBS.CheckRaceAna()
@@ -138,10 +140,9 @@ for _ in tqdm(generator()):
             NBS.CheckCountyStateReportDate()
             if NBS.county:
                 NBS.CheckCounty()                 #new code
-            if NBS.CheckJurisdiction():              #new code
-                NBS.ApproveNotification()
+            NBS.CheckJurisdiction()              #new code
             NBS.CheckInvestigationStatus()
-            NBS.CheckInvestigator()#removed Ana
+            NBS.CheckInvestigatorAna()
             NBS.CheckInvestigatorAssignDateAna()
             NBS.CheckMmwrWeek()
             NBS.CheckMmwrYear()
@@ -166,6 +167,8 @@ for _ in tqdm(generator()):
             NBS.CheckSymptoms()#removed Ana
             NBS.CheckIllnessLength()
             NBS.CheckCase()
+            if NBS.CaseStatus == "Not a Case":
+                continue
             NBS.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
             NBS.CheckConfirmationMethod() #removed Ana
             if not NBS.issues:
