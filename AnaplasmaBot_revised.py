@@ -102,7 +102,6 @@ for _ in tqdm(generator()):
             continue
 
         NBS.CheckFirstCase()
-        NBS.initial_name = NBS.patient_name
         if NBS.condition == 'Anaplasma phagocytophilum':
             NBS.GoToFirstCaseInApprovalQueue()
             if NBS.queue_loaded:
@@ -110,7 +109,7 @@ for _ in tqdm(generator()):
                 continue
             inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
             NBS.Reset()
-
+            NBS.initial_name = NBS.patient_name
 
             NBS.CheckFirstName()
             NBS.CheckLastName()
@@ -128,9 +127,7 @@ for _ in tqdm(generator()):
                 NBS.CheckCounty()
                 #NBS.CheckCityCountyMatch()
             NBS.CheckState()
-            # NBS.CheckCountry()
-            if NBS.country != 'UNITED STATES':
-                continue
+            NBS.CheckCountry()
             NBS.CheckPhone()
             NBS.CheckEthnicity()
             NBS.CheckRaceAna()
@@ -154,7 +151,6 @@ for _ in tqdm(generator()):
             NBS.CheckIllnessDurationUnits()
             NBS.CheckHospitalization()
             NBS.CheckDeath()                         #removed '77' after parenthesis
-            
             ###Anaplasma Specific Checks###
             NBS.CheckImmunosupressed()
             NBS.CheckLifeThreatening()
@@ -167,8 +163,8 @@ for _ in tqdm(generator()):
             NBS.CheckSymptoms()#removed Ana
             NBS.CheckIllnessLength()
             NBS.CheckCase()
-            if NBS.CaseStatus == "Not a Case":
-                continue
+            # if NBS.CaseStatus == "Not a Case":
+            #     continue
             NBS.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
             NBS.CheckConfirmationMethod() #removed Ana
             if not NBS.issues:
@@ -239,7 +235,9 @@ for _ in tqdm(generator()):
                     NBS.queue_loaded = None
                     continue
                 NBS.CheckFirstCase()
+
                 NBS.final_name = NBS.patient_name
+                # if NBS.country != 'UNITED STATES' or NBS.CaseStatus == "Not a Case":
                 if NBS.final_name == NBS.initial_name:
                     reviewed_ids.append(inv_id)
                     what_do.append("Reject Notification")
@@ -247,6 +245,7 @@ for _ in tqdm(generator()):
                     NBS.RejectNotification()
                     NBS.ReturnApprovalQueue()
                 elif NBS.final_name != NBS.initial_name:
+                    print(f"here : {NBS.final_name} {NBS.initial_name}")
                     print('Case at top of queue changed. No action was taken on the reviewed case.')
                     NBS.num_fail += 1
         else:

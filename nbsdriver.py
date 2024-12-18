@@ -205,7 +205,7 @@ class NBSdriver(webdriver.Chrome):
         queue is returned, navigate back to the home page and request the queue
         again."""
         # Recursion seems like a good idea here, but if the queue is truly empty there will be nothing to display and recursion will result in a stack overflow.
-        for attempt in range(self.num_attempts):
+        for _ in range(self.num_attempts):
             try:
                 self.go_to_home()
                 self.GoToApprovalQueue()

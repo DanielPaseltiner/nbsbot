@@ -294,7 +294,7 @@ class Anaplasmacasereview_revised(COVIDcasereview_revised):
         #self.ElevatedCRP = self.CheckForValue('//*[@id="NBS729"]','CRP Interpretation should not be left blank.')
         self.ElevatedCRP = self.ReadText('//*[@id="NBS729"]')
         self.symptoms_list = [self.Fever, self.Chills, self.Headache, self.Myalgia, self.FatigueMalaise, self.Anemia, self.Leukopenia, self.Thrombocytopenia, self.ElevatedHepaticTransaminase, self.ElevatedCRP]
-        if self.ClinicCompIndicator == "Yes" and any(symptom == 'Yes' for symptom in symptoms):
+        if self.ClinicCompIndicator == "Yes" and any(symptom == 'Yes' for symptom in self.symptoms_list):
             return
         else:
             self.issues.append("Clinically compatible illness is 'Yes' but no symptom is 'Yes'")

@@ -53,6 +53,7 @@ class COVIDcasereview_revised(NBSdriver):
         self.status = None
         self.symp_aoe = None
         self.symptoms = None
+        self.symptoms_list = [] #new variable initially undeclared
         self.vax_recieved = None
         self.initial_name = None #new variable initially undeclared
         self.final_name = None  #new variable initially undeclared
