@@ -21,6 +21,11 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 def generator():
     while True:
         yield
@@ -28,7 +33,10 @@ def generator():
 reviewed_ids = []
 what_do = []
 
-NBS = Anaplasmacasereview_revised(production=True)
+is_in_production = os.getenv('ENVIRONMENT', 'production') != 'development'
+
+
+NBS = Anaplasmacasereview_revised(production=is_in_production)
 NBS.get_credentials()
 NBS.log_in()
 NBS.GoToApprovalQueue()
