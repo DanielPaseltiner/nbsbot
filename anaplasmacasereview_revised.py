@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+from fractions import Fraction
 import re
 from dateutil.relativedelta import relativedelta
 from geopy.geocoders import Nominatim
@@ -323,7 +324,16 @@ class Anaplasmacasereview_revised(COVIDcasereview_revised):
                     self.issues.append("Does not meet the case definition, but does not have Not a Case or Suspect status.")
                     print(f"case_status: {self.CaseStatus}")
         elif any(self.Sero_table["Serology Positive?"] == "Yes"):
-            if all(self.Sero_table["Titer Value"] < 128):
+            titer_value = None
+            if re.search(r":", str(self.Sero_table["Titer Value"])):
+                print(f"titer: {str(self.Sero_table["Titer Value"])}")
+                val = str(self.Sero_table["Titer Value"]).split("    ")[1].split(":")
+                print(f"titer : {val}")
+                titer_value = Fraction(int(val[0]), int(val[1].replace("\nName", "")))
+                print(f"titer : {titer_value}")
+            else:
+                titer_value = int(self.Sero_table["Titer Value"])
+            if all(float(titer_value) < 128):
                 if self.CaseStatus != "Not a Case":
                     self.issues.append("Does not meet the case definition, but does not have Not a Case status.")
                     print(f"case_status: {self.CaseStatus}")

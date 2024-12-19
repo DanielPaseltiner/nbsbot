@@ -238,6 +238,19 @@ class NBSdriver(webdriver.Chrome):
         except TimeoutException:
             self.HandleBadQueueReturn()
 
+    def GoToNCaseInApprovalQueue(self, n=1):
+        """ Navigate to first case in the approval queue. """
+        xpath_to_case = f'//*[@id="parent"]/tbody/tr[{n}]/td[8]/a'
+        xpath_to_first_name = '//*[@id="DEM104"]'
+        try:
+            # Make sure queue loads properly before navigating to first case.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_case)))
+            self.find_element(By.XPATH, xpath_to_case).click()
+            # Make sure first case loads properly before moving on.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_first_name)))
+        except TimeoutException:
+            self.HandleBadQueueReturn()
+
     def GoToCaseInfo(self):
         """ Within a COVID investigation navigate to the Case Info tab. """
         case_info_tab_path = '//*[@id="tabs0head1"]'

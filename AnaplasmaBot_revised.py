@@ -41,8 +41,12 @@ NBS.get_credentials()
 NBS.log_in()
 NBS.GoToApprovalQueue()
 
-
+patients_to_skip = []
+n = 1
 attempt_counter = 0
+with open("patients_to_skip.txt", "r") as patient_reader:
+    patients_to_skip.append(patient_reader.readlines())
+
 for _ in tqdm(generator()):
     try:
         #Sort review queue so that only Anaplasma investigations are listed
@@ -108,17 +112,30 @@ for _ in tqdm(generator()):
             NBS.SendManualReviewEmail()
             NBS.Sleep()
             continue
-
+        
         NBS.CheckFirstCase()
         if NBS.condition == 'Anaplasma phagocytophilum':
-            NBS.GoToFirstCaseInApprovalQueue()
+            NBS.GoToNCaseInApprovalQueue(n)
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
                 continue
-            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
+            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text 
+            if any(inv_id in skipped_patients for skipped_patients in patients_to_skip):
+                print(f"present, {inv_id}")
+                NBS.ReturnApprovalQueue()
+                n = n + 1
+                continue
+            # inv_id = "CASE01dummy_patient"
+            # while any(inv_id in skipped_patients for skipped_patients in patients_to_skip):
+            #     NBS.GoToNCaseInApprovalQueue(n + 1)
+            #     if NBS.queue_loaded:
+            #         NBS.queue_loaded = None
+            #         continue
+            #     inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
+
             NBS.Reset()
             NBS.initial_name = NBS.patient_name
-
+            
             NBS.CheckFirstName()
             NBS.CheckLastName()
             NBS.CheckDOB()
@@ -245,8 +262,10 @@ for _ in tqdm(generator()):
                 NBS.CheckFirstCase()
 
                 NBS.final_name = NBS.patient_name
-                # if NBS.country != 'UNITED STATES' or NBS.CaseStatus == "Not a Case":
-                if NBS.final_name == NBS.initial_name:
+                if NBS.country != 'UNITED STATES' or NBS.CaseStatus == "Not a Case":
+                    print("Skipping patient. No action carried out")
+                    patients_to_skip.append(inv_id)
+                elif NBS.final_name == NBS.initial_name:
                     reviewed_ids.append(inv_id)
                     what_do.append("Reject Notification")
                     
@@ -289,6 +308,8 @@ with open(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.
         maintype="application",
         subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+with open("patients_to_skip.txt", "w") as patient_writer:
+    for patient_id in patients_to_skip: patient_writer.write(f"{patient_id}\n")
 
 smtpObj = smtplib.SMTP(NBS.smtp_server)
 smtpObj.send_message(message)
