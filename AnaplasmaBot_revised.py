@@ -21,11 +21,6 @@ from datetime import datetime
 import smtplib
 from email.message import EmailMessage
 
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
 def generator():
     while True:
         yield
@@ -33,20 +28,13 @@ def generator():
 reviewed_ids = []
 what_do = []
 
-is_in_production = os.getenv('ENVIRONMENT', 'production') != 'development'
-
-
-NBS = Anaplasmacasereview_revised(production=is_in_production)
+NBS = Anaplasmacasereview_revised(production=True)
 NBS.get_credentials()
 NBS.log_in()
 NBS.GoToApprovalQueue()
 
-patients_to_skip = []
-n = 1
-attempt_counter = 0
-with open("patients_to_skip.txt", "r") as patient_reader:
-    patients_to_skip.append(patient_reader.readlines())
 
+attempt_counter = 0
 for _ in tqdm(generator()):
     try:
         #Sort review queue so that only Anaplasma investigations are listed
@@ -112,36 +100,24 @@ for _ in tqdm(generator()):
             NBS.SendManualReviewEmail()
             NBS.Sleep()
             continue
-        
+
         NBS.CheckFirstCase()
+        NBS.initial_name = NBS.patient_name
         if NBS.condition == 'Anaplasma phagocytophilum':
-            NBS.GoToNCaseInApprovalQueue(n)
+            NBS.GoToFirstCaseInApprovalQueue()
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
                 continue
-            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text 
-            if any(inv_id in skipped_patients for skipped_patients in patients_to_skip):
-                print(f"present, {inv_id}")
-                NBS.ReturnApprovalQueue()
-                n = n + 1
-                continue
-            # inv_id = "CASE01dummy_patient"
-            # while any(inv_id in skipped_patients for skipped_patients in patients_to_skip):
-            #     NBS.GoToNCaseInApprovalQueue(n + 1)
-            #     if NBS.queue_loaded:
-            #         NBS.queue_loaded = None
-            #         continue
-            #     inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
-
+            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
             NBS.Reset()
-            NBS.initial_name = NBS.patient_name
-            
+
+
             NBS.CheckFirstName()
             NBS.CheckLastName()
             NBS.CheckDOB()
             NBS.CheckAge()
             NBS.CheckAgeType()
-            NBS.CheckCurrentSex()#removed Ana
+            NBS.CheckCurrentSex()#Ana
             #NBS.CheckStAddr()
             street_address = NBS.CheckForValue( '//*[@id="DEM159"]', 'Street address is blank.')
             if any(x in street_address for x in ["HOMELESS", "NO ADDRESS", "NO FIXED ADDRESS", "UNSHELTERED"]):
@@ -157,25 +133,25 @@ for _ in tqdm(generator()):
             NBS.CheckEthnicity()
             NBS.CheckRaceAna()
             NBS.GoToTickBorne()
-            NBS.CheckInvestigationStartDate()#removed Ana
+            NBS.CheckInvestigationStartDate()#Ana
             NBS.CheckReportDate()
             NBS.CheckCountyStateReportDate()
             if NBS.county:
                 NBS.CheckCounty()                 #new code
-            NBS.CheckJurisdiction()              #new code
+            NBS.CheckJurisdiction()               #new code
             NBS.CheckInvestigationStatus()
-            NBS.CheckInvestigatorAna()
+            NBS.CheckInvestigator()#Ana
             NBS.CheckInvestigatorAssignDateAna()
             NBS.CheckMmwrWeek()
             NBS.CheckMmwrYear()
             NBS.CheckReportingSourceType()
             NBS.CheckReportingOrganization()
             NBS.CheckConfirmationDate()
-            NBS.CheckAdmissionDate() #new code to get admission date and compare to discharge
             NBS.CheckDischargeDate()                                   #new code, added this from covidcase review. modified method logic
             NBS.CheckIllnessDurationUnits()
             NBS.CheckHospitalization()
             NBS.CheckDeath()                         #removed '77' after parenthesis
+            
             ###Anaplasma Specific Checks###
             NBS.CheckImmunosupressed()
             NBS.CheckLifeThreatening()
@@ -185,13 +161,11 @@ for _ in tqdm(generator()):
             NBS.CheckPhysicianVisit()                                  #new code
             NBS.CheckSerology()
             NBS.CheckOutbreak()
-            NBS.CheckSymptoms()#removed Ana
+            NBS.CheckSymptoms()#Ana
             NBS.CheckIllnessLength()
             NBS.CheckCase()
-            # if NBS.CaseStatus == "Not a Case":
-            #     continue
-            NBS.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
-            NBS.CheckConfirmationMethod() #removed Ana
+            NBS.CheckDetectionMethod()                              #new code
+            NBS.CheckConfirmationMethod()#Ana
             if not NBS.issues:
                 reviewed_ids.append(inv_id)
                 what_do.append("Approve Notification")
@@ -260,19 +234,13 @@ for _ in tqdm(generator()):
                     NBS.queue_loaded = None
                     continue
                 NBS.CheckFirstCase()
-
                 NBS.final_name = NBS.patient_name
-                if NBS.country != 'UNITED STATES' or NBS.CaseStatus == "Not a Case":
-                    print("Skipping patient. No action carried out")
-                    patients_to_skip.append(inv_id)
-                elif NBS.final_name == NBS.initial_name:
+                if NBS.final_name == NBS.initial_name:
                     reviewed_ids.append(inv_id)
                     what_do.append("Reject Notification")
-                    
                     NBS.RejectNotification()
                     NBS.ReturnApprovalQueue()
                 elif NBS.final_name != NBS.initial_name:
-                    print(f"here : {NBS.final_name} {NBS.initial_name}")
                     print('Case at top of queue changed. No action was taken on the reviewed case.')
                     NBS.num_fail += 1
         else:
@@ -308,8 +276,6 @@ with open(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.
         maintype="application",
         subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-with open("patients_to_skip.txt", "w") as patient_writer:
-    for patient_id in patients_to_skip: patient_writer.write(f"{patient_id}\n")
 
 smtpObj = smtplib.SMTP(NBS.smtp_server)
 smtpObj.send_message(message)

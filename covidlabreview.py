@@ -72,6 +72,8 @@ class COVIDlabreview(NBSdriver):
         self.nbs_db_driver = self.config.get('NBSdb', 'driver')
         self.nbs_db_server = self.config.get('NBSdb', 'server')
         self.nbs_rdb_name = self.config.get('NBSdb', 'rdb')
+        self.nbs_db_username = self.config.get('NBSdb', 'username')
+        self.nbs_db_pwd = self.config.get('NBSdb', 'pwd')
         self.nbs_odse_name = self.config.get('NBSdb', 'odse')
         self.nbs_unassigned_covid_lab_table = self.config.get('NBSdb', 'unassigned_covid_lab_table')
         self.nbs_patient_list_view = self.config.get('NBSdb', 'patient_list_view')
@@ -83,10 +85,13 @@ class COVIDlabreview(NBSdriver):
 
         # Connect to database
         print(f'RETRIEVE NBS PATIENT LIST:\nConnecting to {self.nbs_odse_name} database...')
-        Connection = pyodbc.connect("Driver={" + self.nbs_db_driver + "};"
-                              fr"Server={self.nbs_db_server};"
-                              f"Database={self.nbs_odse_name};"
-                              "Trusted_Connection=yes;")
+        connectionString = f"DRIVER={{{ self.nbs_db_driver }}}; SERVER={self.nbs_db_server}; DATABASE={self.nbs_odse_name}; UID={self.nbs_db_username}; PWD={self.nbs_db_pwd}; TrustServerCertificate=yes"
+        print(f"cstring: {connectionString}")
+        Connection = pyodbc.connect(connectionString)
+        # "Driver={" + self.nbs_db_driver + "};"
+        #                       f"Server={self.nbs_db_server};"
+        #                       f"Database={self.nbs_odse_name};"
+        #                       "Trusted_Connection=yes;"
         # Execute query and close connection
         print (f'Connected to {self.nbs_odse_name}. Executing query...')
         query = f"SELECT PERSON_PARENT_UID, UPPER(FIRST_NM) AS FIRST_NM, UPPER(LAST_NM) AS LAST_NM, BIRTH_DT FROM {self.nbs_patient_list_view} WHERE (FIRST_NM IS NOT NULL) AND (LAST_NM IS NOT NULL) AND (BIRTH_DT IS NOT NULL) AND (RECORD_STATUS_CD = 'ACTIVE')"
@@ -563,7 +568,7 @@ class COVIDlabreview(NBSdriver):
         WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, ethnicity_path)))
         ethnicity = self.ReadText(ethnicity_path)
         if ethnicity in ['Hispanic or Latino', 'Not Hispanic or Latino']:
-            self.demo_ethnicity = ethnicty
+            self.demo_ethnicity = ethnicity
 
     def write_demographic_ethnicity(self):
         """ After reading an ethnicity from the demographics tab, moving back into an
@@ -775,7 +780,7 @@ class COVIDlabreview(NBSdriver):
             elif (investigation_symptom_status == 'Unknown') | (lab_symptom_aoe[0].upper() == 'U'):
                 self.find_element(By.XPATH, symptom_path).send_keys('Unknown')
             if investigation_symptom_status == 'Yes':
-                investigation_onset_date = self.ReadDate(onsed_date_path, 'value')
+                investigation_onset_date = self.ReadDate(onset_date_path, 'value')
                 if investigation_onset_date and lab_onset_date:
                     if lab_onset_date < investigation_onset_date:
                         lab_onset_date = lab_onset_date.strftime('%m/%d/%Y')
@@ -872,7 +877,9 @@ class COVIDlabreview(NBSdriver):
 
     def create_notification(self):
         """After completing a case create notification for it."""
-        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+        create_button_path = '//*[@id="createNoti"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, create_button_path)))
+        self.find_element(By.XPATH,create_button_path).click()
         self.switch_to_secondary_window()
         submit_button_path = '//*[@id="botcreatenotId"]/input[1]'
         WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, submit_button_path)))

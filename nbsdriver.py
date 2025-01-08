@@ -1,4 +1,5 @@
 from selenium import webdriver
+import os
 driver=webdriver.Chrome()
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -432,7 +433,8 @@ class NBSdriver(webdriver.Chrome):
         always be sent."""
         # Construct to path gen_py directory if it exists.
         current_user = getpass.getuser().lower()
-        gen_py_path = r'C:\Users' +'\\' + current_user + '\AppData\Local\Temp\gen_py'
+        gen_py_path = r'C:\Users' +'\\' + current_user + r'\AppData\Local\Temp\gen_py'
+        
         gen_py_path = Path(gen_py_path)
 
         # If gen_py exists delete it and all contents.

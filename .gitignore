@@ -4,3 +4,4 @@
 env\
 .env
 smtptest.py
+patients_to_skip.txt
