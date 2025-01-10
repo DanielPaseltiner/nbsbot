@@ -9,7 +9,7 @@ class COVIDcasereview_revised(NBSdriver):
     """ A class inherits all basic NBS functionality from NBSdriver and adds
     methods for reviewing COVID case investigations for data accuracy and completeness. """
     def __init__(self, production=False):
-        super(COVIDcasereview, self).__init__(production)
+        super(COVIDcasereview_revised, self).__init__(production)
         self.Reset()
         self.read_config()
         self.GetObInvNames()
@@ -29,6 +29,7 @@ class COVIDcasereview_revised(NBSdriver):
         self.cong_aoe = None
         self.cong_setting_indicator = None
         self.county = None
+        self.country = None #new variable
         self.current_report_date = None
         self.current_status = None
         self.death_indicator = None
@@ -44,6 +45,7 @@ class COVIDcasereview_revised(NBSdriver):
         self.immpact = None
         self.investigation_start_date = None
         self.investigator = None
+        self.jurisdiction = None #new variable to allow access from multiple functions
         self.labs = None
         self.ltf = None
         self.preg_aoe = None
@@ -51,7 +53,11 @@ class COVIDcasereview_revised(NBSdriver):
         self.status = None
         self.symp_aoe = None
         self.symptoms = None
+        self.symptoms_list = [] #new variable initially undeclared
         self.vax_recieved = None
+        self.initial_name = None #new variable initially undeclared
+        self.final_name = None  #new variable initially undeclared
+        self.CaseStatus = None  #new variable initially undeclared
 
 ######################### Name Information Check Methods #######################
     def CheckFirstName(self):
@@ -68,8 +74,10 @@ class COVIDcasereview_revised(NBSdriver):
         self.dob = self.ReadDate('//*[@id="DEM115"]')
         if not self.dob:
             self.issues.append('DOB is blank.')
+            print(f"dob: {self.dob}")
         elif self.dob > self.now:
             self.issues.append('DOB cannot be in the future.')
+            print(f"dob: {self.dob}")
 
     def CheckCurrentSex(self):
         """ Ensure patient current sex is not blank. """
@@ -89,6 +97,7 @@ class COVIDcasereview_revised(NBSdriver):
         state = self.CheckForValue( '//*[@id="DEM162"]', 'State is blank.')
         if state != 'Maine':
             self.issues.append('State is not Maine.')
+            print(f"state: {state}")
 
     def CheckZip(self):
         """ Must provide zip code. """
@@ -102,9 +111,12 @@ class COVIDcasereview_revised(NBSdriver):
         
     def CheckCountry(self):
         """ Must provide country. """
-        country = self.CheckForValue( '//*[@id="DEM167"]', 'Country is blank.')
-        if country != 'UNITED STATES':
-            self.issues.append('Country listed is not USA.')
+        self.country = self.CheckForValue( '//*[@id="DEM167"]', 'Country is blank.')
+        if self.country != 'UNITED STATES':
+            # self.GoToApprovalQueue
+            return
+            # self.issues.append('Out of State') #new code
+            # Country listed is not USA.
 
 ############ Ethnicity and Race Information Check Methods #####################
     def CheckEthnicity(self):
@@ -135,12 +147,14 @@ class COVIDcasereview_revised(NBSdriver):
 ################### Investigation Details Check Methods ########################
     def CheckJurisdiction(self):
         """ Jurisdiction and county must match unless jurisdiction is 'Out of State'. """
-        jurisdiction = self.CheckForValue('//*[@id="INV107"]','Jurisdiction is blank.')
-        if jurisdiction == 'Out of State' and self.CaseStatus == 'Not a Case':                 #new code
-            self.approve_notification() #approve and skip further checks                      #new code
-            return
-        if self.county not in jurisdiction and jurisdiction != 'Out of State':                    #new code
+        self.jurisdiction = self.CheckForValue('//*[@id="INV107"]','Jurisdiction is blank.')
+        if self.jurisdiction == 'Out of State' and self.CaseStatus == 'Not a Case':                 #new code
+            # self.approve_notification() #approve and skip further checks                      #new code
+            return 
+        if self.county not in self.jurisdiction and self.jurisdiction != 'Out of State':                    #new code
             self.issues.append('County and jurisdiction mismatch.')                               #new code
+            print(f"jurisdiction: {self.jurisdiction}")
+            
 
     def CheckProgramArea(self):
         """ Program area must be Airborne. """
@@ -163,8 +177,10 @@ class COVIDcasereview_revised(NBSdriver):
         inv_status = self.ReadText('//*[@id="INV109"]')
         if not inv_status:
             self.issues.append('Investigation status is blank.')
+            print(f"investigation_status: {inv_status}")
         elif inv_status == 'Open':
             self.issues.append('Investigation status is open.')
+            print(f"investigation_status: {inv_status}")
 
     def CheckSharedIndicator(self):
         """ Ensure shared indicator is yes. """
@@ -195,6 +211,7 @@ class COVIDcasereview_revised(NBSdriver):
             assigned_date = self.ReadText('//*[@id="INV110"]')
             if not assigned_date:
                 self.issues.append('Missing investigator assigned date.')
+                print(f"investigator_assigned_date: {assigned_date}")
 
 ################# Key Report Dates Check Methods ###############################
     def CheckReportDate(self):
@@ -203,10 +220,13 @@ class COVIDcasereview_revised(NBSdriver):
         self.current_report_date = self.ReadDate('//*[@id="INV111"]')
         if not self.current_report_date:
             self.issues.append('Missing report date.')
+            print(f"report_date: {self.current_report_date}")
         elif self.current_report_date > self.investigation_start_date:
             self.issues.append('Report date cannot be after investigation start date.')
+            print(f"report_date: {self.current_report_date}")
         elif self.report_date != self.current_report_date:
             self.issues.append('Report date mismatch.')
+            print(f"report_date: {self.current_report_date}")
 
     def CheckCountyStateReportDate(self):
         """ Check if the current value of county report date is consistent with
@@ -216,22 +236,36 @@ class COVIDcasereview_revised(NBSdriver):
 
         if not current_county_date:
             self.issues.append('Report to county date missing.')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
         elif current_county_date < self.current_report_date:
             self.issues.append('Earliest report to county cannot be prior to inital report date.')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
         elif current_county_date > self.investigation_start_date:
             self.issues.append('Earliest report to county date cannot be after investigation start date')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
 
         if not current_state_date:
             self.issues.append('Report to state date missing.')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
         elif current_state_date < self.current_report_date:
             self.issues.append('Earliest report to state cannot be prior to inital report date.')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
         elif current_state_date > self.investigation_start_date:
             self.issues.append('Earliest report to state date cannot be after investigation start date.')
+            print(f"current_county_date: {current_county_date}")
+            print(f"current_state_date: {current_state_date}")
 
         if current_county_date:
             if current_state_date:
                 if current_county_date != current_state_date:
                     self.issues.append('Earliest dates reported to county and state do not match.')
+                    print(f"current_county_date: {current_county_date}")
+                    print(f"current_state_date: {current_state_date}")
 
 ################### Reporting Organization Check Methods #######################
     def CheckReportingSourceType(self):
@@ -239,12 +273,14 @@ class COVIDcasereview_revised(NBSdriver):
         reporting_source_type = self.ReadText('//*[@id="INV112"]')
         if not reporting_source_type:
             self.issues.append('Reporting source type is blank.')
+            print(f"reporting_source_type: {reporting_source_type}")
 
     def CheckReportingOrganization(self):
         """ Ensure that reporting organization is not empty. """
         reporting_organization = self.ReadText('//*[@id="INV183"]')
         if not reporting_organization:
             self.issues.append('Reporting organization is blank.')
+            print(f"reporting_organization: {reporting_organization}")
 
 ############### Preforming Lab Check Methods ##################################
     def CheckPreformingLaboratory(self):
@@ -252,6 +288,7 @@ class COVIDcasereview_revised(NBSdriver):
         reporting_organization = self.ReadText('//*[@id="ME6105"]')
         if not reporting_organization:
             self.issues.append('Performing laboratory is blank.')
+            print(f"performing_laboratory: {reporting_organization}")
 
     def CheckCollectionDate(self):
         """ Check if collection date is present and matches earliest date from
@@ -320,19 +357,24 @@ class COVIDcasereview_revised(NBSdriver):
         self.admission_date = self.ReadDate('//*[@id="INV132"]')
         if not self.admission_date:
             self.issues.append('Admission date is missing.')
+            print(f"admission_date: {self.admission_date}")
         elif self.admission_date > self.now:
             self.issues.append('Admission date cannot be in the future.')
+            print(f"admission_date: {self.admission_date}")
 
     def CheckDischargeDate(self):
         """ Check for hospital discharge date."""
         discharge_date = self.ReadDate('//*[@id="INV133"]')
-        #if not discharge_date:                                                         #commented out
+        if not discharge_date:                                                         #commented out
+            return
             #self.issues.append('Discharge date is missing.')                           #commented out
         if self.admission_date:
             if discharge_date < self.admission_date:
                 self.issues.append('Discharge date must be after admission date.')
+                print(f"discharge_date: {discharge_date}")
         elif discharge_date > self.now:
             self.issues.append('Discharge date cannot be in the future.')
+            print(f"discharge_date: {discharge_date}")
 
     def CheckIcuIndicator(self):
         """ If case is hospitalized then we should know if they were ever in the ICU."""
@@ -564,16 +606,24 @@ class COVIDcasereview_revised(NBSdriver):
     def CheckDetectionMethod(self):
         """ Ensure Detection Method is not blank. """
         detection_method = self.CheckForValue( '//*[@id="INV159"]', 'Detection method is blank.')
+        if not detection_method: #new code
+            self.issues.append('Detection method is missing')
+            print(f"detection_method: {detection_method}")
 
     def CheckConfirmationDate(self):
         """ Confirmation date must be on or after report date. """
         confirmation_date = self.ReadDate('//*[@id="INV162"]')
         if not confirmation_date:
             self.issues.append('Confirmation date is blank.')
+            print(f"confirmation_date: {confirmation_date}")
         elif confirmation_date < self.report_date:
             self.issues.append('Confirmation date cannot be prior to report date.')
+            print(f"confirmation_date: {confirmation_date}")
         elif confirmation_date > self.now:
             self.issues.append('Confirmation date cannot be in the future.')
+            print(f"confirmation_date: {confirmation_date}")
+        
+        return confirmation_date
 
     def CheckCaseStatus(self):
         """ Case status must be consistent with associated labs. """

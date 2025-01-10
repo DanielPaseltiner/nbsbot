@@ -1,5 +1,21 @@
+'''
+NOTE: deprecated
+The code block below has been commented out, because I kept getting permission issues with the chrome driver
+but this solves it, since there's a chrome driver being used within the directory
+
 from selenium import webdriver
+import os
 driver=webdriver.Chrome()
+
+'''
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+# initialize chromedriver
+chrome_driver_path = "./chromedriver.exe"  # Replace with your custom path
+service = Service(chrome_driver_path)
+driver = webdriver.Chrome(service=service)
+
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -24,14 +40,14 @@ import smtplib
 from email.message import EmailMessage
 from selenium.webdriver.common.by import By
 from geopy.geocoders import Nominatim
-#from usps import USPSApi, Address
+from usps import USPSApi, Address
 import json
 from io import StringIO
 
 
 
 class NBSdriver(webdriver.Chrome):
-    """ A class to provide basic functionality in NBS via Selenium. """
+    """] A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
         self.production = production
         self.read_config()
@@ -63,9 +79,16 @@ class NBSdriver(webdriver.Chrome):
         self.username = input('Enter your SOM username ("first_name.last_name"):')
         self.passcode = input('Enter your RSA passcode:')
 
+    def set_credentials(self, username, passcode):
+        """ A method to prompt user to provide a valid username and RSA token
+        to log in to NBS. Must """
+        self.username = username
+        self.passcode = passcode
+
     def log_in(self):
         """ Log in to NBS. """
         self.get(self.site)
+        print('passed')
         self.switch_to.frame("contentFrame")
         self.find_element(By.ID, "username").send_keys(self.username) #find_element_by_id() has been deprecated
         self.find_element(By.ID, 'passcode').send_keys(self.passcode)
@@ -204,7 +227,7 @@ class NBSdriver(webdriver.Chrome):
         queue is returned, navigate back to the home page and request the queue
         again."""
         # Recursion seems like a good idea here, but if the queue is truly empty there will be nothing to display and recursion will result in a stack overflow.
-        for attempt in range(self.num_attempts):
+        for _ in range(self.num_attempts):
             try:
                 self.go_to_home()
                 self.GoToApprovalQueue()
@@ -227,6 +250,19 @@ class NBSdriver(webdriver.Chrome):
     def GoToFirstCaseInApprovalQueue(self):
         """ Navigate to first case in the approval queue. """
         xpath_to_case = '//*[@id="parent"]/tbody/tr[1]/td[8]/a'
+        xpath_to_first_name = '//*[@id="DEM104"]'
+        try:
+            # Make sure queue loads properly before navigating to first case.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_case)))
+            self.find_element(By.XPATH, xpath_to_case).click()
+            # Make sure first case loads properly before moving on.
+            WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath_to_first_name)))
+        except TimeoutException:
+            self.HandleBadQueueReturn()
+
+    def GoToNCaseInApprovalQueue(self, n=1):
+        """ Navigate to first case in the approval queue. """
+        xpath_to_case = f'//*[@id="parent"]/tbody/tr[{n}]/td[8]/a'
         xpath_to_first_name = '//*[@id="DEM104"]'
         try:
             # Make sure queue loads properly before navigating to first case.
@@ -418,7 +454,8 @@ class NBSdriver(webdriver.Chrome):
         always be sent."""
         # Construct to path gen_py directory if it exists.
         current_user = getpass.getuser().lower()
-        gen_py_path = r'C:\Users' +'\\' + current_user + '\AppData\Local\Temp\gen_py'
+        gen_py_path = r'C:\Users' +'\\' + current_user + r'\AppData\Local\Temp\gen_py'
+        
         gen_py_path = Path(gen_py_path)
 
         # If gen_py exists delete it and all contents.
@@ -455,7 +492,7 @@ class NBSdriver(webdriver.Chrome):
            smtpObj = smtplib.SMTP(self.smtp_server)
            smtpObj.send_message(message)
            print(f"Successfully sent {email_name}.")
-        except SMTPException:
+        except smtplib.SMTPException:
            print(f"Error: unable to send {email_name}.")
 
     def get_main_window_handle(self):
@@ -550,3 +587,21 @@ class NBSdriver(webdriver.Chrome):
         """Write a note in the general comments box of an investigation."""
         xpath = '//*[@id="INV167"]'
         self.find_element(By.XPATH, xpath).send_keys(note)
+
+    #new code added from covidnotificationbot, it also inherits from here
+    def SendManualReviewEmail(self):
+        """ Send email containing NBS IDs that required manual review."""
+        if (len(self.not_a_case_log) > 0) | (len(self.lab_data_issues_log) > 0):
+            subject = 'Cases Requiring Manual Review'
+            email_name = 'manual review email'
+            body = "COVID Commander,\nThe case(s) listed below have been moved to the rejected notification queue and require manual review.\n\nNot a case:"
+            for id in self.not_a_case_log:
+                body = body + f'\n{id}'
+            body = body + '\n\nAssociated lab issues:'
+            for id in self.lab_data_issues_log:
+                body = body + f'\n{id}'
+            body = body + '\n\n-Nbsbot'
+            #self.send_smtp_email(recipient, cc, subject, body)
+            self.send_smtp_email(self.covid_commander, subject, body, email_name)
+            self.not_a_case_log = []
+            self.lab_data_issues_log = []

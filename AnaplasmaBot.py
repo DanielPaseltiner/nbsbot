@@ -159,7 +159,7 @@ for _ in tqdm(generator()):
             NBS.CheckSymptoms()
             NBS.CheckCase() #We need to figure out what to do with suspect cases
             if not NBS.issues:
-                #NBS.ApproveNotification()
+                NBS.ApproveNotification()
             NBS.ReturnApprovalQueue()
             if NBS.queue_loaded:
                 NBS.queue_loaded = None

@@ -6,7 +6,7 @@ Created on Wed Apr 17 10:35:46 2024
 """
 
 from anaplasmacasereview_revised import Anaplasmacasereview_revised
-#from tqdm import tqdm
+from tqdm import tqdm
 import time
 import traceback
 from selenium.webdriver.common.by import By
@@ -90,7 +90,7 @@ for _ in tqdm(generator()):
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
         NBS.find_element(By.XPATH, submit_date_path).click()
         WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, submit_date_path)))
-        NBS.find_element(By.XPATH, submit_date_path).click()
+        NBS.find_element(By.XPATH, submit_date_path).click() #---here
 
         if NBS.queue_loaded:
             NBS.queue_loaded = None
@@ -108,7 +108,7 @@ for _ in tqdm(generator()):
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
                 continue
-            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text
+            inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text #patient id?
             NBS.Reset()
 
 
@@ -117,7 +117,7 @@ for _ in tqdm(generator()):
             NBS.CheckDOB()
             NBS.CheckAge()
             NBS.CheckAgeType()
-            NBS.CheckCurrentSexAna()
+            NBS.CheckCurrentSex()#Ana
             #NBS.CheckStAddr()
             street_address = NBS.CheckForValue( '//*[@id="DEM159"]', 'Street address is blank.')
             if any(x in street_address for x in ["HOMELESS", "NO ADDRESS", "NO FIXED ADDRESS", "UNSHELTERED"]):
@@ -133,21 +133,21 @@ for _ in tqdm(generator()):
             NBS.CheckEthnicity()
             NBS.CheckRaceAna()
             NBS.GoToTickBorne()
-            NBS.CheckInvestigationStartDateAna()
+            NBS.CheckInvestigationStartDate()#Ana
             NBS.CheckReportDate()
             NBS.CheckCountyStateReportDate()
             if NBS.county:
                 NBS.CheckCounty()                 #new code
             NBS.CheckJurisdiction()               #new code
             NBS.CheckInvestigationStatus()
-            NBS.CheckInvestigatorAna()
+            NBS.CheckInvestigator()#Ana
             NBS.CheckInvestigatorAssignDateAna()
             NBS.CheckMmwrWeek()
             NBS.CheckMmwrYear()
             NBS.CheckReportingSourceType()
             NBS.CheckReportingOrganization()
             NBS.CheckConfirmationDate()
-            NBS.CheckDischargeDate                                   #new code, added this from covidcase review. modified method logic
+            NBS.CheckDischargeDate()                                   #new code, added this from covidcase review. modified method logic
             NBS.CheckIllnessDurationUnits()
             NBS.CheckHospitalization()
             NBS.CheckDeath()                         #removed '77' after parenthesis
@@ -161,11 +161,11 @@ for _ in tqdm(generator()):
             NBS.CheckPhysicianVisit()                                  #new code
             NBS.CheckSerology()
             NBS.CheckOutbreak()
-            NBS.CheckSymptomsAna()
+            NBS.CheckSymptoms()#Ana
             NBS.CheckIllnessLength()
             NBS.CheckCase()
             NBS.CheckDetectionMethod()                              #new code
-            NBS.CheckConfirmationMethodAna()
+            NBS.CheckConfirmationMethod()#Ana
             if not NBS.issues:
                 reviewed_ids.append(inv_id)
                 what_do.append("Approve Notification")

@@ -128,7 +128,7 @@ for _ in tqdm(generator()):
     #grab the first local ID we haven't reviewed and append it to the list for later use 
     event_id = review_queue_table["Local ID"].iloc[i]
     reviewed_ids.append(event_id) 
-    #identify the element that has the event it to be reviewed and navigate to that Lab Report
+    #identify the element that has the event id to be reviewed and navigate to that Lab Report
     
     try:
         anc = NBS.find_element(By.XPATH,f"//td[contains(text(),'{event_id}')]/../td/a")

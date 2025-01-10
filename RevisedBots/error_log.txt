@@ -1,0 +1,72 @@
+01_09_2025 | start_audrey - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
+    return func(*args)
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 58, in start_audrey
+    NBS.log_in()
+    ~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF7743B80D5+2992373]
+	(No symbol) [0x00007FF77404BFD0]
+	(No symbol) [0x00007FF773EE590A]
+	(No symbol) [0x00007FF773F3926E]
+	(No symbol) [0x00007FF773F3955C]
+	(No symbol) [0x00007FF773F827D7]
+	(No symbol) [0x00007FF773F5F3AF]
+	(No symbol) [0x00007FF773F7F584]
+	(No symbol) [0x00007FF773F5F113]
+	(No symbol) [0x00007FF773F2A918]
+	(No symbol) [0x00007FF773F2BA81]
+	GetHandleVerifier [0x00007FF774416A2D+3379789]
+	GetHandleVerifier [0x00007FF77442C32D+3468109]
+	GetHandleVerifier [0x00007FF774420043+3418211]
+	GetHandleVerifier [0x00007FF7741AC78B+847787]
+	(No symbol) [0x00007FF77405757F]
+	(No symbol) [0x00007FF774052FC4]
+	(No symbol) [0x00007FF77405315D]
+	(No symbol) [0x00007FF774042979]
+	BaseThreadInitThunk [0x00007FFB69BE7374+20]
+	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
+
+
+01_09_2025 | start_anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
+    return func(*args)
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
+    NBS.log_in()
+    ~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF7743B80D5+2992373]
+	(No symbol) [0x00007FF77404BFD0]
+	(No symbol) [0x00007FF773EE590A]
+	(No symbol) [0x00007FF773F3926E]
+	(No symbol) [0x00007FF773F3955C]
+	(No symbol) [0x00007FF773F827D7]
+	(No symbol) [0x00007FF773F5F3AF]
+	(No symbol) [0x00007FF773F7F584]
+	(No symbol) [0x00007FF773F5F113]
+	(No symbol) [0x00007FF773F2A918]
+	(No symbol) [0x00007FF773F2BA81]
+	GetHandleVerifier [0x00007FF774416A2D+3379789]
+	GetHandleVerifier [0x00007FF77442C32D+3468109]
+	GetHandleVerifier [0x00007FF774420043+3418211]
+	GetHandleVerifier [0x00007FF7741AC78B+847787]
+	(No symbol) [0x00007FF77405757F]
+	(No symbol) [0x00007FF774052FC4]
+	(No symbol) [0x00007FF77405315D]
+	(No symbol) [0x00007FF774042979]
+	BaseThreadInitThunk [0x00007FFB69BE7374+20]
+	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
+
+
