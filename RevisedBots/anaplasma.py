@@ -4,8 +4,6 @@ Created on Wed Apr 17 10:35:46 2024
 
 @author: Jared.Strauch
 """
-
-from anaplasmacasereview_revised import Anaplasmacasereview_revised
 from tqdm import tqdm
 import time
 import traceback
@@ -23,8 +21,7 @@ from email.message import EmailMessage
 
 from dotenv import load_dotenv
 import os
-
-load_dotenv()
+from RevisedBots.decorator import error_handle
 
 def generator():
     while True:
@@ -35,20 +32,29 @@ what_do = []
 
 is_in_production = os.getenv('ENVIRONMENT', 'production') != 'development'
 
-print("state", is_in_production)
-NBS = Anaplasmacasereview_revised(production=True)
-NBS.get_credentials()
-NBS.log_in()
-NBS.GoToApprovalQueue()
 
-patients_to_skip = []
-n = 1
-attempt_counter = 0
-with open("patients_to_skip.txt", "r") as patient_reader:
-    patients_to_skip.append(patient_reader.readlines())
+@error_handle
+def start_anaplasma(username, passcode):
+    
+    from anaplasmacasereview_revised import Anaplasmacasereview_revised
+    
 
-for _ in tqdm(generator()):
-    try:
+    load_dotenv()
+    
+    
+    NBS = Anaplasmacasereview_revised(production=is_in_production)
+    NBS.set_credentials(username, passcode)
+    NBS.log_in()
+    NBS.GoToApprovalQueue()
+
+    patients_to_skip = []
+    n = 1
+    attempt_counter = 0
+    with open("patients_to_skip.txt", "r") as patient_reader:
+        patients_to_skip.append(patient_reader.readlines())
+
+    for _ in tqdm(generator()):
+        # try:
         #Sort review queue so that only Anaplasma investigations are listed
         clear_filter_path = '//*[@id="removeFilters"]/a/font'
         condition_path = '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/img'
@@ -283,35 +289,40 @@ for _ in tqdm(generator()):
                 print("No Anaplasma cases in notification queue.")
                 NBS.SendManualReviewEmail()
                 NBS.Sleep()
-    except:
-        tb = traceback.format_exc()
-        print(tb)
-        #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(Anaplasma Notification Review) AKA Athena', tb, 'error email')
-        break
+        # except:
+        #     tb = traceback.format_exc()
+        #     # print(tb)
+        #     with open("error_log.txt", "a") as log:
+        #         log.write(f"{datetime.now().date().strftime('%m_%d_%Y')} | anaplasma - {str(tb)}")
+        #     #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(Anaplasma Notification Review) AKA Athena', tb, 'error email')
+        #     break
 
-bot_act = pd.DataFrame(
-    {'Inv ID': reviewed_ids,
-     'Action': what_do
-    })
-bot_act.to_excel(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+    bot_act = pd.DataFrame(
+        {'Inv ID': reviewed_ids,
+        'Action': what_do
+        })
+    bot_act.to_excel(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
 
-body = "The list of Anaplasma Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
-message = EmailMessage()
-message.set_content(body)
-message['Subject'] = 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas'
-message['From'] = NBS.nbsbot_email
-message['To'] = ', '.join(["disease.reporting@maine.gov"])
-with open(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
-    message.add_attachment(
-        f.read(),
-        filename=f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
-        maintype="application",
-        subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-with open("patients_to_skip.txt", "w") as patient_writer:
-    for patient_id in patients_to_skip: patient_writer.write(f"{patient_id}\n")
+    body = "The list of Anaplasma Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
+    message = EmailMessage()
+    message.set_content(body)
+    message['Subject'] = 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas'
+    message['From'] = NBS.nbsbot_email
+    message['To'] = ', '.join(["disease.reporting@maine.gov"])
+    with open(f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
+        message.add_attachment(
+            f.read(),
+            filename=f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
+            maintype="application",
+            subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+    with open("patients_to_skip.txt", "w") as patient_writer:
+        for patient_id in patients_to_skip: patient_writer.write(f"{patient_id}\n")
 
-smtpObj = smtplib.SMTP(NBS.smtp_server)
-smtpObj.send_message(message)
+    smtpObj = smtplib.SMTP(NBS.smtp_server)
+    smtpObj.send_message(message)
 
-#NBS.send_smtp_email("disease.reporting@maine.gov", 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas', body, 'Anaplasma Notification Review email')
+    #NBS.send_smtp_email("disease.reporting@maine.gov", 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas', body, 'Anaplasma Notification Review email')
+
+if __name__ == '__main__':
+    start_anaplasma()

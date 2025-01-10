@@ -1,6 +1,21 @@
+'''
+NOTE: deprecated
+The code block below has been commented out, because I kept getting permission issues with the chrome driver
+but this solves it, since there's a chrome driver being used within the directory
+
 from selenium import webdriver
 import os
 driver=webdriver.Chrome()
+
+'''
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+# initialize chromedriver
+chrome_driver_path = "./chromedriver.exe"  # Replace with your custom path
+service = Service(chrome_driver_path)
+driver = webdriver.Chrome(service=service)
+
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -32,7 +47,7 @@ from io import StringIO
 
 
 class NBSdriver(webdriver.Chrome):
-    """ A class to provide basic functionality in NBS via Selenium. """
+    """] A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
         self.production = production
         self.read_config()
@@ -63,6 +78,12 @@ class NBSdriver(webdriver.Chrome):
         to log in to NBS. Must """
         self.username = input('Enter your SOM username ("first_name.last_name"):')
         self.passcode = input('Enter your RSA passcode:')
+
+    def set_credentials(self, username, passcode):
+        """ A method to prompt user to provide a valid username and RSA token
+        to log in to NBS. Must """
+        self.username = username
+        self.passcode = passcode
 
     def log_in(self):
         """ Log in to NBS. """
