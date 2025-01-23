@@ -1305,7 +1305,7 @@ def start_audrey(username, passcode):
     if len(merges) >= 1:
         # Patient Ids: {merge_ids}
         body = f"Potential merges have been identified for patients associated with the following ELRs: {merges}."
-        NBS.send_smtp_email("disease.reporting@maine.gov", 'Merge Report: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Merge Review email')
+        NBS.send_smtp_email("chloe.manchester@maine.gov", 'Merge Report: NBSbot(Hepatitis ELR Review) AKA Audrey Hepbot', body, 'Hepatitis Merge Review email')
 
     bot_act = pd.DataFrame(
         {'Lab ID': reviewed_ids,
