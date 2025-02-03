@@ -1,76 +1,29 @@
-01_10_2025 | anaplasma - Traceback (most recent call last):
+01_14_2025 | anaplasma - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
     return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 196, in start_anaplasma
+    NBS.CheckCase()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\anaplasmacasereview_revised.py", line 330, in CheckCase
+    val = str(self.Sero_table["Titer Value"]).split("    ")[1].split(":")
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
 
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
+01_14_2025 - 14:16:52.411174 | anaplasma - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
     return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 333, in start_anaplasma
+    raise Exception(tb)
+Exception: None
 
+01_14_2025 - 14:48:57.141953 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
+    return func(*args)
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 333, in start_anaplasma
+    raise Exception(tb)
+Exception: None
 
-01_10_2025 | audrey - Traceback (most recent call last):
+01_22_2025 - 09:39:34.336114 | audrey - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
     sock = connection.create_connection(
         (self._dns_host, self.port),
@@ -122,21 +75,18 @@ Traceback (most recent call last):
     raise NewConnectionError(
         self, f"Failed to establish a new connection: {e}"
     ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000002CFF2208290>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001F7D0F86C40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
     return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 86, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, description_path)))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 84, in _predicate
-    return driver.find_element(*locator)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 269, in start_audrey
+    resulted_test_table = NBS.ReadTableToDF(resulted_test_path)
+  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 417, in ReadTableToDF
+    html = self.find_element(By.XPATH, xpath).get_attribute('innerHTML')
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
     return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -196,199 +146,9 @@ Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
     raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=61009): Max retries exceeded with url: /session/026bdf8076392915e18855a113cf7b20/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002CFF2208290>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=62420): Max retries exceeded with url: /session/0e9d830defd2951d33ce924994dad49e/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001F7D0F86C40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
 
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\common\service.py", line 214, in _start_process
-    self.process = subprocess.Popen(
-                   ~~~~~~~~~~~~~~~~^
-        cmd,
-        ^^^^
-    ...<7 lines>...
-        **self.popen_kw,
-        ^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1036, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                        pass_fds, cwd, env,
-                        ^^^^^^^^^^^^^^^^^^^
-    ...<5 lines>...
-                        gid, gids, uid, umask,
-                        ^^^^^^^^^^^^^^^^^^^^^^
-                        start_new_session, process_group)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1548, in _execute_child
-    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
-                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-                             # no special security
-                             ^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-                             cwd,
-                             ^^^^
-                             startupinfo)
-                             ^^^^^^^^^^^^
-PermissionError: [WinError 5] Access is denied
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 54, in start_audrey
-    from covidlabreview import COVIDlabreview
-  File "C:\Users\caleb.jones\Repos\nbsbot\covidlabreview.py", line 1, in <module>
-    from nbsdriver import NBSdriver
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 17, in <module>
-    driver = webdriver.Chrome(service=service)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
-    super().__init__(
-    ~~~~~~~~~~~~~~~~^
-        browser_name=DesiredCapabilities.CHROME["browserName"],
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-        keep_alive=keep_alive,
-        ^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 55, in __init__
-    self.service.start()
-    ~~~~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\common\service.py", line 104, in start
-    self._start_process(self._path)
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\common\service.py", line 238, in _start_process
-    raise WebDriverException(
-        f"'{os.path.basename(self._path)}' executable may have wrong permissions."
-    ) from err
-selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
-
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 58, in start_audrey
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 58, in start_audrey
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-TypeError: start_anaplasma() missing 2 required positional arguments: 'username' and 'passcode'
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-TypeError: start_anaplasma() missing 2 required positional arguments: 'username' and 'passcode'
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-TypeError: start_anaplasma() missing 2 required positional arguments: 'username' and 'passcode'
-
-01_10_2025 | audrey - Traceback (most recent call last):
+01_22_2025 - 10:39:58.081822 | audrey - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
     sock = connection.create_connection(
         (self._dns_host, self.port),
@@ -440,21 +200,20 @@ Traceback (most recent call last):
     raise NewConnectionError(
         self, f"Failed to establish a new connection: {e}"
     ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000002CFBFFEAC40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000022D37326D70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
     return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 86, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, description_path)))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 72, in start_audrey
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, partial_link)))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
     value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 84, in _predicate
-    return driver.find_element(*locator)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
+    target = driver.find_element(*target)  # grab element at locator
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
     return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -514,9 +273,20 @@ Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
     raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=62821): Max retries exceeded with url: /session/5d047e87bee2ed71ac5e1742ce077aab/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002CFBFFEAC40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=51881): Max retries exceeded with url: /session/2a86be5081ca80633a58016dc8e7cf0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022D37326D70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
 
-01_10_2025 | audrey - Traceback (most recent call last):
+01_30_2025 - 06:17:22.769925 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 99, in start_anaplasma
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[1]')))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
     response = self._make_request(
         conn,
@@ -544,21 +314,15 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 58, in start_audrey
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 104, in start_anaplasma
+    NBS.find_element(By.XPATH,'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[2]').click()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
     response = self.command_executor.execute(driver_command, params)
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
@@ -611,7 +375,16 @@ Traceback (most recent call last):
            ~~~~~~~~~~~~~~~~~~~~^^^
 urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
 
-01_10_2025 | anaplasma - Traceback (most recent call last):
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
+    return func(*args)
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 300, in start_anaplasma
+    raise Exception(e)
+Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+01_30_2025 - 06:22:25.231396 | anaplasma - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
     response = self._make_request(
         conn,
@@ -639,539 +412,23 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ~~~~~~~~~~~~~~~~~~~~~~~~^
-        method, url, fields=fields, headers=headers, **urlopen_kw
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-    ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ~~~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
-    return self._sock.recv_into(b)
-           ~~~~~~~~~~~~~~~~~~~~^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 58, in start_audrey
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
-    sock = connection.create_connection(
-        (self._dns_host, self.port),
-    ...<2 lines>...
-        socket_options=self.socket_options,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    raise err
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
-    sock.connect(sa)
-    ~~~~~~~~~~~~^^^^
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
-    conn.request(
-    ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<6 lines>...
-        enforce_content_length=enforce_content_length,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 441, in request
-    self.endheaders()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1331, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1091, in _send_output
-    self.send(msg)
-    ~~~~~~~~~^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1035, in send
-    self.connect()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
-    self.sock = self._new_conn()
-                ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
-    raise NewConnectionError(
-        self, f"Failed to establish a new connection: {e}"
-    ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000002497B1DF650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 80, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, clear_filter_path)))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ~~~~~~~~~~~~~~~~~~~~~~~~^
-        method, url, fields=fields, headers=headers, **urlopen_kw
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
-    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=63370): Max retries exceeded with url: /session/4fbf6c0da89a430115bbaaa71365604c/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002497B1DF650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 47, in start_anaplasma
-    NBS.log_in()
-    ~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\nbsdriver.py", line 100, in log_in
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
-    raise TimeoutException(message, screen, stacktrace)
-selenium.common.exceptions.TimeoutException: Message: 
-Stacktrace:
-	GetHandleVerifier [0x00007FF7743B80D5+2992373]
-	(No symbol) [0x00007FF77404BFD0]
-	(No symbol) [0x00007FF773EE590A]
-	(No symbol) [0x00007FF773F3926E]
-	(No symbol) [0x00007FF773F3955C]
-	(No symbol) [0x00007FF773F827D7]
-	(No symbol) [0x00007FF773F5F3AF]
-	(No symbol) [0x00007FF773F7F584]
-	(No symbol) [0x00007FF773F5F113]
-	(No symbol) [0x00007FF773F2A918]
-	(No symbol) [0x00007FF773F2BA81]
-	GetHandleVerifier [0x00007FF774416A2D+3379789]
-	GetHandleVerifier [0x00007FF77442C32D+3468109]
-	GetHandleVerifier [0x00007FF774420043+3418211]
-	GetHandleVerifier [0x00007FF7741AC78B+847787]
-	(No symbol) [0x00007FF77405757F]
-	(No symbol) [0x00007FF774052FC4]
-	(No symbol) [0x00007FF77405315D]
-	(No symbol) [0x00007FF774042979]
-	BaseThreadInitThunk [0x00007FFB69BE7374+20]
-	RtlUserThreadStart [0x00007FFB6BA3CC91+33]
-
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
-    sock = connection.create_connection(
-        (self._dns_host, self.port),
-    ...<2 lines>...
-        socket_options=self.socket_options,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    raise err
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
-    sock.connect(sa)
-    ~~~~~~~~~~~~^^^^
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
-    conn.request(
-    ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<6 lines>...
-        enforce_content_length=enforce_content_length,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 441, in request
-    self.endheaders()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1331, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1091, in _send_output
-    self.send(msg)
-    ~~~~~~~~~^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1035, in send
-    self.connect()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
-    self.sock = self._new_conn()
-                ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
-    raise NewConnectionError(
-        self, f"Failed to establish a new connection: {e}"
-    ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001DD031956E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 92, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="parent"]/thead/tr/th[6]/div/label[2]/input')))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ~~~~~~~~~~~~~~~~~~~~~~~~^
-        method, url, fields=fields, headers=headers, **urlopen_kw
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
-    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=63517): Max retries exceeded with url: /session/be31e84a27e86f27e07f3dd0bade9338/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD031956E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-
-01_10_2025 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
-    sock = connection.create_connection(
-        (self._dns_host, self.port),
-    ...<2 lines>...
-        socket_options=self.socket_options,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    raise err
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
-    sock.connect(sa)
-    ~~~~~~~~~~~~^^^^
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-        conn,
-    ...<10 lines>...
-        **response_kw,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
-    conn.request(
-    ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<6 lines>...
-        enforce_content_length=enforce_content_length,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 441, in request
-    self.endheaders()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1331, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1091, in _send_output
-    self.send(msg)
-    ~~~~~~~~~^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1035, in send
-    self.connect()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
-    self.sock = self._new_conn()
-                ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
-    raise NewConnectionError(
-        self, f"Failed to establish a new connection: {e}"
-    ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001983E9B7BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 92, in start_anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 99, in start_anaplasma
     WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[1]')))
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
     value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 364, in _predicate
+    element = visibility_of(target)(driver)
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 173, in _predicate
+    return _element_if_visible(element)
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 179, in _element_if_visible
+    return element if element.is_displayed() == visibility else False
+                      ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 252, in is_displayed
+    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in execute_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
     response = self.command_executor.execute(driver_command, params)
@@ -1192,238 +449,84 @@ Traceback (most recent call last):
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
     response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
     retries = retries.increment(
         method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
     )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
-    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=63703): Max retries exceeded with url: /session/70b9d5ac0c9062c95961ca25ab19b74e/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001983E9B7BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
-
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
-    sock = connection.create_connection(
-        (self._dns_host, self.port),
-    ...<2 lines>...
-        socket_options=self.socket_options,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    raise err
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
-    sock.connect(sa)
-    ~~~~~~~~~~~~^^^^
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
     response = self._make_request(
         conn,
     ...<10 lines>...
         **response_kw,
     )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
-    conn.request(
-    ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<6 lines>...
-        enforce_content_length=enforce_content_length,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 441, in request
-    self.endheaders()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1331, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1091, in _send_output
-    self.send(msg)
-    ~~~~~~~~~^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1035, in send
-    self.connect()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
-    self.sock = self._new_conn()
-                ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
-    raise NewConnectionError(
-        self, f"Failed to establish a new connection: {e}"
-    ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001983F48B020>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
 
-The above exception was the direct cause of the following exception:
+During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
     return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 71, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, partial_link)))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ~~~~~~~~~~~~~~~~~~~~~~~~^
-        method, url, fields=fields, headers=headers, **urlopen_kw
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
-    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=63668): Max retries exceeded with url: /session/fef656607cf6ca152bf875920d0c4f3a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001983F48B020>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 300, in start_anaplasma
+    raise Exception(e)
+Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
 
-01_10_2025 | audrey - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
-    sock = connection.create_connection(
-        (self._dns_host, self.port),
-    ...<2 lines>...
-        socket_options=self.socket_options,
-    )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
-    raise err
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
-    sock.connect(sa)
-    ~~~~~~~~~~~~^^^^
-ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
+01_30_2025 - 06:33:07.357560 | anaplasma - Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
     response = self._make_request(
         conn,
     ...<10 lines>...
         **response_kw,
     )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
-    conn.request(
-    ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<6 lines>...
-        enforce_content_length=enforce_content_length,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 441, in request
-    self.endheaders()
-    ~~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1331, in endheaders
-    self._send_output(message_body, encode_chunked=encode_chunked)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1091, in _send_output
-    self.send(msg)
-    ~~~~~~~~~^^^^^
-  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1035, in send
-    self.connect()
-    ~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
-    self.sock = self._new_conn()
-                ~~~~~~~~~~~~~~^^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
-    raise NewConnectionError(
-        self, f"Failed to establish a new connection: {e}"
-    ) from e
-urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000002410BB756E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
 
-The above exception was the direct cause of the following exception:
+During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\hepatitisbot.py", line 71, in start_audrey
-    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, partial_link)))
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 76, in start_anaplasma
+    WebDriverWait(NBS,NBS.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, condition_path)))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
     value = method(self._driver)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 363, in _predicate
-    target = driver.find_element(*target)  # grab element at locator
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 84, in _predicate
+    return driver.find_element(*locator)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
     return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1446,42 +549,45 @@ Traceback (most recent call last):
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
     response = conn.urlopen(method, u.request_uri, **kw)
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
-    return self.urlopen(
-           ~~~~~~~~~~~~^
-        method,
-        ^^^^^^^
-    ...<13 lines>...
-        **response_kw,
-        ^^^^^^^^^^^^^^
-    )
-    ^
   File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
     retries = retries.increment(
         method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
     )
-  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
-    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=63891): Max retries exceeded with url: /session/5471344fd83b7981caf63357abe53c43/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002410BB756E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+  File "C:\Users\caleb.jones\Repos\nbsbot\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1428, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\AppData\Local\Programs\Python\Python313\Lib\socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\decorator.py", line 9, in wrapper_error_handle
+    return func(*args)
+  File "C:\Users\caleb.jones\Repos\nbsbot\RevisedBots\anaplasma.py", line 300, in start_anaplasma
+    raise Exception(e)
+Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
 

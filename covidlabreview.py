@@ -64,6 +64,7 @@ class COVIDlabreview(NBSdriver):
         self.demo_race = None
         self.demo_ethnicity = None
         self.investigation_id = None
+        self.patient_id = None
         self.new_window_handle = None
         self.multiple_possible_patients_in_immpact = False
 

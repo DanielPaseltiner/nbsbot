@@ -307,54 +307,61 @@ class Anaplasmacasereview_revised(COVIDcasereview_revised):
         self.DNATest = self.ReadText('//*[@id="ME24175"]')
         self.DNAResult = self.ReadText('//*[@id="ME24149"]')
         self.AntibodyTest = self.ReadText('//*[@id="ME24115"]')
+        has_any_symptom = any(symptom == 'Yes' for symptom in self.symptoms_list)
+        has_no_symptom = all(symptom != 'Yes' for symptom in self.symptoms_list)
         # symptoms = [self.Fever, self.Chills, self.Headache, self.Myalgia, self.FatigueMalaise, self.Anemia, self.Leukopenia, self.Thrombocytopenia, self.ElevatedHepaticTransaminase, self.ElevatedCRP]
-        if(any(symptom == 'Yes' for symptom in self.symptoms_list) and self.CaseStatus == "Confirmed"):
+        if has_any_symptom and self.CaseStatus == "Confirmed":
             return
+        if self.CaseStatus == "Not a Case":
+            return
+        
         if self.ClinicCompIndicator == 'unknown' and self.CaseStatus != 'probable':
             self.issues.append("Clinically compatible is unknown but case status isn't probable")
             print(f"case_status: {self.CaseStatus}")
 
         if self.DNAResult == "Yes" and self.DNATest == "Yes":
-            if self.Fever == "Yes" or self.Chills == "Yes" or self.Headache == "Yes" or self.Myalgia == "Yes" or self.FatigueMalaise == "Yes" or self.Anemia == "Yes" or self.Leukopenia == "Yes" or self.Thrombocytopenia == "Yes" or self.ElevatedHepaticTransaminase == "Yes" or self.ElevatedCRP == "Yes":
-                if self.CaseStatus != "Confirmed":
+            if has_any_symptom and self.CaseStatus != "Confirmed":
                     self.issues.append("Meets case definition for a confirmed case but is not a confirmed case.")
                     print(f"case_status: {self.CaseStatus}")
-            elif self.Fever != "Yes" and self.Chills != "Yes" and self.Headache != "Yes" and self.Myalgia != "Yes" and self.FatigueMalaise != "Yes" and self.Anemia != "Yes" and self.Leukopenia != "Yes" and self.Thrombocytopenia != "Yes" and self.ElevatedHepaticTransaminase != "Yes" and self.ElevatedCRP != "Yes":
-                if self.CaseStatus != "Not a Case" and self.CaseStatus != "Suspect":                                                                             #new code. changed from 'or' to 'and' statement
+            elif has_no_symptom and self.CaseStatus != "Not a Case" and self.CaseStatus != "Suspect":                                                                             #new code. changed from 'or' to 'and' statement
                     self.issues.append("Does not meet the case definition, but does not have Not a Case or Suspect status.")
                     print(f"case_status: {self.CaseStatus}")
         elif any(self.Sero_table["Serology Positive?"] == "Yes"):
             titer_value = None
-            if re.search(r":", str(self.Sero_table["Titer Value"])):
-                print(f"titer: {str(self.Sero_table["Titer Value"])}")
-                val = str(self.Sero_table["Titer Value"]).split("    ")[1].split(":")
-                print(f"titer : {val}")
-                titer_value = Fraction(int(val[0]), int(val[1].replace("\nName", "")))
-                print(f"titer : {titer_value}")
-            else:
-                titer_value = int(self.Sero_table["Titer Value"])
-            if all(float(titer_value) < 128):
+            # if re.search(r"NaN", str(self.Sero_table["Titer Value"])):
+            #     print(f"titer: {str(self.Sero_table["Titer Value"])}")
+            #     titer_value = 0
+            try:
+                if re.search(r":", str(self.Sero_table["Titer Value"])):
+                    print(f"titer1: {str(self.Sero_table["Titer Value"])}")
+                    val = str(self.Sero_table["Titer Value"]).split("    ")[1].split(":")
+                    print(f"titer2: {val}")
+                    titer_value = Fraction(int(val[0].replace("\nName", "")), int(val[1].replace("\nName", "")))
+                    print(f"titer3: {titer_value}")
+                else:
+                    titer_value = int(self.Sero_table["Titer Value"])
+            except:
+                print(f"error titer_value: {str(self.Sero_table["Titer Value"])}")
+                titer_value = 0
+
+            if float(titer_value) < 128:
                 if self.CaseStatus != "Not a Case":
                     self.issues.append("Does not meet the case definition, but does not have Not a Case status.")
                     print(f"case_status: {self.CaseStatus}")
             else:
-                if self.Fever != "Yes" and self.Chills != "Yes" and self.Headache != "Yes" and self.Myalgia != "Yes" and self.FatigueMalaise != "Yes" and self.Anemia != "Yes" and self.Leukopenia != "Yes" and self.Thrombocytopenia != "Yes" and self.ElevatedHepaticTransaminase != "Yes" and self.ElevatedCRP != "Yes":
-                    if self.CaseStatus != "Suspect":
+                if has_no_symptom and self.CaseStatus != "Suspect":
                         self.issues.append("Does not meet the case definition, but does not have Suspect status.")
                         print(f"case_status: {self.CaseStatus}")
                 elif self.Fever == "Yes":
-                    if self.Headache == "Yes" or self.Myalgia == "Yes" or self.FatigueMalaise == "Yes" or self.Anemia == "Yes" or self.Leukopenia == "Yes" or self.Thrombocytopenia == "Yes" or self.ElevatedHepaticTransaminase == "Yes" or self.ElevatedCRP == "Yes":
-                        if self.CaseStatus != "Probable":
+                    if has_any_symptom and self.CaseStatus != "Probable":
                             self.issues.append("Meets case definition for a probable case but is not a probable case.")
                             print(f"case_status: {self.CaseStatus}")
-                    elif self.Headache != "Yes" and self.Myalgia != "Yes" and self.FatigueMalaise != "Yes" and self.Anemia != "Yes" and self.Leukopenia != "Yes" and self.Thrombocytopenia != "Yes" and self.ElevatedHepaticTransaminase != "Yes" and self.ElevatedCRP != "Yes":
-                        if self.CaseStatus != "Not a Case":
+                    elif has_no_symptom and self.CaseStatus != "Not a Case":
                             self.issues.append("Does not meet the case definition, but does not have Not a Case status.")
                             print(f"case_status: {self.CaseStatus}")
                 else:
                     if self.Chills == "Yes":
-                        if self.Anemia == "Yes" or self.Leukopenia == "Yes" or self.Thrombocytopenia == "Yes" or self.ElevatedHepaticTransaminase == "Yes" or self.ElevatedCRP == "Yes":
-                           if self.CaseStatus != "Probable":
+                        if has_any_symptom and self.CaseStatus != "Probable":
                                self.issues.append("Meets case definition for a probable case but is not a probable case.")
                                print(f"case_status: {self.CaseStatus}")
                         else:
@@ -405,4 +412,4 @@ class Anaplasmacasereview_revised(COVIDcasereview_revised):
         self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
         self.switch_to.window(main_window_handle)
         self.num_approved += 1
-        
+         

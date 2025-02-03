@@ -602,6 +602,9 @@ class COVIDcasereview_revised(NBSdriver):
                 self.issues.append('Since correct case status is probable confirmation method should include "Laboratory report".')
             elif (self.status == 'S') & ('Clinical diagnosis (non-laboratory confirmed)' not in confirmation_method):
                 self.issues.append('Since correct case status is probable confirmation method should include "Clinical diagnosis (non-laboratory confirmed)".')
+        elif not confirmation_method: #new code
+            self.issues.append("Confirmation method is missing")
+            print(f"confirmation_method: {confirmation_method}")
 
     def CheckDetectionMethod(self):
         """ Ensure Detection Method is not blank. """

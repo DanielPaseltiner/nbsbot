@@ -166,8 +166,10 @@ class NBSdriver(webdriver.Chrome):
     def ReturnApprovalQueue(self):
         """ Return to Approval Queue from an investigation initally accessed from the queue. """
         xpath = '//*[@id="bd"]/div[1]/a'
+        print('returning')
         try:
             WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            print('returned')
             self.find_element(By.XPATH, xpath).click()
         except TimeoutException:
             self.HandleBadQueueReturn()
@@ -227,9 +229,11 @@ class NBSdriver(webdriver.Chrome):
         queue is returned, navigate back to the home page and request the queue
         again."""
         # Recursion seems like a good idea here, but if the queue is truly empty there will be nothing to display and recursion will result in a stack overflow.
+        print('handle')
         for _ in range(self.num_attempts):
             try:
                 self.go_to_home()
+                print('once')
                 self.GoToApprovalQueue()
                 self.queue_loaded = True
                 break

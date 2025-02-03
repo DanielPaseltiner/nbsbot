@@ -64,6 +64,7 @@ def start_audrey(username, passcode):
     limit = 40
     loop = tqdm(generator())
     for _ in loop:
+        #check if the bot haa gone through the set limit of reviews
         if loop.n == limit:
             break
         #Go to Document Requiring Review
