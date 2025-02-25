@@ -8,15 +8,21 @@ import os
 driver=webdriver.Chrome()
 
 '''
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+'''from selenium import webdriver
+from selenium.webdriver.chrome.service import Service'''
 
 # initialize chromedriver
-chrome_driver_path = "./chromedriver.exe"  # Replace with your custom path
+'''chrome_driver_path = "./chromedriver.exe"  # Replace with your custom path
 service = Service(chrome_driver_path)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service)'''
 
-from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+chromedriverpath=ChromeDriverManager().install()
+print(f"chromedriverpath: {chromedriverpath}")
+
+
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
