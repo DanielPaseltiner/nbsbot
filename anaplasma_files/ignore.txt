@@ -1,0 +1,36 @@
+%% CheckCaseIGG
+    M --> M1[Check titer value]
+    M1 --> M2{If titer value is less than 128?}
+    M2 --> |Yes| M3{if case statuse is not Not a Case?}
+    M3 --> |Yes| M3a[Add issue Does not meet the case definition, but does not have Not a Case status.]
+    M2 --> |No| M4{Does case have any symptom and case status is not Probable?}
+    M4 --> |Yes| M5[Add issue Meets case definition for a probable case but is not a probable case.]
+    M4 --> |No| M6{Clinic compatibility inidicator set to unknown and case status is Probable?}
+    M6 --> |Yes| M7[Add issue Clinically compatible is unknown but case status isn't probable]
+    M6 --> |No| M8{Symptoms fever and headache are yes or Myalgia or Fatigue Malaise or Anemia or Leukopenia or Thrombocytopenia or ElevatedHepaticTransaminase or ElevatedCRP are Yes and case status is not Confirmed?}
+    M8 --> |Yes| M9[Add issue Meets case definition for a confirmed case but is not a confirmed case.]
+    M8 --> |No| M10{DNA result and test are Yes?} 
+    M10 --> |Yes| M11{case has any symptom is yes and case status is not Probable?}
+    M11 --> |Yes| M12[Add issue Meets case definition for a probable case but is not a probable case.]
+    M11 --> |No| M13{case has no symptom and case status is not Not a Case and is not Suspect?}
+    M13 --> |Yes| M14[add issue Does not meet the case definition, but does not have Not a Case or Suspect status.]
+    M10 --> |No| M15{Is serology test positive?}
+    M15 --> |Yes| M16{Does case have any symptom and case status is not Suspect?}
+    M16 --> |Yes| M16a[Add issue Does not meet the case definition, but does not have Suspect status.]
+    M16 --> |No| M17{Does case have fever?}
+    M17 --> |Yes| M17a{Does case have any symptom and case status is not confirmed?}
+    M17a --> |Yes| M17b[Add issue Meets case definition for a confirmed case but is not a confirmed case.]
+    M17a --> |No| M17c{Does case have no symptoms and case status is not Not a Case?}
+    M17c --> |Yes| M17d[Add isse Does not meet the case definition, but does not have Not a Case status.]
+    M17 --> |No| M18{Does case have chills?}
+    M18 --> |Yes| M18a{Does case have any symptom and case status is  not confirmed?}
+    M18a --> |Yes| M18b[Add issuse Meets case definition for a confirmed case but is not a confirmed case.]
+    M18a --> |No| M18c{Does case have headache and Myalgia or Headache and Fatigue Malaise or Fatigue Malaise and Myalgia and case status is not Confirmed?}
+    M18c --> |Yes| M18d[Add issue Meets case definition for a confirmed case but is not a confirmed case.]
+    M18c --> |No| M18e{if case status is not Not a Case?}
+    M18e --> |Yes| M18f[Add isse Does not meet the case definition, but does not have Not a Case status.]
+    M18 --> |No| M19{Does case case status is not Not a Case?}
+    M19 --> M20[Addissue Does not meet the case definition, but does not have Not a Case status.]
+    M15 --> |No| M21{Case status is not Not a Case?}
+    M21 --> |Yes| M22[Add issueDoes not meet the case definition, but does not have Not a Case status.]
+    End[End]

@@ -35,15 +35,15 @@ is_in_production = os.getenv('ENVIRONMENT', 'production') != 'development'
 
 
 @error_handle
-def start_anaplasma(username, passcode):
+def start_giardia(username, passcode):
     
-    from .anaplasma import Anaplasma
+    from .giardia import Giardia
     
 
     load_dotenv()
     
     
-    NBS = Anaplasma(production=True)
+    NBS = Giardia(production=False)
     NBS.set_credentials(username, passcode)
     NBS.log_in()
     NBS.GoToApprovalQueue()
@@ -57,51 +57,42 @@ def start_anaplasma(username, passcode):
     with open("patients_to_skip.txt", "r") as patient_reader:
         patients_to_skip |= set(patient_reader.readlines())
 
-    limit = 61
-    page = 3
+    limit = 12
+    page = 1
     loop = tqdm(generator())
     for _ in loop:
         print(f"current limit: {limit}")
         #check if the bot haa gone through the set limit of reviews
         if loop.n == limit:
-            #for test
             # if page > 1:
             #     page -= 1
             #     gone_home = 0
             #     n = 1
             #     limit += 21
             #     continue
-            #end test
             break
         try:
-            #Sort review queue so that only Anaplasma investigations are listed
+            #Sort review queue so that only giardia investigations are listed
             paths = {
                 "clear_filter_path":'//*[@id="removeFilters"]/a/font',
                 "description_path":'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/img',
                 "clear_checkbox_path":'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[2]/input',
                 "click_ok_path":'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[1]',
                 "click_cancel_path":'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[8]/div/label[1]/input[2]',
-                "tests":["Anapla"],
+                "tests":["Giardiasis"],
                 "submit_date_path":'/html/body/div[2]/form/div/table[2]/tbody/tr/td/table/thead/tr/th[3]/a'
             }
             NBS.SortQueue(paths)
             print(f"sorting queue...: {NBS.queue_loaded}")
-
-            #for test
-            # NBS.GoToNPage(page)
-            #test end
+            NBS.GoToNPage(page)
 
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
-
-                #for test
-                # if gone_home > NBS.num_attempts and loop.n >= limit:
-                #     print("No case in approval queue, ending...")
-                #     break
-                # print("failed to go to home, skipping to approval queue...")
-                # gone_home += 1
-                #test end 
-
+                if gone_home > NBS.num_attempts and loop.n >= limit:
+                    print("No case in approval queue, ending...")
+                    break
+                print("failed to go to home, skipping to approval queue...")
+                gone_home += 1
                 continue
             elif NBS.queue_loaded == False:
                 NBS.queue_loaded = None
@@ -113,31 +104,25 @@ def start_anaplasma(username, passcode):
             
             NBS.CheckFirstCase()
             print("checked first case")
-            if NBS.condition == 'Anaplasma phagocytophilum':
+            if NBS.condition == 'Giardiasis':
                 NBS.GoToNCaseInApprovalQueue(n)
                 print("navigated to first case in queue")
                 if NBS.queue_loaded:
                     NBS.queue_loaded = None
-
-                    #for test
-                    # if gone_home > NBS.num_attempts and loop.n >= limit:
-                    #     print("No case in approval queue, ending...")
-                    #     break
-                    # print("failed to go to home, skipping to approval queue...")
-                    # gone_home += 1
-                    #test end
+                    if gone_home > NBS.num_attempts and loop.n >= limit:
+                        print("No case in approval queue, ending...")
+                        break
+                    print("failed to go to home, skipping to approval queue...")
+                    gone_home += 1
                     continue
                 inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text 
-                print(f"present, {inv_id}")
                 if inv_id in patients_to_skip:
-                    print(f"skipping, {inv_id}")
+                    print(f"present, {inv_id}")
                     NBS.ReturnApprovalQueue()
                     print("going to approval queue")
                     n += 1
-                    #for test
-                    # limit += 1
-                    # print(f"increased limit: {limit}")
-                    #test end
+                    limit += 1
+                    print(f"increased limit: {limit}")
                     continue
                 
                 NBS.StandardChecks()
@@ -146,35 +131,24 @@ def start_anaplasma(username, passcode):
                     reviewed_ids.append(inv_id)
                     what_do.append("Approve Notification")
                     reason.append("Approved")
-
-                    #for test
-                    # patients_to_skip.add(inv_id)
-                    # print("approved")
-                    #test end
-
-                    #remove on test
-                    NBS.ApproveNotification()
-                    NBS.SendAnaplasmaEmail("Hey, please don't change anything at all and just click CN", inv_id)
+                    patients_to_skip.add(inv_id)
+                    print("approved")
+                    # NBS.ApproveNotification()
+                    # NBS.SendAnaplasmaEmail("Hey, please don't change anything at all and just click CN", inv_id)
                 NBS.ReturnApprovalQueue()
                 print("returning to approval queue..")
                 if NBS.queue_loaded:
                     NBS.queue_loaded = None
-
-                    #for test
-                    # if gone_home > NBS.num_attempts and loop.n >= limit:
-                    #     print("No case in approval queue, ending...")
-                    #     break
-                    # print("failed to go to home, skipping to approval queue...")
-                    # gone_home += 1
-                    #test end
-
+                    if gone_home > NBS.num_attempts and loop.n >= limit:
+                        print("No case in approval queue, ending...")
+                        break
+                    print("failed to go to home, skipping to approval queue...")
+                    gone_home += 1
                     continue
                 if len(NBS.issues) > 0:
                     NBS.SortQueue(paths)
                     print("sorting queue...")
-                    #for test
                     # NBS.GoToNPage(page)
-                    #test end
                     if NBS.queue_loaded:
                         NBS.queue_loaded = None
                         print("failed to go to home, skipping to approval queue....")
@@ -183,33 +157,24 @@ def start_anaplasma(username, passcode):
                     print("check for matching first case")
 
                     NBS.final_name = NBS.patient_name
-                    if NBS.country != 'UNITED STATES' or NBS.state != 'Maine':
+                    if NBS.country != 'UNITED STATES':
                         print("Skipping patient. No action carried out")
                         patients_to_skip.add(inv_id)
-                        reviewed_ids.append(inv_id)
-                        what_do.append("Skipped Notification")
-                        reason.append(' '.join(NBS.issues))
-
                     elif NBS.final_name == NBS.initial_name:
                         reviewed_ids.append(inv_id)
                         what_do.append("Reject Notification")
                         reason.append(' '.join(NBS.issues))
-
-                        #for test
-                        # patients_to_skip.add(inv_id)
-                        # print("rejected")
-                        #test end
-
-                        #remove on test
-                        NBS.RejectNotification()
-                        body = ''
-                        if  all(case in NBS.issues  for case in ['City is blank.', 'County is blank.', 'Zip code is blank.']):
-                            body = 'Hey, please only update City, Zip Code and County, then Click CN'
-                        elif NBS.CorrectCaseStatus:
-                            body = f'Hey, please only update the case status to {NBS.CorrectCaseStatus}, then click CN for this case.'
-                        if body:
-                            print('mail', body)
-                            NBS.SendAnaplasmaEmail(body, inv_id)
+                        patients_to_skip.add(inv_id)
+                        print("rejected")
+                        # NBS.RejectNotification()
+                        # body = ''
+                        # if  all(case in NBS.issues  for case in ['City is blank.', 'County is blank.', 'Zip code is blank.']):
+                        #     body = 'Hey, please only update City, Zip Code and County, then Click CN'
+                        # elif NBS.CorrectCaseStatus:
+                        #     body = f'Hey, please only update the case status to {NBS.CorrectCaseStatus}, then click CN for this case.'
+                        # if body:
+                        #     print('mail', body)
+                        #     NBS.SendAnaplasmaEmail(body, inv_id)
                         NBS.GoToApprovalQueue()
                         print(f"returning approval queue....: {NBS.queue_loaded}")
                     elif NBS.final_name != NBS.initial_name:
@@ -221,21 +186,18 @@ def start_anaplasma(username, passcode):
                     attempt_counter += 1
                 else:
                     attempt_counter = 0
-                    print("No Anaplasma cases in notification queue.")
+                    print("No giardia cases in notification queue.")
                     # NBS.SendManualReviewEmail()
                     break
                     # NBS.Sleep()
         except Exception as e:
-            #for test
-            # raise Exception(e)
-            #test end
-
-            error_list.append(str(e))
-            error = True
+            raise Exception(e)
+            # error_list.append(str(e))
+            # error = True
         #     # print(tb)
         #     with open("error_log.txt", "a") as log:
-        #         log.write(f"{datetime.now().date().strftime('%m_%d_%Y')} | anaplasma - {str(tb)}")
-        #     #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(Anaplasma Notification Review) AKA Athena', tb, 'error email')
+        #         log.write(f"{datetime.now().date().strftime('%m_%d_%Y')} | giardia - {str(tb)}")
+        #     #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(giardia Notification Review) AKA Athena', tb, 'error email')
             
     print("ending, printing, saving")
     print(reviewed_ids, what_do, reason)
@@ -244,19 +206,19 @@ def start_anaplasma(username, passcode):
         'Action': what_do,
         'Reason': reason
         })
-    bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+    bot_act.to_excel(f"saved/giardia/Giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
 
-    # body = "The list of Anaplasma Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
+    # body = "The list of giardia Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
     
     # message = EmailMessage()
     # message.set_content(body)
-    # message['Subject'] = 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas'
+    # message['Subject'] = 'Notification Review Report: NBSbot(giardia Notification Review) AKA giardia de Armas'
     # message['From'] = NBS.nbsbot_email
     # message['To'] = ', '.join(["disease.reporting@maine.gov"])
-    # with open(f"Anaplasma_bot_activity_1{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
+    # with open(f"giardia_bot_activity_1{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
     #     message.add_attachment(
     #         f.read(),
-    #         filename=f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
+    #         filename=f"giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
     #         maintype="application",
     #         subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     #     )
@@ -266,7 +228,7 @@ def start_anaplasma(username, passcode):
         patient_writer.write("\n".join(patients_to_skip) + "\n")
     if error is not None: 
         raise Exception(error_list)
-    #NBS.send_smtp_email("disease.reporting@maine.gov", 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas', body, 'Anaplasma Notification Review email')
+    #NBS.send_smtp_email("disease.reporting@maine.gov", 'Notification Review Report: NBSbot(giardia Notification Review) AKA giardia de Armas', body, 'giardia Notification Review email')
 
 if __name__ == '__main__':
-    start_anaplasma()
+    start_giardia()

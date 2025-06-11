@@ -10,9 +10,13 @@ driver=webdriver.Chrome()
 '''
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
 # initialize chromedriver
-chrome_driver_path = "./chromedriver.exe"  # Replace with your custom path
+chrome_driver_path = "chromedriver.exe"  # Replace with your custom path
+# chrome_driver_path=ChromeDriverManager().install()
 service = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=service)
 
@@ -46,6 +50,7 @@ from io import StringIO
 
 
 
+
 class NBSdriver(webdriver.Chrome):
     """ A class to provide basic functionality in NBS via Selenium. """
     def __init__(self, production=False):
@@ -72,7 +77,7 @@ class NBSdriver(webdriver.Chrome):
         self.num_attempts = 3
         self.queue_loaded = None
         self.wait_before_timeout = 30
-        self.sleep_duration = 3300 #Value in seconds
+        self.sleep_duration = 300 #3300 #Value in seconds
 
 
     def GetObInvNames(self):
@@ -83,17 +88,22 @@ class NBSdriver(webdriver.Chrome):
         """ Clear values of attributes assigned during case investigation review.
         To be used on initialization and between case reviews. """
         self.issues = []
+        self.is_deceased = None #new
         self.now = datetime.now().date()
         self.collection_date = None
         self.cong_aoe = None
         self.cong_setting_indicator = None
         self.county = None
         self.country = None #new variable
+        self.state = None #new
         self.current_report_date = None
         self.current_status = None
         self.death_indicator = None
         self.dob = None
+        self.discharge_date = None
+        self.date_closed = None #new
         self.first_responder = None
+        self.follow_up_tests = False       #new variable
         self.fr_aoe = None
         self.hcw_aoe = None
         self.healthcare_worker = None
@@ -108,16 +118,25 @@ class NBSdriver(webdriver.Chrome):
         self.labs = None
         self.ltf = None
         self.preg_aoe = None
+        self.patient_sex = None
         self.report_date = None
+        self.reporting_organization = None #new
+        self.reporting_provider = None #new
+        self.earliest_date_received = None
+        self.latest_date_received = None
         self.status = None
         self.symp_aoe = None
         self.symptoms = None
         self.symptoms_list = [] #new variable initially undeclared
+        self.serology_test_type = None #new variable 
         self.vax_recieved = None
         self.initial_name = None #new variable initially undeclared
         self.final_name = None  #new variable initially undeclared
         self.CaseStatus = None  #new variable initially undeclared
         self.CorrectCaseStatus = None  #new variable initially undeclared
+        self.slept = 0 #new
+       # self.travel_outside_home = None #new
+        #self.travel_info = None #new
 
 ########################### NBS Navigation Methods ############################
     def get_credentials(self):
@@ -219,8 +238,9 @@ class NBSdriver(webdriver.Chrome):
                 break
             except TimeoutException:
                 self.home_loaded = False
-        if not self.home_loaded:
-            sys.exit(print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered."))
+        # print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered. {self.home_loaded}")
+        # if not self.home_loaded:
+        #     sys.exit(print(f"Made {self.num_attempts} unsuccessful attempts to load Home page. A persistent issue with NBS was encountered."))
 
     def GoToApprovalQueue(self):
         """ Navigate to approval queue from Home page. """
@@ -280,12 +300,13 @@ class NBSdriver(webdriver.Chrome):
                 self.find_element(By.XPATH, paths['click_cancel_path']).click()
                 #self.go_to_home()
                 time.sleep(3)
+                print("about to sleep")
                 self.Sleep()
                 #this wont work if we are not running the for loop to cycle through the queue,
                 #c]omment out if not running the whole thing
                 
             time.sleep(1)
-
+            print(f"sleep count {self.slept}")
             #sort chronologically, oldest first
             WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, paths['submit_date_path'])))
             self.find_element(By.XPATH, paths['submit_date_path']).click()
@@ -352,6 +373,9 @@ class NBSdriver(webdriver.Chrome):
         for _ in range(self.num_attempts):
             try:
                 self.go_to_home()
+                if not self.home_loaded:
+                    self.queue_loaded = False
+                    break
                 self.GoToApprovalQueue()
                 self.queue_loaded = True
                 break
@@ -360,6 +384,13 @@ class NBSdriver(webdriver.Chrome):
         if not self.queue_loaded:
             print(f"Made {self.num_attempts} unsuccessful attempts to load approval queue. Either to queue is truly empty, or a persistent issue with NBS was encountered.")
 
+    def GoToNPage(self, n):
+        if n >= 2:
+            next_page_path = f'//*[@title="Go to page {n}"]'
+            WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, next_page_path)))
+            self.find_element(By.XPATH, next_page_path).click()
+        print(f"Moved to page {n}")
+        
     def CheckFirstCase(self):
         """ Ensure that first case is COVID and save case's name for later use."""
         try:
@@ -509,6 +540,9 @@ class NBSdriver(webdriver.Chrome):
         elif self.report_date != self.current_report_date:
             self.issues.append('Report date mismatch.')
 
+        if (self.earliest_date_received or self.latest_date_received) and (self.report_date != self.earliest_date_received and self.report_date != self.latest_date_received):
+            self.issues.append('Report date does not match any recieved date.')
+
     def CheckCountyStateReportDate(self):
         """ Check if the current value of county report date is consistent with
         the current value of earliest report to state date and the report date. """
@@ -560,6 +594,11 @@ class NBSdriver(webdriver.Chrome):
         if state != 'Maine':
             self.issues.append('State is not Maine.')
             print(f"state: {state}")
+
+    def CheckStateANA(self):
+        """ Must provide state and if it is not Maine case should be not a case. """
+        self.state = self.CheckForValue( '//*[@id="DEM162"]', 'State is blank.')
+        
     
     def CheckCity(self):
         """ Must provide city. """
@@ -574,32 +613,25 @@ class NBSdriver(webdriver.Chrome):
 
     def CheckReportingOrganization(self):
         """ Ensure that reporting organization is not empty. """
-        reporting_organization = self.ReadText('//*[@id="INV183"]')
-        if not reporting_organization:
+        self.reporting_organization = self.ReadText('//*[@id="INV183"]')
+        if not self.reporting_organization:
             self.issues.append('Reporting organization is blank.')
     
     ######################### Case Status Check Methods ############################
 
     def CheckConfirmationMethod(self):
         """ Confirmation Method must be blank or consistent with correct case status."""
-        confirmation_method =  self.ReadText('//*[@id="INV161"]')
-        if confirmation_method:
-            if (self.status == 'C') & ('Laboratory confirmed' not in confirmation_method):
-                self.issues.append('Since correct case status is confirmed confirmation method should include "Laboratory confirmed".')
-            elif (self.status == 'P') & ('Laboratory report' not in confirmation_method):
-                self.issues.append('Since correct case status is probable confirmation method should include "Laboratory report".')
-            elif (self.status == 'S') & ('Clinical diagnosis (non-laboratory confirmed)' not in confirmation_method):
-                self.issues.append('Since correct case status is probable confirmation method should include "Clinical diagnosis (non-laboratory confirmed)".')
-        elif not confirmation_method: #new code
+        self.confirmation_method =  self.ReadText('//*[@id="INV161"]')
+        if not self.confirmation_method: #new code
             self.issues.append("Confirmation method is missing")
-            print(f"confirmation_method: {confirmation_method}")
+            print(f"confirmation_method: {self.confirmation_method}")
 
     def CheckDetectionMethod(self):
         """ Ensure Detection Method is not blank. """
         detection_method = self.CheckForValue( '//*[@id="INV159"]', 'Detection method is blank.')
-        if not detection_method: #new code
-            self.issues.append('Detection method is missing')
-            print(f"detection_method: {detection_method}")
+        # if not detection_method: #new code
+        #     self.issues.append('Detection method is missing')
+        #     print(f"detection_method: {detection_method}")
 
     def CheckConfirmationDate(self):
         """ Confirmation date must be on or after report date. """
@@ -607,9 +639,9 @@ class NBSdriver(webdriver.Chrome):
         if not confirmation_date:
             self.issues.append('Confirmation date is blank.')
             print(f"confirmation_date: {confirmation_date}")
-        elif confirmation_date < self.report_date:
-            self.issues.append('Confirmation date cannot be prior to report date.')
-            print(f"confirmation_date: {confirmation_date}")
+        # elif confirmation_date < self.report_date:
+        #     self.issues.append('Confirmation date cannot be prior to report date.')
+        #     print(f"confirmation_date: {confirmation_date}")
         elif confirmation_date > self.now:
             self.issues.append('Confirmation date cannot be in the future.')
             print(f"confirmation_date: {confirmation_date}")
@@ -619,30 +651,32 @@ class NBSdriver(webdriver.Chrome):
     def CheckAdmissionDate(self):
         """ Check for hospital admission date."""
         self.admission_date = self.ReadDate('//*[@id="INV132"]')
-        if not self.admission_date:
-            self.issues.append('Admission date is missing.')
-            print(f"admission_date: {self.admission_date}")
-        elif self.admission_date > self.now:
+        # if not self.admission_date:
+        #     self.issues.append('Admission date is missing.')
+        #     print(f"admission_date: {self.admission_date}")
+        if self.admission_date and self.admission_date > self.now:
             self.issues.append('Admission date cannot be in the future.')
             print(f"admission_date: {self.admission_date}")
 
     def CheckDischargeDate(self):
         """ Check for hospital discharge date."""
-        discharge_date = self.ReadDate('//*[@id="INV133"]')
-        if not discharge_date:                                                         #commented out
-            return
-            #self.issues.append('Discharge date is missing.')                           #commented out
-        if self.admission_date:
-            if discharge_date < self.admission_date:
-                self.issues.append('Discharge date must be after admission date.')
-                print(f"discharge_date: {discharge_date}")
-        elif discharge_date > self.now:
-            self.issues.append('Discharge date cannot be in the future.')
-            print(f"discharge_date: {discharge_date}")
+        self.discharge_date = self.ReadDate('//*[@id="INV133"]')
+        if self.discharge_date:                                                         #commented out
+        #     self.issues.append('Missing discharge date.')
+        #     print(f"discharge_date: {self.discharge_date}")
+        # else:
+            if self.admission_date:
+                if self.discharge_date < self.admission_date:
+                    self.issues.append('Discharge date must be after admission date.')
+                    print(f"discharge_date: {self.discharge_date}")
+            elif pd.to_datetime(self.discharge_date).date() > self.now:
+                self.issues.append('Discharge date cannot be in the future.')
+                print(f"discharge_date: {self.discharge_date}")
 
     def CheckMmwrWeek(self):
         """ MMWR week must be provided."""
         mmwr_week = self.CheckForValue( '//*[@id="INV165"]', "MMWR Week is blank.")
+        
 
     def CheckMmwrYear(self):
         """ MMWR year must be provided."""
@@ -653,8 +687,8 @@ class NBSdriver(webdriver.Chrome):
         """ Must provide ethnicity. """
         self.ethnicity = self.CheckForValue('//*[@id="DEM155"]','Ethnicity is blank.')
 
-############### Preforming Lab Check Methods ##################################
-    def CheckPreformingLaboratory(self):
+############### Performing Lab Check Methods ##################################
+    def CheckPerformingLaboratory(self):
         """ Ensure that preforming laboratory is not empty. """
         reporting_organization = self.ReadText('//*[@id="ME6105"]')
         if not reporting_organization:
@@ -666,8 +700,8 @@ class NBSdriver(webdriver.Chrome):
         """ If value is blank add appropriate message to list of issues. """
         value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
         value = value.replace('\n','')
-        # if not value:
-        #     self.issues.append(blank_message)
+        if not value:
+            self.issues.append(blank_message)
         return value
 
     def check_for_value_bool(self, path):
@@ -724,6 +758,7 @@ class NBSdriver(webdriver.Chrome):
 
     def Sleep(self):
         """ Pause all action for the specified number of seconds. """
+        self.slept += 1
         for i in range(self.sleep_duration):
             time_remaining = self.sleep_duration - i
             print(f'Sleeping for: {time_remaining//60:02d}:{time_remaining%60:02d}', end='\r', flush=True)

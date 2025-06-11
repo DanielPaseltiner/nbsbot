@@ -63,7 +63,7 @@ class Athena(NBSdriver):
         self.CheckCountyStateReportDate()
         self.CheckReportingSourceType()
         self.CheckReportingOrganization()
-        self.CheckPreformingLaboratory()
+        self.CheckPerformingLaboratory()
         self.CheckCollectionDate()
         self.CheckCurrentStatus()
         self.CheckProbableReason()
@@ -373,8 +373,8 @@ class Athena(NBSdriver):
     def CheckJurisdiction(self):
         """ Jurisdiction and county must match. """
         jurisdiction = self.CheckForValue('//*[@id="INV107"]','Jurisdiction is blank.')
-        if jurisdiction not in self.county:
-            self.issues.append('County and jurisdiction mismatch.')
+        # if jurisdiction not in self.county:
+        #     self.issues.append('County and jurisdiction mismatch.')
 
     def CheckProgramArea(self):
         """ Program area must be Airborne. """
@@ -538,7 +538,7 @@ class Athena(NBSdriver):
         investigation matches."""
         if self.fr_aoe & (self.first_responder != 'Yes'):
             self.issues.append('AOEs indicate that the case is a first responder, but the investigation does not.')
-
+    
     def CheckPregnancyAOE(self):
         """ Ensure that if AOEs show a patient is pregnany that the
         investigation matches."""
@@ -546,9 +546,9 @@ class Athena(NBSdriver):
         if self.preg_aoe & (pregnant_status != 'Yes'):
             self.issues.append('AOEs indicate that the case is pregnant, but the investigation does not.')
 
-############### Preforming Lab Check Methods ##################################
-    # def CheckPreformingLaboratory(self):
-    #     """ Ensure that preforming laboratory is not empty. """
+############### Performing Lab Check Methods ##################################
+    # def CheckPerformingLaboratory(self):
+    #     """ Ensure that performing laboratory is not empty. """
     #     reporting_organization = self.ReadText('//*[@id="ME6105"]')
     #     if not reporting_organization:
     #         self.issues.append('Performing laboratory is blank.')

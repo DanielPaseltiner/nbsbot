@@ -1,1220 +1,15 @@
-01_22_2025 - 12:11:30.026526 | athena - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\athena_files\athena_bot.py", line 13, in start_athena
-    from athena import COVIDnotificationreview
-ModuleNotFoundError: No module named 'athena'
-
-01_22_2025 - 12:32:51.399679 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 45, in start_anaplasma
-    NBS = Anaplasmacasereview_revised(production=is_in_production)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 27, in __init__
-    super(NBSdriver, self).__init__(production)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
-    super().__init__(
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 50, in __init__
-    if finder.get_browser_path():
-       ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\driver_finder.py", line 47, in get_browser_path
-    return self._binary_paths()["browser_path"]
-           ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\driver_finder.py", line 56, in _binary_paths
-    browser = self._options.capabilities["browserName"]
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'bool' object has no attribute 'capabilities'
-
-01_22_2025 - 15:12:14.548990 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 55, in start_anaplasma
-    with open("patients_to_skip.txt", "r") as patient_reader:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'patients_to_skip.txt'
-
-01_29_2025 - 09:36:18.723792 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 47, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 147, in log_in
-    self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
-    self._execute(Command.CLICK_ELEMENT)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
-    return self._parent.execute(command, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-01_29_2025 - 09:39:38.732388 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 56, in start_anaplasma
-    with open("patients_to_skip.txt", "r") as patient_reader:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'patients_to_skip.txt'
-
-01_29_2025 - 09:48:25.651490 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 56, in start_anaplasma
-    with open("patients_to_skip.txt", "r") as patient_reader:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'patients_to_skip.txt'
-
-01_29_2025 - 10:03:37.608938 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 180, in start_anaplasma
-    raise Exception(tb)
-Exception: Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 77, in start_anaplasma
-    NBS.SortQueue(paths)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 247, in SortQueue
-    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, paths.clear_filter_path)))
-                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'dict' object has no attribute 'clear_filter_path'
-
-
-01_29_2025 - 12:01:51.501424 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 182, in start_anaplasma
-    raise Exception(tb)
-Exception: Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-TimeoutError: timed out
+saved/05_15_2025 - 12:21:34.296285 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
 
 The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 76, in start_anaplasma
-    NBS.SortQueue(paths)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 247, in SortQueue
-    #clear all filters
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
-    self._execute(Command.CLICK_ELEMENT)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
-    return self._parent.execute(command, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
-    raise value
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 538, in _make_request
-    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 369, in _raise_timeout
-    raise ReadTimeoutError(
-urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=63365): Read timed out. (read timeout=120)
-
-
-01_29_2025 - 15:52:51.463272 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 131, in start_anaplasma
-    elif NBS.CorrectCaseStatus:
-         ^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Anaplasma' object has no attribute 'CorrectCaseStatus'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 151, in start_anaplasma
-    raise Exception(e)
-Exception: 'Anaplasma' object has no attribute 'CorrectCaseStatus'
-
-01_29_2025 - 16:47:39.011655 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 76, in start_anaplasma
-    NBS.SortQueue(paths)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 250, in SortQueue
-    self.find_element(By.XPATH, paths['clear_filter_path']).click()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
-    self._execute(Command.CLICK_ELEMENT)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
-    return self._parent.execute(command, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 151, in start_anaplasma
-    raise Exception(e)
-Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-01_29_2025 - 17:02:30.283589 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 76, in start_anaplasma
-    NBS.SortQueue(paths)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 270, in SortQueue
-    result.click()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
-    self._execute(Command.CLICK_ELEMENT)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
-    return self._parent.execute(command, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 151, in start_anaplasma
-    raise Exception(e)
-Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-01_30_2025 - 06:52:23.548994 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 76, in start_anaplasma
-    NBS.SortQueue(paths)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 249, in SortQueue
-    time.sleep(5)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
-    value = method(self._driver)
-            ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 364, in _predicate
-    element = visibility_of(target)(driver)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 173, in _predicate
-    return _element_if_visible(element)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 179, in _element_if_visible
-    return element if element.is_displayed() == visibility else False
-                      ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 252, in is_displayed
-    return self.parent.execute_script(f"/* isDisplayed */return ({isDisplayed_js}).apply(null, arguments);", self)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 444, in execute_script
-    return self.execute(command, {"script": script, "args": converted_args})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 150, in start_anaplasma
-    error = True
-Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-
-02_03_2025 - 09:53:02.706082 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args)
-           ^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 182, in start_anaplasma
-    raise Exception(error_list)
-Exception: []
-
-02_03_2025 - 10:56:50.966839 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 11:06:12.976248 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 11:07:40.807550 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 11:11:04.778636 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 184, in start_anaplasma
-    raise Exception(error_list)
-Exception: []
-
-02_03_2025 - 11:43:48.781878 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 11:59:01.567046 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 12:16:01.578212 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 12:21:43.619911 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
-    frame_reference = self._driver.find_element(By.ID, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
-    frame_reference = self._driver.find_element(By.NAME, frame_reference)
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
-    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
-    self.error_handler.check_response(response)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
-    raise exception_class(message, screen, stacktrace)
-selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
-  (Session info: chrome=132.0.6834.160); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7454F02F5+28725]
-	(No symbol) [0x00007FF745452AE0]
-	(No symbol) [0x00007FF7452E510A]
-	(No symbol) [0x00007FF7453393D2]
-	(No symbol) [0x00007FF7453395FC]
-	(No symbol) [0x00007FF745383407]
-	(No symbol) [0x00007FF74535FFEF]
-	(No symbol) [0x00007FF745380181]
-	(No symbol) [0x00007FF74535FD53]
-	(No symbol) [0x00007FF74532A0E3]
-	(No symbol) [0x00007FF74532B471]
-	GetHandleVerifier [0x00007FF74581F30D+3366989]
-	GetHandleVerifier [0x00007FF7458312F0+3440688]
-	GetHandleVerifier [0x00007FF7458278FD+3401277]
-	GetHandleVerifier [0x00007FF7455BAAAB+858091]
-	(No symbol) [0x00007FF74545E74F]
-	(No symbol) [0x00007FF74545A304]
-	(No symbol) [0x00007FF74545A49D]
-	(No symbol) [0x00007FF745448B69]
-	BaseThreadInitThunk [0x00007FF8CEED7374+20]
-	RtlUserThreadStart [0x00007FF8CF01CC91+33]
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
-    NBS.log_in()
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 139, in log_in
-    self.switch_to.frame("contentFrame")
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
-    raise NoSuchFrameException(frame_reference) from exc
-selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
-
-
-02_03_2025 - 12:22:38.402950 | anaplasma - Traceback (most recent call last):
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
-
-During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
   File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
@@ -1224,63 +19,659 @@ Traceback (most recent call last):
     from .anaplasma import Anaplasma
   File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
     from base import NBSdriver
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 17, in <module>
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
     driver = webdriver.Chrome(service=service)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
     super().__init__(
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 66, in __init__
-    super().__init__(command_executor=executor, options=options)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 241, in __init__
-    self.start_session(capabilities)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 329, in start_session
-    response = self.execute(Command.NEW_SESSION, caps)["value"]
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
-    response = self.command_executor.execute(driver_command, params)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
-    return self._request(command_info[0], url, body=data)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
-    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
-    return self.request_encode_body(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
-    return self.urlopen(method, url, **extra_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
-    response = conn.urlopen(method, u.request_uri, **kw)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
-    retries = retries.increment(
-              ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
-    raise reraise(type(error), error, _stacktrace)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
-    response = self._make_request(
-               ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
-    response = conn.getresponse()
-               ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
-    httplib_response = super().getresponse()
-                       ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 1428, in getresponse
-    response.begin()
-  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
-    version, status, reason = self._read_status()
-                              ^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
-    return self._sock.recv_into(b)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 55, in __init__
+    self.service.start()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 104, in start
+    self._start_process(self._path)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+
+saved/05_15_2025 - 15:38:59.879839 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 40, in start_anaplasma
+    from .anaplasma import Anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
+    driver = webdriver.Chrome(service=service)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 55, in __init__
+    self.service.start()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 104, in start
+    self._start_process(self._path)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+
+saved/05_15_2025 - 15:44:15.411013 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 40, in start_anaplasma
+    from .anaplasma import Anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
+    driver = webdriver.Chrome(service=service)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 55, in __init__
+    self.service.start()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 104, in start
+    self._start_process(self._path)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+
+saved/05_15_2025 - 16:06:50.887883 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 40, in start_anaplasma
+    from .anaplasma import Anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 18
+    chrome_driver_path = "C:\Users\caleb.jones\Repos\nbsbot.v1.5\chromedriver.exe"  # Replace with your custom path
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
+
+saved/05_15_2025 - 16:09:02.694515 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 214, in _start_process
+    self.process = subprocess.Popen(
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 40, in start_anaplasma
+    from .anaplasma import Anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
+    driver = webdriver.Chrome(service=service)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 55, in __init__
+    self.service.start()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 104, in start
+    self._start_process(self._path)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\common\service.py", line 238, in _start_process
+    raise WebDriverException(
+selenium.common.exceptions.WebDriverException: Message: 'chromedriver.exe' executable may have wrong permissions.
+
+
+saved/05_15_2025 - 17:06:51.380249 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_15_2025 - 18:31:47.387613 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_15_2025 - 18:55:16.704722 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_15_2025 - 19:17:16.258984 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))", "HTTPConnectionPool(host='localhost', port=52472): Max retries exceeded with url: /session/bb177d088393e1e98a07ebc14cd80d34/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B615004050>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"]
+
+saved/05_19_2025 - 11:30:12.784986 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_20_2025 - 14:28:39.758534 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 142, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 89, in StandardChecks
+    self.CheckPhysicianVisit()                                  #new code
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 373, in CheckPhysicianVisit
+    if not physician_visit_date and self.reporting_provider:
+                                    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Anaplasma' object has no attribute 'reporting_provider'. Did you mean: 'CheckReportingProvider'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 229, in start_anaplasma
+    raise Exception(e)
+Exception: 'Anaplasma' object has no attribute 'reporting_provider'
+
+saved/05_20_2025 - 15:53:14.347890 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_20_2025 - 16:40:10.896605 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_20_2025 - 17:05:23.929719 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_22_2025 - 10:53:45.267396 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 142, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 59, in StandardChecks
+    self.CheckDeceased()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 170, in CheckDeceased
+    self.is_deceased = self.ReadText('//*[@id="DEM127]')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 738, in ReadText
+    value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //*[@id="DEM127] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//*[@id="DEM127]' is not a valid XPath expression.
+  (Session info: chrome=136.0.7103.114); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF74AC7CF65+75717]
+	GetHandleVerifier [0x00007FF74AC7CFC0+75808]
+	(No symbol) [0x00007FF74AA48F9A]
+	(No symbol) [0x00007FF74AA50998]
+	(No symbol) [0x00007FF74AA53A0C]
+	(No symbol) [0x00007FF74AA53ADF]
+	(No symbol) [0x00007FF74AA9ED77]
+	(No symbol) [0x00007FF74AA9F77C]
+	(No symbol) [0x00007FF74AAF2577]
+	(No symbol) [0x00007FF74AAC73BF]
+	(No symbol) [0x00007FF74AAEF39C]
+	(No symbol) [0x00007FF74AAC7153]
+	(No symbol) [0x00007FF74AA90421]
+	(No symbol) [0x00007FF74AA911B3]
+	GetHandleVerifier [0x00007FF74AF7D74D+3223469]
+	GetHandleVerifier [0x00007FF74AF77CF2+3200338]
+	GetHandleVerifier [0x00007FF74AF95B23+3322755]
+	GetHandleVerifier [0x00007FF74AC96A3A+180890]
+	GetHandleVerifier [0x00007FF74AC9E13F+211359]
+	GetHandleVerifier [0x00007FF74AC852B4+109332]
+	GetHandleVerifier [0x00007FF74AC85462+109762]
+	GetHandleVerifier [0x00007FF74AC6BA79+4825]
+	BaseThreadInitThunk [0x00007FFD3CF8259D+29]
+	RtlUserThreadStart [0x00007FFD3E76AF58+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 229, in start_anaplasma
+    raise Exception(e)
+Exception: Message: invalid selector: Unable to locate an element with the xpath expression //*[@id="DEM127] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//*[@id="DEM127]' is not a valid XPath expression.
+  (Session info: chrome=136.0.7103.114); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF74AC7CF65+75717]
+	GetHandleVerifier [0x00007FF74AC7CFC0+75808]
+	(No symbol) [0x00007FF74AA48F9A]
+	(No symbol) [0x00007FF74AA50998]
+	(No symbol) [0x00007FF74AA53A0C]
+	(No symbol) [0x00007FF74AA53ADF]
+	(No symbol) [0x00007FF74AA9ED77]
+	(No symbol) [0x00007FF74AA9F77C]
+	(No symbol) [0x00007FF74AAF2577]
+	(No symbol) [0x00007FF74AAC73BF]
+	(No symbol) [0x00007FF74AAEF39C]
+	(No symbol) [0x00007FF74AAC7153]
+	(No symbol) [0x00007FF74AA90421]
+	(No symbol) [0x00007FF74AA911B3]
+	GetHandleVerifier [0x00007FF74AF7D74D+3223469]
+	GetHandleVerifier [0x00007FF74AF77CF2+3200338]
+	GetHandleVerifier [0x00007FF74AF95B23+3322755]
+	GetHandleVerifier [0x00007FF74AC96A3A+180890]
+	GetHandleVerifier [0x00007FF74AC9E13F+211359]
+	GetHandleVerifier [0x00007FF74AC852B4+109332]
+	GetHandleVerifier [0x00007FF74AC85462+109762]
+	GetHandleVerifier [0x00007FF74AC6BA79+4825]
+	BaseThreadInitThunk [0x00007FFD3CF8259D+29]
+	RtlUserThreadStart [0x00007FFD3E76AF58+40]
+
+
+saved/05_22_2025 - 14:24:44.090666 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_22_2025 - 15:41:30.013221 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 246, in start_anaplasma
+    bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+             ^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'saved/anaplasma/Anaplasma_bot_activity_05_22_2025.xlsx'
+
+saved/05_22_2025 - 16:16:10.435690 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_22_2025 - 16:38:02.974280 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_27_2025 - 15:51:02.434171 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_27_2025 - 16:25:22.776775 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/05_27_2025 - 17:04:20.853698 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_02_2025 - 12:02:14.018039 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_02_2025 - 15:43:20.253578 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_05_2025 - 08:49:04.361699 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_05_2025 - 15:56:01.011500 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_06_2025 - 10:27:40.335306 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 267, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_10_2025 - 13:09:39.383248 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 142, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 537, in CheckLabReports
+    self.collection_date = pd.to_datetime(self.Lab_report_table["Date Collected"].values[0]).date()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1101, in to_datetime
+    result = convert_listlike(np.array([arg]), format)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 435, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\arrays\datetimes.py", line 2398, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tslib.pyx", line 414, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: No Date, at position 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 229, in start_anaplasma
+    raise Exception(e)
+Exception: Unknown datetime string format, unable to parse: No Date, at position 0
+
+saved/06_10_2025 - 16:03:01.392549 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 142, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 537, in CheckLabReports
+    self.collection_date = pd.to_datetime(self.Lab_report_table["Date Collected"]).min().date()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 435, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\arrays\datetimes.py", line 2398, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tslib.pyx", line 414, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: No Date, at position 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 229, in start_anaplasma
+    raise Exception(e)
+Exception: Unknown datetime string format, unable to parse: No Date, at position 0
+
+saved/06_10_2025 - 18:58:08.544496 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 143, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 537, in CheckLabReports
+    self.collection_date = pd.to_datetime(self.Lab_report_table["Date Collected"].values[0]).date() or None
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1101, in to_datetime
+    result = convert_listlike(np.array([arg]), format)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 435, in _convert_listlike_datetimes
+    result, tz_parsed = objects_to_datetime64(
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\arrays\datetimes.py", line 2398, in objects_to_datetime64
+    result, tz_parsed = tslib.array_to_datetime(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tslib.pyx", line 414, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 596, in pandas._libs.tslib.array_to_datetime
+  File "tslib.pyx", line 553, in pandas._libs.tslib.array_to_datetime
+  File "conversion.pyx", line 641, in pandas._libs.tslibs.conversion.convert_str_to_tsobject
+  File "parsing.pyx", line 336, in pandas._libs.tslibs.parsing.parse_datetime_string
+  File "parsing.pyx", line 666, in pandas._libs.tslibs.parsing.dateutil_parse
+pandas._libs.tslibs.parsing.DateParseError: Unknown datetime string format, unable to parse: No Date, at position 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 230, in start_anaplasma
+    raise Exception(e)
+Exception: Unknown datetime string format, unable to parse: No Date, at position 0
+
+saved/06_10_2025 - 19:15:25.113407 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 143, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 537, in CheckLabReports
+    collectionDate = self.Lab_report_table["Date Collected"].values[0] if self.Lab_report_table["Date Collected"].values[0] == "No Date" else self.Lab_report_table["Date Collected"].values[1]
+                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: index 1 is out of bounds for axis 0 with size 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 230, in start_anaplasma
+    raise Exception(e)
+Exception: index 1 is out of bounds for axis 0 with size 1
+
+saved/06_10_2025 - 20:49:05.541941 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_10_2025 - 22:07:07.955654 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_11_2025 - 05:32:01.281081 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 143, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 535, in CheckLabReports
+    self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m-%d-%Y").min().date()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 433, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 467, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "strptime.pyx", line 501, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 451, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 583, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "06/07/2025 6:00 AM" doesn't match format "%m-%d-%Y", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 230, in start_anaplasma
+    raise Exception(e)
+Exception: time data "06/07/2025 6:00 AM" doesn't match format "%m-%d-%Y", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+saved/06_11_2025 - 05:56:01.104057 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 143, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 535, in CheckLabReports
+    self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m-%d-%Y %I:%M%p").min().date()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 433, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 467, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "strptime.pyx", line 501, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 451, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 583, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "06/07/2025 6:00 AM" doesn't match format "%m-%d-%Y %I:%M%p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 230, in start_anaplasma
+    raise Exception(e)
+Exception: time data "06/07/2025 6:00 AM" doesn't match format "%m-%d-%Y %I:%M%p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+saved/06_11_2025 - 07:10:01.343228 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_11_2025 - 14:43:03.767733 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_11_2025 - 15:33:46.140333 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
 

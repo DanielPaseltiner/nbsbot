@@ -5,11 +5,13 @@ import time
 from anaplasma_files.anaplasma_bot import start_anaplasma
 from audrey_files.audrey_bot import start_audrey
 from athena_files.athena_bot import start_athena
+from giardia_files.giardia_bot import start_giardia
 # run the get credentials function
 bots = {
     1: start_athena,
     2: start_audrey,
-    3: start_anaplasma
+    3: start_anaplasma,
+    4: start_giardia
 }
 targets = []
 def selection():
@@ -32,6 +34,7 @@ def run_bots():
     print("1. athena")
     print("2. audrey")
     print("3. anaplasma")
+    print("4. giardiasis")
     selection()
     try:
         for  target in targets:
