@@ -675,3 +675,2367 @@ saved/06_11_2025 - 15:33:46.140333 | anaplasma - Traceback (most recent call las
     raise Exception(error_list)
 Exception: []
 
+saved/06_13_2025 - 11:01:23.509969 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 10:12:10.628446 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 11:41:30.066693 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 15:33:14.336380 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 16:03:44.058896 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 143, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 92, in StandardChecks
+    self.CheckSerology()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 503, in CheckSerology
+    if self.titer_value and all(float(seroTiter)!= float(self.titer_value)):
+                                ^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\series.py", line 248, in wrapper
+    raise TypeError(f"cannot convert the series to {converter}")
+TypeError: cannot convert the series to <class 'float'>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 230, in start_anaplasma
+    raise Exception(e)
+Exception: cannot convert the series to <class 'float'>
+
+saved/06_16_2025 - 16:54:11.208810 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 17:19:55.503412 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_16_2025 - 18:07:40.547288 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_23_2025 - 10:40:38.638259 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 166, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF67425CF65+75717]
+	GetHandleVerifier [0x00007FF67425CFC0+75808]
+	(No symbol) [0x00007FF674028F9A]
+	(No symbol) [0x00007FF67407F4C6]
+	(No symbol) [0x00007FF67407F77C]
+	(No symbol) [0x00007FF6740D2577]
+	(No symbol) [0x00007FF6740A73BF]
+	(No symbol) [0x00007FF6740CF39C]
+	(No symbol) [0x00007FF6740A7153]
+	(No symbol) [0x00007FF674070421]
+	(No symbol) [0x00007FF6740711B3]
+	GetHandleVerifier [0x00007FF67455D74D+3223469]
+	GetHandleVerifier [0x00007FF674557CF2+3200338]
+	GetHandleVerifier [0x00007FF674575B23+3322755]
+	GetHandleVerifier [0x00007FF674276A3A+180890]
+	GetHandleVerifier [0x00007FF67427E13F+211359]
+	GetHandleVerifier [0x00007FF6742652B4+109332]
+	GetHandleVerifier [0x00007FF674265462+109762]
+	GetHandleVerifier [0x00007FF67424BA79+4825]
+	BaseThreadInitThunk [0x00007FF97005259D+29]
+	RtlUserThreadStart [0x00007FF971E4AF78+40]
+
+
+saved/06_23_2025 - 12:17:50.902684 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_23_2025 - 13:52:31.069868 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_23_2025 - 14:32:57.939693 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85130>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84E90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E729854410>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84DA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84D70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDDC70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85310>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84980>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDFEF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDD9A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84980>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84D40>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDE690>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF846E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84830>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85430>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDFBC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF849B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85040>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85370>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDD760>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84740>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF862D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDC4A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDD220>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84410>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85190>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDC7A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDE990>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF853D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84650>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDD100>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF9FFB0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85550>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84A10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDDE50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDFEC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF847D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84E60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF65910>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84080>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84710>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDE930>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF670E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BFDD460>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF854F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85070>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF66AE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF9FF20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF85610>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=49613): Max retries exceeded with url: /session/9da8a7cb3cbbd0e7ba808bc094f689d0/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E72BF84800>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"]
+
+saved/06_23_2025 - 15:08:23.413277 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/06_27_2025 - 13:02:05.985576 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 58, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 216, in CheckLabReports
+    self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").min().date()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 433, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 467, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "strptime.pyx", line 501, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 451, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 583, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "Nothing found to display." doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data "Nothing found to display." doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+saved/07_09_2025 - 18:51:01.602274 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 40, in start_giardia
+    from .giardia import Giardia
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
+    driver = webdriver.Chrome(service=service)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: This version of ChromeDriver only supports Chrome version 136
+Current browser version is 138.0.7204.97 with binary path C:\Program Files\Google\Chrome\Application\chrome.exe
+Stacktrace:
+	GetHandleVerifier [0x00007FF62E27CF65+75717]
+	GetHandleVerifier [0x00007FF62E27CFC0+75808]
+	(No symbol) [0x00007FF62E048F9A]
+	(No symbol) [0x00007FF62E08D1DF]
+	(No symbol) [0x00007FF62E08C22B]
+	(No symbol) [0x00007FF62E086518]
+	(No symbol) [0x00007FF62E081ADD]
+	(No symbol) [0x00007FF62E0D52D8]
+	(No symbol) [0x00007FF62E0D48B0]
+	(No symbol) [0x00007FF62E0C7153]
+	(No symbol) [0x00007FF62E090421]
+	(No symbol) [0x00007FF62E0911B3]
+	GetHandleVerifier [0x00007FF62E57D74D+3223469]
+	GetHandleVerifier [0x00007FF62E577CF2+3200338]
+	GetHandleVerifier [0x00007FF62E595B23+3322755]
+	GetHandleVerifier [0x00007FF62E296A3A+180890]
+	GetHandleVerifier [0x00007FF62E29E13F+211359]
+	GetHandleVerifier [0x00007FF62E2852B4+109332]
+	GetHandleVerifier [0x00007FF62E285462+109762]
+	GetHandleVerifier [0x00007FF62E26BA79+4825]
+	BaseThreadInitThunk [0x00007FFA00D1259D+29]
+	RtlUserThreadStart [0x00007FFA01EEAF78+40]
+
+
+saved/07_09_2025 - 18:58:12.949350 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 58, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 216, in CheckLabReports
+    if self.Lab_report_table["Date Received"] == "Nothing found to display.":
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 1577, in __nonzero__
+    raise ValueError(
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+saved/07_09_2025 - 19:16:34.879336 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_10_2025 - 05:17:43.729857 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 94, in StandardChecks
+    self.CheckWhereDiseaseWasAcquired()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 416, in CheckWhereDiseaseWasAcquired
+    disease_acquired = self.ReadText('//*[@id="INV152"]', "Where disease acquired cannot be blank.")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NBSdriver.ReadText() takes 2 positional arguments but 3 were given
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: NBSdriver.ReadText() takes 2 positional arguments but 3 were given
+
+saved/07_10_2025 - 05:25:46.787653 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 244, in CheckLabReports
+    self.date_collected = pd.to_datetime(self.Lab_report_table["Date Collected"], format="%m/%d/%Y %I:%M %p").max().date()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 433, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 467, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "strptime.pyx", line 501, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 451, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 583, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "01/22/2025" doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data "01/22/2025" doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+saved/07_10_2025 - 05:54:30.555090 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_16_2025 - 08:48:33.859583 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 62, in StandardChecks
+    if not self.returned_by_link:
+           ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Giardia' object has no attribute 'returned_by_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: 'Giardia' object has no attribute 'returned_by_link'
+
+saved/07_16_2025 - 08:51:05.772731 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 82, in StandardChecks
+    self.CheckSpecimenSource()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 354, in CheckSpecimenSource
+    if self.lab_specimen_source and specimen_source not in self.lab_specimen_source:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Giardia' object has no attribute 'lab_specimen_source'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: 'Giardia' object has no attribute 'lab_specimen_source'
+
+saved/07_16_2025 - 08:55:29.804387 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 249, in CheckLabReports
+    self.find_element(By.XPATH, '//div[@class="returnToPageLink]/a').click()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression //div[@class="returnToPageLink]/a because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//div[@class="returnToPageLink]/a' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: invalid selector: Unable to locate an element with the xpath expression //div[@class="returnToPageLink]/a because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//div[@class="returnToPageLink]/a' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+saved/07_16_2025 - 09:24:54.108804 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 249, in CheckLabReports
+    self.find_element(By.XPATH, '(//div[@class="returnToPageLink]/a)[1]').click()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression (//div[@class="returnToPageLink]/a)[1] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '(//div[@class="returnToPageLink]/a)[1]' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: invalid selector: Unable to locate an element with the xpath expression (//div[@class="returnToPageLink]/a)[1] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '(//div[@class="returnToPageLink]/a)[1]' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+saved/07_16_2025 - 09:37:07.658568 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 249, in CheckLabReports
+    self.find_element(By.XPATH, '(//div[containc(@class, "returnToPageLink)]//a)[1]').click()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSelectorException: Message: invalid selector: Unable to locate an element with the xpath expression (//div[containc(@class, "returnToPageLink)]//a)[1] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '(//div[containc(@class, "returnToPageLink)]//a)[1]' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: invalid selector: Unable to locate an element with the xpath expression (//div[containc(@class, "returnToPageLink)]//a)[1] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '(//div[containc(@class, "returnToPageLink)]//a)[1]' is not a valid XPath expression.
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff652206f75+76917]
+	GetHandleVerifier [0x0x7ff652206fd0+77008]
+	(No symbol) [0x0x7ff651fb9dea]
+	(No symbol) [0x0x7ff651fc1789]
+	(No symbol) [0x0x7ff651fc482c]
+	(No symbol) [0x0x7ff651fc48ff]
+	(No symbol) [0x0x7ff65200fb07]
+	(No symbol) [0x0x7ff65201050c]
+	(No symbol) [0x0x7ff652063887]
+	(No symbol) [0x0x7ff6520384af]
+	(No symbol) [0x0x7ff65206065c]
+	(No symbol) [0x0x7ff652038243]
+	(No symbol) [0x0x7ff652001431]
+	(No symbol) [0x0x7ff6520021c3]
+	GetHandleVerifier [0x0x7ff6524dd2ad+3051437]
+	GetHandleVerifier [0x0x7ff6524d7903+3028483]
+	GetHandleVerifier [0x0x7ff6524f589d+3151261]
+	GetHandleVerifier [0x0x7ff65222183e+185662]
+	GetHandleVerifier [0x0x7ff6522296ff+218111]
+	GetHandleVerifier [0x0x7ff65220faf4+112628]
+	GetHandleVerifier [0x0x7ff65220fca9+113065]
+	GetHandleVerifier [0x0x7ff6521f6c78+10616]
+	BaseThreadInitThunk [0x0x7ffa00d1259d+29]
+	RtlUserThreadStart [0x0x7ffa01eeaf78+40]
+
+
+saved/07_16_2025 - 09:50:29.697635 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_21_2025 - 15:19:32.681461 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 144, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 93, in StandardChecks
+    self.CheckSerology()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 507, in CheckSerology
+    seroTiter = self.Sero_table["Titer Value"].apply(lambda x: float(x.split(":")[1]) if ":" in str(x) else float(str(x).replace("<", "")))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\series.py", line 4924, in apply
+    ).apply()
+      ^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\apply.py", line 1427, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\apply.py", line 1507, in apply_standard
+    mapped = obj._map_values(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\base.py", line 921, in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action, convert=convert)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\algorithms.py", line 1743, in map_array
+    return lib.map_infer(values, mapper, convert=convert)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "lib.pyx", line 2972, in pandas._libs.lib.map_infer
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 507, in <lambda>
+    seroTiter = self.Sero_table["Titer Value"].apply(lambda x: float(x.split(":")[1]) if ":" in str(x) else float(str(x).replace("<", "")))
+                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: '>2048'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 234, in start_anaplasma
+    raise Exception(e)
+Exception: could not convert string to float: '>2048'
+
+saved/07_22_2025 - 10:10:06.632436 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 144, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 94, in StandardChecks
+    if self.pcr_positive == "Yes" or self.titer_value > 64 or (not self.titer_value and self.reporting_organization == "MDLAB"):
+                                     ^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'NoneType' and 'int'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 234, in start_anaplasma
+    raise Exception(e)
+Exception: '>' not supported between instances of 'NoneType' and 'int'
+
+saved/07_22_2025 - 11:40:29.869193 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 273, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_22_2025 - 12:16:14.464663 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 273, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_22_2025 - 13:19:32.846819 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 273, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_24_2025 - 06:01:31.929291 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_24_2025 - 07:20:26.341104 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_24_2025 - 07:43:19.629371 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 209, in start_giardia
+    bot_act.to_excel(f"saved/giardia/Giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+             ^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'saved/giardia/Giardia_bot_activity_07_24_2025.xlsx'
+
+saved/07_24_2025 - 07:52:21.671562 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 90, in StandardChecks
+    self.CheckPregnancyStatus()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 297, in CheckPregnancyStatus
+    pregnancy_due_date = self.ReadDate('//*[@id="ME8170"]')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 738, in ReadDate
+    date = datetime.strptime(date, '%m/%d/%Y').date()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 653, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 432, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%m/%d/%Y'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data '' does not match format '%m/%d/%Y'
+
+saved/07_24_2025 - 07:55:20.424930 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 90, in StandardChecks
+    self.CheckPregnancyStatus()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 297, in CheckPregnancyStatus
+    pregnancy_due_date = self.ReadDate('//*[@id="ME8170"]')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 739, in ReadDate
+    date = datetime.strptime(date, '%m/%d/%Y').date()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 653, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 432, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%m/%d/%Y'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data '' does not match format '%m/%d/%Y'
+
+saved/07_24_2025 - 08:01:15.558117 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 67, in StandardChecks
+    self.CheckInvestigationStartDate()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 187, in CheckInvestigationStartDate
+    self.investigation_start_date = self.ReadDate('//*[@id="INV147"]')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 742, in ReadDate
+    date = datetime.strptime(date, '%m/%d/%Y').date()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 653, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 432, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '\n04/30/2025\n' does not match format '%m/%d/%Y'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data '\n04/30/2025\n' does not match format '%m/%d/%Y'
+
+saved/07_24_2025 - 08:08:23.143418 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 90, in StandardChecks
+    self.CheckPregnancyStatus()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 297, in CheckPregnancyStatus
+    pregnancy_due_date = self.ReadDate('//*[@id="ME8170"]')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 742, in ReadDate
+    date = datetime.strptime(date.strip(), '%m/%d/%Y').date()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 653, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\_strptime.py", line 432, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%m/%d/%Y'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data '' does not match format '%m/%d/%Y'
+
+saved/07_24_2025 - 08:12:46.151684 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 248, in CheckLabReports
+    self.lab_specimen_source = self.ReadText('//*[@id="LAB165"]')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 757, in ReadText
+    value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="LAB165"]"}
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff74eee6f75+76917]
+	GetHandleVerifier [0x0x7ff74eee6fd0+77008]
+	(No symbol) [0x0x7ff74ec99dea]
+	(No symbol) [0x0x7ff74ecf0256]
+	(No symbol) [0x0x7ff74ecf050c]
+	(No symbol) [0x0x7ff74ed43887]
+	(No symbol) [0x0x7ff74ed184af]
+	(No symbol) [0x0x7ff74ed4065c]
+	(No symbol) [0x0x7ff74ed18243]
+	(No symbol) [0x0x7ff74ece1431]
+	(No symbol) [0x0x7ff74ece21c3]
+	GetHandleVerifier [0x0x7ff74f1bd2ad+3051437]
+	GetHandleVerifier [0x0x7ff74f1b7903+3028483]
+	GetHandleVerifier [0x0x7ff74f1d589d+3151261]
+	GetHandleVerifier [0x0x7ff74ef0183e+185662]
+	GetHandleVerifier [0x0x7ff74ef096ff+218111]
+	GetHandleVerifier [0x0x7ff74eeefaf4+112628]
+	GetHandleVerifier [0x0x7ff74eeefca9+113065]
+	GetHandleVerifier [0x0x7ff74eed6c78+10616]
+	BaseThreadInitThunk [0x0x7ff9408e259d+29]
+	RtlUserThreadStart [0x0x7ff9419caf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="LAB165"]"}
+  (Session info: chrome=138.0.7204.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff74eee6f75+76917]
+	GetHandleVerifier [0x0x7ff74eee6fd0+77008]
+	(No symbol) [0x0x7ff74ec99dea]
+	(No symbol) [0x0x7ff74ecf0256]
+	(No symbol) [0x0x7ff74ecf050c]
+	(No symbol) [0x0x7ff74ed43887]
+	(No symbol) [0x0x7ff74ed184af]
+	(No symbol) [0x0x7ff74ed4065c]
+	(No symbol) [0x0x7ff74ed18243]
+	(No symbol) [0x0x7ff74ece1431]
+	(No symbol) [0x0x7ff74ece21c3]
+	GetHandleVerifier [0x0x7ff74f1bd2ad+3051437]
+	GetHandleVerifier [0x0x7ff74f1b7903+3028483]
+	GetHandleVerifier [0x0x7ff74f1d589d+3151261]
+	GetHandleVerifier [0x0x7ff74ef0183e+185662]
+	GetHandleVerifier [0x0x7ff74ef096ff+218111]
+	GetHandleVerifier [0x0x7ff74eeefaf4+112628]
+	GetHandleVerifier [0x0x7ff74eeefca9+113065]
+	GetHandleVerifier [0x0x7ff74eed6c78+10616]
+	BaseThreadInitThunk [0x0x7ff9408e259d+29]
+	RtlUserThreadStart [0x0x7ff9419caf78+40]
+
+
+saved/07_24_2025 - 10:02:55.951234 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 170, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6c6a16f75+76917]
+	GetHandleVerifier [0x0x7ff6c6a16fd0+77008]
+	(No symbol) [0x0x7ff6c67c9dea]
+	(No symbol) [0x0x7ff6c6820256]
+	(No symbol) [0x0x7ff6c682050c]
+	(No symbol) [0x0x7ff6c6873887]
+	(No symbol) [0x0x7ff6c68484af]
+	(No symbol) [0x0x7ff6c687065c]
+	(No symbol) [0x0x7ff6c6848243]
+	(No symbol) [0x0x7ff6c6811431]
+	(No symbol) [0x0x7ff6c68121c3]
+	GetHandleVerifier [0x0x7ff6c6ced2ad+3051437]
+	GetHandleVerifier [0x0x7ff6c6ce7903+3028483]
+	GetHandleVerifier [0x0x7ff6c6d0589d+3151261]
+	GetHandleVerifier [0x0x7ff6c6a3183e+185662]
+	GetHandleVerifier [0x0x7ff6c6a396ff+218111]
+	GetHandleVerifier [0x0x7ff6c6a1faf4+112628]
+	GetHandleVerifier [0x0x7ff6c6a1fca9+113065]
+	GetHandleVerifier [0x0x7ff6c6a06c78+10616]
+	BaseThreadInitThunk [0x0x7ff9408e259d+29]
+	RtlUserThreadStart [0x0x7ff9419caf78+40]
+
+
+saved/07_24_2025 - 10:13:06.317333 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_24_2025 - 11:21:54.944331 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 209, in start_giardia
+    bot_act.to_excel(f"saved/giardia/Giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+             ^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'saved/giardia/Giardia_bot_activity_07_24_2025.xlsx'
+
+saved/07_24_2025 - 11:41:46.620104 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 08:52:33.641707 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 49, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 160, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=138.0.7204.101)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff716366f75+76917]
+	GetHandleVerifier [0x0x7ff716366fd0+77008]
+	(No symbol) [0x0x7ff716119dea]
+	(No symbol) [0x0x7ff716116ba5]
+	(No symbol) [0x0x7ff716107879]
+	(No symbol) [0x0x7ff716109631]
+	(No symbol) [0x0x7ff716107b96]
+	(No symbol) [0x0x7ff7161075f6]
+	(No symbol) [0x0x7ff7161072ba]
+	(No symbol) [0x0x7ff716104e8b]
+	(No symbol) [0x0x7ff71610570c]
+	(No symbol) [0x0x7ff71611dd9a]
+	(No symbol) [0x0x7ff7161c143e]
+	(No symbol) [0x0x7ff71619846a]
+	(No symbol) [0x0x7ff7161c065c]
+	(No symbol) [0x0x7ff716198243]
+	(No symbol) [0x0x7ff716161431]
+	(No symbol) [0x0x7ff7161621c3]
+	GetHandleVerifier [0x0x7ff71663d2ad+3051437]
+	GetHandleVerifier [0x0x7ff716637903+3028483]
+	GetHandleVerifier [0x0x7ff71665589d+3151261]
+	GetHandleVerifier [0x0x7ff71638183e+185662]
+	GetHandleVerifier [0x0x7ff7163896ff+218111]
+	GetHandleVerifier [0x0x7ff71636faf4+112628]
+	GetHandleVerifier [0x0x7ff71636fca9+113065]
+	GetHandleVerifier [0x0x7ff716356c78+10616]
+	BaseThreadInitThunk [0x0x7ff9408e259d+29]
+	RtlUserThreadStart [0x0x7ff9419caf78+40]
+
+
+saved/07_29_2025 - 08:57:33.182629 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 09:16:21.314182 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 256, in start_anaplasma
+    bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+             ^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'saved/anaplasma/Anaplasma_bot_activity_07_29_2025.xlsx'
+
+saved/07_29_2025 - 09:27:32.009174 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 09:45:50.596439 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 10:48:56.148275 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 11:15:48.178712 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 277, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 14:21:18.851027 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 89, in start_anaplasma
+    NBS.SortQueue(paths)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 292, in SortQueue
+    self.find_element(By.XPATH, paths['clear_filter_path']).click()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 239, in start_anaplasma
+    raise Exception(e)
+Exception: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+saved/07_29_2025 - 14:29:55.018427 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 14:57:57.145188 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:08:27.480392 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:13:55.500579 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:30:54.164144 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:40:09.139860 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:43:53.029824 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 15:47:34.820073 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 258, in start_anaplasma
+    bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_1r_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+                                                               ^
+NameError: name 'j' is not defined
+
+saved/07_29_2025 - 16:48:54.358077 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_29_2025 - 18:05:20.303482 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_30_2025 - 01:12:18.749664 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_30_2025 - 01:39:39.458722 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_31_2025 - 11:27:54.750771 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/07_31_2025 - 16:13:35.954764 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F692E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623FB0380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F6B500>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F91910>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623FB02F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623FB1430>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F92090>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F910D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F903E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F90920>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F90C20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F91FD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))", "HTTPConnectionPool(host='localhost', port=53876): Max retries exceeded with url: /session/45f01de9bbbe60479d6d9cfdf7574a0a/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001B623F93680>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"]
+
+saved/07_31_2025 - 16:45:20.937077 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 279, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/07_31_2025 - 20:12:56.788301 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 280, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_01_2025 - 08:19:54.267516 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 73, in start_anaplasma
+    {'Inv ID': reviewed_ids,
+               ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'reviewed_ids' where it is not associated with a value
+
+saved/08_01_2025 - 08:23:16.282598 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=138.0.7204.170); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b0116f75+76917]
+	GetHandleVerifier [0x0x7ff6b0116fd0+77008]
+	(No symbol) [0x0x7ff6afec9dea]
+	(No symbol) [0x0x7ff6aff20256]
+	(No symbol) [0x0x7ff6aff2050c]
+	(No symbol) [0x0x7ff6aff73887]
+	(No symbol) [0x0x7ff6aff484af]
+	(No symbol) [0x0x7ff6aff7065c]
+	(No symbol) [0x0x7ff6aff48243]
+	(No symbol) [0x0x7ff6aff11431]
+	(No symbol) [0x0x7ff6aff121c3]
+	GetHandleVerifier [0x0x7ff6b03ed2ad+3051437]
+	GetHandleVerifier [0x0x7ff6b03e7903+3028483]
+	GetHandleVerifier [0x0x7ff6b040589d+3151261]
+	GetHandleVerifier [0x0x7ff6b013183e+185662]
+	GetHandleVerifier [0x0x7ff6b01396ff+218111]
+	GetHandleVerifier [0x0x7ff6b011faf4+112628]
+	GetHandleVerifier [0x0x7ff6b011fca9+113065]
+	GetHandleVerifier [0x0x7ff6b0106c78+10616]
+	BaseThreadInitThunk [0x0x7ffc2655259d+29]
+	RtlUserThreadStart [0x0x7ffc2734af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=138.0.7204.170); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b0116f75+76917]
+	GetHandleVerifier [0x0x7ff6b0116fd0+77008]
+	(No symbol) [0x0x7ff6afec9dea]
+	(No symbol) [0x0x7ff6aff20256]
+	(No symbol) [0x0x7ff6aff2050c]
+	(No symbol) [0x0x7ff6aff73887]
+	(No symbol) [0x0x7ff6aff484af]
+	(No symbol) [0x0x7ff6aff7065c]
+	(No symbol) [0x0x7ff6aff48243]
+	(No symbol) [0x0x7ff6aff11431]
+	(No symbol) [0x0x7ff6aff121c3]
+	GetHandleVerifier [0x0x7ff6b03ed2ad+3051437]
+	GetHandleVerifier [0x0x7ff6b03e7903+3028483]
+	GetHandleVerifier [0x0x7ff6b040589d+3151261]
+	GetHandleVerifier [0x0x7ff6b013183e+185662]
+	GetHandleVerifier [0x0x7ff6b01396ff+218111]
+	GetHandleVerifier [0x0x7ff6b011faf4+112628]
+	GetHandleVerifier [0x0x7ff6b011fca9+113065]
+	GetHandleVerifier [0x0x7ff6b0106c78+10616]
+	BaseThreadInitThunk [0x0x7ffc2655259d+29]
+	RtlUserThreadStart [0x0x7ffc2734af78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 49, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 162, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/08_01_2025 - 08:25:12.009455 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 227, in start_anaplasma
+    reviewed_ids.append(inv_id)
+    ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'reviewed_ids' where it is not associated with a value
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 266, in start_anaplasma
+    raise Exception(e)
+Exception: cannot access local variable 'reviewed_ids' where it is not associated with a value
+
+saved/08_01_2025 - 08:46:52.865836 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 305, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_01_2025 - 09:31:13.720751 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=138.0.7204.170); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b0116f75+76917]
+	GetHandleVerifier [0x0x7ff6b0116fd0+77008]
+	(No symbol) [0x0x7ff6afec9dea]
+	(No symbol) [0x0x7ff6aff20256]
+	(No symbol) [0x0x7ff6aff2050c]
+	(No symbol) [0x0x7ff6aff73887]
+	(No symbol) [0x0x7ff6aff484af]
+	(No symbol) [0x0x7ff6aff7065c]
+	(No symbol) [0x0x7ff6aff48243]
+	(No symbol) [0x0x7ff6aff11431]
+	(No symbol) [0x0x7ff6aff121c3]
+	GetHandleVerifier [0x0x7ff6b03ed2ad+3051437]
+	GetHandleVerifier [0x0x7ff6b03e7903+3028483]
+	GetHandleVerifier [0x0x7ff6b040589d+3151261]
+	GetHandleVerifier [0x0x7ff6b013183e+185662]
+	GetHandleVerifier [0x0x7ff6b01396ff+218111]
+	GetHandleVerifier [0x0x7ff6b011faf4+112628]
+	GetHandleVerifier [0x0x7ff6b011fca9+113065]
+	GetHandleVerifier [0x0x7ff6b0106c78+10616]
+	BaseThreadInitThunk [0x0x7ffc2655259d+29]
+	RtlUserThreadStart [0x0x7ffc2734af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=138.0.7204.170); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b0116f75+76917]
+	GetHandleVerifier [0x0x7ff6b0116fd0+77008]
+	(No symbol) [0x0x7ff6afec9dea]
+	(No symbol) [0x0x7ff6aff20256]
+	(No symbol) [0x0x7ff6aff2050c]
+	(No symbol) [0x0x7ff6aff73887]
+	(No symbol) [0x0x7ff6aff484af]
+	(No symbol) [0x0x7ff6aff7065c]
+	(No symbol) [0x0x7ff6aff48243]
+	(No symbol) [0x0x7ff6aff11431]
+	(No symbol) [0x0x7ff6aff121c3]
+	GetHandleVerifier [0x0x7ff6b03ed2ad+3051437]
+	GetHandleVerifier [0x0x7ff6b03e7903+3028483]
+	GetHandleVerifier [0x0x7ff6b040589d+3151261]
+	GetHandleVerifier [0x0x7ff6b013183e+185662]
+	GetHandleVerifier [0x0x7ff6b01396ff+218111]
+	GetHandleVerifier [0x0x7ff6b011faf4+112628]
+	GetHandleVerifier [0x0x7ff6b011fca9+113065]
+	GetHandleVerifier [0x0x7ff6b0106c78+10616]
+	BaseThreadInitThunk [0x0x7ffc2655259d+29]
+	RtlUserThreadStart [0x0x7ffc2734af78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 162, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/08_01_2025 - 09:43:35.120456 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 335, in SortQueue
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, paths['submit_date_path'])))
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6b0116f75+76917]
+	GetHandleVerifier [0x0x7ff6b0116fd0+77008]
+	(No symbol) [0x0x7ff6afec9dea]
+	(No symbol) [0x0x7ff6aff20256]
+	(No symbol) [0x0x7ff6aff2050c]
+	(No symbol) [0x0x7ff6aff73887]
+	(No symbol) [0x0x7ff6aff484af]
+	(No symbol) [0x0x7ff6aff7065c]
+	(No symbol) [0x0x7ff6aff48243]
+	(No symbol) [0x0x7ff6aff11431]
+	(No symbol) [0x0x7ff6aff121c3]
+	GetHandleVerifier [0x0x7ff6b03ed2ad+3051437]
+	GetHandleVerifier [0x0x7ff6b03e7903+3028483]
+	GetHandleVerifier [0x0x7ff6b040589d+3151261]
+	GetHandleVerifier [0x0x7ff6b013183e+185662]
+	GetHandleVerifier [0x0x7ff6b01396ff+218111]
+	GetHandleVerifier [0x0x7ff6b011faf4+112628]
+	GetHandleVerifier [0x0x7ff6b011fca9+113065]
+	GetHandleVerifier [0x0x7ff6b0106c78+10616]
+	BaseThreadInitThunk [0x0x7ffc2655259d+29]
+	RtlUserThreadStart [0x0x7ffc2734af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 199, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
+    conn.request(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 441, in request
+    self.endheaders()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1037, in send
+    self.connect()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 279, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 214, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000021071143140>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 204, in start_anaplasma
+    NBS.SortQueue(paths)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 340, in SortQueue
+    self.HandleBadQueueReturn()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 399, in HandleBadQueueReturn
+    self.go_to_home()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 259, in go_to_home
+    WebDriverWait(self,self.wait_before_timeout).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, partial_link)))
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 96, in until
+    value = method(self._driver)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\expected_conditions.py", line 84, in _predicate
+    return driver.find_element(*locator)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 873, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=51811): Max retries exceeded with url: /session/a7592931f0fcf008d033d285301a6979/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021071143140>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 266, in start_anaplasma
+    raise Exception(e)
+Exception: HTTPConnectionPool(host='localhost', port=51811): Max retries exceeded with url: /session/a7592931f0fcf008d033d285301a6979/element (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021071143140>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+saved/08_01_2025 - 10:03:58.481936 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 306, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_01_2025 - 13:05:43.294835 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_04_2025 - 11:49:47.380088 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_05_2025 - 12:50:29.462450 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_05_2025 - 14:38:02.845566 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_05_2025 - 18:22:35.044849 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_07_2025 - 11:56:04.766744 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_07_2025 - 12:51:17.868940 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_12_2025 - 10:00:49.484251 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_12_2025 - 10:50:26.074488 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_14_2025 - 04:01:29.026322 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 174, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 116, in StandardChecks
+    self.CheckCaseAna()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 473, in CheckCaseAna
+    elif symptom_test and "Laboratory confirmed" not in self.confirmation_method:
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Anaplasma' object has no attribute 'confirmation_method'. Did you mean: 'CheckConfirmationMethod'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(e)
+Exception: 'Anaplasma' object has no attribute 'confirmation_method'
+
+saved/08_14_2025 - 04:08:32.401141 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 174, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 61, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 585, in CheckLabReports
+    collectionDate = self.Lab_report_table["Date Collected"].values[0] if self.Lab_report_table["Date Collected"].values[0] != "No Date" else self.Lab_report_table["Date Collected"].values[1]
+                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: index 0 is out of bounds for axis 0 with size 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(e)
+Exception: index 0 is out of bounds for axis 0 with size 0
+
+saved/08_14_2025 - 04:15:07.543547 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 174, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 70, in StandardChecks
+    self.CheckCountyStateReportDate()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 581, in CheckCountyStateReportDate
+    if self.earliest_date_received and current_county_date > self.earliest_date_received or current_county_date < self.earliest_date_received:
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'datetime.date' and 'NoneType'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(e)
+Exception: '<' not supported between instances of 'datetime.date' and 'NoneType'
+
+saved/08_14_2025 - 04:24:26.575894 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 174, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 76, in StandardChecks
+    self.CheckMmwrYearAna()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 626, in CheckMmwrYearAna
+    if mmwr_year and mmwr_year != f'{self.collection_date.isocalendar().year}':
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'isocalendar'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(e)
+Exception: 'NoneType' object has no attribute 'isocalendar'
+
+saved/08_14_2025 - 04:51:03.520617 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 174, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 73, in StandardChecks
+    self.CheckInvestigatorAssignDateAna()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 276, in CheckInvestigatorAssignDateAna
+    elif self.assigned_date < self.lab_report_date:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'datetime.date' and 'str'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 268, in start_anaplasma
+    raise Exception(e)
+Exception: '<' not supported between instances of 'datetime.date' and 'str'
+
+saved/08_14_2025 - 05:34:05.595153 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_14_2025 - 07:03:36.099654 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_14_2025 - 11:30:38.893217 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_14_2025 - 13:14:25.317934 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 309, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_15_2025 - 16:47:47.147368 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 175, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 116, in StandardChecks
+    self.CheckCaseAna()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 479, in CheckCaseAna
+    if (self.fourFoldChange == "Yes" or self.other_diagnostic_test == "Yes") and has_any_symptom and ("Laboratory confirmed" in self.confirmation_method or self.pcr_positive == "Yes"):
+                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Anaplasma' object has no attribute 'confirmation_method'. Did you mean: 'CheckConfirmationMethod'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 269, in start_anaplasma
+    raise Exception(e)
+Exception: 'Anaplasma' object has no attribute 'confirmation_method'
+
+saved/08_15_2025 - 17:04:47.466356 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_18_2025 - 09:53:30.086042 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_18_2025 - 10:20:48.744016 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_18_2025 - 17:59:36.787838 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_19_2025 - 14:49:55.580778 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_20_2025 - 10:01:44.935267 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_20_2025 - 10:36:12.444977 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 08:57:34.717273 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 09:49:49.149419 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 10:15:50.943534 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 12:49:13.890690 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 18:19:14.094708 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 175, in start_anaplasma
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 116, in StandardChecks
+    self.CheckCaseAna()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 480, in CheckCaseAna
+    if self.titer_value and self.titer_value < 128 and self.CaseStatus != "Not a Case" and self.lab_is_serology:
+      ^^^^^^^^^^^^^^^^
+AttributeError: 'Anaplasma' object has no attribute 'titer_value'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 269, in start_anaplasma
+    raise Exception(e)
+Exception: 'Anaplasma' object has no attribute 'titer_value'
+
+saved/08_21_2025 - 18:28:05.411715 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_21_2025 - 19:01:02.674402 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_27_2025 - 10:17:28.722065 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 62, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 245, in CheckLabReports
+    if self.case_status and self.case_status != "Probable" and any(self.Lab_report_table["Date Received"] == "Nothing found to display."):
+       ^^^^^^^^^^^^^^^^
+AttributeError: 'Giardia' object has no attribute 'case_status'. Did you mean: 'CaseStatus'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: 'Giardia' object has no attribute 'case_status'
+
+saved/08_27_2025 - 11:09:52.690834 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 65, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 254, in CheckLabReports
+    self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").min().date()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 1067, in to_datetime
+    values = convert_listlike(arg._values, format)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 433, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\tools\datetimes.py", line 467, in _array_strptime_with_fallback
+    result, tz_out = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "strptime.pyx", line 501, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 451, in pandas._libs.tslibs.strptime.array_strptime
+  File "strptime.pyx", line 583, in pandas._libs.tslibs.strptime._parse_with_format
+ValueError: time data "Nothing found to display." doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: time data "Nothing found to display." doesn't match format "%m/%d/%Y %I:%M %p", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+saved/08_27_2025 - 11:48:22.546617 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_28_2025 - 05:18:08.990504 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_28_2025 - 05:59:47.279979 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_28_2025 - 11:23:57.503808 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 87, in start_giardia
+    NBS.GoToNPage(page)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 420, in GoToNPage
+    self.find_element(By.XPATH, next_page_path).click()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 39, in reraise
+    raise value
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 538, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 369, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=62227): Read timed out. (read timeout=120)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: HTTPConnectionPool(host='localhost', port=62227): Read timed out. (read timeout=120)
+
+saved/08_28_2025 - 12:27:06.119910 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_28_2025 - 13:14:29.955246 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_28_2025 - 18:02:06.952850 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/08_29_2025 - 04:00:01.729848 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 69, in StandardChecks
+    self.CheckJurisdiction()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 164, in CheckJurisdiction
+    jurisdiction = self.CheckForValue('//*[@id="INV107"]', 'Jurisdiction cannot be blank.')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 762, in CheckForValue
+    value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="INV107"]"}
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff66cd26f75+76917]
+	GetHandleVerifier [0x0x7ff66cd26fd0+77008]
+	(No symbol) [0x0x7ff66cad9dea]
+	(No symbol) [0x0x7ff66cb30256]
+	(No symbol) [0x0x7ff66cb3050c]
+	(No symbol) [0x0x7ff66cb83887]
+	(No symbol) [0x0x7ff66cb584af]
+	(No symbol) [0x0x7ff66cb8065c]
+	(No symbol) [0x0x7ff66cb58243]
+	(No symbol) [0x0x7ff66cb21431]
+	(No symbol) [0x0x7ff66cb221c3]
+	GetHandleVerifier [0x0x7ff66cffd2ad+3051437]
+	GetHandleVerifier [0x0x7ff66cff7903+3028483]
+	GetHandleVerifier [0x0x7ff66d01589d+3151261]
+	GetHandleVerifier [0x0x7ff66cd4183e+185662]
+	GetHandleVerifier [0x0x7ff66cd496ff+218111]
+	GetHandleVerifier [0x0x7ff66cd2faf4+112628]
+	GetHandleVerifier [0x0x7ff66cd2fca9+113065]
+	GetHandleVerifier [0x0x7ff66cd16c78+10616]
+	BaseThreadInitThunk [0x0x7ffb6d41259d+29]
+	RtlUserThreadStart [0x0x7ffb6ec0af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="INV107"]"}
+  (Session info: chrome=139.0.7258.139); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff66cd26f75+76917]
+	GetHandleVerifier [0x0x7ff66cd26fd0+77008]
+	(No symbol) [0x0x7ff66cad9dea]
+	(No symbol) [0x0x7ff66cb30256]
+	(No symbol) [0x0x7ff66cb3050c]
+	(No symbol) [0x0x7ff66cb83887]
+	(No symbol) [0x0x7ff66cb584af]
+	(No symbol) [0x0x7ff66cb8065c]
+	(No symbol) [0x0x7ff66cb58243]
+	(No symbol) [0x0x7ff66cb21431]
+	(No symbol) [0x0x7ff66cb221c3]
+	GetHandleVerifier [0x0x7ff66cffd2ad+3051437]
+	GetHandleVerifier [0x0x7ff66cff7903+3028483]
+	GetHandleVerifier [0x0x7ff66d01589d+3151261]
+	GetHandleVerifier [0x0x7ff66cd4183e+185662]
+	GetHandleVerifier [0x0x7ff66cd496ff+218111]
+	GetHandleVerifier [0x0x7ff66cd2faf4+112628]
+	GetHandleVerifier [0x0x7ff66cd2fca9+113065]
+	GetHandleVerifier [0x0x7ff66cd16c78+10616]
+	BaseThreadInitThunk [0x0x7ffb6d41259d+29]
+	RtlUserThreadStart [0x0x7ffb6ec0af78+40]
+
+
+saved/08_29_2025 - 17:00:49.970060 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_29_2025 - 19:04:35.646576 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/08_29_2025 - 20:23:32.394816 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/09_02_2025 - 09:16:11.498710 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 310, in start_anaplasma
+    raise Exception(error_list)
+Exception: []
+
+saved/09_02_2025 - 11:32:04.140580 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/09_02_2025 - 12:05:47.337780 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/09_02_2025 - 14:54:45.936872 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+

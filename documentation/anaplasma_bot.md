@@ -13,7 +13,7 @@ Ananplasma Bot reviews anaplasma cases and reports using emails to NBS personnel
 
 ## Key Features
 - Automated case processing
-- Data validation
+- Data validationf
 - Email notifications
 - Manual review flagging
 - Patient data verification

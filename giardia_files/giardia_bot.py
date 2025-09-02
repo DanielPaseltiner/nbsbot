@@ -57,19 +57,19 @@ def start_giardia(username, passcode):
     with open("patients_to_skip.txt", "r") as patient_reader:
         patients_to_skip |= set(patient_reader.readlines())
 
-    limit = 12
-    page = 1
+    limit = 4
+    page = 2
     loop = tqdm(generator())
     for _ in loop:
         print(f"current limit: {limit}")
         #check if the bot haa gone through the set limit of reviews
         if loop.n == limit:
-            # if page > 1:
-            #     page -= 1
-            #     gone_home = 0
-            #     n = 1
-            #     limit += 21
-            #     continue
+            if page > 1:
+                page -= 1
+                gone_home = 0
+                n = 1
+                limit += 20
+                continue
             break
         try:
             #Sort review queue so that only giardia investigations are listed
@@ -157,10 +157,10 @@ def start_giardia(username, passcode):
                     print("check for matching first case")
 
                     NBS.final_name = NBS.patient_name
-                    if NBS.country != 'UNITED STATES':
-                        print("Skipping patient. No action carried out")
-                        patients_to_skip.add(inv_id)
-                    elif NBS.final_name == NBS.initial_name:
+                    # if NBS.country != 'UNITED STATES':
+                    #     print("Skipping patient. No action carried out")
+                    #     patients_to_skip.add(inv_id)
+                    if NBS.final_name == NBS.initial_name:
                         reviewed_ids.append(inv_id)
                         what_do.append("Reject Notification")
                         reason.append(' '.join(NBS.issues))

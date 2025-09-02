@@ -95,6 +95,8 @@ class NBSdriver(webdriver.Chrome):
         self.cong_setting_indicator = None
         self.county = None
         self.country = None #new variable
+        self.culture_done = None #new
+        self.culture_positive = None #new
         self.state = None #new
         self.current_report_date = None
         self.current_status = None
@@ -102,6 +104,7 @@ class NBSdriver(webdriver.Chrome):
         self.dob = None
         self.discharge_date = None
         self.date_closed = None #new
+        self.epi = None #new
         self.first_responder = None
         self.follow_up_tests = False       #new variable
         self.fr_aoe = None
@@ -116,12 +119,17 @@ class NBSdriver(webdriver.Chrome):
         self.investigator = None
         self.jurisdiction = None #new variable to allow access from multiple functions
         self.labs = None
+        self.lab_specimen_source = None #new
+        self.lab_specimen_collection_date = None #new
+        self.lab_report_date = None #new
+        self.lab_is_serology = False #new
         self.ltf = None
         self.preg_aoe = None
         self.patient_sex = None
         self.report_date = None
         self.reporting_organization = None #new
         self.reporting_provider = None #new
+        self.returned_by_link = False #new
         self.earliest_date_received = None
         self.latest_date_received = None
         self.status = None
@@ -129,13 +137,14 @@ class NBSdriver(webdriver.Chrome):
         self.symptoms = None
         self.symptoms_list = [] #new variable initially undeclared
         self.serology_test_type = None #new variable 
+        self.titer_value = None #new
         self.vax_recieved = None
         self.initial_name = None #new variable initially undeclared
         self.final_name = None  #new variable initially undeclared
         self.CaseStatus = None  #new variable initially undeclared
         self.CorrectCaseStatus = None  #new variable initially undeclared
         self.slept = 0 #new
-       # self.travel_outside_home = None #new
+        self.travel_outside_home = None #new
         #self.travel_info = None #new
 
 ########################### NBS Navigation Methods ############################
@@ -165,6 +174,26 @@ class NBSdriver(webdriver.Chrome):
         print(self.page_source) #for some reason removing this makes nbsbot unable to log in to nbs
         WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
         self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
+    
+    def go_to_tab_one(self):
+        path = '//*[@id="tabs0head0"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, path)))
+        self.find_element(By.XPATH, path).click()
+
+    def go_to_tab_two(self):
+        path = '//*[@id="tabs0head1"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, path)))
+        self.find_element(By.XPATH, path).click()
+    
+    def go_to_tab_three(self):
+        path = '//*[@id="tabs0head2"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, path)))
+        self.find_element(By.XPATH, path).click()
+    
+    def go_to_tab_five(self):
+        path = '//*[@id="tabs0head4"]'
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, path)))
+        self.find_element(By.XPATH, path).click()
 
     ######################### Name Information Check Methods #######################
     def CheckFirstName(self):
@@ -391,11 +420,11 @@ class NBSdriver(webdriver.Chrome):
             self.find_element(By.XPATH, next_page_path).click()
         print(f"Moved to page {n}")
         
-    def CheckFirstCase(self):
+    def CheckFirstCase(self, n=1):
         """ Ensure that first case is COVID and save case's name for later use."""
         try:
-            self.condition = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[8]/a').get_attribute('innerText')
-            self.patient_name = self.find_element(By.XPATH, '//*[@id="parent"]/tbody/tr[1]/td[7]/a').get_attribute('innerText')
+            self.condition = self.find_element(By.XPATH, f'//*[@id="parent"]/tbody/tr[{n}]/td[8]/a').get_attribute('innerText')
+            self.patient_name = self.find_element(By.XPATH, f'//*[@id="parent"]/tbody/tr[{n}]/td[7]/a').get_attribute('innerText')
         except NoSuchElementException:
             self.condition = None
             self.patient_name = None
@@ -548,20 +577,28 @@ class NBSdriver(webdriver.Chrome):
         the current value of earliest report to state date and the report date. """
         current_county_date = self.ReadDate('//*[@id="INV120"]')
         current_state_date = self.ReadDate('//*[@id="INV121"]')
+            
+        if current_county_date:
+            if self.earliest_date_received and current_county_date > self.earliest_date_received or  self.earliest_date_received and  current_county_date < self.earliest_date_received:
+                self.issues.append(f"Earliest county report date should be {self.earliest_date_received}")
 
-        if not current_county_date:
+            if self.current_report_date and current_county_date < self.current_report_date:
+                self.issues.append('Earliest report to county cannot be prior to inital report date.')
+            elif self.investigation_start_date and current_county_date > self.investigation_start_date:
+                self.issues.append('Earliest report to county date cannot be after investigation start date')
+        else:
             self.issues.append('Report to county date missing.')
-        elif current_county_date < self.current_report_date:
-            self.issues.append('Earliest report to county cannot be prior to inital report date.')
-        elif current_county_date > self.investigation_start_date:
-            self.issues.append('Earliest report to county date cannot be after investigation start date')
 
-        if not current_state_date:
+        if current_state_date:
+            if self.earliest_date_received and current_state_date > self.earliest_date_received or self.earliest_date_received and current_state_date < self.earliest_date_received:
+                self.issues.append(f"Earliest state report date should be {self.earliest_date_received}")
+
+            if self.current_report_date and current_state_date < self.current_report_date:
+                self.issues.append('Earliest report to state cannot be prior to inital report date.')
+            elif self.investigation_start_date and current_state_date > self.investigation_start_date:
+                self.issues.append('Earliest report to state date cannot be after investigation start date.')
+        else:
             self.issues.append('Report to state date missing.')
-        elif current_state_date < self.current_report_date:
-            self.issues.append('Earliest report to state cannot be prior to inital report date.')
-        elif current_state_date > self.investigation_start_date:
-            self.issues.append('Earliest report to state date cannot be after investigation start date.')
 
         if current_county_date:
             if current_state_date:
@@ -573,16 +610,25 @@ class NBSdriver(webdriver.Chrome):
         """ Must provide zip code. """
         self.zipcode = self.CheckForValue( '//*[@id="DEM163"]', 'Zip code is blank.')
 
+    def CheckJurisdiction(self):
+        """ Jurisdiction and county must match unless jurisdiction is 'Out of State'. """
+        self.jurisdiction = self.ReadText('//*[@id="INV107"]') #,'Jurisdiction is blank.'
+        if self.jurisdiction == 'Out of State' and self.CaseStatus != 'Not a Case':                 #new code
+            self.issues.append("Out of state - should be Not a Case.")                      #new code
+
+        if self.jurisdiction and self.jurisdiction.lower().replace(" county", "") not in self.county.lower().replace(" county", "") and self.jurisdiction != 'Out of State':                    #new code
+            self.issues.append('County and jurisdiction mismatch.')                               #new code
+        print(f"jurisdiction: {self.jurisdiction}")
+
     def CheckCounty(self):
         """ Must provide county unless the jurisdiction is 'Out of State'. """
-        self.county = self.CheckForValue( '//*[@id="DEM165"]', 'County is blank.')
-        if self.jurisdiction == 'Out of State':                                        #new code
-            return #skip further county checks if out of state                       #new code
+        self.county = self.CheckForValue( '//*[@id="DEM165"]', 'County is blank.')                                   #new code
         
     def CheckCountry(self):
         """ Must provide country. """
         self.country = self.CheckForValue( '//*[@id="DEM167"]', 'Country is blank.')
-        if self.country != 'UNITED STATES':
+        if self.country and self.country != 'UNITED STATES':
+            self.issues.append("Out of State")
             # self.GoToApprovalQueue
             return
             # self.issues.append('Out of State') #new code
@@ -619,32 +665,50 @@ class NBSdriver(webdriver.Chrome):
     
     ######################### Case Status Check Methods ############################
 
+    def CheckWhereDisease(self):
+        where_was_disease_acquired = self.ReadText('//*[@id="INV152"]') 
+            
+        if where_was_disease_acquired == "Indigenous":
+            if "Yes" in self.travel_outside_home:
+                self.issues.append("Disease acquired should not be “indigenous” if any travel outside home county.")
+            
+            elif any(option != "No" for option in self.travel_outside_home):
+                self.issues.append("Cannot be indigenous without travel questions all being no.")
+
+
+            if (self.culture_done and self.culture_done not in  ['No', 'Unknown']) or (self.culture_positive and self.culture_positive not in  ['No', 'Unknown']):
+                self.issues.append('Culture done and Culture positive should be blank or unknown, Where disease was acquired says Indigenous but travel history is unknown')
+        else:
+            if all(option == "No" for option in self.travel_outside_home):
+                self.issues.append("If all 3 travel questions are no, where was disease acquired should be indigenous.")
+            
     def CheckConfirmationMethod(self):
         """ Confirmation Method must be blank or consistent with correct case status."""
         self.confirmation_method =  self.ReadText('//*[@id="INV161"]')
-        if not self.confirmation_method: #new code
-            self.issues.append("Confirmation method is missing")
-            print(f"confirmation_method: {self.confirmation_method}")
+        # if not self.confirmation_method: #new code
+        #     self.issues.append("Confirmation method is missing")
+        #     print(f"confirmation_method: {self.confirmation_method}")
 
     def CheckDetectionMethod(self):
         """ Ensure Detection Method is not blank. """
-        detection_method = self.CheckForValue( '//*[@id="INV159"]', 'Detection method is blank.')
-        # if not detection_method: #new code
-        #     self.issues.append('Detection method is missing')
-        #     print(f"detection_method: {detection_method}")
+        detection_method = self.CheckForValue( '//*[@id="INV159"]', 'Detection mode blank.')
 
     def CheckConfirmationDate(self):
         """ Confirmation date must be on or after report date. """
         confirmation_date = self.ReadDate('//*[@id="INV162"]')
         if not confirmation_date:
-            self.issues.append('Confirmation date is blank.')
+            self.issues.append(f'Confirmation date is blank.{confirmation_date}')
             print(f"confirmation_date: {confirmation_date}")
         # elif confirmation_date < self.report_date:
         #     self.issues.append('Confirmation date cannot be prior to report date.')
         #     print(f"confirmation_date: {confirmation_date}")
-        elif confirmation_date > self.now:
-            self.issues.append('Confirmation date cannot be in the future.')
-            print(f"confirmation_date: {confirmation_date}")
+        else:
+            if self.investigation_start_date and confirmation_date < self.investigation_start_date:
+                self.issues.append("confirmation date cannot be before investigation start date.")
+            if confirmation_date > self.now:
+                self.issues.append('Confirmation date cannot be in the future.')
+                print(f"confirmation_date: {confirmation_date}")
+        
         
         return confirmation_date
     
@@ -662,9 +726,6 @@ class NBSdriver(webdriver.Chrome):
         """ Check for hospital discharge date."""
         self.discharge_date = self.ReadDate('//*[@id="INV133"]')
         if self.discharge_date:                                                         #commented out
-        #     self.issues.append('Missing discharge date.')
-        #     print(f"discharge_date: {self.discharge_date}")
-        # else:
             if self.admission_date:
                 if self.discharge_date < self.admission_date:
                     self.issues.append('Discharge date must be after admission date.')
@@ -692,7 +753,7 @@ class NBSdriver(webdriver.Chrome):
         """ Ensure that preforming laboratory is not empty. """
         reporting_organization = self.ReadText('//*[@id="ME6105"]')
         if not reporting_organization:
-            self.issues.append('Performing laboratory is blank.')
+            self.issues.append('Laboratory name is blank.')
 
 ############################# Data Reading/Validation Methods ##################################
 
@@ -717,7 +778,7 @@ class NBSdriver(webdriver.Chrome):
         """ Read date from NBS and return a datetime.date object. """
         date = self.find_element(By.XPATH, xpath).get_attribute(attribute)
         try:
-            date = datetime.strptime(date, '%m/%d/%Y').date()
+            date = datetime.strptime(date.strip(), '%m/%d/%Y').date()
         except ValueError:
             date = ''
         return date

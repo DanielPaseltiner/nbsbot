@@ -42,9 +42,9 @@ class Giardia(NBSdriver):
         self.CheckAgeType()
         self.CheckCurrentSex()#removed Ana
         self.CheckMortality()
-        #self.CheckStAddr()
-        street_address = self.ReadText( '//*[@id="DEM159"]') #, 'Street address is blank.'
-        if any(x in street_address for x in ["HOMELESS", "NO ADDRESS", "NO FIXED ADDRESS", "UNSHELTERED"]):
+        self.CheckStAddr()
+        # street_address = self.ReadText( '//*[@id="DEM159"]') #, 'Street address is blank.'
+        if any(x in self.street_address for x in ["HOMELESS", "NO ADDRESS", "NO FIXED ADDRESS", "UNSHELTERED"]):
             pass
         else: 
             self.CheckCity()
@@ -54,15 +54,37 @@ class Giardia(NBSdriver):
         self.CheckState()
         self.CheckCountry()
         self.CheckPhone()
-        self.GoToGiardiasis()
+        self.CheckRace()
+        self.CheckEthnicity()
+
+        self.go_to_tab_two()
         self.CheckCaseStatus()
+
+        self.go_to_tab_five()
+        print("lab=rep")
+        self.CheckLabReports()
+        if not self.returned_by_link:
+            self.go_to_tab_two()
+
+        self.CheckJurisdiction()
+        self.CheckProgramArea()
+        self.CheckInvestigationStartDate()
+        self.CheckInvestigationStatus()
+        self.CheckSharedIndidcator()
+        # self.CheckStateCaseID()
+        self.CheckReportingSourceType()
+        self.CheckReportingOrganization()
+        self.CheckInvestigator()
+        self.CheckDateAssigned()
+
+        
+
         self.CheckLabTestResult()
-        if self.case_status == "Confirmed":
-            self.CheckLabName()
-            self.CheckLabTestType()
-            
-            self.CheckSpecimenSource()
-            self.CheckDateSpecimenCollected()
+        # if self.case_status == "Confirmed":
+        self.CheckLabName()
+        self.CheckLabTestType()
+        self.CheckSpecimenSource()
+        self.CheckDateSpecimenCollected()
 
         self.CheckIllnessOnset()
         self.CheckAgeData()
@@ -73,11 +95,15 @@ class Giardia(NBSdriver):
         self.CheckPatientTreated()
         self.CheckImmuneCompromised()  
         self.CheckCoInfection()
-        self.CheckDiseaseAcquired()
+        self.CheckSecondaryToANotherCase()
+        self.CheckWhereDiseaseWasAcquired()
         self.CheckTransmissionMode()
         self.CheckDetectionMethod()
         self.CheckConfirmationMethod() 
+        self.CheckConfirmationDate()
         self.VerifyCaseStatus()
+        self.CheckMmwrWeek()
+        self.CheckMmwrYear()
         self.CheckDateClosed()
 
     ####################### Patient Demographics Check Methods ############################
@@ -131,8 +157,29 @@ class Giardia(NBSdriver):
                 self.issues.append('Patient sex is Unknown without a note.')
 
     def CheckMortality(self):
-        mortality_as_of_date = self.CheckForValue('//*[@id="NBS097"]', "Mortality fields on patient page should not be blank")
-        is_deceased = self.CheckForValue('//*[@id="DEM127"]', "Mortality fields on patient page should not be blank")
+        mortality_as_of_date = self.CheckForValue('//*[@id="NBS097"]', "Mortality fields on patient page should not be blank.")
+        is_deceased = self.CheckForValue('//*[@id="DEM127"]', "Mortality fields on patient page should not be blank.")
+    
+    def CheckJurisdiction(self):
+        jurisdiction = self.CheckForValue('//*[@id="INV107"]', 'Jurisdiction cannot be blank.')
+        if jurisdiction not in self.county:
+            self.issues.append("Jurisdiction and county mismatch.")
+
+    def CheckStAddr(self):
+        self.street_address = self.ReadText( '//*[@id="DEM159"]')
+        if not self.street_address:
+            self.issues.append("Street address cannot be blank.")
+
+    def CheckRace(self):
+        returned_race = self.ReadText( '//*[@id="patientRacesViewContainer"]')
+        if not returned_race:
+            self.issues.append("Race cannot be blank.")
+        
+        definitive_races = ['White', 'Black or African American', 'Asian', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander']  #New code
+        if 'Unknown' in returned_race and any(def_race in returned_race for def_race in definitive_races):                                                  #New code
+            self.issues.append('Case rejected: Definitive race and Unknown race should not be selected together.')                            #New code
+            print(f"race: {returned_race}.")
+
         
     ####################### Navigation Methods ############################
     def GoToGiardiasis(self):
@@ -140,6 +187,86 @@ class Giardia(NBSdriver):
         WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, giardiasis_path)))
         self.find_element(By.XPATH, giardiasis_path).click()
     
+    ####################### Investigation Check Methods ############################
+    def CheckProgramArea(self):
+        program = self.CheckForValue('//*[@id="INV108"]', 'should be disease specific')
+
+    def CheckInvestigationStartDate(self):
+        """ Verify investigation start date is on or after report date. """
+        self.investigation_start_date = self.ReadDate('//*[@id="INV147"]')
+        if not self.investigation_start_date:
+            self.issues.append(f"Investigation start date: {self.investigation_start_date} cannot be blank.")
+            print(f"investigation start date: {self.investigation_start_date}")
+
+    def CheckInvestigationStatus(self):
+        status = self.CheckForValue('//*[@id="INV109"]', 'Investigation status date cannot be blank')
+    
+    def CheckSharedIndidcator(self):
+        indicator = self.CheckForValue('//*[@id="NBS_UI_19"]/tbody/tr[5]/td[2]', 'Shared indicator is blank')
+
+    def CheckStateCaseID(self):
+        caseId = self.CheckForValue('//*[@id="INV173"]', 'state case id is blank')
+        
+    ####################### Investigator Check Methods ############################
+    def CheckInvestigator(self):
+        investigator = self.ReadText('//*[@id="INV180"]')
+
+    def CheckDateAssigned(self):
+        date_assigned = self.ReadDate('//*[@id="INV110"]')
+        if not date_assigned:
+            self.issues.append("date assigned cannot be blank.")
+
+    ################# Key Report Dates Check Methods ###############################
+    def CheckReportDates(self):
+        """ Check if the current value of Report Date matches the earliest
+        Report Date from the associated labs. """
+        self.reported_state_date = self.ReadDate('//*[@id="INV120"]')
+        self.reported_county_date = self.ReadDate('//*[@id="INV121"]')
+        self.report_date = self.ReadDate('//*[@id="INV111"]')
+
+        if not self.reported_state_date:
+            self.issues.append('Missing date reported to state.')
+        
+        if not self.reported_county_date:
+            self.issues.append('Missing date reported to county.')
+
+        if not self.report_date:
+            self.issues.append('Missing report date.')
+
+        dates = [self.reported_state_date, self.reported_county_date, self.report_date]
+        if all(dates != self.latest_date_received) and all(dates !=self.earliest_date_received):
+            self.issues.append("date mismatch with recieved dates")
+
+    ####################### Supplmental Check Methods ############################
+    def CheckLabReports(self):
+        """ Pull lab reports from supplemental tab. """
+        #Lab report info is only displayed if you click on the button after tick-borne. There could be more than one.
+        html = self.find_element(By.XPATH, '//*[@id="eventLabReport"]').get_attribute('outerHTML')
+        soup = BeautifulSoup(html, 'html.parser')
+        self.Lab_report_table = pd.read_html(StringIO(str(soup)))[0]
+        if len(self.Lab_report_table) > 0:
+            if any(self.Lab_report_table["Date Received"] == "Nothing found to display."):
+                if self.case_status and self.case_status != "Probable": 
+                    self.issues.append("Missing lab report.")
+                    
+                self.earliest_date_received = None
+                self.latest_date_received = None
+                self.lab_specimen_collection_date = None
+                return
+            self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").min().date()
+            self.latest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").max().date()
+            self.lab_specimen_collection_date = pd.to_datetime(self.Lab_report_table["Date Collected"], format="%m/%d/%Y").max().date()
+            self.find_element(By.XPATH, '//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a').click()
+            self.lab_specimen_source = self.ReadText('//*[@id="LAB165"]').lower()
+            if not self.lab_specimen_collection_date:
+                self.lab_specimen_collection_date = self.ReadDate('//*[@id="LAB163"]')
+            self.find_element(By.XPATH, '(//div[contains(@class, "returnToPageLink")]//a)[1]').click()
+            self.returned_by_link = True
+        else:
+            if self.case_status and self.case_status != "Probable":
+                self.issues.append("Missing lab report.")
+
+
     ####################### Patient Status Check Methods ############################
     def CheckDeath(self):
         """If died from illness is yes or no, need a death date """
@@ -151,135 +278,131 @@ class Giardia(NBSdriver):
             """ Death date must be present."""
             death_date = self.ReadDate('//*[@id="INV146"]')
             if not death_date:
-                self.issues.append('Date of death is blank.')
+                self.issues.append('Date of death is missing.')
                 print(f"death: {self.death_indicator}")
             elif death_date > self.now:
                 self.issues.append('Date of death date cannot be in the future.')
                 print(f"death: {self.death_indicator}")
-        elif self.death_indicator not in ['Yes', 'No', 'Unknown']:
-            self.issues.append('Death indicator cannot be blank')
+        elif self.death_indicator not in ['Yes', 'No', 'Unknown'] and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append('Did case die from this illness cannot be blank.')
             print(f"death: {self.death_indicator}")
 
     def CheckHospitalization(self):
         """ Read hospitalization status. If yes need date and hospital """
         self.hospitalization_indicator = self.ReadText('//*[@id="INV128"]')
-        if self.hospitalization_indicator == "Yes":
+        if self.hospitalization_indicator not in ['Yes', 'No'] and self.case_status in ["Confirmed", "Probable"]: 
+            self.issues.append("Hospitalized answer cannot be blank or unknown.")
+        if self.hospitalization_indicator == 'Yes':
             hospital_name = self.ReadText('//*[@id="INV184"]')
             if not hospital_name:
-                self.issues.append('Hospital name missing.')
+                self.issues.append('Missing name of hospital.')
                 print(f"hospitalization, hospital_name: {hospital_name}")
             self.admission_date = self.ReadDate('//*[@id="INV132"]')
             if not self.admission_date:
-                self.issues.append('Admission date is missing.')
+                self.issues.append('Missing hospital admission date.')
                 print(f"hospitalization, admission_date: {self.admission_date}")
             self.discharge_date = self.ReadDate('//*[@id="INV133"]')
-            if not self.discharge_date:                                                         #commented out
-                self.issues.append('Missing discharge date.')
-                print(f"discharge_date: {self.discharge_date}")
             self.duration_in_hospital = self.ReadText('//*[@id="INV134"]')
-            if not self.duration_in_hospital:
-                self.issues.append('Missing Total duration in hospital.')
+            if self.admission_date and self.discharge_date and not self.duration_in_hospital:
+                self.issues.append('Duration of hospitalization missing.')
                 print(f"duration in hospital: {self.duration_in_hospital}")
-            # if self.admission_date and self.admission_date > self.now:
-            #     self.issues.append('Admission date cannot be in the future.')
-            #     print(f"hospitalization, admission_date: {self.admission_date}")
-
-        elif self.hospitalization_indicator not in ['Yes', 'No']: 
-            self.issues.append("Patient hospitalization status should not be blank.")
-            
-    
+      
     def CheckPregnancyStatus(self):
         """ Check that pregnancy status isn't blank."""
         pregnant_status = self.ReadText('//*[@id="INV178"]')
-        if pregnant_status not in ['Yes', 'No', 'Unknown'] and self.patient_sex != "Male":
-            self.issues.append('Pregnant status is blank.')
+        pregnancy_due_date = self.ReadDate('//*[@id="ME8170"]')
+        # if pregnant_status not in ['Yes', 'No', 'Unknown'] and self.patient_sex != "Male":
+        #     self.issues.append('Pregnant status is blank.')
+        if pregnant_status == "Yes" and not pregnancy_due_date:
+            self.issues.append("Pregnancy due date missing.")
 
     def CheckImmuneCompromised(self):
         """ If patient is immune compromised, need condition info """
-        self.Immune_compromised = self.CheckForValue('//*[@id="ME3129"]', 'Immuno compressed cannot be blank.')
+        self.Immune_compromised = self.ReadText('//*[@id="ME3129"]')
+        if not self.Immune_compromised and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append("Immune compromised cannot be blank.")
+
     
     def CheckCoInfection(self):
         """ Check that pregnancy status isn't blank."""
-        co_infection = self.CheckForValue('//*[@id="ME11173"]', 'Co infection cannot be blank.')
+        co_infection = self.ReadText('//*[@id="ME11173"]')
+        co_infection_condition = self.ReadText('//*[@id="ME11174"]')
+        if not co_infection and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append("Co-infection field cannot be blank.")
+        if co_infection == "Yes" and not co_infection_condition:
+            self.issues.append("Missing co-infection condition.")
     
-    def CheckDiseaseAcquired(self):
-        """ Check that pregnancy status isn't blank."""
-        disease_acquired = self.CheckForValue('//*[@id="INV152"]', "Where was Disease Acquired cannot be blank.")
-    
-    def CheckTransmissionMode(self):
-        """ Check that pregnancy status isn't blank."""
-        transmission_mode = self.CheckForValue('//*[@id="INV157"]', "Transmission mode cannot be blank.")
-
-    def CheckDateClosed(self):
-        date_closed = self.CheckForValue('//*[@id="ME11163"]', "Date closed should not be blank")
-
-    def CheckPatientTreated(self):
-        patient_treated = self.CheckForValue('//*[@id="ME8171"]', 'Patient treated cannot be blank.')
-
-    def CheckCaseStatus(self):
-        self.case_status = self.ReadText('//*[@id="INV163"]')
-
-    def VerifyCaseStatus(self):
-        confirmed = self.laboratory_test_result == "Positive" and self.symptomatic == "Yes"
-        probable = self.symptomatic == "Yes" and self.confirmation_method == "Epidemiologically linked"
-        if confirmed:
-            if self.case_status != "Confirmed":
-                self.issues.append("Meets case definition for a confirmed case but isn't a confirmed case")
-        elif probable:
-            if self.case_status != "Probable":
-                self.issues.append("Meets case definition for a probable case but isn't a probable case")
-        elif confirmed is False and probable is False and self.CaseStatus != "Not a Case":
-            self.issues.append("Meets case definition for Not a Case case but isn't Not a Case")
-    
-    """
-        checks for confirmed case status
-    """
-
+    ####################### Clinical Check Methods ############################
     def CheckLabName(self):
         """ Check for follow-up tests """
         self.laboratory_name = self.ReadText('//*[@id="ME6105"]')
-        if not self.laboratory_name:
-            self.issues.append("laboratory name cannot be blank when Case status is confirmed.")
+        if not self.laboratory_name and self.case_status == "Confirmed":
+            self.issues.append("Confirmed case but no laboratory name.")
         print(f"laboratory name: {self.laboratory_name}")
     
     def CheckLabTestType(self):
         """ Check for follow-up tests """
         self.laboratory_test_type = self.ReadText('//*[@id="ME15109"]')
-        if not self.laboratory_test_type:
-            self.issues.append("laboratory test type cannot be blank when Case status is confirmed.")
+        other_test_type = self.ReadText('//*[@id="ME15111"]')
+        if not self.laboratory_test_type and self.case_status == "Confirmed":
+            self.issues.append("Confirmed case but no laboratory test type.")
         print(f"laboratory test type: {self.laboratory_test_type}")
+
+        if self.laboratory_test_type == "Other":
+            if not other_test_type:
+                self.issues.append("Lab Test Type is Other, but other test type is blank.")
+    
 
     def CheckLabTestResult(self):
         """ Check for follow-up tests """
         self.laboratory_test_result = self.ReadText('//*[@id="ME15110"]')
-        if self.laboratory_test_result != "Positive" and self.CaseStatus == 'Confirmed':
-            self.issues.append("laboratory test result must be positive.")
+        if self.laboratory_test_result != "Positive" and self.case_status == 'Confirmed':
+            if self.laboratory_test_result.lower() == "pending":
+                self.issues.append("Confirmed case but lab test result pending.")
+            else:
+                self.issues.append("Confirmed case but no lab test result selected.")
         print(f"laboratory test result: {self.laboratory_test_result}")
 
     def CheckSpecimenSource(self):
         """ Check for follow-up tests """
-        specimen_source = self.ReadText('//*[@id="ME11165"]')
+        specimen_source = self.ReadText('//*[@id="ME11165"]').lower()
+        other_specimen_source = self.ReadText('//*[@id="ME12173"]')
         if not specimen_source:
-            self.issues.append("specimen source cannot be blank when Case status is confirmed.")
+            if self.case_status == "Confirmed":
+                self.issues.append("Confirmed case but no specimen source selected.")
+        else:
+            if self.lab_specimen_source and specimen_source not in self.lab_specimen_source:
+                self.issues.append("Specimen source doesn't match lab report: Needs manual review.")
+            
+            if specimen_source == "Other" and not other_specimen_source:
+                self.issues.append('Other speciment source cannot be vlank when speciment source is "Other"')
         print(f"specimen source: {specimen_source}")
         
     def CheckDateSpecimenCollected(self):
         """ Check for follow-up tests """
-        date_specimen_collected = self.ReadText('//*[@id="ME8117"]')
-        if not date_specimen_collected:
+        date_specimen_collected = self.ReadDate('//*[@id="ME8117"]')
+        if not date_specimen_collected and self.case_status == "Confirmed":
             self.issues.append("date specimen collected cannot be blank when Case status is confirmed.")
+        else:
+            if self.lab_specimen_collection_date and self.lab_specimen_collection_date != date_specimen_collected:
+                self.issues.append("Specimen collection dates do not match dates on lab report.")
         print(f"date specimen collected: {date_specimen_collected}")
+        
 
-    """
-    end
-    """
+    def CheckSecondaryToANotherCase(self):
+        secondary_to = self.CheckForValue('//*[@id="ME11175"]', 'secondary to another case cannot be blank')
+        others_iii = self.CheckForValue('//*[@id="ME11176"]', 'Others III cannot be blank')
+        if not secondary_to and self.case_status == ["Confirmed", "Probable"]:
+            self.issues.append("Secondary to Another Case cannot be blank.")
+        
+        if not others_iii and self.case_status == ["Confirmed", "Probable"]:
+            self.issues.append("Others ill cannot be blank.")
     
     def CheckDiagnosisDate(self):
         diagnosis_date = self.CheckForValue('//*[@id="INV136"]', 'Diagnosis date cannot be blank.')
         if diagnosis_date and diagnosis_date != self.collection_date:
             self.issues.append('Diagnosis date should be same as collection date.')
 
-            
     def CheckIllnessOnset(self):
         """ Check if a patient has an illness onset date. """
         self.IllnessOnset = self.ReadDate('//*[@id="INV137"]')
@@ -289,23 +412,96 @@ class Giardia(NBSdriver):
             self.issues.append('Illness end date cannot precede illness onset date.')
             print(f"Illness_length: {self.IllnessOnset}")
 
-        if not self.IllnessOnset:
-            self.issues.append('“Illness onset date” should not be blank.')
+        if not self.IllnessOnset and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append(f'“Illness onset date: {self.IllnessOnset}” should not be blank.')
             print(f"Illness_onset: {self.IllnessOnset}")
+    
+    def CheckIllnessDuration(self):
+        self.illnessDuration = self.ReadText('//*[@id="INV139"]')
+        self.illnessDurationUnits = self.ReadText('//*[@id="INV140"]')
 
     def CheckAgeData(self):
         """ Check for follow-up tests """
-        self.age_at_onset = self.CheckForValue('//*[@id="INV143"]', 'Age at onset cannot be blank')
+        self.age_at_onset = self.ReadText('//*[@id="INV143"]')
         print(f"age at onset: {self.age_at_onset}")
-        self.age_at_onset_units = self.CheckForValue('//*[@id="INV144"]', 'Age at onset units cannot be blank')
+        self.age_at_onset_units = self.ReadText('//*[@id="INV144"]')
         print(f"age at onset units: {self.age_at_onset}")
-        
 
+        if not self.age_at_onset and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append('Age at onset is missing.')
+        
+        if not self.age_at_onset_units and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append('Age at onset units is missing.')
+        
     def CheckWasSymptomatic(self):
+
         """ Check for follow-up tests """
-        self.symptomatic = self.CheckForValue('//*[@id="ME12174"]', 'Symptomatic cannot be blank')
+        self.symptomatic = self.ReadText('//*[@id="ME12174"]')
         print(f"was symptomatic: {self.symptomatic}")
 
+        if self.symptomatic not in ["Yes", "No"] and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append('Confirmed or probable needs to be symptomatic.')
+
+    ####################### Epidemiologic Check Methods ############################
+    def CheckWhereDiseaseWasAcquired(self):
+        """ Check where disease was acquired."""
+        disease_acquired = self.ReadText('//*[@id="INV152"]')
+        imported_country = self.ReadText('//*[@id="INV153"]')
+        imported_state = self.ReadText('//*[@id="INV154"]')
+
+        if disease_acquired == "international" and not imported_country:
+            self.issues.append("Internationally acquired but no country specified.")
+        
+        if disease_acquired == "Out of State" and not imported_state:
+            self.issues.append("Out of state acquired but no state specified.")
+
+    
+    def CheckTransmissionMode(self):
+        """ Check that transmission mode isn't blank."""
+        transmission_mode = self.CheckForValue('//*[@id="INV157"]', "Transmission mode cannot be blank.")
+
+    # def CheckConfirmationDate(self):
+    #     confirmationDate = self.ReadDate('//*[@id="INV162"]')
+    #     if not confirmationDate:
+    #         self.issues.append("Confirmation date is missing.")
+
+    def CheckDateClosed(self):
+        date_closed = self.ReadDate('//*[@id="ME11163"]')
+        date_closed_text = self.ReadText('//*[@id="ME11163"]')
+        if not date_closed:
+            self.issues.append(f"Date closed: {date_closed}-text{date_closed_text} should not be blank.")
+            print(f"date_closed: {date_closed}-text{date_closed_text}")
+
+    def CheckPatientTreated(self):
+        patient_treated = self.ReadText('//*[@id="ME8171"]')
+        if not patient_treated and self.case_status in ["Confirmed", "Probable"]:
+            self.issues.append("Patient treated field cannot be blank.")
+
+    def CheckCaseStatus(self):
+        self.case_status = self.ReadText('//*[@id="INV163"]')
+
+    def VerifyCaseStatus(self):
+        confirmed = self.laboratory_test_result == "Positive" and self.symptomatic == "Yes"
+        probable = self.symptomatic == "Yes" and "Epidemiologically linked" in self.confirmation_method
+        
+        if not self.case_status or self.case_status in ["Suspect", "Unknown"]:
+            self.issues.append("Case status incorrect or missing.")
+        elif self.case_status == "Confirmed" and not confirmed:
+            self.issues.append("Does not meet confirmed case criteria.")
+        elif self.case_status == "Probable" and not probable:
+            self.issues.append("Does not meet probable case criteria.")
+
+        # if confirmed:
+        #     if self.case_status != "Confirmed":
+        #         self.issues.append("Meets case definition for a confirmed case but isn't a confirmed case")
+        # elif probable:
+        #     if self.case_status != "Probable":
+        #         self.issues.append("Meets case definition for a probable case but isn't a probable case")
+        # elif confirmed is False and probable is False and self.CaseStatus != "Not a Case":
+        #     self.issues.append("Meets case definition for Not a Case case but isn't Not a Case")
+
+    
+    #### notification controls ####
     def RejectNotification(self):
         """ Reject notification on first case in notification queue.
         To be used when issues were encountered during review of the case."""
