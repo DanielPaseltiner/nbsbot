@@ -56,27 +56,68 @@ def start_anaplasma(username, passcode):
     n = 1
     gone_home = -1
     attempt_counter = 0
+    consecutive_no_case_attempts = 0  # Track consecutive attempts with no valid cases
+    max_consecutive_no_case_attempts = 3  # Stop after 3 consecutive attempts with no valid cases
+    
     with open("patients_to_skip.txt", "r") as patient_reader:
         patients_to_skip |= set(patient_reader.readlines())
 
-    limit = 2
-    printAt = 100
+    #set number of patients to review, preferrably the current number of cases 
+    #before running.
+    limit = 6
+    printAt = 6
     printNo = 1
     page = 1
     loop = tqdm(generator())
-    for _ in loop:
-        print(f"current limit: {limit}", "starting_iteration:", loop.n)
-        #check if the bot haa gone through the set limit of reviews
-        if loop.n !=0 and loop.n % printAt == 0: 
-            print(f"printing set {printNo}", reviewed_ids, reason)
-            bot_act = pd.DataFrame(
+    
+    def save_and_print_results(file_suffix=""):
+        """Helper function to save results to Excel - appends if file exists"""
+        if len(reviewed_ids) > 0:
+            print(f"Saving results: {reviewed_ids}, {what_do}, {reason}, {epi}")
+            new_data = pd.DataFrame(
                 {
                 'Inv ID': reviewed_ids,
                 'Action': what_do,
                 'Reason': reason,
                 'Epi': epi
                 })
-            bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_{printNo}r_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+            
+            filename = f"saved/anaplasma/Anaplasma_bot_activity_{file_suffix}_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx"
+            
+            # Check if file already exists
+            if os.path.exists(filename):
+                try:
+                    # Read existing data
+                    existing_data = pd.read_excel(filename, index_col=0)
+                    # Append new data to existing data
+                    combined_data = pd.concat([existing_data, new_data], ignore_index=True)
+                    
+                    # Remove duplicates based on 'Inv ID' to avoid processing same case multiple times
+                    # Keep the last occurrence (most recent) in case of duplicates
+                    combined_data = combined_data.drop_duplicates(subset=['Inv ID'], keep='last')
+                    
+                    print(f"Appending {len(new_data)} new records to existing file with {len(existing_data)} records")
+                    print(f"After removing duplicates: {len(combined_data)} total records")
+                except Exception as e:
+                    print(f"Error reading existing file, creating new one: {str(e)}")
+                    combined_data = new_data
+            else:
+                combined_data = new_data
+                print(f"Creating new file with {len(new_data)} records")
+            
+            # Save the combined data
+            combined_data.to_excel(filename)
+            print(f"Results saved to {filename} (Total records: {len(combined_data)})")
+            return True
+        return False
+    
+    for _ in loop:
+        print(f"current limit: {limit}", "starting_iteration:", loop.n)
+        
+        #check if the bot has gone through the set limit of reviews
+        if loop.n !=0 and loop.n % printAt == 0: 
+            print(f"printing set {printNo}", reviewed_ids, reason)
+            save_and_print_results(f"{printNo}r")
             printNo += 1
             reviewed_ids = []
             what_do = []
@@ -85,25 +126,18 @@ def start_anaplasma(username, passcode):
             print(f"sleeping for 2s after run {printNo - 1}")
             time.sleep(2)
 
-        if limit and loop.n == limit:
-            #for test
-            # if page > 1:
-            #     page -= 1
-            #     gone_home = 0
-            #     n = 1
-            #     limit += 10
-            #     continue
-            #end test
+        # Check if we've reached the limit OR if we've had too many consecutive attempts with no valid cases
+        if (limit and loop.n == limit) or consecutive_no_case_attempts >= max_consecutive_no_case_attempts:
+            if consecutive_no_case_attempts >= max_consecutive_no_case_attempts:
+                print(f"No more valid cases found after {max_consecutive_no_case_attempts} consecutive attempts. Ending run.")
             
-            if len(reason) > 0:
-                bot_act = pd.DataFrame(
-                    {'Inv ID': reviewed_ids,
-                    'Action': what_do,
-                    'Reason': reason,
-                    'Epi': epi
-                    })
-                bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_Endr_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+            # Save any remaining results
+            if len(reviewed_ids) > 0:
+                save_and_print_results("final")
+            else:
+                print("No cases processed in final batch.")
             break
+            
         try:
             #Sort review queue so that only Anaplasma investigations are listed
             paths = {
@@ -124,119 +158,78 @@ def start_anaplasma(username, passcode):
 
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
-
-                #for test
-                # if gone_home > NBS.num_attempts and loop.n >= limit:
-                #     print("No case in approval queue, ending...", "current_iteration:", loop.n)
-                #     break
-                # print("failed to go to home, skipping to approval queue...", "current_iteration:", loop.n)
-                # gone_home += 1
-                #test end 
-
                 continue
             elif NBS.queue_loaded == False:
                 NBS.queue_loaded = None
                 print("failed to go to home, approval queue didn't load, breaking....", "current_iteration:", loop.n)
-                # NBS.SendManualReviewEmail()
-                # NBS.Sleep()
-                # continue
                 break
             
             NBS.CheckFirstCase(n)
             print("checked first case", "current_iteration:", loop.n)
+            
             if NBS.condition == 'Anaplasma phagocytophilum':
+                # Reset consecutive no-case counter since we found a valid case
+                consecutive_no_case_attempts = 0
+                
                 NBS.GoToNCaseInApprovalQueue(n)
                 print(f"navigated to {n or "first"} case in queue", "current_iteration:", loop.n)
                 if NBS.queue_loaded:
                     NBS.queue_loaded = None
-
-                    #for test
-                    # if gone_home > NBS.num_attempts and loop.n >= limit:
-                    #     print("No case in approval queue, ending...", "current_iteration:", loop.n)
-                    #     break
-                    # print("failed to go to home, skipping to approval queue...", "current_iteration:", loop.n)
-                    # gone_home += 1
-                    #test end
                     continue
+                    
                 inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text 
                 print(f"present, {inv_id}", "current_iteration:", loop.n)
+                
                 if inv_id in patients_to_skip: #this caused order error in nbs comment ?
                     print(f"skipping, {inv_id}", "current_iteration:", loop.n)
                     NBS.ReturnApprovalQueue()
                     print("going to approval queue", "current_iteration:", loop.n)
                     n += 1
                     print("Making up for skipped case with increased limit...", "current_iteration:", loop.n)
-                    #for test
-                    # limit += 1
-                    # print(f"increased limit: {limit}", "current_iteration:", loop.n)
-                    #test end
                     continue
                 
                 NBS.StandardChecks()
                 print("running standard checks", "current_iteration:", loop.n)
-                if not NBS.issues:
+                if not NBS.issues or "Out of state - should be Not a Case." in NBS.issues:
                     reviewed_ids.append(inv_id)
                     what_do.append("Approve Notification")
                     reason.append("Approved")
                     epi.append(NBS.investigator_name)
 
-                    #for test
-                    # patients_to_skip.add(inv_id)
-                    # print("approved", "current_iteration:", loop.n)
-                    #test end
-
                     #remove on test
                     NBS.ApproveNotification()
-                    NBS.SendAnaplasmaEmail("Hey, please don't change anything at all and just click CN", inv_id)
+                    if "Out of state - should be Not a Case." not in NBS.issues:
+                        NBS.SendAnaplasmaEmail("Out of state - should be Not a Case.", inv_id)
+                    else:
+                        NBS.SendAnaplasmaEmail("Hey, please don't change anything at all and just click CN", inv_id)
                     print("current run approved", "current_iteration:", loop.n)
+                    
                 NBS.ReturnApprovalQueue() #return to approval queue if no approval
                 print("returning to approval queue..", "ending_iteration:", loop.n)
                 if NBS.queue_loaded:
                     NBS.queue_loaded = None
-
-                    #for test
-                    # if gone_home > NBS.num_attempts and loop.n >= limit:
-                    #     print("No case in approval queue, ending...", "current_iteration:", loop.n)
-                    #     break
-                    # print("failed to go to home, skipping to approval queue...", "current_iteration:", loop.n)
-                    # gone_home += 1
-                    #test end
-
                     continue
+
                 if len(NBS.issues) > 0:
                     NBS.SortQueue(paths)
                     print("sorting queue to check case at the top...", "current_iteration:", loop.n)
-                    #for test
-                    # NBS.GoToNPage(page)
-                    #test end
+                    
                     if NBS.queue_loaded:
                         NBS.queue_loaded = None
                         print("failed to go to home, skipping to approval queue....", "current_iteration:", loop.n)
                         continue
+                        
                     NBS.CheckFirstCase(n)
                     print("check for matching first case", "current_iteration:", loop.n)
 
                     NBS.final_name = NBS.patient_name
-                    # if NBS.country and NBS.country != 'UNITED STATES' or NBS.state and  NBS.state != 'Maine':
-                    #     print("Skipping patient. No action carried out", "current_iteration:", loop.n)
-                    #     patients_to_skip.add(inv_id)
-                    #     reviewed_ids.append(inv_id)
-                    #     what_do.append("Skipped Notification")
-                    #     epi.append(NBS.investigator_name)
-                    #     reason.append(' '.join(NBS.issues))
-                    #     print("issues seen on append:", NBS.issues, "current_iteration:", loop.n)
 
-                    if NBS.final_name == NBS.initial_name:
+                    if NBS.final_name == NBS.initial_name and "Out of state - should be Not a Case." not in NBS.issues:
                         reviewed_ids.append(inv_id)
                         what_do.append("Reject Notification")
                         epi.append(NBS.investigator_name)
                         reason.append(' '.join(NBS.issues))
                         print("issues seen on append:", NBS.issues, "current_iteration:", loop.n)
-
-                        #for test
-                        # patients_to_skip.add(inv_id)
-                        # print("rejected", "current_iteration:", loop.n)
-                        #test end
 
                         #remove on test
                         NBS.RejectNotification(n)
@@ -249,6 +242,7 @@ def start_anaplasma(username, passcode):
                             print('mail', body, "current_iteration:", loop.n)
                             NBS.SendAnaplasmaEmail(body, inv_id)
                         print("current iteration was rejected", "current_iteration:", loop.n)
+
                         NBS.GoToApprovalQueue()
                         print(f"returning approval queue....: {NBS.queue_loaded}", "ending_iteration:", loop.n)
                     elif NBS.final_name != NBS.initial_name:
@@ -256,62 +250,38 @@ def start_anaplasma(username, passcode):
                         print('Case at top of queue changed. No action was taken on the reviewed case.', "current_iteration:", loop.n)
                         NBS.num_fail += 1
             else:
+                # Increment consecutive no-case counter since we didn't find a valid Anaplasma case
+                consecutive_no_case_attempts += 1
+                print(f"No Anaplasma case found. Consecutive attempts: {consecutive_no_case_attempts}/{max_consecutive_no_case_attempts}", "current_iteration:", loop.n)
+                
                 if attempt_counter < NBS.num_attempts:
                     attempt_counter += 1
                 else:
                     attempt_counter = 0
                     print("No Anaplasma cases in notification queue.", "current_iteration:", loop.n)
-                    # NBS.SendManualReviewEmail()
-                    break
-                    # NBS.Sleep()
+                    # If we've exhausted NBS attempts and still no cases, this counts as a no-case attempt
+                    if consecutive_no_case_attempts >= max_consecutive_no_case_attempts:
+                        print("Maximum consecutive no-case attempts reached. Ending run.")
+                        break
+                        
         except Exception as e:
-            #for test
-            # raise Exception(e)
-            #test end
-
             error_list.append(str(e))
             error = True
-        #     # print(tb, "current_iteration:", loop.n)
-        #     with open("error_log.txt", "a") as log:
-        #         log.write(f"{datetime.now().date().strftime('%m_%d_%Y')} | anaplasma - {str(tb)}")
-        #     #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(Anaplasma Notification Review) AKA Athena', tb, 'error email')
+            print(f"Exception occurred: {str(e)}", "current_iteration:", loop.n)
             
     print("ending, printing, saving", "current_iteration:", loop.n)
     
-    if len(reason) > 0:
-        print(reviewed_ids, what_do, reason, epi, "current_iteration:", loop.n)
-        bot_act = pd.DataFrame(
-            {'Inv ID': reviewed_ids,
-            'Action': what_do,
-            'Reason': reason,
-            'Epi': epi
-            })
-        bot_act.to_excel(f"saved/anaplasma/Anaplasma_bot_activity_105r_final_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
+    # Final save of any remaining results
+    if len(reviewed_ids) > 0:
+        save_and_print_results("final")
+    else:
+        print("No final results to save.")
 
-    # body = "The list of Anaplasma Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
-
-    # message = EmailMessage()
-    # message.set_content(body)
-    # message['Subject'] = 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas'
-    # message['From'] = NBS.nbsbot_email
-    # message['To'] = ', '.join(["disease.reporting@maine.gov"])
-    # with open(f"Anaplasma_bot_activity_1{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
-    #     message.add_attachment(
-    #         f.read(),
-    #         filename=f"Anaplasma_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
-    #         maintype="application",
-    #         subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    #     )
-    # smtpObj = smtplib.SMTP(NBS.smtp_server)
-    # smtpObj.send_message(message)
     with open("patients_to_skip.txt", "w") as patient_writer:
         patient_writer.write("\n".join(patients_to_skip) + "\n")
-    if error is not None: 
+
+    if error: 
         raise Exception(error_list)
-        #NBS.send_smtp_email("disease.reporting@maine.gov", 'Notification Review Report: NBSbot(Anaplasma Notification Review) AKA Anaplasma de Armas', body, 'Anaplasma Notification Review email')
 
 if __name__ == '__main__':
     start_anaplasma()
-
-
-# CAS11020803ME01

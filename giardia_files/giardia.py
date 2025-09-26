@@ -71,6 +71,7 @@ class Giardia(NBSdriver):
         self.CheckInvestigationStartDate()
         self.CheckInvestigationStatus()
         self.CheckSharedIndidcator()
+        self.CheckReportDates()
         # self.CheckStateCaseID()
         self.CheckReportingSourceType()
         self.CheckReportingOrganization()
@@ -200,6 +201,8 @@ class Giardia(NBSdriver):
 
     def CheckInvestigationStatus(self):
         status = self.CheckForValue('//*[@id="INV109"]', 'Investigation status date cannot be blank')
+        if status.lower() == "open":
+            self.issues.append("Investigation status is listed as 'Open'")
     
     def CheckSharedIndidcator(self):
         indicator = self.CheckForValue('//*[@id="NBS_UI_19"]/tbody/tr[5]/td[2]', 'Shared indicator is blank')
@@ -234,8 +237,10 @@ class Giardia(NBSdriver):
             self.issues.append('Missing report date.')
 
         dates = [self.reported_state_date, self.reported_county_date, self.report_date]
-        if all(dates != self.latest_date_received) and all(dates !=self.earliest_date_received):
-            self.issues.append("date mismatch with recieved dates")
+        # if all(date != self.latest_date_received and date != self.earliest_date_received for date in dates):
+        #     self.issues.append("date mismatch with received dates")
+        if (self.latest_date_received not in dates and self.earliest_date_received not in dates):
+            self.issues.append("last date received and earliest date received mismatched with reported dates")
 
     ####################### Supplmental Check Methods ############################
     def CheckLabReports(self):
@@ -248,7 +253,7 @@ class Giardia(NBSdriver):
             if any(self.Lab_report_table["Date Received"] == "Nothing found to display."):
                 if self.case_status and self.case_status != "Probable": 
                     self.issues.append("Missing lab report.")
-                    
+
                 self.earliest_date_received = None
                 self.latest_date_received = None
                 self.lab_specimen_collection_date = None
@@ -290,7 +295,8 @@ class Giardia(NBSdriver):
     def CheckHospitalization(self):
         """ Read hospitalization status. If yes need date and hospital """
         self.hospitalization_indicator = self.ReadText('//*[@id="INV128"]')
-        if self.hospitalization_indicator not in ['Yes', 'No'] and self.case_status in ["Confirmed", "Probable"]: 
+        if self.hospitalization_indicator not in ['Yes', 'No']:
+            # and self.case_status in ["Confirmed", "Probable"]: 
             self.issues.append("Hospitalized answer cannot be blank or unknown.")
         if self.hospitalization_indicator == 'Yes':
             hospital_name = self.ReadText('//*[@id="INV184"]')
@@ -490,6 +496,8 @@ class Giardia(NBSdriver):
             self.issues.append("Does not meet confirmed case criteria.")
         elif self.case_status == "Probable" and not probable:
             self.issues.append("Does not meet probable case criteria.")
+        elif self.case_status == "Not a Case" and (probable or confirmed):
+            self.issues.append("Incorrect case status.")
 
         # if confirmed:
         #     if self.case_status != "Confirmed":

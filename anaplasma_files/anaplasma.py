@@ -106,7 +106,7 @@ class Anaplasma(NBSdriver):
         self.CheckIllnessLength()
         self.CheckAcuteOrConvalscent()                              #new code
         self.CheckClinicallyCompatible()
-        self.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
+        #self.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
         self.CheckConfirmationMethod() #removed Ana
         self.CheckLTF()
         # if self.serology_test_type and str(self.serology_test_type).endswith("IgM"):

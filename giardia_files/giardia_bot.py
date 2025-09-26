@@ -148,7 +148,7 @@ def start_giardia(username, passcode):
                 if len(NBS.issues) > 0:
                     NBS.SortQueue(paths)
                     print("sorting queue...")
-                    # NBS.GoToNPage(page)
+                    NBS.GoToNPage(page)
                     if NBS.queue_loaded:
                         NBS.queue_loaded = None
                         print("failed to go to home, skipping to approval queue....")
