@@ -19,6 +19,8 @@ from io import StringIO
 from bs4 import BeautifulSoup
 import smtplib
 from email.message import EmailMessage
+from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
+from selenium.common.exceptions import NoSuchElementException
 
 
 
@@ -239,8 +241,8 @@ class Giardia(NBSdriver):
         dates = [self.reported_state_date, self.reported_county_date, self.report_date]
         # if all(date != self.latest_date_received and date != self.earliest_date_received for date in dates):
         #     self.issues.append("date mismatch with received dates")
-        if (self.latest_date_received not in dates and self.earliest_date_received not in dates):
-            self.issues.append("last date received and earliest date received mismatched with reported dates")
+        if (self.latest_date_received not in dates and self.earliest_date_received not in dates and self.case_status != "Probable" and not self.missing_lab_report):
+            self.issues.append(f"Lab received dates and reported dates mismatched.")
 
     ####################### Supplmental Check Methods ############################
     def CheckLabReports(self):
@@ -253,7 +255,7 @@ class Giardia(NBSdriver):
             if any(self.Lab_report_table["Date Received"] == "Nothing found to display."):
                 if self.case_status and self.case_status != "Probable": 
                     self.issues.append("Missing lab report.")
-
+                self.missing_lab_report = True
                 self.earliest_date_received = None
                 self.latest_date_received = None
                 self.lab_specimen_collection_date = None
@@ -261,8 +263,12 @@ class Giardia(NBSdriver):
             self.earliest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").min().date()
             self.latest_date_received = pd.to_datetime(self.Lab_report_table["Date Received"], format="%m/%d/%Y %I:%M %p").max().date()
             self.lab_specimen_collection_date = pd.to_datetime(self.Lab_report_table["Date Collected"], format="%m/%d/%Y").max().date()
-            self.find_element(By.XPATH, '//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a').click()
-            self.lab_specimen_source = self.ReadText('//*[@id="LAB165"]').lower()
+            try:
+                self.find_element(By.XPATH, '//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a').click()
+                self.lab_specimen_source = self.ReadText('//*[@id="LAB165"]').lower()
+            except (TimeoutException, NoSuchElementException):
+                self.lab_specimen_collection_date = None
+
             if not self.lab_specimen_collection_date:
                 self.lab_specimen_collection_date = self.ReadDate('//*[@id="LAB163"]')
             self.find_element(By.XPATH, '(//div[contains(@class, "returnToPageLink")]//a)[1]').click()
@@ -510,43 +516,44 @@ class Giardia(NBSdriver):
 
     
     #### notification controls ####
-    def RejectNotification(self):
-        """ Reject notification on first case in notification queue.
-        To be used when issues were encountered during review of the case."""
-        reject_path = '//*[@id="parent"]/tbody/tr[1]/td[2]/img'
-        main_window_handle = self.current_window_handle
-        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
-        self.find_element(By.XPATH,reject_path).click()
-        rejection_comment_window = None
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                rejection_comment_window = handle
-                break
-        if rejection_comment_window:
-            self.switch_to.window(rejection_comment_window)
-            timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-            self.issues.append('-nbsbot ' + timestamp)
-            self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
-            self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
-            self.switch_to.window(main_window_handle)
-            self.num_rejected += 1
-    def ApproveNotification(self):
-        """ Approve notification on first case in notification queue. """
-        main_window_handle = self.current_window_handle
-        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                approval_comment_window = handle
-                break
-        self.switch_to.window(approval_comment_window)
-        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
-        self.switch_to.window(main_window_handle)
-        self.num_approved += 1
+    # def RejectNotification(self, n=1):
+    #     """ Reject notification on first case in notification queue.
+    #     To be used when issues were encountered during review of the case."""
+    #     reject_path = f'//*[@id="parent"]/tbody/tr[{n}]/td[2]/img'
+    #     main_window_handle = self.current_window_handle
+    #     WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
+    #     self.find_element(By.XPATH,reject_path).click()
+    #     rejection_comment_window = None
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             rejection_comment_window = handle
+    #             break
+    #     if rejection_comment_window:
+    #         self.switch_to.window(rejection_comment_window)
+    #         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    #         self.issues.append('-nbsbot ' + timestamp)
+    #         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
+    #         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
+    #         self.switch_to.window(main_window_handle)
+    #         self.num_rejected += 1
+
+    # def ApproveNotification(self):
+    #     """ Approve notification on first case in notification queue. """
+    #     main_window_handle = self.current_window_handle
+    #     self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             approval_comment_window = handle
+    #             break
+    #     self.switch_to.window(approval_comment_window)
+    #     self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+    #     self.switch_to.window(main_window_handle)
+    #     self.num_approved += 1
     
-    def SendAnaplasmaEmail(self, body, inv_id):
+    def SendGiardiaEmail(self, body, inv_id):
         message = EmailMessage()
         message.set_content(body)
-        message['Subject'] = f'AnA Bot {inv_id}'
+        message['Subject'] = f'Giardia Bot {inv_id}'
         message['From'] = self.nbsbot_email
         message['To'] = ', '.join(["disease.reporting@maine.gov"])
         smtpObj = smtplib.SMTP(self.smtp_server)

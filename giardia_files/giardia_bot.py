@@ -54,22 +54,64 @@ def start_giardia(username, passcode):
     n = 1
     gone_home = -1
     attempt_counter = 0
+
+    def save_and_print_results(file_suffix=""):
+        """Helper function to save results to Excel - appends if file exists"""
+        if len(reviewed_ids) > 0:
+            print(f"Saving results: {reviewed_ids}, {what_do}, {reason}")
+            new_data = pd.DataFrame(
+                {
+                'Inv ID': reviewed_ids,
+                'Action': what_do,
+                'Reason': reason
+                })
+            
+            filename = f"saved/giardia/Giardia_bot_activity_{file_suffix}_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx"
+            
+            # Check if file already exists
+            if os.path.exists(filename):
+                try:
+                    # Read existing data
+                    existing_data = pd.read_excel(filename, index_col=0)
+                    # Append new data to existing data
+                    combined_data = pd.concat([existing_data, new_data], ignore_index=True)
+                    
+                    # Remove duplicates based on 'Inv ID' to avoid processing same case multiple times
+                    # Keep the last occurrence (most recent) in case of duplicates
+                    combined_data = combined_data.drop_duplicates(subset=['Inv ID'], keep='last')
+                    
+                    print(f"Appending {len(new_data)} new records to existing file with {len(existing_data)} records")
+                    print(f"After removing duplicates: {len(combined_data)} total records")
+                except Exception as e:
+                    print(f"Error reading existing file, creating new one: {str(e)}")
+                    combined_data = new_data
+            else:
+                combined_data = new_data
+                print(f"Creating new file with {len(new_data)} records")
+            
+            # Save the combined data
+            combined_data.to_excel(filename)
+            print(f"Results saved to {filename} (Total records: {len(combined_data)})")
+            return True
+        return False
+
+    
     with open("patients_to_skip.txt", "r") as patient_reader:
         patients_to_skip |= set(patient_reader.readlines())
 
-    limit = 4
+    limit = 20
     page = 2
     loop = tqdm(generator())
     for _ in loop:
         print(f"current limit: {limit}")
         #check if the bot haa gone through the set limit of reviews
         if loop.n == limit:
-            if page > 1:
-                page -= 1
-                gone_home = 0
-                n = 1
-                limit += 20
-                continue
+            # if page > 1:
+            #     page -= 1
+            #     gone_home = 0
+            #     n = 1
+            #     limit += 20
+            #     continue
             break
         try:
             #Sort review queue so that only giardia investigations are listed
@@ -84,7 +126,7 @@ def start_giardia(username, passcode):
             }
             NBS.SortQueue(paths)
             print(f"sorting queue...: {NBS.queue_loaded}")
-            NBS.GoToNPage(page)
+            # NBS.GoToNPage(page)
 
             if NBS.queue_loaded:
                 NBS.queue_loaded = None
@@ -102,7 +144,7 @@ def start_giardia(username, passcode):
                 # continue
                 break
             
-            NBS.CheckFirstCase()
+            NBS.CheckFirstCase(n)
             print("checked first case")
             if NBS.condition == 'Giardiasis':
                 NBS.GoToNCaseInApprovalQueue(n)
@@ -115,14 +157,15 @@ def start_giardia(username, passcode):
                     print("failed to go to home, skipping to approval queue...")
                     gone_home += 1
                     continue
+
                 inv_id = NBS.find_element(By.XPATH,'//*[@id="bd"]/table[3]/tbody/tr[2]/td[1]/span[2]').text 
                 if inv_id in patients_to_skip:
                     print(f"present, {inv_id}")
                     NBS.ReturnApprovalQueue()
                     print("going to approval queue")
                     n += 1
-                    limit += 1
-                    print(f"increased limit: {limit}")
+                    # limit += 1
+                    print("Making up for skipped case with increased limit...", "current_iteration:", loop.n)
                     continue
                 
                 NBS.StandardChecks()
@@ -131,12 +174,13 @@ def start_giardia(username, passcode):
                     reviewed_ids.append(inv_id)
                     what_do.append("Approve Notification")
                     reason.append("Approved")
-                    patients_to_skip.add(inv_id)
+                    # patients_to_skip.add(inv_id)
                     print("approved")
-                    # NBS.ApproveNotification()
-                    # NBS.SendAnaplasmaEmail("Hey, please don't change anything at all and just click CN", inv_id)
+                    NBS.ApproveNotification()
+                    NBS.SendGiardiaEmail("Hey, please don't change anything at all and just click CN", inv_id)
                 NBS.ReturnApprovalQueue()
                 print("returning to approval queue..")
+
                 if NBS.queue_loaded:
                     NBS.queue_loaded = None
                     if gone_home > NBS.num_attempts and loop.n >= limit:
@@ -145,15 +189,18 @@ def start_giardia(username, passcode):
                     print("failed to go to home, skipping to approval queue...")
                     gone_home += 1
                     continue
+
                 if len(NBS.issues) > 0:
                     NBS.SortQueue(paths)
                     print("sorting queue...")
-                    NBS.GoToNPage(page)
+                    # NBS.GoToNPage(page)
+
                     if NBS.queue_loaded:
                         NBS.queue_loaded = None
                         print("failed to go to home, skipping to approval queue....")
                         continue
-                    NBS.CheckFirstCase()
+
+                    NBS.CheckFirstCase(n)
                     print("check for matching first case")
 
                     NBS.final_name = NBS.patient_name
@@ -164,17 +211,19 @@ def start_giardia(username, passcode):
                         reviewed_ids.append(inv_id)
                         what_do.append("Reject Notification")
                         reason.append(' '.join(NBS.issues))
-                        patients_to_skip.add(inv_id)
+                        # patients_to_skip.add(inv_id)
                         print("rejected")
-                        # NBS.RejectNotification()
-                        # body = ''
-                        # if  all(case in NBS.issues  for case in ['City is blank.', 'County is blank.', 'Zip code is blank.']):
-                        #     body = 'Hey, please only update City, Zip Code and County, then Click CN'
-                        # elif NBS.CorrectCaseStatus:
-                        #     body = f'Hey, please only update the case status to {NBS.CorrectCaseStatus}, then click CN for this case.'
-                        # if body:
-                        #     print('mail', body)
-                        #     NBS.SendAnaplasmaEmail(body, inv_id)
+
+                        NBS.RejectNotification(n)
+                        body = ''
+                        if  all(case in NBS.issues  for case in ['City is blank.', 'County is blank.', 'Zip code is blank.']):
+                            body = 'Hey, please only update City, Zip Code and County, then Click CN'
+                        elif NBS.CorrectCaseStatus:
+                            body = f'Hey, please only update the case status to {NBS.CorrectCaseStatus}, then click CN for this case.'
+                        if body:
+                            print('mail', body)
+                            NBS.SendGiardiaEmail(body, inv_id)
+
                         NBS.GoToApprovalQueue()
                         print(f"returning approval queue....: {NBS.queue_loaded}")
                     elif NBS.final_name != NBS.initial_name:
@@ -191,39 +240,24 @@ def start_giardia(username, passcode):
                     break
                     # NBS.Sleep()
         except Exception as e:
-            raise Exception(e)
-            # error_list.append(str(e))
-            # error = True
+            # raise Exception(e)
+            error_list.append(str(e))
+            error = True
         #     # print(tb)
         #     with open("error_log.txt", "a") as log:
         #         log.write(f"{datetime.now().date().strftime('%m_%d_%Y')} | giardia - {str(tb)}")
         #     #NBS.send_smtp_email(NBS.covid_informatics_list, 'ERROR REPORT: NBSbot(giardia Notification Review) AKA Athena', tb, 'error email')
             
     print("ending, printing, saving")
-    print(reviewed_ids, what_do, reason)
-    bot_act = pd.DataFrame(
-        {'Inv ID': reviewed_ids,
-        'Action': what_do,
-        'Reason': reason
-        })
-    bot_act.to_excel(f"saved/giardia/Giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx")
-
-    # body = "The list of giardia Phagocytophilum notifications that need to be manually reviewed are in the attached spreadsheet."
+    print(reviewed_ids)
     
-    # message = EmailMessage()
-    # message.set_content(body)
-    # message['Subject'] = 'Notification Review Report: NBSbot(giardia Notification Review) AKA giardia de Armas'
-    # message['From'] = NBS.nbsbot_email
-    # message['To'] = ', '.join(["disease.reporting@maine.gov"])
-    # with open(f"giardia_bot_activity_1{datetime.now().date().strftime('%m_%d_%Y')}.xlsx", "rb") as f:
-    #     message.add_attachment(
-    #         f.read(),
-    #         filename=f"giardia_bot_activity_{datetime.now().date().strftime('%m_%d_%Y')}.xlsx",
-    #         maintype="application",
-    #         subtype="vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    #     )
-    # smtpObj = smtplib.SMTP(NBS.smtp_server)
-    # smtpObj.send_message(message)
+    if len(reviewed_ids) > 0:
+        save_and_print_results("final")
+    else:
+        print("No final results to save.")
+    
+
+
     with open("patients_to_skip.txt", "w") as patient_writer:
         patient_writer.write("\n".join(patients_to_skip) + "\n")
     if error is not None: 
@@ -232,3 +266,4 @@ def start_giardia(username, passcode):
 
 if __name__ == '__main__':
     start_giardia()
+    

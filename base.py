@@ -29,7 +29,7 @@ from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
-import sys
+import sys, re
 import win32com.client as win32
 import getpass
 from pathlib import Path
@@ -91,6 +91,7 @@ class NBSdriver(webdriver.Chrome):
         self.is_deceased = None #new
         self.now = datetime.now().date()
         self.collection_date = None
+        self.serology_collection_date = None
         self.cong_aoe = None
         self.cong_setting_indicator = None
         self.county = None
@@ -132,6 +133,7 @@ class NBSdriver(webdriver.Chrome):
         self.returned_by_link = False #new
         self.earliest_date_received = None
         self.latest_date_received = None
+        self.missing_lab_report = False
         self.status = None
         self.symp_aoe = None
         self.symptoms = None
@@ -778,7 +780,11 @@ class NBSdriver(webdriver.Chrome):
         """ Read date from NBS and return a datetime.date object. """
         date = self.find_element(By.XPATH, xpath).get_attribute(attribute)
         try:
-            date = datetime.strptime(date.strip(), '%m/%d/%Y').date()
+            date_pattern = r'^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+$'
+            if re.match(date_pattern, date.strip()):
+                date = datetime.strptime(date.strip(), '%Y-%m-%d %H:%M:%S.%f').date()
+            else:
+                date = datetime.strptime(date.strip(), '%m/%d/%Y').date()
         except ValueError:
             date = ''
         return date
@@ -979,6 +985,41 @@ class NBSdriver(webdriver.Chrome):
         xpath = '//*[@id="INV167"]'
         self.find_element(By.XPATH, xpath).send_keys(note)
 
+    def RejectNotification(self, n=1):
+        """ Reject notification on first case in notification queue.
+        To be used when issues were encountered during review of the case."""
+        print("issues seen in reject:", self.issues)
+        reject_path = f'//*[@id="parent"]/tbody/tr[{n}]/td[2]/img'
+        main_window_handle = self.current_window_handle
+        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
+        self.find_element(By.XPATH,reject_path).click()
+        rejection_comment_window = None
+        for handle in self.window_handles:
+            if handle != main_window_handle:
+                rejection_comment_window = handle
+                break
+        if rejection_comment_window:
+            self.switch_to.window(rejection_comment_window)
+            timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            self.issues.append('-nbsbot ' + timestamp)
+            self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
+            self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
+            self.switch_to.window(main_window_handle)
+            self.num_rejected += 1
+            
+    def ApproveNotification(self):
+        """ Approve notification on first case in notification queue. """
+        main_window_handle = self.current_window_handle
+        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+        for handle in self.window_handles:
+            if handle != main_window_handle:
+                approval_comment_window = handle
+                break
+        self.switch_to.window(approval_comment_window)
+        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+        self.switch_to.window(main_window_handle)
+        self.num_approved += 1
+        
     #new code added from covidnotificationbot, it also inherits from here
     def SendManualReviewEmail(self):
         """ Send email containing NBS IDs that required manual review."""

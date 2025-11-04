@@ -875,39 +875,39 @@ class Athena(NBSdriver):
             if not assigned_date:
                 self.issues.append('Missing investigator assigned date.')
 
-    def ApproveNotification(self):
-        """ Approve notification on first case in notification queue. """
-        main_window_handle = self.current_window_handle
-        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                approval_comment_window = handle
-                break
-        self.switch_to.window(approval_comment_window)
-        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
-        self.switch_to.window(main_window_handle)
-        self.num_approved += 1
+    # def ApproveNotification(self):
+    #     """ Approve notification on first case in notification queue. """
+    #     main_window_handle = self.current_window_handle
+    #     self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             approval_comment_window = handle
+    #             break
+    #     self.switch_to.window(approval_comment_window)
+    #     self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+    #     self.switch_to.window(main_window_handle)
+    #     self.num_approved += 1
 
-    def RejectNotification(self):
-        """ Reject notification on first case in notification queue.
-        To be used when issues were encountered during review of the case."""
-        reject_path = '//*[@id="parent"]/tbody/tr[1]/td[2]/img'
-        main_window_handle = self.current_window_handle
-        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
-        self.find_element(By.XPATH,reject_path).click()
-        rejection_comment_window = None
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                rejection_comment_window = handle
-                break
-        if rejection_comment_window:
-            self.switch_to.window(rejection_comment_window)
-            timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-            self.issues.append('-nbsbot ' + timestamp)
-            self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
-            self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
-            self.switch_to.window(main_window_handle)
-            self.num_rejected += 1
+    # def RejectNotification(self):
+    #     """ Reject notification on first case in notification queue.
+    #     To be used when issues were encountered during review of the case."""
+    #     reject_path = '//*[@id="parent"]/tbody/tr[1]/td[2]/img'
+    #     main_window_handle = self.current_window_handle
+    #     WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
+    #     self.find_element(By.XPATH,reject_path).click()
+    #     rejection_comment_window = None
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             rejection_comment_window = handle
+    #             break
+    #     if rejection_comment_window:
+    #         self.switch_to.window(rejection_comment_window)
+    #         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    #         self.issues.append('-nbsbot ' + timestamp)
+    #         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
+    #         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
+    #         self.switch_to.window(main_window_handle)
+    #         self.num_rejected += 1
 
     # def SendManualReviewEmail(self):
     #     """ Send email containing NBS IDs that required manual review."""

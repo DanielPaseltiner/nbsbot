@@ -103,9 +103,9 @@ class Anaplasma(NBSdriver):
         self.CheckSymptoms()#removed Ana
         self.CheckTravelInfo()
         self.CheckWhereDisease() 
+        self.CheckClinicallyCompatible()
         self.CheckIllnessLength()
         self.CheckAcuteOrConvalscent()                              #new code
-        self.CheckClinicallyCompatible()
         #self.CheckDetectionMethod() #new code                           #new code reject if not detectionmethod
         self.CheckConfirmationMethod() #removed Ana
         self.CheckLTF()
@@ -503,6 +503,9 @@ class Anaplasma(NBSdriver):
                 self.issues.append("Does not meet the case definition, but does not have Not a Case status. no match.")
                 self.CorrectCaseStatus = "Not a Case"
                 print(f"case_status: {self.CaseStatus}")
+            elif not self.CorrectCaseStatus:
+                if self.CaseStatus == "Confirmed":
+                    self.issues.append("Incorrect case status!. Match not found.")
         elif self.ClinicCompIndicator == "Unknown":
             if (serologic_tests or self.fourFoldChange == "Yes" or self.other_diagnostic_test == "Yes") and "Laboratory confirmed" not in self.confirmation_method:
                 if self.CaseStatus != 'Suspect': 
@@ -544,6 +547,11 @@ class Anaplasma(NBSdriver):
             if any(pd.isnull(self.Sero_table["Serology Collection Date"].values)):
                 self.issues.append('Patient has a reported serology test, but the collection date is not listed.')
                 print(f"serology_collection_date: {self.Sero_table["Serology Collection Date"].values}")
+            else:
+                collectionDate = self.Sero_table["Serology Collection Date"].values[0] if self.Sero_table["Serology Collection Date"].values[0] != "No Date" else self.Sero_table["Serology Collection Date"].values[1]
+                self.serology_collection_date = pd.to_datetime(collectionDate).date() or None
+                if self.collection_date and self.collection_date != "No Date" and self.collection_date != self.serology_collection_date:
+                    self.issues.append(f"lab collection date {self.collection_date} doesn't match serology collection date{self.serology_collection_date}")
             if any(pd.isnull(self.Sero_table["Serology Test Type"].values)):
                 self.issues.append('Patient has a reported serology test, but the test type is not listed.')
                 print(f"serology_test_type: {self.Sero_table["Serology Test Type"].values}")
@@ -689,7 +697,7 @@ class Anaplasma(NBSdriver):
             print(f"Illness_length: {self.IllnessOnset}")
 
         if any(symptom in ['Yes', 'Unknown'] for symptom in self.symptoms_list) or self.ClinicCompIndicator in ['Unknown', 'Yes']:
-            if not self.IllnessOnset:
+            if not self.IllnessOnset and self.CaseStatus != "Suspect" and self.ClinicCompIndicator != "Unknown":
                 self.issues.append('“Illness onset date” should not be blank.')
                 print(f"Illness_onset: {self.IllnessOnset}")
         
@@ -961,47 +969,50 @@ class Anaplasma(NBSdriver):
             self.issues.append(f"LTF is unknown when case status is {self.CaseStatus}.")
 
 
-    def RejectNotification(self, n=1):
-        """ Reject notification on first case in notification queue.
-        To be used when issues were encountered during review of the case."""
-        print("issues seen in reject:", self.issues)
-        reject_path = f'//*[@id="parent"]/tbody/tr[{n}]/td[2]/img'
-        main_window_handle = self.current_window_handle
-        WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
-        self.find_element(By.XPATH,reject_path).click()
-        rejection_comment_window = None
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                rejection_comment_window = handle
-                break
-        if rejection_comment_window:
-            self.switch_to.window(rejection_comment_window)
-            timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-            self.issues.append('-nbsbot ' + timestamp)
-            self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
-            self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
-            self.switch_to.window(main_window_handle)
-            self.num_rejected += 1
+    # def RejectNotification(self, n=1):
+    #     """ Reject notification on first case in notification queue.
+    #     To be used when issues were encountered during review of the case."""
+    #     print("issues seen in reject:", self.issues)
+    #     reject_path = f'//*[@id="parent"]/tbody/tr[{n}]/td[2]/img'
+    #     main_window_handle = self.current_window_handle
+    #     WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, reject_path)))
+    #     self.find_element(By.XPATH,reject_path).click()
+    #     rejection_comment_window = None
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             rejection_comment_window = handle
+    #             break
+    #     if rejection_comment_window:
+    #         self.switch_to.window(rejection_comment_window)
+    #         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    #         self.issues.append('-nbsbot ' + timestamp)
+    #         self.find_element(By.XPATH,'//*[@id="rejectComments"]').send_keys(' '.join(self.issues))
+    #         self.find_element(By.XPATH,'/html/body/form/table/tbody/tr[3]/td/input[1]').click()
+    #         self.switch_to.window(main_window_handle)
+    #         self.num_rejected += 1
             
-    def ApproveNotification(self):
-        """ Approve notification on first case in notification queue. """
-        main_window_handle = self.current_window_handle
-        self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
-        for handle in self.window_handles:
-            if handle != main_window_handle:
-                approval_comment_window = handle
-                break
-        self.switch_to.window(approval_comment_window)
-        self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
-        self.switch_to.window(main_window_handle)
-        self.num_approved += 1
+    # def ApproveNotification(self):
+    #     """ Approve notification on first case in notification queue. """
+    #     main_window_handle = self.current_window_handle
+    #     self.find_element(By.XPATH,'//*[@id="createNoti"]').click()
+    #     for handle in self.window_handles:
+    #         if handle != main_window_handle:
+    #             approval_comment_window = handle
+    #             break
+    #     self.switch_to.window(approval_comment_window)
+    #     self.find_element(By.XPATH,'//*[@id="botcreatenotId"]/input[1]').click()
+    #     self.switch_to.window(main_window_handle)
+    #     self.num_approved += 1
     
-    def SendAnaplasmaEmail(self, body, inv_id):
+    def SendAnaplasmaEmail(self, body, inv_id, email=None):
         message = EmailMessage()
         message.set_content(body)
         message['Subject'] = f'AnA Bot {inv_id}'
         message['From'] = self.nbsbot_email
-        message['To'] = ', '.join(["disease.reporting@maine.gov"])
+        if email:
+            message['To'] = ', '.join(["disease.reporting@maine.gov", email])
+        else:
+            message['To'] = ', '.join(["disease.reporting@maine.gov"])
         smtpObj = smtplib.SMTP(self.smtp_server)
         smtpObj.send_message(message)
         print('sent email', inv_id)

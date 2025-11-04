@@ -64,8 +64,8 @@ def start_anaplasma(username, passcode):
 
     #set number of patients to review, preferrably the current number of cases 
     #before running.
-    limit = 6
-    printAt = 6
+    limit = 15
+    printAt = 15
     printNo = 1
     page = 1
     loop = tqdm(generator())
@@ -276,6 +276,8 @@ def start_anaplasma(username, passcode):
         save_and_print_results("final")
     else:
         print("No final results to save.")
+    
+    NBS.SendAnaplasmaEmail("Anaplasma bot run completed", "Status", "caleb.jones@maine.gov")
 
     with open("patients_to_skip.txt", "w") as patient_writer:
         patient_writer.write("\n".join(patients_to_skip) + "\n")
