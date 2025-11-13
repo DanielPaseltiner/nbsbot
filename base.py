@@ -125,6 +125,7 @@ class NBSdriver(webdriver.Chrome):
         self.lab_report_date = None #new
         self.lab_is_serology = False #new
         self.ltf = None
+        self.negative_lab_result = False #new
         self.preg_aoe = None
         self.patient_sex = None
         self.report_date = None

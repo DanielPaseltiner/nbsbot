@@ -384,7 +384,7 @@ class Giardia(NBSdriver):
                 self.issues.append("Confirmed case but no specimen source selected.")
         else:
             if self.lab_specimen_source and specimen_source not in self.lab_specimen_source:
-                self.issues.append("Specimen source doesn't match lab report: Needs manual review.")
+                self.issues.append("Specimen source doesn't match lab report: Needs EOC review.")
             
             if specimen_source == "Other" and not other_specimen_source:
                 self.issues.append('Other speciment source cannot be vlank when speciment source is "Other"')

@@ -3801,3 +3801,1210 @@ saved/09_23_2025 - 19:24:55.335487 | anaplasma - Traceback (most recent call las
              ^^^^^^^^^^^^^^^^^^^^^^^^^
 PermissionError: [Errno 13] Permission denied: 'saved/anaplasma/Anaplasma_bot_activity_105r_final_09_23_2025.xlsx'
 
+saved/10_06_2025 - 09:38:01.038197 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 165, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=140.0.7339.208)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068cada]
+	(No symbol) [0x0x7ff7106897e1]
+	(No symbol) [0x0x7ff71067a339]
+	(No symbol) [0x0x7ff71067c111]
+	(No symbol) [0x0x7ff71067a656]
+	(No symbol) [0x0x7ff71067a0a7]
+	(No symbol) [0x0x7ff710679d6b]
+	(No symbol) [0x0x7ff7106778dc]
+	(No symbol) [0x0x7ff71067816c]
+	(No symbol) [0x0x7ff710690baa]
+	(No symbol) [0x0x7ff710735d6e]
+	(No symbol) [0x0x7ff71070cada]
+	(No symbol) [0x0x7ff710734f8b]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+saved/10_06_2025 - 09:57:26.334995 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 165, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=140.0.7339.208)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068cada]
+	(No symbol) [0x0x7ff7106897e1]
+	(No symbol) [0x0x7ff71067a339]
+	(No symbol) [0x0x7ff71067c111]
+	(No symbol) [0x0x7ff71067a656]
+	(No symbol) [0x0x7ff71067a0a7]
+	(No symbol) [0x0x7ff710679d6b]
+	(No symbol) [0x0x7ff7106778dc]
+	(No symbol) [0x0x7ff71067816c]
+	(No symbol) [0x0x7ff710690baa]
+	(No symbol) [0x0x7ff710735d6e]
+	(No symbol) [0x0x7ff71070cada]
+	(No symbol) [0x0x7ff710734f8b]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+saved/10_06_2025 - 10:30:02.137931 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 65, in StandardChecks
+    self.CheckLabReports()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 265, in CheckLabReports
+    self.lab_specimen_source = self.ReadText('//*[@id="LAB165"]').lower()
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 800, in ReadText
+    value = self.find_element(By.XPATH, xpath).get_attribute('innerText')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="LAB165"]"}
+  (Session info: chrome=140.0.7339.208); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068cada]
+	(No symbol) [0x0x7ff7106e4457]
+	(No symbol) [0x0x7ff7106e471c]
+	(No symbol) [0x0x7ff710738217]
+	(No symbol) [0x0x7ff71070cb1f]
+	(No symbol) [0x0x7ff710734f8b]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="LAB165"]"}
+  (Session info: chrome=140.0.7339.208); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068cada]
+	(No symbol) [0x0x7ff7106e4457]
+	(No symbol) [0x0x7ff7106e471c]
+	(No symbol) [0x0x7ff710738217]
+	(No symbol) [0x0x7ff71070cb1f]
+	(No symbol) [0x0x7ff710734f8b]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+saved/10_06_2025 - 11:25:18.359107 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 108, in start_giardia
+    NBS.GoToNCaseInApprovalQueue(n)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 452, in GoToNCaseInApprovalQueue
+    self.find_element(By.XPATH, xpath_to_case).click()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: tab crashed
+  (Session info: chrome=140.0.7339.208)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068c8fc]
+	(No symbol) [0x0x7ff71067b55a]
+	(No symbol) [0x0x7ff71067a612]
+	(No symbol) [0x0x7ff71067a0a7]
+	(No symbol) [0x0x7ff710679d6b]
+	(No symbol) [0x0x7ff7106778dc]
+	(No symbol) [0x0x7ff71067835b]
+	(No symbol) [0x0x7ff71068725e]
+	(No symbol) [0x0x7ff71069d5c1]
+	(No symbol) [0x0x7ff7106a485a]
+	(No symbol) [0x0x7ff710678b0e]
+	(No symbol) [0x0x7ff71069cdb2]
+	(No symbol) [0x0x7ff7107352f7]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: Message: tab crashed
+  (Session info: chrome=140.0.7339.208)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff71090fc95+79861]
+	GetHandleVerifier [0x0x7ff71090fcf0+79952]
+	(No symbol) [0x0x7ff71068c8fc]
+	(No symbol) [0x0x7ff71067b55a]
+	(No symbol) [0x0x7ff71067a612]
+	(No symbol) [0x0x7ff71067a0a7]
+	(No symbol) [0x0x7ff710679d6b]
+	(No symbol) [0x0x7ff7106778dc]
+	(No symbol) [0x0x7ff71067835b]
+	(No symbol) [0x0x7ff71068725e]
+	(No symbol) [0x0x7ff71069d5c1]
+	(No symbol) [0x0x7ff7106a485a]
+	(No symbol) [0x0x7ff710678b0e]
+	(No symbol) [0x0x7ff71069cdb2]
+	(No symbol) [0x0x7ff7107352f7]
+	(No symbol) [0x0x7ff71070c8b3]
+	(No symbol) [0x0x7ff7106d5272]
+	(No symbol) [0x0x7ff7106d6043]
+	GetHandleVerifier [0x0x7ff710bcb9cd+2946349]
+	GetHandleVerifier [0x0x7ff710bc5c4a+2922410]
+	GetHandleVerifier [0x0x7ff710be59d7+3052855]
+	GetHandleVerifier [0x0x7ff71092aa7e+189918]
+	GetHandleVerifier [0x0x7ff710932a1f+222591]
+	GetHandleVerifier [0x0x7ff710918ab4+116244]
+	GetHandleVerifier [0x0x7ff710918c69+116681]
+	GetHandleVerifier [0x0x7ff7108ff048+11176]
+	BaseThreadInitThunk [0x0x7ffd1428259d+29]
+	RtlUserThreadStart [0x0x7ffd1504af78+40]
+
+
+saved/10_06_2025 - 14:15:07.579206 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_09_2025 - 10:38:38.169216 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 167, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/10_09_2025 - 11:02:22.871199 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 167, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/10_09_2025 - 12:46:40.231006 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=141.0.7390.55); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff77d0bfc95+79861]
+	GetHandleVerifier [0x0x7ff77d0bfcf0+79952]
+	(No symbol) [0x0x7ff77ce3cada]
+	(No symbol) [0x0x7ff77ce94457]
+	(No symbol) [0x0x7ff77ce9471c]
+	(No symbol) [0x0x7ff77cee8217]
+	(No symbol) [0x0x7ff77cebcb1f]
+	(No symbol) [0x0x7ff77cee4f8b]
+	(No symbol) [0x0x7ff77cebc8b3]
+	(No symbol) [0x0x7ff77ce85272]
+	(No symbol) [0x0x7ff77ce86043]
+	GetHandleVerifier [0x0x7ff77d37b9cd+2946349]
+	GetHandleVerifier [0x0x7ff77d375c4a+2922410]
+	GetHandleVerifier [0x0x7ff77d3959d7+3052855]
+	GetHandleVerifier [0x0x7ff77d0daa7e+189918]
+	GetHandleVerifier [0x0x7ff77d0e2a1f+222591]
+	GetHandleVerifier [0x0x7ff77d0c8ab4+116244]
+	GetHandleVerifier [0x0x7ff77d0c8c69+116681]
+	GetHandleVerifier [0x0x7ff77d0af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 167, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/10_14_2025 - 09:45:41.451927 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 165, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=141.0.7390.55)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6156bfc95+79861]
+	GetHandleVerifier [0x0x7ff6156bfcf0+79952]
+	(No symbol) [0x0x7ff61543cada]
+	(No symbol) [0x0x7ff6154397e1]
+	(No symbol) [0x0x7ff61542a339]
+	(No symbol) [0x0x7ff61542c111]
+	(No symbol) [0x0x7ff61542a656]
+	(No symbol) [0x0x7ff61542a0a7]
+	(No symbol) [0x0x7ff615429d6b]
+	(No symbol) [0x0x7ff6154278dc]
+	(No symbol) [0x0x7ff61542816c]
+	(No symbol) [0x0x7ff615440baa]
+	(No symbol) [0x0x7ff6154e5d6e]
+	(No symbol) [0x0x7ff6154bcada]
+	(No symbol) [0x0x7ff6154e4f8b]
+	(No symbol) [0x0x7ff6154bc8b3]
+	(No symbol) [0x0x7ff615485272]
+	(No symbol) [0x0x7ff615486043]
+	GetHandleVerifier [0x0x7ff61597b9cd+2946349]
+	GetHandleVerifier [0x0x7ff615975c4a+2922410]
+	GetHandleVerifier [0x0x7ff6159959d7+3052855]
+	GetHandleVerifier [0x0x7ff6156daa7e+189918]
+	GetHandleVerifier [0x0x7ff6156e2a1f+222591]
+	GetHandleVerifier [0x0x7ff6156c8ab4+116244]
+	GetHandleVerifier [0x0x7ff6156c8c69+116681]
+	GetHandleVerifier [0x0x7ff6156af048+11176]
+	BaseThreadInitThunk [0x0x7fff6c60259d+29]
+	RtlUserThreadStart [0x0x7fff6cdcaf78+40]
+
+
+saved/10_14_2025 - 10:15:22.725520 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 128, in start_giardia
+    NBS.StandardChecks()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 76, in StandardChecks
+    self.CheckReportDates()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia.py", line 245, in CheckReportDates
+    self.issues.append(f"latest date received {self.latest_date_received} and earliest date received {self.earliest_date_received} mismatched with reported dates {','.join(dates)}")
+                                                                                                                                                                   ^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, datetime.date found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 194, in start_giardia
+    raise Exception(e)
+Exception: sequence item 0: expected str instance, datetime.date found
+
+saved/10_14_2025 - 10:56:07.704473 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_20_2025 - 09:45:41.340644 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 166, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=141.0.7390.77)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6ef74e9e5+80021]
+	GetHandleVerifier [0x0x7ff6ef74ea40+80112]
+	(No symbol) [0x0x7ff6ef4d060f]
+	(No symbol) [0x0x7ff6ef4cd0bf]
+	(No symbol) [0x0x7ff6ef4bdae9]
+	(No symbol) [0x0x7ff6ef4bf94e]
+	(No symbol) [0x0x7ff6ef4be0d2]
+	(No symbol) [0x0x7ff6ef4bd859]
+	(No symbol) [0x0x7ff6ef4bd51d]
+	(No symbol) [0x0x7ff6ef4bb08c]
+	(No symbol) [0x0x7ff6ef4bb91c]
+	(No symbol) [0x0x7ff6ef4d46da]
+	(No symbol) [0x0x7ff6ef57a47e]
+	(No symbol) [0x0x7ff6ef55122a]
+	(No symbol) [0x0x7ff6ef57968a]
+	(No symbol) [0x0x7ff6ef551003]
+	(No symbol) [0x0x7ff6ef5195d1]
+	(No symbol) [0x0x7ff6ef51a3f3]
+	GetHandleVerifier [0x0x7ff6efa0dd8d+2960445]
+	GetHandleVerifier [0x0x7ff6efa0804a+2936570]
+	GetHandleVerifier [0x0x7ff6efa28a87+3070263]
+	GetHandleVerifier [0x0x7ff6ef7684ce+185214]
+	GetHandleVerifier [0x0x7ff6ef76ff1f+216527]
+	GetHandleVerifier [0x0x7ff6ef757c24+117460]
+	GetHandleVerifier [0x0x7ff6ef757ddf+117903]
+	GetHandleVerifier [0x0x7ff6ef73dcb8+11112]
+	BaseThreadInitThunk [0x0x7ffef642259d+29]
+	RtlUserThreadStart [0x0x7ffef720af78+40]
+
+
+saved/10_21_2025 - 10:16:32.181785 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 230, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_22_2025 - 09:58:19.046356 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 167, in log_in
+    self.get(self.site)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 393, in get
+    self.execute(Command.GET, {"url": url})
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_NAME_NOT_RESOLVED
+  (Session info: chrome=141.0.7390.77)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff7a6aae8e5+80021]
+	GetHandleVerifier [0x0x7ff7a6aae940+80112]
+	(No symbol) [0x0x7ff7a683060f]
+	(No symbol) [0x0x7ff7a682d0bf]
+	(No symbol) [0x0x7ff7a681dae9]
+	(No symbol) [0x0x7ff7a681f94e]
+	(No symbol) [0x0x7ff7a681e0d2]
+	(No symbol) [0x0x7ff7a681d859]
+	(No symbol) [0x0x7ff7a681d51d]
+	(No symbol) [0x0x7ff7a681b08c]
+	(No symbol) [0x0x7ff7a681b91c]
+	(No symbol) [0x0x7ff7a68346da]
+	(No symbol) [0x0x7ff7a68da47e]
+	(No symbol) [0x0x7ff7a68b122a]
+	(No symbol) [0x0x7ff7a68d968a]
+	(No symbol) [0x0x7ff7a68b1003]
+	(No symbol) [0x0x7ff7a68795d1]
+	(No symbol) [0x0x7ff7a687a3f3]
+	GetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]
+	GetHandleVerifier [0x0x7ff7a6d67f3a+2936554]
+	GetHandleVerifier [0x0x7ff7a6d88977+3070247]
+	GetHandleVerifier [0x0x7ff7a6ac83ce+185214]
+	GetHandleVerifier [0x0x7ff7a6acfe1f+216527]
+	GetHandleVerifier [0x0x7ff7a6ab7b24+117460]
+	GetHandleVerifier [0x0x7ff7a6ab7cdf+117903]
+	GetHandleVerifier [0x0x7ff7a6a9dbb8+11112]
+	BaseThreadInitThunk [0x0x7ffef642259d+29]
+	RtlUserThreadStart [0x0x7ffef720af78+40]
+
+
+saved/10_22_2025 - 10:14:07.888257 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 284, in start_anaplasma
+    raise Exception(error_list)
+Exception: ['Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.77); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a6aae8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a6aae940+80112]\n\t(No symbol) [0x0x7ff7a683060f]\n\t(No symbol) [0x0x7ff7a6888854]\n\t(No symbol) [0x0x7ff7a6888b1c]\n\t(No symbol) [0x0x7ff7a68dc927]\n\t(No symbol) [0x0x7ff7a68b126f]\n\t(No symbol) [0x0x7ff7a68d968a]\n\t(No symbol) [0x0x7ff7a68b1003]\n\t(No symbol) [0x0x7ff7a68795d1]\n\t(No symbol) [0x0x7ff7a687a3f3]\n\tGetHandleVerifier [0x0x7ff7a6d6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a6d67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a6d88977+3070247]\n\tGetHandleVerifier [0x0x7ff7a6ac83ce+185214]\n\tGetHandleVerifier [0x0x7ff7a6acfe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a6ab7b24+117460]\n\tGetHandleVerifier [0x0x7ff7a6ab7cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a6a9dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffef642259d+29]\n\tRtlUserThreadStart [0x0x7ffef720af78+40]\n']
+
+saved/10_22_2025 - 15:11:55.093437 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 263, in start_giardia
+    if error is not None:
+       ^^^^^^^^^^^^^^^^^^^
+Exception: []
+
+saved/10_22_2025 - 15:23:55.829530 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 48, in start_giardia
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 177, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff707dce8e5+80021]
+	GetHandleVerifier [0x0x7ff707dce940+80112]
+	(No symbol) [0x0x7ff707b5060f]
+	(No symbol) [0x0x7ff707ba8854]
+	(No symbol) [0x0x7ff707ba8b1c]
+	(No symbol) [0x0x7ff707bfc927]
+	(No symbol) [0x0x7ff707bd126f]
+	(No symbol) [0x0x7ff707bf968a]
+	(No symbol) [0x0x7ff707bd1003]
+	(No symbol) [0x0x7ff707b995d1]
+	(No symbol) [0x0x7ff707b9a3f3]
+	GetHandleVerifier [0x0x7ff70808dc7d+2960429]
+	GetHandleVerifier [0x0x7ff708087f3a+2936554]
+	GetHandleVerifier [0x0x7ff7080a8977+3070247]
+	GetHandleVerifier [0x0x7ff707de83ce+185214]
+	GetHandleVerifier [0x0x7ff707defe1f+216527]
+	GetHandleVerifier [0x0x7ff707dd7b24+117460]
+	GetHandleVerifier [0x0x7ff707dd7cdf+117903]
+	GetHandleVerifier [0x0x7ff707dbdbb8+11112]
+	BaseThreadInitThunk [0x0x7ffef642259d+29]
+	RtlUserThreadStart [0x0x7ffef720af78+40]
+
+
+saved/10_22_2025 - 15:32:05.982301 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 264, in start_giardia
+    raise Exception(error_list)
+Exception: ['Giardia.RejectNotification() takes 1 positional argument but 2 were given']
+
+saved/10_22_2025 - 16:56:58.828689 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 264, in start_giardia
+    raise Exception(error_list)
+Exception: ['Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given', 'Giardia.RejectNotification() takes 1 positional argument but 2 were given']
+
+saved/10_22_2025 - 18:18:15.164317 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 264, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_22_2025 - 18:26:00.031640 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 264, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_22_2025 - 18:43:22.112408 | giardia - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\giardia_files\giardia_bot.py", line 264, in start_giardia
+    raise Exception(error_list)
+Exception: []
+
+saved/10_23_2025 - 09:50:03.417482 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 284, in start_anaplasma
+    raise Exception(error_list)
+Exception: ['Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff76a9ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff76a9ae940+80112]\n\t(No symbol) [0x0x7ff76a73060f]\n\t(No symbol) [0x0x7ff76a788854]\n\t(No symbol) [0x0x7ff76a788b1c]\n\t(No symbol) [0x0x7ff76a7dc927]\n\t(No symbol) [0x0x7ff76a7b126f]\n\t(No symbol) [0x0x7ff76a7d968a]\n\t(No symbol) [0x0x7ff76a7b1003]\n\t(No symbol) [0x0x7ff76a7795d1]\n\t(No symbol) [0x0x7ff76a77a3f3]\n\tGetHandleVerifier [0x0x7ff76ac6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff76ac67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff76ac88977+3070247]\n\tGetHandleVerifier [0x0x7ff76a9c83ce+185214]\n\tGetHandleVerifier [0x0x7ff76a9cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff76a9b7b24+117460]\n\tGetHandleVerifier [0x0x7ff76a9b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff76a99dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffc36d5259d+29]\n\tRtlUserThreadStart [0x0x7ffc3882af78+40]\n']
+
+saved/10_31_2025 - 13:32:00.649676 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 88, in frame
+    frame_reference = self._driver.find_element(By.ID, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="contentFrame"]"}
+  (Session info: chrome=141.0.7390.123); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff68bcbe8e5+80021]
+	GetHandleVerifier [0x0x7ff68bcbe940+80112]
+	(No symbol) [0x0x7ff68ba4060f]
+	(No symbol) [0x0x7ff68ba98854]
+	(No symbol) [0x0x7ff68ba98b1c]
+	(No symbol) [0x0x7ff68baec927]
+	(No symbol) [0x0x7ff68bac126f]
+	(No symbol) [0x0x7ff68bae968a]
+	(No symbol) [0x0x7ff68bac1003]
+	(No symbol) [0x0x7ff68ba895d1]
+	(No symbol) [0x0x7ff68ba8a3f3]
+	GetHandleVerifier [0x0x7ff68bf7dc7d+2960429]
+	GetHandleVerifier [0x0x7ff68bf77f3a+2936554]
+	GetHandleVerifier [0x0x7ff68bf98977+3070247]
+	GetHandleVerifier [0x0x7ff68bcd83ce+185214]
+	GetHandleVerifier [0x0x7ff68bcdfe1f+216527]
+	GetHandleVerifier [0x0x7ff68bcc7b24+117460]
+	GetHandleVerifier [0x0x7ff68bcc7cdf+117903]
+	GetHandleVerifier [0x0x7ff68bcadbb8+11112]
+	BaseThreadInitThunk [0x0x7ffaa9a7259d+29]
+	RtlUserThreadStart [0x0x7ffaab0aaf78+40]
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 91, in frame
+    frame_reference = self._driver.find_element(By.NAME, frame_reference)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[name="contentFrame"]"}
+  (Session info: chrome=141.0.7390.123); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x0x7ff68bcbe8e5+80021]
+	GetHandleVerifier [0x0x7ff68bcbe940+80112]
+	(No symbol) [0x0x7ff68ba4060f]
+	(No symbol) [0x0x7ff68ba98854]
+	(No symbol) [0x0x7ff68ba98b1c]
+	(No symbol) [0x0x7ff68baec927]
+	(No symbol) [0x0x7ff68bac126f]
+	(No symbol) [0x0x7ff68bae968a]
+	(No symbol) [0x0x7ff68bac1003]
+	(No symbol) [0x0x7ff68ba895d1]
+	(No symbol) [0x0x7ff68ba8a3f3]
+	GetHandleVerifier [0x0x7ff68bf7dc7d+2960429]
+	GetHandleVerifier [0x0x7ff68bf77f3a+2936554]
+	GetHandleVerifier [0x0x7ff68bf98977+3070247]
+	GetHandleVerifier [0x0x7ff68bcd83ce+185214]
+	GetHandleVerifier [0x0x7ff68bcdfe1f+216527]
+	GetHandleVerifier [0x0x7ff68bcc7b24+117460]
+	GetHandleVerifier [0x0x7ff68bcc7cdf+117903]
+	GetHandleVerifier [0x0x7ff68bcadbb8+11112]
+	BaseThreadInitThunk [0x0x7ffaa9a7259d+29]
+	RtlUserThreadStart [0x0x7ffaab0aaf78+40]
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 169, in log_in
+    self.switch_to.frame("contentFrame")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\switch_to.py", line 93, in frame
+    raise NoSuchFrameException(frame_reference) from exc
+selenium.common.exceptions.NoSuchFrameException: Message: contentFrame
+
+
+saved/10_31_2025 - 13:46:27.867330 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["HTTPConnectionPool(host='localhost', port=62256): Read timed out. (read timeout=120)", "HTTPConnectionPool(host='localhost', port=62256): Read timed out. (read timeout=120)"]
+
+saved/11_03_2025 - 08:58:27.183000 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'"]
+
+saved/11_04_2025 - 09:17:00.261650 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'", "Anaplasma.SendAnaplasmaEmail() missing 1 required positional argument: 'email'"]
+
+saved/11_04_2025 - 09:55:40.633883 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 120, in start_anaplasma
+    save_and_print_results(f"{printNo}r")
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 109, in save_and_print_results
+    combined_data.to_excel(filename)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+             ^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'saved/anaplasma/Anaplasma_bot_activity_1r_11_04_2025.xlsx'
+
+saved/11_05_2025 - 08:53:28.128323 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ["HTTPConnectionPool(host='localhost', port=62489): Read timed out. (read timeout=120)", "HTTPConnectionPool(host='localhost', port=62489): Read timed out. (read timeout=120)", "HTTPConnectionPool(host='localhost', port=62489): Read timed out. (read timeout=120)", "HTTPConnectionPool(host='localhost', port=62489): Read timed out. (read timeout=120)"]
+
+saved/11_06_2025 - 10:31:00.883793 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ['Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7fd28e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7fd28e940+80112]\n\t(No symbol) [0x0x7ff7fd01060f]\n\t(No symbol) [0x0x7ff7fd068854]\n\t(No symbol) [0x0x7ff7fd068b1c]\n\t(No symbol) [0x0x7ff7fd0bc927]\n\t(No symbol) [0x0x7ff7fd09126f]\n\t(No symbol) [0x0x7ff7fd0b968a]\n\t(No symbol) [0x0x7ff7fd091003]\n\t(No symbol) [0x0x7ff7fd0595d1]\n\t(No symbol) [0x0x7ff7fd05a3f3]\n\tGetHandleVerifier [0x0x7ff7fd54dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7fd547f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7fd568977+3070247]\n\tGetHandleVerifier [0x0x7ff7fd2a83ce+185214]\n\tGetHandleVerifier [0x0x7ff7fd2afe1f+216527]\n\tGetHandleVerifier [0x0x7ff7fd297b24+117460]\n\tGetHandleVerifier [0x0x7ff7fd297cdf+117903]\n\tGetHandleVerifier [0x0x7ff7fd27dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7fd28e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7fd28e940+80112]\n\t(No symbol) [0x0x7ff7fd01060f]\n\t(No symbol) [0x0x7ff7fd068854]\n\t(No symbol) [0x0x7ff7fd068b1c]\n\t(No symbol) [0x0x7ff7fd0bc927]\n\t(No symbol) [0x0x7ff7fd09126f]\n\t(No symbol) [0x0x7ff7fd0b968a]\n\t(No symbol) [0x0x7ff7fd091003]\n\t(No symbol) [0x0x7ff7fd0595d1]\n\t(No symbol) [0x0x7ff7fd05a3f3]\n\tGetHandleVerifier [0x0x7ff7fd54dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7fd547f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7fd568977+3070247]\n\tGetHandleVerifier [0x0x7ff7fd2a83ce+185214]\n\tGetHandleVerifier [0x0x7ff7fd2afe1f+216527]\n\tGetHandleVerifier [0x0x7ff7fd297b24+117460]\n\tGetHandleVerifier [0x0x7ff7fd297cdf+117903]\n\tGetHandleVerifier [0x0x7ff7fd27dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7fd28e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7fd28e940+80112]\n\t(No symbol) [0x0x7ff7fd01060f]\n\t(No symbol) [0x0x7ff7fd068854]\n\t(No symbol) [0x0x7ff7fd068b1c]\n\t(No symbol) [0x0x7ff7fd0bc927]\n\t(No symbol) [0x0x7ff7fd09126f]\n\t(No symbol) [0x0x7ff7fd0b968a]\n\t(No symbol) [0x0x7ff7fd091003]\n\t(No symbol) [0x0x7ff7fd0595d1]\n\t(No symbol) [0x0x7ff7fd05a3f3]\n\tGetHandleVerifier [0x0x7ff7fd54dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7fd547f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7fd568977+3070247]\n\tGetHandleVerifier [0x0x7ff7fd2a83ce+185214]\n\tGetHandleVerifier [0x0x7ff7fd2afe1f+216527]\n\tGetHandleVerifier [0x0x7ff7fd297b24+117460]\n\tGetHandleVerifier [0x0x7ff7fd297cdf+117903]\n\tGetHandleVerifier [0x0x7ff7fd27dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7fd28e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7fd28e940+80112]\n\t(No symbol) [0x0x7ff7fd01060f]\n\t(No symbol) [0x0x7ff7fd068854]\n\t(No symbol) [0x0x7ff7fd068b1c]\n\t(No symbol) [0x0x7ff7fd0bc927]\n\t(No symbol) [0x0x7ff7fd09126f]\n\t(No symbol) [0x0x7ff7fd0b968a]\n\t(No symbol) [0x0x7ff7fd091003]\n\t(No symbol) [0x0x7ff7fd0595d1]\n\t(No symbol) [0x0x7ff7fd05a3f3]\n\tGetHandleVerifier [0x0x7ff7fd54dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7fd547f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7fd568977+3070247]\n\tGetHandleVerifier [0x0x7ff7fd2a83ce+185214]\n\tGetHandleVerifier [0x0x7ff7fd2afe1f+216527]\n\tGetHandleVerifier [0x0x7ff7fd297b24+117460]\n\tGetHandleVerifier [0x0x7ff7fd297cdf+117903]\n\tGetHandleVerifier [0x0x7ff7fd27dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n']
+
+saved/11_07_2025 - 09:15:28.774133 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ['Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff7a283e8e5+80021]\n\tGetHandleVerifier [0x0x7ff7a283e940+80112]\n\t(No symbol) [0x0x7ff7a25c060f]\n\t(No symbol) [0x0x7ff7a2618854]\n\t(No symbol) [0x0x7ff7a2618b1c]\n\t(No symbol) [0x0x7ff7a266c927]\n\t(No symbol) [0x0x7ff7a264126f]\n\t(No symbol) [0x0x7ff7a266968a]\n\t(No symbol) [0x0x7ff7a2641003]\n\t(No symbol) [0x0x7ff7a26095d1]\n\t(No symbol) [0x0x7ff7a260a3f3]\n\tGetHandleVerifier [0x0x7ff7a2afdc7d+2960429]\n\tGetHandleVerifier [0x0x7ff7a2af7f3a+2936554]\n\tGetHandleVerifier [0x0x7ff7a2b18977+3070247]\n\tGetHandleVerifier [0x0x7ff7a28583ce+185214]\n\tGetHandleVerifier [0x0x7ff7a285fe1f+216527]\n\tGetHandleVerifier [0x0x7ff7a2847b24+117460]\n\tGetHandleVerifier [0x0x7ff7a2847cdf+117903]\n\tGetHandleVerifier [0x0x7ff7a282dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n']
+
+saved/11_10_2025 - 06:58:44.169408 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 179, in log_in
+    self.find_element(By.XPATH,'//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a').click()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+
+saved/11_10_2025 - 06:59:47.308249 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 48, in start_anaplasma
+    NBS.log_in()
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 178, in log_in
+    WebDriverWait(self,self.wait_before_timeout).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bea-portal-window-content-4"]/tr/td/h2[4]/font/a'))) #switch to element_to_be_clickable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\support\wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6f07ae8e5+80021]
+	GetHandleVerifier [0x0x7ff6f07ae940+80112]
+	(No symbol) [0x0x7ff6f053060f]
+	(No symbol) [0x0x7ff6f0588854]
+	(No symbol) [0x0x7ff6f0588b1c]
+	(No symbol) [0x0x7ff6f05dc927]
+	(No symbol) [0x0x7ff6f05b126f]
+	(No symbol) [0x0x7ff6f05d968a]
+	(No symbol) [0x0x7ff6f05b1003]
+	(No symbol) [0x0x7ff6f05795d1]
+	(No symbol) [0x0x7ff6f057a3f3]
+	GetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]
+	GetHandleVerifier [0x0x7ff6f0a67f3a+2936554]
+	GetHandleVerifier [0x0x7ff6f0a88977+3070247]
+	GetHandleVerifier [0x0x7ff6f07c83ce+185214]
+	GetHandleVerifier [0x0x7ff6f07cfe1f+216527]
+	GetHandleVerifier [0x0x7ff6f07b7b24+117460]
+	GetHandleVerifier [0x0x7ff6f07b7cdf+117903]
+	GetHandleVerifier [0x0x7ff6f079dbb8+11112]
+	BaseThreadInitThunk [0x0x7ffaa9a7259d+29]
+	RtlUserThreadStart [0x0x7ffaab0aaf78+40]
+
+
+saved/11_10_2025 - 07:43:24.066357 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 286, in start_anaplasma
+    raise Exception(error_list)
+Exception: ['Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n', 'Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="eventLabReport"]/tbody/tr[1]/td[1]/a"}\n  (Session info: chrome=141.0.7390.125); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception\nStacktrace:\n\tGetHandleVerifier [0x0x7ff6f07ae8e5+80021]\n\tGetHandleVerifier [0x0x7ff6f07ae940+80112]\n\t(No symbol) [0x0x7ff6f053060f]\n\t(No symbol) [0x0x7ff6f0588854]\n\t(No symbol) [0x0x7ff6f0588b1c]\n\t(No symbol) [0x0x7ff6f05dc927]\n\t(No symbol) [0x0x7ff6f05b126f]\n\t(No symbol) [0x0x7ff6f05d968a]\n\t(No symbol) [0x0x7ff6f05b1003]\n\t(No symbol) [0x0x7ff6f05795d1]\n\t(No symbol) [0x0x7ff6f057a3f3]\n\tGetHandleVerifier [0x0x7ff6f0a6dc7d+2960429]\n\tGetHandleVerifier [0x0x7ff6f0a67f3a+2936554]\n\tGetHandleVerifier [0x0x7ff6f0a88977+3070247]\n\tGetHandleVerifier [0x0x7ff6f07c83ce+185214]\n\tGetHandleVerifier [0x0x7ff6f07cfe1f+216527]\n\tGetHandleVerifier [0x0x7ff6f07b7b24+117460]\n\tGetHandleVerifier [0x0x7ff6f07b7cdf+117903]\n\tGetHandleVerifier [0x0x7ff6f079dbb8+11112]\n\tBaseThreadInitThunk [0x0x7ffaa9a7259d+29]\n\tRtlUserThreadStart [0x0x7ffaab0aaf78+40]\n']
+
+saved/11_13_2025 - 08:59:54.129751 | anaplasma - Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\decorator.py", line 9, in wrapper_error_handle
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma_bot.py", line 36, in start_anaplasma
+    from .anaplasma import Anaplasma
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\anaplasma_files\anaplasma.py", line 8, in <module>
+    from base import NBSdriver
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\base.py", line 21, in <module>
+    driver = webdriver.Chrome(service=service)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chrome\webdriver.py", line 45, in __init__
+    super().__init__(
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\chromium\webdriver.py", line 66, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 241, in __init__
+    self.start_session(capabilities)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 329, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 382, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 404, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 428, in _request
+    response = self._conn.request(method, url, body=body, headers=headers, timeout=self._client_config.timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 143, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\_request_methods.py", line 278, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\poolmanager.py", line 443, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\retry.py", line 474, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\util\util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connectionpool.py", line 536, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\caleb.jones\Repos\nbsbot.v1.5\env\Lib\site-packages\urllib3\connection.py", line 507, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Program Files\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+

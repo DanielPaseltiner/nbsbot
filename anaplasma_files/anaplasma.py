@@ -124,13 +124,16 @@ class Anaplasma(NBSdriver):
             print(f"age: {self.age}")
         else:
             current = datetime.now().date()
-            assumed_age = current.year  - self.dob.year - ((current.month, current.day) < (self.dob.month, self.dob.day))
-            if int(self.age) != assumed_age:
+            assumed_age = current.year  - self.dob.year - ((current.month, current.day) < (self.dob.month, self.dob.day)) #returns 1 or 0
+            age_difference = abs(assumed_age - int(self.age))
+            if age_difference == 0:
+                return
+            else:
                 birthday_this_year = self.dob.replace(year=self.investigation_start_date.year)
                 
-                if birthday_this_year >= self.investigation_start_date and birthday_this_year <= self.date_closed:
+                if birthday_this_year >= self.investigation_start_date and birthday_this_year <= self.date_closed and age_difference == 1:
                     return
-                if birthday_this_year > self.investigation_start_date and birthday_this_year > self.date_closed and assumed_age - int(self.age) == 1:
+                if birthday_this_year > self.investigation_start_date and birthday_this_year > self.date_closed and age_difference == 1:
                     return
                 self.issues.append(f"Reported age incorrect. Reported Age: {self.age} Assumed Age: {assumed_age}") 
         
@@ -275,6 +278,9 @@ class Anaplasma(NBSdriver):
                 print(f"investigator_assigned_date: {self.assigned_date}")
             elif self.lab_report_date and self.assigned_date < self.lab_report_date:
                 self.issues.append("Date assigned to investigation is before lab report date.")
+            
+            # if self.investigation_start_date and self.assigned_date and self.assigned_date < self.investigation_start_date:
+            #     self.issues.append("Date assigned to investigation is before investigator start date.")
 
             # elif self.assigned_date and self.investigation_start_date:
             #     if self.assigned_date < self.investigation_start_date:
@@ -477,6 +483,11 @@ class Anaplasma(NBSdriver):
         #         self.issues.append("Does not meet the case definition, but does not have Not a Case status. less titer")
         #         self.CorrectCaseStatus = "Not a Case"
         #         print(f"case_status: {self.CaseStatus}")
+        if self.negative_lab_result and self.CaseStatus != "Not a Case":
+            self.issues.append(f"Does not meet the case definition, but does not have Not a Case status.")
+            self.CorrectCaseStatus = "Not a Case"
+            print(f"case_status: {self.CaseStatus}: {self.ClinicCompIndicator}:{self.CaseStatus}")
+            return
         if self.CheckClinicallyCompatible == "No" and has_any_symptom:
             self.issues.append("Symptom marked as yes, but clinically compatible illness was marked as no")
 
@@ -520,7 +531,7 @@ class Anaplasma(NBSdriver):
             self.issues.append(f"Does not meet the case definition, but does not have Not a Case status.")
             self.CorrectCaseStatus = "Not a Case"
             print(f"case_status: {self.CaseStatus}: {self.ClinicCompIndicator}:{self.CaseStatus}")
-        elif self.CaseStatus == "Not a Case" or self.ClinicCompIndicator == "No":
+        elif self.CaseStatus == "Not a Case" or self.ClinicCompIndicator == "No" or self.negative_lab_result:
             self.issues.clear()
             
     def CheckDateSpecimenCollected(self):
@@ -607,9 +618,10 @@ class Anaplasma(NBSdriver):
         html = self.find_element(By.XPATH, '//*[@id="eventLabReport"]').get_attribute('outerHTML')
         soup = BeautifulSoup(html, 'html.parser')
         self.Lab_report_table = pd.read_html(StringIO(str(soup)))[0]
-        if len(self.Lab_report_table) > 0:
+        if len(self.Lab_report_table) > 0 and self.Lab_report_table.iloc[0, 0] != "Nothing found to display.":
             self.Lab_report_table = self.Lab_report_table[self.Lab_report_table["Test Results"].str.contains("IgG")]
             self.pcr_table = self.Lab_report_table[self.Lab_report_table["Test Results"].str.contains("DNA")]
+            self.negative_lab_result = self.Lab_report_table["Test Results"].str.contains("Negative", na=False).any()
             if len(self.Lab_report_table) > 0:
                 self.lab_is_serology = True
 

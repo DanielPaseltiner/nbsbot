@@ -64,8 +64,8 @@ def start_anaplasma(username, passcode):
 
     #set number of patients to review, preferrably the current number of cases 
     #before running.
-    limit = 15
-    printAt = 15
+    limit = 31
+    printAt = 31
     printNo = 1
     page = 1
     loop = tqdm(generator())
